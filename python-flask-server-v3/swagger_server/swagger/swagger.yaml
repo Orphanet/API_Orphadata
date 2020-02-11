@@ -1,0 +1,47 @@
+openapi: 3.0.1
+info:
+  title: Orphadata API
+  description: Provide API to Orphadata
+  termsOfService: TermsOfService
+  contact:
+    name: Maintainer
+    email: cyril.bigot@inserm.fr
+  license:
+    name: CC-BY-NC-SA
+  version: 1.0.0
+externalDocs:
+  description: For further information, checks Orphadata main site
+  url: http://www.orphadata.org/cgi-bin/index.php
+servers:
+- url: /localhost
+  description: URL for future Orphadata's API server
+security:
+- HTTP_auth: []
+tags:
+- name: Disorder
+  description: A Disorder or Disease object as defined by Orphanet Ontology
+  externalDocs:
+    description: Disease or Disorder according to Orphanet Ontology
+    url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
+paths:
+  /disorder:
+    summary: Disorder by ORPHAnumber
+    description: Access informations related to a disorder object by its ORPHAnumber
+    get:
+      summary: Disorder by ORPHAnumber
+      description: Access informations related to a disorder object by its ORPHAnumber
+      operationId: disorder_by_orph_anumber
+      responses:
+        "200":
+          description: Process OK
+        default:
+          description: Default error sample response
+      x-openapi-router-controller: swagger_server.controllers.default_controller
+components:
+  schemas: {}
+  securitySchemes:
+    HTTP_auth:
+      type: http
+      scheme: basic
+      x-basicInfoFunc: swagger_server.controllers.authorization_controller.check_HTTP_auth
+

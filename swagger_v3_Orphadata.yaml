@@ -1,0 +1,46 @@
+openapi: 3.0.1
+info:
+  title: Orphadata API
+  version: 1.0.0
+  description: Provide API to Orphadata
+  termsOfService: TermsOfService
+  license:
+    name: CC-BY-NC-SA
+    url: ''
+  contact:
+    email: cyril.bigot@inserm.fr
+    name: Maintainer
+components:
+  securitySchemes:
+    HTTP_auth:
+      type: http
+      scheme: basic
+servers:
+  - url: localhost
+    variables: {}
+    description: URL for future Orphadata's API server
+security:
+  - HTTP_auth: []
+tags:
+  - name: Disorder
+    description: A Disorder or Disease object as defined by Orphanet Ontology
+    externalDocs:
+      url: >-
+        https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
+      description: Disease or Disorder according to Orphanet Ontology
+externalDocs:
+  url: 'http://www.orphadata.org/cgi-bin/index.php'
+  description: 'For further information, checks Orphadata main site'
+paths:
+  /disorder:
+    summary: Disorder by ORPHAnumber
+    description: Access informations related to a disorder object by its ORPHAnumber
+    get:
+      summary: Disorder by ORPHAnumber
+      description: Access informations related to a disorder object by its ORPHAnumber
+      operationId: DisorderByORPHAnumber
+      responses:
+        "default":
+          description: Default error sample response
+        "200":
+          description: Process OK
