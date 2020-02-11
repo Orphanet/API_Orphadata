@@ -24,13 +24,22 @@ tags:
     description: Disease or Disorder according to Orphanet Ontology
     url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
 paths:
-  /disorder:
+  /disorder/{OrphaNumber}:
     summary: Disorder by ORPHAnumber
     description: Access informations related to a disorder object by its ORPHAnumber
     get:
       summary: Disorder by ORPHAnumber
       description: Access informations related to a disorder object by its ORPHAnumber
       operationId: disorder_by_orph_anumber
+      parameters:
+      - name: OrphaNumber
+        in: path
+        description: The unique identifier of the disorder
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
         "200":
           description: Process OK

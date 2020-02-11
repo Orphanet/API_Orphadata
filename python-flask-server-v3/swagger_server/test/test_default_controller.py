@@ -17,7 +17,7 @@ class TestDefaultController(BaseTestCase):
         Disorder by ORPHAnumber
         """
         response = self.client.open(
-            '/disorder',
+            '/disorder/{OrphaNumber}'.format(orpha_number='orpha_number_example'),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
