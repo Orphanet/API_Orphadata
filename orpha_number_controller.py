@@ -17,7 +17,11 @@ def get_orpha_number_by_id(OrphaNumber):  # noqa: E501
 
     :rtype: OrphaNumber
     """
-    host = "host.docker.internal:9200"
+
+    # Only if served by docker
+    # host = "host.docker.internal:9200"
+
+    host = "localhost:9200"
     index = "product1"
     url = "http://{}/{}/_search?q=fields.OrphaNumber={}&pretty".format(host, index, OrphaNumber)
     response = requests.get(url, timeout=None).text
