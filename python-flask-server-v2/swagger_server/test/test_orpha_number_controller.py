@@ -18,7 +18,7 @@ class TestOrphaNumberController(BaseTestCase):
         Find a disorder by ORPHAnumber
         """
         response = self.client.open(
-            '/v2/{OrphaNumber}'.format(OrphaNumber=56),
+            '//disorder/{OrphaNumber}'.format(OrphaNumber=56),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))

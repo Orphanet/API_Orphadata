@@ -11,9 +11,9 @@ info:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "Orphadata"
-basePath: "/v2"
+basePath: "/"
 tags:
-- name: "Disorder"
+- name: "disorder"
   description: "Request informations about disorders by their OrphaNumbers"
   externalDocs:
     description: "Find out more at Orphanet"
@@ -52,8 +52,6 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "OrphaNumber not found"
-      security:
-      - api_key: []
   /user:
     post:
       tags:
@@ -240,17 +238,6 @@ paths:
           description: "Invalid username supplied"
         404:
           description: "User not found"
-securityDefinitions:
-  OrphaNumberstore_auth:
-    type: "oauth2"
-    authorizationUrl: "http://OrphaNumberstore.swagger.io/oauth/dialog"
-    flow: "implicit"
-    scopes:
-      read:OrphaNumbers: "Query disorders by OrphaNumbers"
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
 definitions:
   User:
     type: "object"

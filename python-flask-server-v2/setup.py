@@ -24,7 +24,7 @@ setup(
     keywords=["Swagger", "Orphadata API"],
     install_requires=REQUIRES,
     packages=find_packages(),
-    package_data={'': ['swagger/swagger_spec_Orphadata.yaml']},
+    package_data={'': ['swagger/swagger.yaml']},
     include_package_data=True,
     entry_points={
         'console_scripts': ['swagger_server=swagger_server.__main__:main']},

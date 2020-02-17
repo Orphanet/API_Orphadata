@@ -19,7 +19,7 @@ class TestUserController(BaseTestCase):
         """
         body = User()
         response = self.client.open(
-            '/v2/user',
+            '//user',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
@@ -33,7 +33,7 @@ class TestUserController(BaseTestCase):
         """
         body = [User()]
         response = self.client.open(
-            '/v2/user/createWithArray',
+            '//user/createWithArray',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
@@ -47,7 +47,7 @@ class TestUserController(BaseTestCase):
         """
         body = [User()]
         response = self.client.open(
-            '/v2/user/createWithList',
+            '//user/createWithList',
             method='POST',
             data=json.dumps(body),
             content_type='application/json')
@@ -60,7 +60,7 @@ class TestUserController(BaseTestCase):
         Delete user
         """
         response = self.client.open(
-            '/v2/user/{username}'.format(username='username_example'),
+            '//user/{username}'.format(username='username_example'),
             method='DELETE')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -71,7 +71,7 @@ class TestUserController(BaseTestCase):
         Get user by user name
         """
         response = self.client.open(
-            '/v2/user/{username}'.format(username='username_example'),
+            '//user/{username}'.format(username='username_example'),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -84,7 +84,7 @@ class TestUserController(BaseTestCase):
         query_string = [('username', 'username_example'),
                         ('password', 'password_example')]
         response = self.client.open(
-            '/v2/user/login',
+            '//user/login',
             method='GET',
             query_string=query_string)
         self.assert200(response,
@@ -96,7 +96,7 @@ class TestUserController(BaseTestCase):
         Logs out current logged in user session
         """
         response = self.client.open(
-            '/v2/user/logout',
+            '//user/logout',
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
@@ -108,7 +108,7 @@ class TestUserController(BaseTestCase):
         """
         body = User()
         response = self.client.open(
-            '/v2/user/{username}'.format(username='username_example'),
+            '//user/{username}'.format(username='username_example'),
             method='PUT',
             data=json.dumps(body),
             content_type='application/json')
