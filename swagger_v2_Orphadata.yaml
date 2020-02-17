@@ -30,7 +30,7 @@ paths:
   /disorder/{OrphaNumber}:
     get:
       tags:
-      - "OrphaNumber"
+      - "disorder"
       summary: "Find a disorder by ORPHAnumber"
       description: "Returns a single OrphaNumber"
       operationId: "getOrphaNumberById"

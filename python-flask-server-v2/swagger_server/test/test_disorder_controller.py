@@ -9,8 +9,8 @@ from swagger_server.models.orpha_number import OrphaNumber  # noqa: E501
 from swagger_server.test import BaseTestCase
 
 
-class TestOrphaNumberController(BaseTestCase):
-    """OrphaNumberController integration test stubs"""
+class TestDisorderController(BaseTestCase):
+    """DisorderController integration test stubs"""
 
     def test_get_orpha_number_by_id(self):
         """Test case for get_orpha_number_by_id

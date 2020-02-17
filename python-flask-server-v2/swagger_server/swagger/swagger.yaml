@@ -31,7 +31,7 @@ paths:
   /disorder/{OrphaNumber}:
     get:
       tags:
-      - "OrphaNumber"
+      - "disorder"
       summary: "Find a disorder by ORPHAnumber"
       description: "Returns a single OrphaNumber"
       operationId: "get_orpha_number_by_id"
@@ -53,7 +53,7 @@ paths:
           description: "Invalid ID supplied"
         "404":
           description: "OrphaNumber not found"
-      x-swagger-router-controller: "swagger_server.controllers.orpha_number_controller"
+      x-swagger-router-controller: "swagger_server.controllers.disorder_controller"
   /user:
     post:
       tags:

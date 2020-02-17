@@ -24,7 +24,15 @@ def get_orpha_number_by_id(OrphaNumber):  # noqa: E501
     host = "localhost:9200"
     index = "product1"
     url = "http://{}/{}/_search?q=fields.OrphaNumber={}&pretty".format(host, index, OrphaNumber)
+
     response = requests.get(url, timeout=None).text
-    response = json.loads(response)
-    response = response["hits"]["hits"][0]["_source"]
+
+    try:
+        response = json.loads(response)
+        response = response["hits"]["hits"][0]["_source"]
+    except KeyError:
+        print(response)
+    except IndexError:
+        print(response)
+
     return response
