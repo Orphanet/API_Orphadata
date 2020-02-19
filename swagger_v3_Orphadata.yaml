@@ -9,38 +9,72 @@ info:
     url: ''
   contact:
     email: cyril.bigot@inserm.fr
-    name: Maintainer
-components:
-  securitySchemes:
-    HTTP_auth:
-      type: http
-      scheme: basic
+    name: maintainer
 servers:
-  - url: localhost
+  - url: "/"
     variables: {}
-    description: URL for future Orphadata's API server
-security:
-  - HTTP_auth: []
+    description: URL for Orphadata's API server
 tags:
-  - name: Disorder
-    description: A Disorder or Disease object as defined by Orphanet Ontology
+  - name: disorder
+    description: Disorder or Disease object
     externalDocs:
       url: >-
         https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
-      description: Disease or Disorder according to Orphanet Ontology
+      description: Disorder or Disease object according to Orphanet Ontology
 externalDocs:
   url: 'http://www.orphadata.org/cgi-bin/index.php'
   description: 'For further information, checks Orphadata main site'
+components:
+  schemas:
+    disorder:
+      type: object
+      properties:
+        ORPHAnumber:
+          type: string
+          example: "558"
+        name:
+          type: string
+          example: "Marfan syndrome"
+        hierarchyId:
+          type: string
+          example: "146"
+        parents:
+          type: array
+          items:
+            type: string
+            example: ["93890"]
+        childs:
+          type: array
+          items:
+            type: string
+            example: ["284963", "284973"]
+      required:
+        - ORPHAnumber
 paths:
-  /disorder:
-    summary: Disorder by ORPHAnumber
+  /disorder/{orphaNumber}:
+    summary: Disorder by orphaNumber
     description: Access informations related to a disorder object by its ORPHAnumber
+    parameters:
+      - name: orphaNumber
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+          exclusiveMinimum: true
     get:
       summary: Disorder by ORPHAnumber
       description: Access informations related to a disorder object by its ORPHAnumber
-      operationId: DisorderByORPHAnumber
+      operationId: disorder_by_orphanumber
+      tags:
+        - disorder
       responses:
         "default":
           description: Default error sample response
         "200":
-          description: Process OK
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/disorder"
