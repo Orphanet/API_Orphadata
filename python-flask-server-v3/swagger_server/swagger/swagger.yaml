@@ -14,8 +14,8 @@ externalDocs:
   description: For further information, checks Orphadata main site
   url: http://www.orphadata.org/cgi-bin/index.php
 servers:
-- url: /
-  description: URL for Orphadata's API server
+- url: "/"
+  description: "URL for Orphadata's API server"
 tags:
 - name: disorder
   description: Disorder or Disease object
@@ -47,6 +47,10 @@ paths:
       responses:
         "200":
           description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/disorder"
         "403":
           description: Access denied
         "404":
@@ -89,6 +93,10 @@ paths:
       responses:
         "200":
           description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/disorder"
         "403":
           description: Access denied
         "404":
@@ -154,4 +162,3 @@ components:
       explode: false
       schema:
         type: string
-
