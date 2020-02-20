@@ -2,12 +2,13 @@ openapi: 3.0.1
 info:
   title: Orphadata API
   description: Provide API to Orphadata
-  termsOfService: TermsOfService
+  termsOfService: https://www.orpha.net/consor/cgi-bin/Education_AboutOrphanet.php?lng=EN
   contact:
     name: maintainer
     email: cyril.bigot@inserm.fr
   license:
     name: CC-BY-NC-SA
+    url: https://creativecommons.org/licenses/by-nc-sa/3.0/fr/
   version: 1.0.0
 externalDocs:
   description: For further information, checks Orphadata main site
@@ -22,18 +23,19 @@ tags:
     description: Disorder or Disease object according to Orphanet Ontology
     url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
 paths:
-  /disorder/{orphaNumber}:
-    summary: Disorder by orphaNumber
-    description: Access informations related to a disorder object by its ORPHAnumber
+  /disorder/{orphanumber}:
+    summary: Disorder by orphanumber
     get:
       tags:
       - disorder
       summary: Disorder by ORPHAnumber
-      description: Access informations related to a disorder object by its ORPHAnumber
+      description: Access every information related to a disorder object by its ORPHAnumber
       operationId: disorder_by_orphanumber
       parameters:
-      - name: orphaNumber
+      - name: orphanumber
         in: path
+        description: The ORPHAnumber is a unique identifier to reference an Orphanet's
+          concept
         required: true
         style: simple
         explode: false
@@ -45,8 +47,56 @@ paths:
       responses:
         "200":
           description: Successful operation
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
         default:
-          description: Default error sample response
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.disorder_controller
+  /disorder/{orphanumber}/{product}:
+    summary: Disorder by orphanumber
+    get:
+      tags:
+      - disorder
+      summary: Disorder by ORPHAnumber and product
+      description: Access information related to a disorder object by its ORPHAnumber
+        on a specific subject
+      operationId: disorder_by_orphanumber_and_product
+      parameters:
+      - name: orphanumber
+        in: path
+        description: The ORPHAnumber is a unique identifier to reference an Orphanet's
+          concept
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+          format: int32
+      - name: product
+        in: path
+        description: Specify the Orphadata product
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.disorder_controller
 components:
   schemas:
@@ -74,4 +124,34 @@ components:
           items:
             type: string
             example: '["284963","284973"]'
+  responses:
+    "403":
+      description: Access denied
+    "404":
+      description: Queried disorder not found
+    default:
+      description: Unknown internal error
+  parameters:
+    orphanumber:
+      name: orphanumber
+      in: path
+      description: The ORPHAnumber is a unique identifier to reference an Orphanet's
+        concept
+      required: true
+      style: simple
+      explode: false
+      schema:
+        minimum: 0
+        exclusiveMinimum: true
+        type: integer
+        format: int32
+    product:
+      name: product
+      in: path
+      description: Specify the Orphadata product
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
 

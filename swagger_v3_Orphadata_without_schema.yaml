@@ -3,13 +3,16 @@ info:
   title: Orphadata API
   version: 1.0.0
   description: Provide API to Orphadata
-  termsOfService: TermsOfService
+  termsOfService: https://www.orpha.net/consor/cgi-bin/Education_AboutOrphanet.php?lng=EN
   license:
     name: CC-BY-NC-SA
-    url: ''
+    url: 'https://creativecommons.org/licenses/by-nc-sa/3.0/fr/'
   contact:
     email: cyril.bigot@inserm.fr
     name: maintainer
+externalDocs:
+  url: 'http://www.orphadata.org/cgi-bin/index.php'
+  description: 'For further information, checks Orphadata main site'
 servers:
   - url: "/"
     variables: {}
@@ -18,12 +21,8 @@ tags:
   - name: disorder
     description: Disorder or Disease object
     externalDocs:
-      url: >-
-        https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
+      url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
       description: Disorder or Disease object according to Orphanet Ontology
-externalDocs:
-  url: 'http://www.orphadata.org/cgi-bin/index.php'
-  description: 'For further information, checks Orphadata main site'
 components:
   schemas:
     disorder:
@@ -50,31 +49,72 @@ components:
             example: ["284963", "284973"]
       required:
         - ORPHAnumber
+  responses:
+    "default":
+      description: Unknown internal error
+    "403":
+      description: Access denied
+    "404":
+      description: Queried disorder not found
+  parameters:
+    orphanumber:
+      name: orphanumber
+      description: The ORPHAnumber is a unique identifier to reference an Orphanet's concept
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        exclusiveMinimum: true
+    product:
+      name: product
+      description: Specify the Orphadata product
+      in: path
+      required: true
+      schema:
+        type: string
 paths:
-  /disorder/{orphaNumber}:
-    summary: Disorder by orphaNumber
-    description: Access informations related to a disorder object by its ORPHAnumber
+  /disorder/{orphanumber}:
+    summary: Disorder by orphanumber
     parameters:
-      - name: orphaNumber
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int32
-          minimum: 0
-          exclusiveMinimum: true
+      - $ref: "#/components/parameters/orphanumber"
     get:
       summary: Disorder by ORPHAnumber
-      description: Access informations related to a disorder object by its ORPHAnumber
+      description: Access every information related to a disorder object by its ORPHAnumber
       operationId: disorder_by_orphanumber
       tags:
         - disorder
       responses:
         "default":
-          description: Default error sample response
+          $ref: "#/components/responses/default"
         "200":
           description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/disorder"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/default"
+  /disorder/{orphanumber}/{product}:
+    summary: Disorder by orphanumber
+    parameters:
+      - $ref: "#/components/parameters/orphanumber"
+      - $ref: "#/components/parameters/product"
+    get:
+      summary: Disorder by ORPHAnumber and product
+      description: Access information related to a disorder object by its ORPHAnumber on a specific subject
+      operationId: disorder_by_orphanumber_and_product
+      tags:
+        - disorder
+      responses:
+        "default":
+          $ref: "#/components/responses/default"
+        "200":
+          description: Successful operation
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/default"

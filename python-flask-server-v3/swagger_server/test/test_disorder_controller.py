@@ -17,7 +17,18 @@ class TestDisorderController(BaseTestCase):
         Disorder by ORPHAnumber
         """
         response = self.client.open(
-            '/disorder/{orphaNumber}'.format(orpha_number=1),
+            '/disorder/{orphanumber}'.format(orphanumber=1),
+            method='GET')
+        self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
+    def test_disorder_by_orphanumber_and_product(self):
+        """Test case for disorder_by_orphanumber_and_product
+
+        Disorder by ORPHAnumber and product
+        """
+        response = self.client.open(
+            '/disorder/{orphanumber}/{product}'.format(orphanumber=1, product='product_example'),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
