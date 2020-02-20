@@ -1,0 +1,91 @@
+openapi: 3.0.1
+info:
+  title: Orphadata API
+  version: 1.0.0
+  description: Provide API to Orphadata
+  termsOfService: TermsOfService
+  license:
+    name: CC-BY-NC-SA
+    url: ''
+  contact:
+    email: cyril.bigot@inserm.fr
+    name: maintainer
+servers:
+  - url: "/"
+    variables: {}
+    description: URL for Orphadata's API server
+tags:
+  - name: disorder
+    description: Disorder or Disease object
+    externalDocs:
+      url: >-
+        https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
+      description: Disorder or Disease object according to Orphanet Ontology
+externalDocs:
+  url: 'http://www.orphadata.org/cgi-bin/index.php'
+  description: 'For further information, checks Orphadata main site'
+components:
+  schemas:
+    disorder:
+      type: object
+      properties:
+        ORPHAnumber:
+          type: string
+          example: "558"
+        name:
+          type: string
+          example: "Marfan syndrome"
+        hierarchyId:
+          type: string
+          example: "146"
+        parents:
+          type: array
+          items:
+            type: string
+            example: ["93890"]
+        childs:
+          type: array
+          items:
+            type: string
+            example: ["284963", "284973"]
+      required:
+        - ORPHAnumber
+  responses:
+    "default":
+      description: Unknown internal error
+    "403":
+      description: Access denied
+    "404":
+      description: Queried disorder not found
+  parameters:
+    orphaNumber:
+      name: orphaNumber
+      description: Access informations related to a disorder object by its ORPHAnumber
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        exclusiveMinimum: true
+paths:
+  /disorder/{orphaNumber}:
+    summary: Disorder by orphaNumber
+    parameters:
+      - $ref: "#/components/parameters/orphaNumber"
+    get:
+      summary: Disorder by ORPHAnumber
+      description: Access informations related to a disorder object by its ORPHAnumber
+      operationId: disorder_by_orphanumber
+      tags:
+        - disorder
+      responses:
+        "default":
+          $ref: "#/components/responses/default"
+        "200":
+          description: Successful operation
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+          

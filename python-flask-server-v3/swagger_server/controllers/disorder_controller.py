@@ -1,7 +1,7 @@
 import connexion
 import six
 import requests
-import json
+from flask import json
 
 from swagger_server import util
 
@@ -29,8 +29,10 @@ def disorder_by_orphanumber(orpha_number):  # noqa: E501
         response = json.loads(response)
         response = response["hits"]["hits"][0]["_source"]
     except KeyError:
+        response = "404"
         print(response)
     except IndexError:
+        response = "404"
         print(response)
 
     return response
