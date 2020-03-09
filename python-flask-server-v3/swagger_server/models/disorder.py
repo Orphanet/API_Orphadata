@@ -14,11 +14,11 @@ class Disorder(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, orph_anumber: str=None, name: str=None, hierarchy_id: str=None, parents: List[str]=None, childs: List[str]=None):  # noqa: E501
+    def __init__(self, orph_acode: str=None, name: str=None, hierarchy_id: str=None, parents: List[str]=None, childs: List[str]=None):  # noqa: E501
         """Disorder - a model defined in Swagger
 
-        :param orph_anumber: The orph_anumber of this Disorder.  # noqa: E501
-        :type orph_anumber: str
+        :param orph_acode: The orph_acode of this Disorder.  # noqa: E501
+        :type orph_acode: str
         :param name: The name of this Disorder.  # noqa: E501
         :type name: str
         :param hierarchy_id: The hierarchy_id of this Disorder.  # noqa: E501
@@ -29,7 +29,7 @@ class Disorder(Model):
         :type childs: List[str]
         """
         self.swagger_types = {
-            'orph_anumber': str,
+            'orph_acode': str,
             'name': str,
             'hierarchy_id': str,
             'parents': List[str],
@@ -37,13 +37,13 @@ class Disorder(Model):
         }
 
         self.attribute_map = {
-            'orph_anumber': 'ORPHAnumber',
+            'orph_acode': 'ORPHAcode',
             'name': 'name',
             'hierarchy_id': 'hierarchyId',
             'parents': 'parents',
             'childs': 'childs'
         }
-        self._orph_anumber = orph_anumber
+        self._orph_acode = orph_acode
         self._name = name
         self._hierarchy_id = hierarchy_id
         self._parents = parents
@@ -61,27 +61,27 @@ class Disorder(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def orph_anumber(self) -> str:
-        """Gets the orph_anumber of this Disorder.
+    def orph_acode(self) -> str:
+        """Gets the orph_acode of this Disorder.
 
 
-        :return: The orph_anumber of this Disorder.
+        :return: The orph_acode of this Disorder.
         :rtype: str
         """
-        return self._orph_anumber
+        return self._orph_acode
 
-    @orph_anumber.setter
-    def orph_anumber(self, orph_anumber: str):
-        """Sets the orph_anumber of this Disorder.
+    @orph_acode.setter
+    def orph_acode(self, orph_acode: str):
+        """Sets the orph_acode of this Disorder.
 
 
-        :param orph_anumber: The orph_anumber of this Disorder.
-        :type orph_anumber: str
+        :param orph_acode: The orph_acode of this Disorder.
+        :type orph_acode: str
         """
-        if orph_anumber is None:
-            raise ValueError("Invalid value for `orph_anumber`, must not be `None`")  # noqa: E501
+        if orph_acode is None:
+            raise ValueError("Invalid value for `orph_acode`, must not be `None`")  # noqa: E501
 
-        self._orph_anumber = orph_anumber
+        self._orph_acode = orph_acode
 
     @property
     def name(self) -> str:

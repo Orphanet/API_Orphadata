@@ -14,27 +14,53 @@ externalDocs:
   description: For further information, checks Orphadata main site
   url: http://www.orphadata.org/cgi-bin/index.php
 servers:
-- url: "/"
-  description: "URL for Orphadata's API server"
+- url: /
+  description: URL for Orphadata's API server
 tags:
 - name: disorder
-  description: Disorder or Disease object
+  description: Full list of API operation
   externalDocs:
     description: Disorder or Disease object according to Orphanet Ontology
     url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
+- name: orphaclassif
+  description: Hierarchical classification
+  externalDocs:
+    description: Orphanet's hierarchical classification of disorder
+    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+- name: product1
+  description: Operations for product 1
+  externalDocs:
+    description: Disorder or Disease object according to Orphanet Ontology
+    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+- name: associated gene
+  description: Operations for associated genes
+  externalDocs:
+    description: Genes referenced by Orphanet
+    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+- name: phenotype
+  description: Operations for phenotype
+  externalDocs:
+    description: Phenotypes referenced by Orphanet, Human Phenotype Ontology (HPO)
+    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+- name: epidemiology
+  description: Operations for epidemiology
+  externalDocs:
+    description: Epidemiological data referenced by Orphanet
+    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 paths:
-  /disorder/{orphanumber}:
-    summary: Disorder by orphanumber
+  /orphaclassif/orphacode/{orphacode}:
     get:
       tags:
       - disorder
-      summary: Disorder by ORPHAnumber
-      description: Access every information related to a disorder object by its ORPHAnumber
-      operationId: disorder_by_orphanumber
+      - orphaclassif
+      summary: Hierarchical classification of disorder by ORPHAcode
+      description: Query one disorder by its ORPHAcode and gives its Orphanet classification
+        number, the list of its children and parents.
+      operationId: hierarchy_by_orphacode
       parameters:
-      - name: orphanumber
+      - name: orphacode
         in: path
-        description: The ORPHAnumber is a unique identifier to reference an Orphanet's
+        description: The ORPHAcode is a unique identifier to reference an Orphanet's
           concept
         required: true
         style: simple
@@ -47,10 +73,6 @@ paths:
       responses:
         "200":
           description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/disorder"
         "403":
           description: Access denied
         "404":
@@ -60,19 +82,18 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.disorder_controller
-  /disorder/{orphanumber}/{product}:
-    summary: Disorder by orphanumber
+  /product1/orphacode/{orphacode}/{language}:
     get:
       tags:
       - disorder
-      summary: Disorder by ORPHAnumber and product
-      description: Access information related to a disorder object by its ORPHAnumber
-        on a specific subject
-      operationId: disorder_by_orphanumber_and_product
+      - product1
+      summary: Disorder by ORPHAcode for product 1
+      description: Access every information related to a disorder object by its ORPHAcode
+      operationId: disorder_by_orphacode
       parameters:
-      - name: orphanumber
+      - name: orphacode
         in: path
-        description: The ORPHAnumber is a unique identifier to reference an Orphanet's
+        description: The ORPHAcode is a unique identifier to reference an Orphanet's
           concept
         required: true
         style: simple
@@ -82,21 +103,217 @@ paths:
           exclusiveMinimum: true
           type: integer
           format: int32
-      - name: product
+      - name: language
         in: path
-        description: Specify the Orphadata product
+        description: Specify the language in the list supported by Orphanet (EN, FR,
+          ES, DE, IT, PT, NL, PL)
         required: true
         style: simple
         explode: false
         schema:
           type: string
+          default: EN
+          enum:
+          - EN
+          - FR
+          - ES
+          - DE
+          - IT
+          - PT
+          - NL
+          - PL
       responses:
         "200":
           description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/disorder"
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.disorder_controller
+  /associatedgene/orphacode/{orphacode}:
+    get:
+      tags:
+      - disorder
+      - associated gene
+      summary: Disorder by ORPHAcode with associated genes
+      description: Access every information related to a disorder object by its ORPHAcode
+      operationId: gene_by_disorder_orphacode
+      parameters:
+      - name: orphacode
+        in: path
+        description: The ORPHAcode is a unique identifier to reference an Orphanet's
+          concept
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: Successful operation
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.disorder_controller
+  /phenotype/orphacode/{orphacode}/{language}:
+    get:
+      tags:
+      - disorder
+      - phenotype
+      summary: Disorder by ORPHAcode with its associated phenotype
+      description: Access every information related to a disorder object by its ORPHAcode
+      operationId: phenotype_by_orphacode
+      parameters:
+      - name: orphacode
+        in: path
+        description: The ORPHAcode is a unique identifier to reference an Orphanet's
+          concept
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+          format: int32
+      - name: language
+        in: path
+        description: Specify the language in the list supported by Orphanet (EN, FR,
+          ES, DE, IT, PT, NL, PL)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: EN
+          enum:
+          - EN
+          - FR
+          - ES
+          - DE
+          - IT
+          - PT
+          - NL
+          - PL
+      responses:
+        "200":
+          description: Successful operation
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.disorder_controller
+  /epidemiology/orphacode/{orphacode}/{language}:
+    get:
+      tags:
+      - disorder
+      - epidemiology
+      summary: Disorder by ORPHAcode with epidemiological data
+      description: Access every information related to a disorder object by its ORPHAcode
+      operationId: epidemiology_by_orphacode
+      parameters:
+      - name: orphacode
+        in: path
+        description: The ORPHAcode is a unique identifier to reference an Orphanet's
+          concept
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+          format: int32
+      - name: language
+        in: path
+        description: Specify the language in the list supported by Orphanet (EN, FR,
+          ES, DE, IT, PT, NL, PL)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: EN
+          enum:
+          - EN
+          - FR
+          - ES
+          - DE
+          - IT
+          - PT
+          - NL
+          - PL
+      responses:
+        "200":
+          description: Successful operation
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.disorder_controller
+  /age/orphacode/{orphacode}/{language}:
+    get:
+      tags:
+      - disorder
+      - epidemiology
+      summary: Disorder by ORPHAcode with age of onset
+      description: Access every information related to a disorder object by its ORPHAcode
+      operationId: age_by_orphacode
+      parameters:
+      - name: orphacode
+        in: path
+        description: The ORPHAcode is a unique identifier to reference an Orphanet's
+          concept
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+          format: int32
+      - name: language
+        in: path
+        description: Specify the language in the list supported by Orphanet (EN, FR,
+          ES, DE, IT, PT, NL, PL)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: EN
+          enum:
+          - EN
+          - FR
+          - ES
+          - DE
+          - IT
+          - PT
+          - NL
+          - PL
+      responses:
+        "200":
+          description: Successful operation
         "403":
           description: Access denied
         "404":
@@ -110,10 +327,10 @@ components:
   schemas:
     disorder:
       required:
-      - ORPHAnumber
+      - ORPHAcode
       type: object
       properties:
-        ORPHAnumber:
+        ORPHAcode:
           type: string
           example: "558"
         name:
@@ -140,10 +357,10 @@ components:
     default:
       description: Unknown internal error
   parameters:
-    orphanumber:
-      name: orphanumber
+    orphacode:
+      name: orphacode
       in: path
-      description: The ORPHAnumber is a unique identifier to reference an Orphanet's
+      description: The ORPHAcode is a unique identifier to reference an Orphanet's
         concept
       required: true
       style: simple
@@ -153,12 +370,24 @@ components:
         exclusiveMinimum: true
         type: integer
         format: int32
-    product:
-      name: product
+    language:
+      name: language
       in: path
-      description: Specify the Orphadata product
+      description: Specify the language in the list supported by Orphanet (EN, FR,
+        ES, DE, IT, PT, NL, PL)
       required: true
       style: simple
       explode: false
       schema:
         type: string
+        default: EN
+        enum:
+        - EN
+        - FR
+        - ES
+        - DE
+        - IT
+        - PT
+        - NL
+        - PL
+
