@@ -19,16 +19,41 @@ servers:
     description: URL for Orphadata's API server
 tags:
   - name: disorder
-    description: Disorder or Disease object
+    description: Full list of API operation
     externalDocs:
-      url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
       description: Disorder or Disease object according to Orphanet Ontology
+      url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
+  - name: orphaclassif
+    description: Hierarchical classification
+    externalDocs:
+      description: Orphanet's hierarchical classification of disorder 
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: product1
+    description: Operations for product 1
+    externalDocs:
+      description: Disorder or Disease object according to Orphanet Ontology
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: associated gene
+    description: Operations for associated genes
+    externalDocs:
+      description: Genes referenced by Orphanet
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: phenotype
+    description: Operations for phenotype
+    externalDocs:
+      description: Phenotypes referenced by Orphanet, Human Phenotype Ontology (HPO)
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: epidemiology
+    description: Operations for epidemiology
+    externalDocs:
+      description: Epidemiological data referenced by Orphanet
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 components:
   schemas:
     disorder:
       type: object
       properties:
-        ORPHAnumber:
+        ORPHAcode:
           type: string
           example: "558"
         name:
@@ -48,7 +73,7 @@ components:
             type: string
             example: ["284963", "284973"]
       required:
-        - ORPHAnumber
+        - ORPHAcode
   responses:
     "default":
       description: Unknown internal error
@@ -57,9 +82,9 @@ components:
     "404":
       description: Queried disorder not found
   parameters:
-    orphanumber:
-      name: orphanumber
-      description: The ORPHAnumber is a unique identifier to reference an Orphanet's concept
+    orphacode:
+      name: orphacode
+      description: The ORPHAcode is a unique identifier to reference an Orphanet's concept
       in: path
       required: true
       schema:
@@ -67,24 +92,33 @@ components:
         format: int32
         minimum: 0
         exclusiveMinimum: true
-    product:
-      name: product
-      description: Specify the Orphadata product
+    language:
+      name: language
+      description: Specify the language in the list supported by Orphanet (EN, FR, ES, DE, IT, PT, NL, PL)
       in: path
       required: true
       schema:
-        type: string
+        enum:
+          - EN
+          - FR
+          - ES
+          - DE
+          - IT
+          - PT
+          - NL
+          - PL
+        default: EN
 paths:
-  /disorder/{orphanumber}:
-    summary: Disorder by orphanumber
+  /orphaclassif/orphacode/{orphacode}:
     parameters:
-      - $ref: "#/components/parameters/orphanumber"
+      - $ref: "#/components/parameters/orphacode"
     get:
-      summary: Disorder by ORPHAnumber
-      description: Access every information related to a disorder object by its ORPHAnumber
-      operationId: disorder_by_orphanumber
+      summary: Hierarchical classification of disorder by ORPHAcode
+      description: Query one disorder by its ORPHAcode and gives its Orphanet classification number, the list of its children and parents.
+      operationId: hierarchy_by_orphacode
       tags:
         - disorder
+        - orphaclassif
       responses:
         "default":
           $ref: "#/components/responses/default"
@@ -96,17 +130,104 @@ paths:
           $ref: "#/components/responses/404"
         "500":
           $ref: "#/components/responses/default"
-  /disorder/{orphanumber}/{product}:
-    summary: Disorder by orphanumber
+  /product1/orphacode/{orphacode}/{language}:
     parameters:
-      - $ref: "#/components/parameters/orphanumber"
-      - $ref: "#/components/parameters/product"
+      - $ref: "#/components/parameters/orphacode"
+      - $ref: "#/components/parameters/language"
     get:
-      summary: Disorder by ORPHAnumber and product
-      description: Access information related to a disorder object by its ORPHAnumber on a specific subject
-      operationId: disorder_by_orphanumber_and_product
+      summary: Disorder by ORPHAcode for product 1
+      description: Access every information related to a disorder object by its ORPHAcode
+      operationId: disorder_by_orphacode
       tags:
         - disorder
+        - product1
+      responses:
+        "default":
+          $ref: "#/components/responses/default"
+        "200":
+          description: Successful operation
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/default"
+  /associatedgene/orphacode/{orphacode}:
+    parameters:
+      - $ref: "#/components/parameters/orphacode"
+    get:
+      summary: Disorder by ORPHAcode with associated genes
+      description: Access every information related to a disorder object by its ORPHAcode
+      operationId: gene_by_disorder_orphacode
+      tags:
+        - disorder
+        - associated gene
+      responses:
+        "default":
+          $ref: "#/components/responses/default"
+        "200":
+          description: Successful operation
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/default"
+  /phenotype/orphacode/{orphacode}/{language}:
+    parameters:
+      - $ref: "#/components/parameters/orphacode"
+      - $ref: "#/components/parameters/language"
+    get:
+      summary: Disorder by ORPHAcode with its associated phenotype
+      description: Access every information related to a disorder object by its ORPHAcode
+      operationId: phenotype_by_orphacode
+      tags:
+        - disorder
+        - phenotype
+      responses:
+        "default":
+          $ref: "#/components/responses/default"
+        "200":
+          description: Successful operation
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/default"
+  /epidemiology/orphacode/{orphacode}/{language}:
+    parameters:
+      - $ref: "#/components/parameters/orphacode"
+      - $ref: '#/components/parameters/language'
+    get:
+      summary: Disorder by ORPHAcode with epidemiological data
+      description: Access every information related to a disorder object by its ORPHAcode
+      operationId: epidemiology_by_orphacode
+      tags:
+        - disorder
+        - epidemiology
+      responses:
+        "default":
+          $ref: "#/components/responses/default"
+        "200":
+          description: Successful operation
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "500":
+          $ref: "#/components/responses/default"
+  /age/orphacode/{orphacode}/{language}:
+    parameters:
+      - $ref: "#/components/parameters/orphacode"
+      - $ref: '#/components/parameters/language'
+    get:
+      summary: Disorder by ORPHAcode with age of onset
+      description: Access every information related to a disorder object by its ORPHAcode
+      operationId: age_by_orphacode
+      tags:
+        - disorder
+        - epidemiology
       responses:
         "default":
           $ref: "#/components/responses/default"
