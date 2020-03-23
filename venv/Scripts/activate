@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\cbigot\PycharmProjects\API_orphadata\venv"
+VIRTUAL_ENV="C:\Users\Cyrlynx\PycharmProjects\API_Orphadata\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
