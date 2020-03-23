@@ -13,16 +13,16 @@ en_product1:
     DisorderFlag:
       type: array
       items:
-        type: string
-        example: [{'Label': 'on-line'}]
-        Label:
-          type: string
-          example: "on-line"
+        type: object
+        properties:
+          Label:
+            type: string
+            example: "on-line"
     Synonym:
       type: array
       items:
         type: string
-        example: ['AD OSMED', 'Stickler syndrome type 3']
+        example: "['AD OSMED', 'Stickler syndrome type 3', 'Stickler syndrome, non-ocular type']"
     DisorderType:
       type: string
       example: "Malformation syndrome"
@@ -35,38 +35,44 @@ en_product1:
     ExternalReference:
       type: array
       items:
-        type: string
-        example: [{'Source': 'MeSH', 'Reference': 'C537494', 'DisorderMappingRelation': 'E (exact mapping (the terms and the concepts are equivalent))', 'DisorderMappingICDRelation': None, 'DisorderMappingValidationStatus': 'Validated'}, {'Source': 'OMIM', 'Reference': '184840', 'DisorderMappingRelation': 'E (exact mapping (the terms and the concepts are equivalent))', 'DisorderMappingICDRelation': None, 'DisorderMappingValidationStatus': 'Validated'}]
-        Source:
-          type: string
-          example: "MeSH"
-        Reference:
-          type: string
-          example: "C537494"
-        DisorderMappingRelation:
-          type: string
-          example: "E (exact mapping (the terms and the concepts are equivalent))"
-        DisorderMappingValidationStatus:
-          type: string
-          example: "Validated"
+        type: object
+        properties:
+          Source:
+            type: string
+            example: "MeSH"
+          Reference:
+            type: string
+            example: "C537494"
+          DisorderMappingRelation:
+            type: string
+            example: "E (exact mapping (the terms and the concepts are equivalent))"
+          DisorderMappingICDRelation:
+            type: string
+            example: "None"
+          DisorderMappingValidationStatus:
+            type: string
+            example: "Validated"
     DisorderDisorderAssociation:
       type: array
       items:
-        type: string
-        example: [{'Disorder1': None, 'Disorder2': 'Weissenbacher-Zweymuller syndrome', 'DisorderDisorderAssociationType': 'Moved to'}]
-        Disorder2:
-          type: string
-          example: "Weissenbacher-Zweymuller syndrome"
-        DisorderDisorderAssociationType:
-          type: string
-          example: "Moved to"
+        type: object
+        properties:
+          Disorder1:
+            type: string
+            example: "None"
+          Disorder2:
+            type: string
+            example: "Weissenbacher-Zweymuller syndrome"
+          DisorderDisorderAssociationType:
+            type: string
+            example: "Moved to"
     TextualInformation:
       type: array
       items:
-        type: string
-        example: [{'Definition': 'Stickler syndrome type 3 is a rare, genetic, multiple congenital anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism (midface hypoplasia, depressed nasal bridge, small nose with upturned tip, cleft palate, Pierre Robin sequence), bilateral, pronounced sensorineural hearing loss, and skeletal/joint anomalies (including spondyloepiphyseal dysplasia, arthralgia/arthropathy), in the absence of ocular abnormalities.'}]
-        Definition:
-          type: string
-          example: "Stickler syndrome type 3 is a rare, genetic, multiple congenital anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism (midface hypoplasia, depressed nasal bridge, small nose with upturned tip, cleft palate, Pierre Robin sequence), bilateral, pronounced sensorineural hearing loss, and skeletal/joint anomalies (including spondyloepiphyseal dysplasia, arthralgia/arthropathy), in the absence of ocular abnormalities."
+        type: object
+        properties:
+          Definition:
+            type: string
+            example: "Stickler syndrome type 3 is a rare, genetic, multiple congenital anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism (midface hypoplasia, depressed nasal bridge, small nose with upturned tip, cleft palate, Pierre Robin sequence), bilateral, pronounced sensorineural hearing loss, and skeletal/joint anomalies (including spondyloepiphyseal dysplasia, arthralgia/arthropathy), in the absence of ocular abnormalities."
   required:
     - ORPHAcode

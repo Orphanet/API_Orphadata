@@ -17,16 +17,16 @@ en_product9_ages:
       type: array
       items:
         type: string
-        example: ['All ages']
+        example: "['All ages']"
     AverageAgeOfDeath:
       type: array
       items:
         type: string
-        example: ['any age']
+        example: "['any age']"
     TypeOfInheritance:
       type: array
       items:
         type: string
-        example: ['Autosomal dominant']
+        example: "['Autosomal dominant']"
   required:
     - ORPHAcode

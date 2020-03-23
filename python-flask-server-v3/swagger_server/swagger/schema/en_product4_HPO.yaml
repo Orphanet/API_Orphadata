@@ -10,21 +10,22 @@ en_product4_HPO:
     HPODisorderAssociation:
       type: array
       items:
-        type: string
-        example: [{'HPO': {'HPOId': 'HP:0007663', 'HPOTerm': 'Reduced visual acuity'}, 'HPOFrequency': 'Obligate (100%)', 'DiagnosticCriteria': None}, {'HPO': {'HPOId': 'HP:0000493', 'HPOTerm': 'Abnormal foveal morphology'}, 'HPOFrequency': 'Very frequent (99-80%)', 'DiagnosticCriteria': None}]
-        HPO:
-          type: array
-          items:
+        type: object
+        properties:
+          HPO:
+            type: object
+            properties:
+              HPOId:
+                type: string
+                example: "HP:0007663"
+              HPOTerm:
+                type: string
+                example: "Reduced visual acuity"
+          HPOFrequency:
             type: string
-            example: ['HPOId', 'HPOTerm']
-            HPOId:
-              type: string
-              example: "HP:0007663"
-            HPOTerm:
-              type: string
-              example: "Reduced visual acuity"
-        HPOFrequency:
-          type: string
-          example: "Obligate (100%)"
+            example: "Obligate (100%)"
+          DiagnosticCriteria:
+            type: string
+            example: "None"
   required:
     - ORPHAcode

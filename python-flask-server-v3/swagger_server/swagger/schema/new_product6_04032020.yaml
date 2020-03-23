@@ -19,57 +19,55 @@ new_product6_04032020:
     DisorderGeneAssociation:
       type: array
       items:
-        type: string
-        example: [{'SourceOfValidation': '22587682[PMID]', 'Gene': {'Name': 'kinesin family member 7', 'Symbol': 'KIF7', 'Synonym': ['JBTS12'], 'GeneType': 'gene with protein product', 'ExternalReference': [{'Source': 'Ensembl', 'Reference': 'ENSG00000166813'}, {'Source': 'Genatlas', 'Reference': 'KIF7'}, {'Source': 'HGNC', 'Reference': '30497'}, {'Source': 'OMIM', 'Reference': '611254'}, {'Source': 'Reactome', 'Reference': 'Q2M1P5'}, {'Source': 'SwissProt', 'Reference': 'Q2M1P5'}], 'Locus': [{'GeneLocus': '15q26.1', 'LocusKey': '1'}]}, 'DisorderGeneAssociationType': 'Disease-causing germline mutation(s) in', 'DisorderGeneAssociationStatus': 'Assessed'}]
-        SourceOfValidation:
-          type: string
-          example: "22587682[PMID]"
-        Gene:
-          type: array
-          items:
+        type: object
+        properties:
+          SourceOfValidation:
             type: string
-            example: ['Name', 'Symbol', 'Synonym', 'GeneType', 'ExternalReference', 'Locus']
-            Name:
-              type: string
-              example: "kinesin family member 7"
-            Symbol:
-              type: string
-              example: "KIF7"
-            Synonym:
-              type: array
-              items:
+            example: "22587682[PMID]"
+          Gene:
+            type: object
+            properties:
+              Name:
                 type: string
-                example: ['JBTS12']
-            GeneType:
-              type: string
-              example: "gene with protein product"
-            ExternalReference:
-              type: array
-              items:
+                example: "kinesin family member 7"
+              Symbol:
                 type: string
-                example: [{'Source': 'Ensembl', 'Reference': 'ENSG00000166813'}, {'Source': 'Genatlas', 'Reference': 'KIF7'}]
-                Source:
+                example: "KIF7"
+              Synonym:
+                type: array
+                items:
                   type: string
-                  example: "Ensembl"
-                Reference:
-                  type: string
-                  example: "ENSG00000166813"
-            Locus:
-              type: array
-              items:
+                  example: "['JBTS12']"
+              GeneType:
                 type: string
-                example: [{'GeneLocus': '15q26.1', 'LocusKey': '1'}]
-                GeneLocus:
-                  type: string
-                  example: "15q26.1"
-                LocusKey:
-                  type: string
-                  example: "1"
-        DisorderGeneAssociationType:
-          type: string
-          example: "Disease-causing germline mutation(s) in"
-        DisorderGeneAssociationStatus:
-          type: string
-          example: "Assessed"
+                example: "gene with protein product"
+              ExternalReference:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Source:
+                      type: string
+                      example: "Ensembl"
+                    Reference:
+                      type: string
+                      example: "ENSG00000166813"
+              Locus:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    GeneLocus:
+                      type: string
+                      example: "15q26.1"
+                    LocusKey:
+                      type: string
+                      example: "1"
+          DisorderGeneAssociationType:
+            type: string
+            example: "Disease-causing germline mutation(s) in"
+          DisorderGeneAssociationStatus:
+            type: string
+            example: "Assessed"
   required:
     - ORPHAcode

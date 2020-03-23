@@ -14,11 +14,11 @@ en_product3_146:
       type: array
       items:
         type: string
-        example: ['247']
+        example: "['247']"
     childs:
       type: array
       items:
         type: string
-        example: ['293888', '293899']
+        example: "['293888', '293899', '293910']"
   required:
     - ORPHAcode
