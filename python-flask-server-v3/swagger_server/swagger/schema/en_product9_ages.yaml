@@ -1,0 +1,32 @@
+en_product9_ages:
+  type: object
+  properties:
+    ORPHAcode:
+      type: string
+      example: "58"
+    ExpertLink:
+      type: string
+      example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58"
+    Name:
+      type: string
+      example: "Alexander disease"
+    DisorderType:
+      type: string
+      example: "Disease"
+    AverageAgeOfOnset:
+      type: array
+      items:
+        type: string
+        example: ['All ages']
+    AverageAgeOfDeath:
+      type: array
+      items:
+        type: string
+        example: ['any age']
+    TypeOfInheritance:
+      type: array
+      items:
+        type: string
+        example: ['Autosomal dominant']
+  required:
+    - ORPHAcode

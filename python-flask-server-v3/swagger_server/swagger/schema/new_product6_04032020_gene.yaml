@@ -1,0 +1,75 @@
+new_product6_04032020_gene:
+  type: object
+  properties:
+    Name:
+      type: string
+      example: "kinesin family member 7"
+    Symbol:
+      type: string
+      example: "KIF7"
+    Synonym:
+      type: array
+      items:
+        type: string
+        example: ['JBTS12']
+    GeneType:
+      type: string
+      example: "gene with protein product"
+    ExternalReference:
+      type: array
+      items:
+        type: string
+        example: [{'Source': 'Ensembl', 'Reference': 'ENSG00000166813'}, {'Source': 'Genatlas', 'Reference': 'KIF7'}]
+        Source:
+          type: string
+          example: "Ensembl"
+        Reference:
+          type: string
+          example: "ENSG00000166813"
+    Locus:
+      type: array
+      items:
+        type: string
+        example: [{'GeneLocus': '15q26.1', 'LocusKey': '1'}]
+        GeneLocus:
+          type: string
+          example: "15q26.1"
+        LocusKey:
+          type: string
+          example: "1"
+    GeneDisorderAssociation:
+      type: array
+      items:
+        type: string
+        example: [{'SourceOfValidation': '22587682[PMID]', 'DisorderGeneAssociationType': 'Disease-causing germline mutation(s) in', 'DisorderGeneAssociationStatus': 'Assessed', 'disorder': {'ORPHAcode': '166024', 'ExpertLink': 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024', 'Name': 'Multiple epiphyseal dysplasia, Al-Gazali type', 'DisorderType': 'Disease', 'DisorderGroup': 'Disorder'}}, {'SourceOfValidation': '21552264[PMID]_23142271[PMID]', 'DisorderGeneAssociationType': 'Disease-causing germline mutation(s) in', 'DisorderGeneAssociationStatus': 'Assessed', 'disorder': {'ORPHAcode': '36', 'ExpertLink': 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=36', 'Name': 'Acrocallosal syndrome', 'DisorderType': 'Malformation syndrome', 'DisorderGroup': 'Disorder'}}]
+        SourceOfValidation:
+          type: string
+          example: "22587682[PMID]"
+        DisorderGeneAssociationType:
+          type: string
+          example: "Disease-causing germline mutation(s) in"
+        DisorderGeneAssociationStatus:
+          type: string
+          example: "Assessed"
+        disorder:
+          type: array
+          items:
+            type: string
+            example: ['ORPHAcode', 'ExpertLink', 'Name', 'DisorderType', 'DisorderGroup']
+            ORPHAcode:
+              type: string
+              example: "166024"
+            ExpertLink:
+              type: string
+              example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024"
+            Name:
+              type: string
+              example: "Multiple epiphyseal dysplasia, Al-Gazali type"
+            DisorderType:
+              type: string
+              example: "Disease"
+            DisorderGroup:
+              type: string
+              example: "Disorder"
+  required:
+    - ORPHAcode

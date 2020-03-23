@@ -1,0 +1,40 @@
+en_product9_prev:
+  type: object
+  properties:
+    ORPHAcode:
+      type: string
+      example: "166024"
+    ExpertLink:
+      type: string
+      example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024"
+    Name:
+      type: string
+      example: "Multiple epiphyseal dysplasia, Al-Gazali type"
+    DisorderType:
+      type: string
+      example: "Disease"
+    Prevalence:
+      type: array
+      items:
+        type: string
+        example: [{'Source': '11389160[PMID]_9689990[PMID]_ [EXPERT]', 'PrevalenceType': 'Cases/families', 'PrevalenceQualification': 'Case', 'PrevalenceClass': None, 'ValMoy': '4.0', 'PrevalenceGeographic': 'Worldwide', 'PrevalenceValidationStatus': 'Validated'}, {'Source': 'ORPHANET_11389160[PMID]_9689990[PMID]', 'PrevalenceType': 'Point prevalence', 'PrevalenceQualification': 'Class only', 'PrevalenceClass': '<1 / 1 000 000', 'ValMoy': '0.0', 'PrevalenceGeographic': 'Worldwide', 'PrevalenceValidationStatus': 'Validated'}]
+        Source:
+          type: string
+          example: "11389160[PMID]_9689990[PMID]_ [EXPERT]"
+        PrevalenceType:
+          type: string
+          example: "Cases/families"
+        PrevalenceQualification:
+          type: string
+          example: "Case"
+        ValMoy:
+          type: string
+          example: "4.0"
+        PrevalenceGeographic:
+          type: string
+          example: "Worldwide"
+        PrevalenceValidationStatus:
+          type: string
+          example: "Validated"
+  required:
+    - ORPHAcode
