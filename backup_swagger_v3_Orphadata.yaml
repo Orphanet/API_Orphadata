@@ -109,8 +109,8 @@ paths:
           format: int32
       - name: language
         in: path
-        description: Specify the language in the list supported by Orphanet (CZ DE
-          EN ES FR IT NL PL PT)
+        description: Specify the language in the list supported by Orphanet (CS, DE,
+          EN, ES, FR, IT, NL, PL, PT)
         required: true
         style: simple
         explode: false
@@ -203,8 +203,8 @@ paths:
           format: int32
       - name: language
         in: path
-        description: Specify the language in the list supported by Orphanet (CZ DE
-          EN ES FR IT NL PL PT)
+        description: Specify the language in the list supported by Orphanet (CS, DE,
+          EN, ES, FR, IT, NL, PL, PT)
         required: true
         style: simple
         explode: false
@@ -260,8 +260,8 @@ paths:
           format: int32
       - name: language
         in: path
-        description: Specify the language in the list supported by Orphanet (CZ DE
-          EN ES FR IT NL PL PT)
+        description: Specify the language in the list supported by Orphanet (CS, DE,
+          EN, ES, FR, IT, NL, PL, PT)
         required: true
         style: simple
         explode: false
@@ -317,8 +317,8 @@ paths:
           format: int32
       - name: language
         in: path
-        description: Specify the language in the list supported by Orphanet (CZ DE
-          EN ES FR IT NL PL PT)
+        description: Specify the language in the list supported by Orphanet (CS, DE,
+          EN, ES, FR, IT, NL, PL, PT)
         required: true
         style: simple
         explode: false
@@ -731,7 +731,7 @@ components:
     language:
       name: language
       in: path
-      description: Specify the language in the list supported by Orphanet (CZ DE EN
+      description: Specify the language in the list supported by Orphanet (CS DE EN
         ES FR IT NL PL PT)
       required: true
       style: simple
