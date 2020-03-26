@@ -157,7 +157,7 @@ def hierarchy_by_orphacode(orphacode):  # noqa: E501
     """
     es = config.elastic_server
 
-    index = "en_product3_146"
+    index = "en_product3_*"
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
@@ -165,7 +165,8 @@ def hierarchy_by_orphacode(orphacode):  # noqa: E501
     # print(response)
 
     try:
-        response = response["hits"]["hits"][0]["_source"]
+        response = [elem["_source"] for elem in response["hits"]["hits"]]
+
     except KeyError:
         response = "404"
         print(response)
