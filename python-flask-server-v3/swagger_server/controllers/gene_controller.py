@@ -20,7 +20,7 @@ def gene_by_symbol(symbol):  # noqa: E501
 
     index = "new_product6_04032020_gene"
 
-    query = "{\"query\": {\"match\": {\"Symbol\": " + symbol.upper() + "}}}"
+    query = "{\"query\": {\"match\": {\"Symbol\": \"" + symbol.upper() + "\"}}}"
 
     response = es.search(index=index, body=query)
     print(response)
