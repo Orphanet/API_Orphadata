@@ -5,20 +5,20 @@ from __future__ import absolute_import
 from flask import json
 from six import BytesIO
 
-from swagger_server.models.product1 import Product1  # noqa: E501
+from swagger_server.models.product6_gene import Product6Gene  # noqa: E501
 from swagger_server.test import BaseTestCase
 
 
-class TestProduct1Controller(BaseTestCase):
-    """Product1Controller integration test stubs"""
+class TestGeneController(BaseTestCase):
+    """GeneController integration test stubs"""
 
-    def test_disorder_by_orphacode(self):
-        """Test case for disorder_by_orphacode
+    def test_gene_by_symbol(self):
+        """Test case for gene_by_symbol
 
-        Disorder by ORPHAcode for product 1
+        Gene by gene symbol with associated rare disorder
         """
         response = self.client.open(
-            '/product1/orphacode/{orphacode}/{language}'.format(orphacode=1, language='language_example'),
+            '/gene/symbol/{symbol}'.format(symbol='symbol_example'),
             method='GET')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))

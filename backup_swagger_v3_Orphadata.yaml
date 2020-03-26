@@ -16,12 +16,20 @@ externalDocs:
 servers:
 - url: /
   description: URL for Orphadata's API server
+security:
+- UserSecurity: []
+- AdminSecurity: []
 tags:
 - name: disorder
-  description: Full list of API operation
+  description: Full list of API operation for disorders
   externalDocs:
     description: Disorder or Disease object according to Orphanet Ontology
     url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
+- name: gene
+  description: Full list of API operation for genes
+  externalDocs:
+    description: Gene referenced by Orphanet
+    url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C16612
 - name: orphaclassif
   description: Hierarchical classification
   externalDocs:
@@ -53,23 +61,39 @@ paths:
       tags:
       - disorder
       - orphaclassif
-      summary: Hierarchical classification of disorder by ORPHAcode
-      description: Query one disorder by its ORPHAcode and gives its Orphanet classification
+      summary: Hierarchical classification of disorder by ORPHAcode in all classifications
+      description: Query one disorder by its ORPHAcode and gives the list of occurences in Orphanet's classifications with parents and childs disorder ORPHAcode
         number, the list of its children and parents.
       operationId: hierarchy_by_orphacode
       parameters:
-      - name: orphacode
-        in: path
-        description: The ORPHAcode is a unique identifier to reference an Orphanet's
-          concept
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
-          format: int32
+      - $ref: "#/components/parameters/orphacode"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/product3_classification_list"
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.disorder_controller
+  /orphaclassif/orphacode/{orphacode}/hchid/{hchid}:
+    get:
+      tags:
+      - disorder
+      - orphaclassif
+      summary: Hierarchical classification of disorder by ORPHAcode in selected classification
+      description: Query one disorder by its ORPHAcode and gives the list of parents and childs disorder in the selected Orphanet's classification
+      operationId: hierarchy_id_by_orphacode
+      parameters:
+      - $ref: "#/components/parameters/orphacode"
+      - $ref: "#/components/parameters/hchid"
       responses:
         "200":
           description: Successful operation
@@ -95,38 +119,8 @@ paths:
       description: Access every information related to a disorder object by its ORPHAcode
       operationId: disorder_by_orphacode
       parameters:
-      - name: orphacode
-        in: path
-        description: The ORPHAcode is a unique identifier to reference an Orphanet's
-          concept
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
-          format: int32
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          default: EN
-          enum:
-          - CZ
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+      - $ref: "#/components/parameters/orphacode"
+      - $ref: "#/components/parameters/language"
       responses:
         "200":
           description: Successful operation
@@ -152,18 +146,7 @@ paths:
       description: Access every information related to a disorder object by its ORPHAcode
       operationId: gene_by_disorder_orphacode
       parameters:
-      - name: orphacode
-        in: path
-        description: The ORPHAcode is a unique identifier to reference an Orphanet's
-          concept
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
-          format: int32
+      - $ref: "#/components/parameters/orphacode"
       responses:
         "200":
           description: Successful operation
@@ -189,38 +172,8 @@ paths:
       description: Access every information related to a disorder object by its ORPHAcode
       operationId: phenotype_by_orphacode
       parameters:
-      - name: orphacode
-        in: path
-        description: The ORPHAcode is a unique identifier to reference an Orphanet's
-          concept
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
-          format: int32
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          default: EN
-          enum:
-          - CZ
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+      - $ref: "#/components/parameters/orphacode"
+      - $ref: "#/components/parameters/language"
       responses:
         "200":
           description: Successful operation
@@ -246,38 +199,8 @@ paths:
       description: Access every information related to a disorder object by its ORPHAcode
       operationId: epidemiology_by_orphacode
       parameters:
-      - name: orphacode
-        in: path
-        description: The ORPHAcode is a unique identifier to reference an Orphanet's
-          concept
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
-          format: int32
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          default: EN
-          enum:
-          - CZ
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+      - $ref: "#/components/parameters/orphacode"
+      - $ref: "#/components/parameters/language"
       responses:
         "200":
           description: Successful operation
@@ -303,38 +226,8 @@ paths:
       description: Access every information related to a disorder object by its ORPHAcode
       operationId: age_by_orphacode
       parameters:
-      - name: orphacode
-        in: path
-        description: The ORPHAcode is a unique identifier to reference an Orphanet's
-          concept
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
-          format: int32
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-          default: EN
-          enum:
-          - CZ
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+      - $ref: "#/components/parameters/orphacode"
+      - $ref: "#/components/parameters/language"
       responses:
         "200":
           description: Successful operation
@@ -351,7 +244,41 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.disorder_controller
+  /gene/symbol/{symbol}:
+    get:
+      tags:
+      - gene
+      summary: Gene by gene symbol with associated rare disorder
+      description: Access every information related to a gene by its symbol
+      operationId: gene_by_symbol
+      parameters:
+      - $ref: "#/components/parameters/symbol"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/product6_gene"
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.gene_controller
 components:
+  securitySchemes:
+    UserSecurity:
+      type: apiKey
+      in: header
+      name: SIMPLE-API-KEY
+    AdminSecurity:
+      type: apiKey
+      in: header
+      name: ADMIN-API-KEY
   schemas:
     product1:
       type: object
@@ -431,6 +358,10 @@ components:
                 example: "Stickler syndrome type 3 is a rare, genetic, multiple congenital anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism (midface hypoplasia, depressed nasal bridge, small nose with upturned tip, cleft palate, Pierre Robin sequence), bilateral, pronounced sensorineural hearing loss, and skeletal/joint anomalies (including spondyloepiphyseal dysplasia, arthralgia/arthropathy), in the absence of ocular abnormalities."
       required:
         - ORPHAcode
+    product3_classification_list:
+      type: array
+      items:
+        $ref: "#/components/schemas/product3_classification"
     product3_classification:
       type: object
       properties:
@@ -715,6 +646,38 @@ components:
     default:
       description: Unknown internal error
   parameters:
+    hchid:
+      name: hchid
+      in: path
+      description: The hierarchy ID (hchID) is a number which refers to an Orphanet classification
+      required: true
+      style: simple
+      explode: false
+      schema:
+        minimum: 0
+        exclusiveMinimum: true
+        type: integer
+    language:
+      name: language
+      in: path
+      description: Specify the language in the list supported by Orphanet (CS, DE, EN,
+        ES, FR, IT, NL, PL, PT)
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        default: EN
+        enum:
+        - CS
+        - DE
+        - EN
+        - ES
+        - FR
+        - IT
+        - NL
+        - PL
+        - PT
     orphacode:
       name: orphacode
       in: path
@@ -728,25 +691,12 @@ components:
         exclusiveMinimum: true
         type: integer
         format: int32
-    language:
-      name: language
+    symbol:
+      name: symbol
       in: path
-      description: Specify the language in the list supported by Orphanet (CS DE EN
-        ES FR IT NL PL PT)
+      description: The symbol is an identifier to reference a gene
       required: true
       style: simple
       explode: false
       schema:
         type: string
-        default: EN
-        enum:
-        - CZ
-        - DE
-        - EN
-        - ES
-        - FR
-        - IT
-        - NL
-        - PL
-        - PT
-

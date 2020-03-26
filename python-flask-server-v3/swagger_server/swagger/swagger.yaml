@@ -16,12 +16,20 @@ externalDocs:
 servers:
 - url: /
   description: URL for Orphadata's API server
+security:
+- UserSecurity: []
+- AdminSecurity: []
 tags:
 - name: disorder
-  description: Full list of API operation
+  description: Full list of API operation for disorders
   externalDocs:
     description: Disorder or Disease object according to Orphanet Ontology
     url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
+- name: gene
+  description: Full list of API operation for genes
+  externalDocs:
+    description: Gene referenced by Orphanet
+    url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C16612
 - name: orphaclassif
   description: Hierarchical classification
   externalDocs:
@@ -53,9 +61,10 @@ paths:
       tags:
       - disorder
       - orphaclassif
-      summary: Hierarchical classification of disorder by ORPHAcode
-      description: Query one disorder by its ORPHAcode and gives its Orphanet classification
-        number, the list of its children and parents.
+      summary: Hierarchical classification of disorder by ORPHAcode in all classifications
+      description: Query one disorder by its ORPHAcode and gives the list of occurences
+        in Orphanet's classifications with parents and childs disorder ORPHAcode number,
+        the list of its children and parents.
       operationId: hierarchy_by_orphacode
       parameters:
       - name: orphacode
@@ -76,7 +85,56 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/product3_classification"
+                $ref: '#/components/schemas/product3_classification_list'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.disorder_controller
+  /orphaclassif/orphacode/{orphacode}/hchid/{hchid}:
+    get:
+      tags:
+      - disorder
+      - orphaclassif
+      summary: Hierarchical classification of disorder by ORPHAcode in selected classification
+      description: Query one disorder by its ORPHAcode and gives the list of parents
+        and childs disorder in the selected Orphanet's classification
+      operationId: hierarchy_id_by_orphacode
+      parameters:
+      - name: orphacode
+        in: path
+        description: The ORPHAcode is a unique identifier to reference an Orphanet's
+          concept
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+          format: int32
+      - name: hchid
+        in: path
+        description: The hierarchy ID (hchID) is a number which refers to an Orphanet
+          classification
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product3_classification'
         "403":
           description: Access denied
         "404":
@@ -109,8 +167,8 @@ paths:
           format: int32
       - name: language
         in: path
-        description: Specify the language in the list supported by Orphanet (CZ DE
-          EN ES FR IT NL PL PT)
+        description: Specify the language in the list supported by Orphanet (CS, DE,
+          EN, ES, FR, IT, NL, PL, PT)
         required: true
         style: simple
         explode: false
@@ -118,7 +176,7 @@ paths:
           type: string
           default: EN
           enum:
-          - CZ
+          - CS
           - DE
           - EN
           - ES
@@ -133,7 +191,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/product1"
+                $ref: '#/components/schemas/product1'
         "403":
           description: Access denied
         "404":
@@ -170,7 +228,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/product6"
+                $ref: '#/components/schemas/product6'
         "403":
           description: Access denied
         "404":
@@ -203,8 +261,8 @@ paths:
           format: int32
       - name: language
         in: path
-        description: Specify the language in the list supported by Orphanet (CZ DE
-          EN ES FR IT NL PL PT)
+        description: Specify the language in the list supported by Orphanet (CS, DE,
+          EN, ES, FR, IT, NL, PL, PT)
         required: true
         style: simple
         explode: false
@@ -212,7 +270,7 @@ paths:
           type: string
           default: EN
           enum:
-          - CZ
+          - CS
           - DE
           - EN
           - ES
@@ -227,7 +285,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/product4_HPO"
+                $ref: '#/components/schemas/product4_HPO'
         "403":
           description: Access denied
         "404":
@@ -260,8 +318,8 @@ paths:
           format: int32
       - name: language
         in: path
-        description: Specify the language in the list supported by Orphanet (CZ DE
-          EN ES FR IT NL PL PT)
+        description: Specify the language in the list supported by Orphanet (CS, DE,
+          EN, ES, FR, IT, NL, PL, PT)
         required: true
         style: simple
         explode: false
@@ -269,7 +327,7 @@ paths:
           type: string
           default: EN
           enum:
-          - CZ
+          - CS
           - DE
           - EN
           - ES
@@ -284,7 +342,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/product9_prev"
+                $ref: '#/components/schemas/product9_prev'
         "403":
           description: Access denied
         "404":
@@ -317,8 +375,8 @@ paths:
           format: int32
       - name: language
         in: path
-        description: Specify the language in the list supported by Orphanet (CZ DE
-          EN ES FR IT NL PL PT)
+        description: Specify the language in the list supported by Orphanet (CS, DE,
+          EN, ES, FR, IT, NL, PL, PT)
         required: true
         style: simple
         explode: false
@@ -326,7 +384,7 @@ paths:
           type: string
           default: EN
           enum:
-          - CZ
+          - CS
           - DE
           - EN
           - ES
@@ -341,7 +399,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/product9_ages"
+                $ref: '#/components/schemas/product9_ages'
         "403":
           description: Access denied
         "404":
@@ -351,9 +409,43 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.disorder_controller
+  /gene/symbol/{symbol}:
+    get:
+      tags:
+      - gene
+      summary: Gene by gene symbol with associated rare disorder
+      description: Access every information related to a gene by its symbol
+      operationId: gene_by_symbol
+      parameters:
+      - name: symbol
+        in: path
+        description: The symbol is an identifier to reference a gene
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product6_gene'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.gene_controller
 components:
   schemas:
     product1:
+      required:
+      - ORPHAcode
       type: object
       properties:
         ORPHAcode:
@@ -361,82 +453,101 @@ components:
           example: "166100"
         ExpertLink:
           type: string
-          example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166100"
+          example: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166100
         Name:
           type: string
-          example: "Autosomal dominant otospondylomegaepiphyseal dysplasia"
+          example: Autosomal dominant otospondylomegaepiphyseal dysplasia
         DisorderFlag:
           type: array
           items:
-            type: object
-            properties:
-              Label:
-                type: string
-                example: "on-line"
+            $ref: '#/components/schemas/product1_DisorderFlag'
         Synonym:
           type: array
           items:
             type: string
-            example: "['AD OSMED', 'Stickler syndrome type 3', 'Stickler syndrome, non-ocular type']"
+            example: '[''AD OSMED'', ''Stickler syndrome type 3'', ''Stickler syndrome,
+              non-ocular type'']'
         DisorderType:
           type: string
-          example: "Malformation syndrome"
+          example: Malformation syndrome
         DisorderNature:
           type: string
-          example: "Clinical entity"
+          example: Clinical entity
         DisorderGroup:
           type: string
-          example: "Disorder"
+          example: Disorder
         ExternalReference:
           type: array
           items:
-            type: object
-            properties:
-              Source:
-                type: string
-                example: "MeSH"
-              Reference:
-                type: string
-                example: "C537494"
-              DisorderMappingRelation:
-                type: string
-                example: "E (exact mapping (the terms and the concepts are equivalent))"
-              DisorderMappingICDRelation:
-                type: string
-                example: "None"
-              DisorderMappingValidationStatus:
-                type: string
-                example: "Validated"
+            $ref: '#/components/schemas/product1_ExternalReference'
         DisorderDisorderAssociation:
           type: array
           items:
-            type: object
-            properties:
-              Disorder1:
-                type: string
-                example: "None"
-              Disorder2:
-                type: string
-                example: "Weissenbacher-Zweymuller syndrome"
-              DisorderDisorderAssociationType:
-                type: string
-                example: "Moved to"
+            $ref: '#/components/schemas/product1_DisorderDisorderAssociation'
         TextualInformation:
           type: array
           items:
-            type: object
-            properties:
-              Definition:
-                type: string
-                example: "Stickler syndrome type 3 is a rare, genetic, multiple congenital anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism (midface hypoplasia, depressed nasal bridge, small nose with upturned tip, cleft palate, Pierre Robin sequence), bilateral, pronounced sensorineural hearing loss, and skeletal/joint anomalies (including spondyloepiphyseal dysplasia, arthralgia/arthropathy), in the absence of ocular abnormalities."
-      required:
-        - ORPHAcode
+            $ref: '#/components/schemas/product1_TextualInformation'
+      example:
+        DisorderFlag:
+        - Label: on-line
+        - Label: on-line
+        ORPHAcode: "166100"
+        ExpertLink: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166100
+        ExternalReference:
+        - DisorderMappingICDRelation: None
+          Reference: C537494
+          DisorderMappingValidationStatus: Validated
+          Source: MeSH
+          DisorderMappingRelation: E (exact mapping (the terms and the concepts are
+            equivalent))
+        - DisorderMappingICDRelation: None
+          Reference: C537494
+          DisorderMappingValidationStatus: Validated
+          Source: MeSH
+          DisorderMappingRelation: E (exact mapping (the terms and the concepts are
+            equivalent))
+        DisorderDisorderAssociation:
+        - DisorderDisorderAssociationType: Moved to
+          Disorder1: None
+          Disorder2: Weissenbacher-Zweymuller syndrome
+        - DisorderDisorderAssociationType: Moved to
+          Disorder1: None
+          Disorder2: Weissenbacher-Zweymuller syndrome
+        DisorderNature: Clinical entity
+        DisorderGroup: Disorder
+        Synonym:
+        - '[''AD OSMED'', ''Stickler syndrome type 3'', ''Stickler syndrome, non-ocular
+          type'']'
+        - '[''AD OSMED'', ''Stickler syndrome type 3'', ''Stickler syndrome, non-ocular
+          type'']'
+        TextualInformation:
+        - Definition: Stickler syndrome type 3 is a rare, genetic, multiple congenital
+            anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism
+            (midface hypoplasia, depressed nasal bridge, small nose with upturned
+            tip, cleft palate, Pierre Robin sequence), bilateral, pronounced sensorineural
+            hearing loss, and skeletal/joint anomalies (including spondyloepiphyseal
+            dysplasia, arthralgia/arthropathy), in the absence of ocular abnormalities.
+        - Definition: Stickler syndrome type 3 is a rare, genetic, multiple congenital
+            anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism
+            (midface hypoplasia, depressed nasal bridge, small nose with upturned
+            tip, cleft palate, Pierre Robin sequence), bilateral, pronounced sensorineural
+            hearing loss, and skeletal/joint anomalies (including spondyloepiphyseal
+            dysplasia, arthralgia/arthropathy), in the absence of ocular abnormalities.
+        DisorderType: Malformation syndrome
+        Name: Autosomal dominant otospondylomegaepiphyseal dysplasia
+    product3_classification_list:
+      type: array
+      items:
+        $ref: '#/components/schemas/product3_classification'
     product3_classification:
+      required:
+      - ORPHAcode
       type: object
       properties:
         name:
           type: string
-          example: "Familial isolated arrhythmogenic right ventricular dysplasia"
+          example: Familial isolated arrhythmogenic right ventricular dysplasia
         ORPHAcode:
           type: string
           example: "217656"
@@ -447,15 +558,25 @@ components:
           type: array
           items:
             type: string
-            example: "['247']"
+            example: '[''247'']'
         childs:
           type: array
           items:
             type: string
-            example: "['293888', '293899', '293910']"
-      required:
-        - ORPHAcode
+            example: '[''293888'', ''293899'', ''293910'']'
+      example:
+        ORPHAcode: "217656"
+        hch_id: "146"
+        name: Familial isolated arrhythmogenic right ventricular dysplasia
+        childs:
+        - '[''293888'', ''293899'', ''293910'']'
+        - '[''293888'', ''293899'', ''293910'']'
+        parents:
+        - '[''247'']'
+        - '[''247'']'
     product4_HPO:
+      required:
+      - ORPHAcode
       type: object
       properties:
         ORPHAcode:
@@ -463,30 +584,28 @@ components:
           example: "827"
         Name:
           type: string
-          example: "Stargardt disease"
+          example: Stargardt disease
         HPODisorderAssociation:
           type: array
           items:
-            type: object
-            properties:
-              HPO:
-                type: object
-                properties:
-                  HPOId:
-                    type: string
-                    example: "HP:0007663"
-                  HPOTerm:
-                    type: string
-                    example: "Reduced visual acuity"
-              HPOFrequency:
-                type: string
-                example: "Obligate (100%)"
-              DiagnosticCriteria:
-                type: string
-                example: "None"
-      required:
-        - ORPHAcode
+            $ref: '#/components/schemas/product4_HPO_HPODisorderAssociation'
+      example:
+        ORPHAcode: "827"
+        HPODisorderAssociation:
+        - HPO:
+            HPOTerm: Reduced visual acuity
+            HPOId: HP:0007663
+          HPOFrequency: Obligate (100%)
+          DiagnosticCriteria: None
+        - HPO:
+            HPOTerm: Reduced visual acuity
+            HPOId: HP:0007663
+          HPOFrequency: Obligate (100%)
+          DiagnosticCriteria: None
+        Name: Stargardt disease
     product6:
+      required:
+      - ORPHAcode
       type: object
       properties:
         ORPHAcode:
@@ -494,145 +613,137 @@ components:
           example: "166024"
         ExpertLink:
           type: string
-          example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024"
+          example: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
         Name:
           type: string
-          example: "Multiple epiphyseal dysplasia, Al-Gazali type"
+          example: Multiple epiphyseal dysplasia, Al-Gazali type
         DisorderType:
           type: string
-          example: "Disease"
+          example: Disease
         DisorderGroup:
           type: string
-          example: "Disorder"
+          example: Disorder
         DisorderGeneAssociation:
           type: array
           items:
-            type: object
-            properties:
-              SourceOfValidation:
-                type: string
-                example: "22587682[PMID]"
-              Gene:
-                type: object
-                properties:
-                  Name:
-                    type: string
-                    example: "kinesin family member 7"
-                  Symbol:
-                    type: string
-                    example: "KIF7"
-                  Synonym:
-                    type: array
-                    items:
-                      type: string
-                      example: "['JBTS12']"
-                  GeneType:
-                    type: string
-                    example: "gene with protein product"
-                  ExternalReference:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        Source:
-                          type: string
-                          example: "Ensembl"
-                        Reference:
-                          type: string
-                          example: "ENSG00000166813"
-                  Locus:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        GeneLocus:
-                          type: string
-                          example: "15q26.1"
-                        LocusKey:
-                          type: string
-                          example: "1"
-              DisorderGeneAssociationType:
-                type: string
-                example: "Disease-causing germline mutation(s) in"
-              DisorderGeneAssociationStatus:
-                type: string
-                example: "Assessed"
-      required:
-        - ORPHAcode
+            $ref: '#/components/schemas/product6_DisorderGeneAssociation'
+      example:
+        DisorderGeneAssociation:
+        - DisorderGeneAssociationStatus: Assessed
+          Gene:
+            ExternalReference:
+            - Reference: ENSG00000166813
+              Source: Ensembl
+            - Reference: ENSG00000166813
+              Source: Ensembl
+            Symbol: KIF7
+            Synonym:
+            - '[''JBTS12'']'
+            - '[''JBTS12'']'
+            GeneType: gene with protein product
+            Locus:
+            - GeneLocus: 15q26.1
+              LocusKey: "1"
+            - GeneLocus: 15q26.1
+              LocusKey: "1"
+            Name: kinesin family member 7
+          DisorderGeneAssociationType: Disease-causing germline mutation(s) in
+          SourceOfValidation: 22587682[PMID]
+        - DisorderGeneAssociationStatus: Assessed
+          Gene:
+            ExternalReference:
+            - Reference: ENSG00000166813
+              Source: Ensembl
+            - Reference: ENSG00000166813
+              Source: Ensembl
+            Symbol: KIF7
+            Synonym:
+            - '[''JBTS12'']'
+            - '[''JBTS12'']'
+            GeneType: gene with protein product
+            Locus:
+            - GeneLocus: 15q26.1
+              LocusKey: "1"
+            - GeneLocus: 15q26.1
+              LocusKey: "1"
+            Name: kinesin family member 7
+          DisorderGeneAssociationType: Disease-causing germline mutation(s) in
+          SourceOfValidation: 22587682[PMID]
+        ORPHAcode: "166024"
+        ExpertLink: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
+        DisorderGroup: Disorder
+        DisorderType: Disease
+        Name: Multiple epiphyseal dysplasia, Al-Gazali type
     product6_gene:
+      required:
+      - Symbol
       type: object
       properties:
         Name:
           type: string
-          example: "kinesin family member 7"
+          example: kinesin family member 7
         Symbol:
           type: string
-          example: "KIF7"
+          example: KIF7
         Synonym:
           type: array
           items:
             type: string
-            example: "['JBTS12']"
+            example: '[''JBTS12'']'
         GeneType:
           type: string
-          example: "gene with protein product"
+          example: gene with protein product
         ExternalReference:
           type: array
           items:
-            type: object
-            properties:
-              Source:
-                type: string
-                example: "Ensembl"
-              Reference:
-                type: string
-                example: "ENSG00000166813"
+            $ref: '#/components/schemas/product6_Gene_ExternalReference'
         Locus:
           type: array
           items:
-            type: object
-            properties:
-              GeneLocus:
-                type: string
-                example: "15q26.1"
-              LocusKey:
-                type: string
-                example: "1"
+            $ref: '#/components/schemas/product6_Gene_Locus'
         GeneDisorderAssociation:
           type: array
           items:
-            type: object
-            properties:
-              SourceOfValidation:
-                type: string
-                example: "22587682[PMID]"
-              DisorderGeneAssociationType:
-                type: string
-                example: "Disease-causing germline mutation(s) in"
-              DisorderGeneAssociationStatus:
-                type: string
-                example: "Assessed"
-              disorder:
-                type: object
-                properties:
-                  ORPHAcode:
-                    type: string
-                    example: "166024"
-                  ExpertLink:
-                    type: string
-                    example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024"
-                  Name:
-                    type: string
-                    example: "Multiple epiphyseal dysplasia, Al-Gazali type"
-                  DisorderType:
-                    type: string
-                    example: "Disease"
-                  DisorderGroup:
-                    type: string
-                    example: "Disorder"
-      required:
-        - Symbol
+            $ref: '#/components/schemas/product6_gene_GeneDisorderAssociation'
+      example:
+        ExternalReference:
+        - Reference: ENSG00000166813
+          Source: Ensembl
+        - Reference: ENSG00000166813
+          Source: Ensembl
+        Symbol: KIF7
+        GeneDisorderAssociation:
+        - DisorderGeneAssociationStatus: Assessed
+          disorder:
+            ORPHAcode: "166024"
+            ExpertLink: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
+            DisorderGroup: Disorder
+            DisorderType: Disease
+            Name: Multiple epiphyseal dysplasia, Al-Gazali type
+          DisorderGeneAssociationType: Disease-causing germline mutation(s) in
+          SourceOfValidation: 22587682[PMID]
+        - DisorderGeneAssociationStatus: Assessed
+          disorder:
+            ORPHAcode: "166024"
+            ExpertLink: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
+            DisorderGroup: Disorder
+            DisorderType: Disease
+            Name: Multiple epiphyseal dysplasia, Al-Gazali type
+          DisorderGeneAssociationType: Disease-causing germline mutation(s) in
+          SourceOfValidation: 22587682[PMID]
+        Synonym:
+        - '[''JBTS12'']'
+        - '[''JBTS12'']'
+        GeneType: gene with protein product
+        Locus:
+        - GeneLocus: 15q26.1
+          LocusKey: "1"
+        - GeneLocus: 15q26.1
+          LocusKey: "1"
+        Name: kinesin family member 7
     product9_ages:
+      required:
+      - ORPHAcode
       type: object
       properties:
         ORPHAcode:
@@ -640,31 +751,45 @@ components:
           example: "58"
         ExpertLink:
           type: string
-          example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58"
+          example: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58
         Name:
           type: string
-          example: "Alexander disease"
+          example: Alexander disease
         DisorderType:
           type: string
-          example: "Disease"
+          example: Disease
         AverageAgeOfOnset:
           type: array
           items:
             type: string
-            example: "['All ages']"
+            example: '[''All ages'']'
         AverageAgeOfDeath:
           type: array
           items:
             type: string
-            example: "['any age']"
+            example: '[''any age'']'
         TypeOfInheritance:
           type: array
           items:
             type: string
-            example: "['Autosomal dominant']"
-      required:
-        - ORPHAcode
+            example: '[''Autosomal dominant'']'
+      example:
+        AverageAgeOfOnset:
+        - '[''All ages'']'
+        - '[''All ages'']'
+        AverageAgeOfDeath:
+        - '[''any age'']'
+        - '[''any age'']'
+        ORPHAcode: "58"
+        ExpertLink: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58
+        TypeOfInheritance:
+        - '[''Autosomal dominant'']'
+        - '[''Autosomal dominant'']'
+        DisorderType: Disease
+        Name: Alexander disease
     product9_prev:
+      required:
+      - ORPHAcode
       type: object
       properties:
         ORPHAcode:
@@ -672,41 +797,314 @@ components:
           example: "166024"
         ExpertLink:
           type: string
-          example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024"
+          example: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
         Name:
           type: string
-          example: "Multiple epiphyseal dysplasia, Al-Gazali type"
+          example: Multiple epiphyseal dysplasia, Al-Gazali type
         DisorderType:
           type: string
-          example: "Disease"
+          example: Disease
         Prevalence:
           type: array
           items:
-            type: object
-            properties:
-              Source:
-                type: string
-                example: "11389160[PMID]_9689990[PMID]_ [EXPERT]"
-              PrevalenceType:
-                type: string
-                example: "Cases/families"
-              PrevalenceQualification:
-                type: string
-                example: "Case"
-              PrevalenceClass:
-                type: string
-                example: "None"
-              ValMoy:
-                type: string
-                example: "4.0"
-              PrevalenceGeographic:
-                type: string
-                example: "Worldwide"
-              PrevalenceValidationStatus:
-                type: string
-                example: "Validated"
-      required:
-        - ORPHAcode
+            $ref: '#/components/schemas/product9_prev_Prevalence'
+      example:
+        ORPHAcode: "166024"
+        ExpertLink: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
+        Prevalence:
+        - PrevalenceGeographic: Worldwide
+          PrevalenceType: Cases/families
+          PrevalenceQualification: Case
+          PrevalenceValidationStatus: Validated
+          PrevalenceClass: None
+          Source: 11389160[PMID]_9689990[PMID]_ [EXPERT]
+          ValMoy: "4.0"
+        - PrevalenceGeographic: Worldwide
+          PrevalenceType: Cases/families
+          PrevalenceQualification: Case
+          PrevalenceValidationStatus: Validated
+          PrevalenceClass: None
+          Source: 11389160[PMID]_9689990[PMID]_ [EXPERT]
+          ValMoy: "4.0"
+        DisorderType: Disease
+        Name: Multiple epiphyseal dysplasia, Al-Gazali type
+    product1_DisorderFlag:
+      type: object
+      properties:
+        Label:
+          type: string
+          example: on-line
+      example:
+        Label: on-line
+    product1_ExternalReference:
+      type: object
+      properties:
+        Source:
+          type: string
+          example: MeSH
+        Reference:
+          type: string
+          example: C537494
+        DisorderMappingRelation:
+          type: string
+          example: E (exact mapping (the terms and the concepts are equivalent))
+        DisorderMappingICDRelation:
+          type: string
+          example: None
+        DisorderMappingValidationStatus:
+          type: string
+          example: Validated
+      example:
+        DisorderMappingICDRelation: None
+        Reference: C537494
+        DisorderMappingValidationStatus: Validated
+        Source: MeSH
+        DisorderMappingRelation: E (exact mapping (the terms and the concepts are
+          equivalent))
+    product1_DisorderDisorderAssociation:
+      type: object
+      properties:
+        Disorder1:
+          type: string
+          example: None
+        Disorder2:
+          type: string
+          example: Weissenbacher-Zweymuller syndrome
+        DisorderDisorderAssociationType:
+          type: string
+          example: Moved to
+      example:
+        DisorderDisorderAssociationType: Moved to
+        Disorder1: None
+        Disorder2: Weissenbacher-Zweymuller syndrome
+    product1_TextualInformation:
+      type: object
+      properties:
+        Definition:
+          type: string
+          example: Stickler syndrome type 3 is a rare, genetic, multiple congenital
+            anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism
+            (midface hypoplasia, depressed nasal bridge, small nose with upturned
+            tip, cleft palate, Pierre Robin sequence), bilateral, pronounced sensorineural
+            hearing loss, and skeletal/joint anomalies (including spondyloepiphyseal
+            dysplasia, arthralgia/arthropathy), in the absence of ocular abnormalities.
+      example:
+        Definition: Stickler syndrome type 3 is a rare, genetic, multiple congenital
+          anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism
+          (midface hypoplasia, depressed nasal bridge, small nose with upturned tip,
+          cleft palate, Pierre Robin sequence), bilateral, pronounced sensorineural
+          hearing loss, and skeletal/joint anomalies (including spondyloepiphyseal
+          dysplasia, arthralgia/arthropathy), in the absence of ocular abnormalities.
+    product4_HPO_HPO:
+      type: object
+      properties:
+        HPOId:
+          type: string
+          example: HP:0007663
+        HPOTerm:
+          type: string
+          example: Reduced visual acuity
+      example:
+        HPOTerm: Reduced visual acuity
+        HPOId: HP:0007663
+    product4_HPO_HPODisorderAssociation:
+      type: object
+      properties:
+        HPO:
+          $ref: '#/components/schemas/product4_HPO_HPO'
+        HPOFrequency:
+          type: string
+          example: Obligate (100%)
+        DiagnosticCriteria:
+          type: string
+          example: None
+      example:
+        HPO:
+          HPOTerm: Reduced visual acuity
+          HPOId: HP:0007663
+        HPOFrequency: Obligate (100%)
+        DiagnosticCriteria: None
+    product6_Gene_ExternalReference:
+      type: object
+      properties:
+        Source:
+          type: string
+          example: Ensembl
+        Reference:
+          type: string
+          example: ENSG00000166813
+      example:
+        Reference: ENSG00000166813
+        Source: Ensembl
+    product6_Gene_Locus:
+      type: object
+      properties:
+        GeneLocus:
+          type: string
+          example: 15q26.1
+        LocusKey:
+          type: string
+          example: "1"
+      example:
+        GeneLocus: 15q26.1
+        LocusKey: "1"
+    product6_Gene:
+      type: object
+      properties:
+        Name:
+          type: string
+          example: kinesin family member 7
+        Symbol:
+          type: string
+          example: KIF7
+        Synonym:
+          type: array
+          items:
+            type: string
+            example: '[''JBTS12'']'
+        GeneType:
+          type: string
+          example: gene with protein product
+        ExternalReference:
+          type: array
+          items:
+            $ref: '#/components/schemas/product6_Gene_ExternalReference'
+        Locus:
+          type: array
+          items:
+            $ref: '#/components/schemas/product6_Gene_Locus'
+      example:
+        ExternalReference:
+        - Reference: ENSG00000166813
+          Source: Ensembl
+        - Reference: ENSG00000166813
+          Source: Ensembl
+        Symbol: KIF7
+        Synonym:
+        - '[''JBTS12'']'
+        - '[''JBTS12'']'
+        GeneType: gene with protein product
+        Locus:
+        - GeneLocus: 15q26.1
+          LocusKey: "1"
+        - GeneLocus: 15q26.1
+          LocusKey: "1"
+        Name: kinesin family member 7
+    product6_DisorderGeneAssociation:
+      type: object
+      properties:
+        SourceOfValidation:
+          type: string
+          example: 22587682[PMID]
+        Gene:
+          $ref: '#/components/schemas/product6_Gene'
+        DisorderGeneAssociationType:
+          type: string
+          example: Disease-causing germline mutation(s) in
+        DisorderGeneAssociationStatus:
+          type: string
+          example: Assessed
+      example:
+        DisorderGeneAssociationStatus: Assessed
+        Gene:
+          ExternalReference:
+          - Reference: ENSG00000166813
+            Source: Ensembl
+          - Reference: ENSG00000166813
+            Source: Ensembl
+          Symbol: KIF7
+          Synonym:
+          - '[''JBTS12'']'
+          - '[''JBTS12'']'
+          GeneType: gene with protein product
+          Locus:
+          - GeneLocus: 15q26.1
+            LocusKey: "1"
+          - GeneLocus: 15q26.1
+            LocusKey: "1"
+          Name: kinesin family member 7
+        DisorderGeneAssociationType: Disease-causing germline mutation(s) in
+        SourceOfValidation: 22587682[PMID]
+    product6_gene_disorder:
+      type: object
+      properties:
+        ORPHAcode:
+          type: string
+          example: "166024"
+        ExpertLink:
+          type: string
+          example: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
+        Name:
+          type: string
+          example: Multiple epiphyseal dysplasia, Al-Gazali type
+        DisorderType:
+          type: string
+          example: Disease
+        DisorderGroup:
+          type: string
+          example: Disorder
+      example:
+        ORPHAcode: "166024"
+        ExpertLink: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
+        DisorderGroup: Disorder
+        DisorderType: Disease
+        Name: Multiple epiphyseal dysplasia, Al-Gazali type
+    product6_gene_GeneDisorderAssociation:
+      type: object
+      properties:
+        SourceOfValidation:
+          type: string
+          example: 22587682[PMID]
+        DisorderGeneAssociationType:
+          type: string
+          example: Disease-causing germline mutation(s) in
+        DisorderGeneAssociationStatus:
+          type: string
+          example: Assessed
+        disorder:
+          $ref: '#/components/schemas/product6_gene_disorder'
+      example:
+        DisorderGeneAssociationStatus: Assessed
+        disorder:
+          ORPHAcode: "166024"
+          ExpertLink: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
+          DisorderGroup: Disorder
+          DisorderType: Disease
+          Name: Multiple epiphyseal dysplasia, Al-Gazali type
+        DisorderGeneAssociationType: Disease-causing germline mutation(s) in
+        SourceOfValidation: 22587682[PMID]
+    product9_prev_Prevalence:
+      type: object
+      properties:
+        Source:
+          type: string
+          example: 11389160[PMID]_9689990[PMID]_ [EXPERT]
+        PrevalenceType:
+          type: string
+          example: Cases/families
+        PrevalenceQualification:
+          type: string
+          example: Case
+        PrevalenceClass:
+          type: string
+          example: None
+        ValMoy:
+          type: string
+          example: "4.0"
+        PrevalenceGeographic:
+          type: string
+          example: Worldwide
+        PrevalenceValidationStatus:
+          type: string
+          example: Validated
+      example:
+        PrevalenceGeographic: Worldwide
+        PrevalenceType: Cases/families
+        PrevalenceQualification: Case
+        PrevalenceValidationStatus: Validated
+        PrevalenceClass: None
+        Source: 11389160[PMID]_9689990[PMID]_ [EXPERT]
+        ValMoy: "4.0"
   responses:
     "403":
       description: Access denied
@@ -715,6 +1113,39 @@ components:
     default:
       description: Unknown internal error
   parameters:
+    hchid:
+      name: hchid
+      in: path
+      description: The hierarchy ID (hchID) is a number which refers to an Orphanet
+        classification
+      required: true
+      style: simple
+      explode: false
+      schema:
+        minimum: 0
+        exclusiveMinimum: true
+        type: integer
+    language:
+      name: language
+      in: path
+      description: Specify the language in the list supported by Orphanet (CS, DE,
+        EN, ES, FR, IT, NL, PL, PT)
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        default: EN
+        enum:
+        - CS
+        - DE
+        - EN
+        - ES
+        - FR
+        - IT
+        - NL
+        - PL
+        - PT
     orphacode:
       name: orphacode
       in: path
@@ -728,25 +1159,24 @@ components:
         exclusiveMinimum: true
         type: integer
         format: int32
-    language:
-      name: language
+    symbol:
+      name: symbol
       in: path
-      description: Specify the language in the list supported by Orphanet (CZ DE EN
-        ES FR IT NL PL PT)
+      description: The symbol is an identifier to reference a gene
       required: true
       style: simple
       explode: false
       schema:
         type: string
-        default: EN
-        enum:
-        - CZ
-        - DE
-        - EN
-        - ES
-        - FR
-        - IT
-        - NL
-        - PL
-        - PT
+  securitySchemes:
+    UserSecurity:
+      type: apiKey
+      name: SIMPLE-API-KEY
+      in: header
+      x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_UserSecurity
+    AdminSecurity:
+      type: apiKey
+      name: ADMIN-API-KEY
+      in: header
+      x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_AdminSecurity
 

@@ -1,14 +1,15 @@
-import json
-
 import connexion
-import elasticsearch
-import requests
 import six
-from swagger_server import config
 
+import config
+from swagger_server.models.product1 import Product1  # noqa: E501
+from swagger_server.models.product3_classification import Product3Classification  # noqa: E501
+from swagger_server.models.product3_classification_list import Product3ClassificationList  # noqa: E501
+from swagger_server.models.product4_hpo import Product4HPO  # noqa: E501
+from swagger_server.models.product6 import Product6  # noqa: E501
+from swagger_server.models.product9_ages import Product9Ages  # noqa: E501
+from swagger_server.models.product9_prev import Product9Prev  # noqa: E501
 from swagger_server import util
-from swagger_server import models
-from elasticsearch import Elasticsearch
 
 
 def age_by_orphacode(orphacode, language):  # noqa: E501
@@ -16,12 +17,12 @@ def age_by_orphacode(orphacode, language):  # noqa: E501
 
     Access every information related to a disorder object by its ORPHAcode # noqa: E501
 
-    :param orphacode: The ORPHAcode is a unique identifier to reference an Orphanet's concept
+    :param orphacode: The ORPHAcode is a unique identifier to reference an Orphanet&#x27;s concept
     :type orphacode: int
-    :param language: Specify the language in the list supported by Orphanet (EN, FR, ES, DE, IT, PT, NL, PL)
-    :type language: dict | bytes
+    :param language: Specify the language in the list supported by Orphanet (CS, DE, EN, ES, FR, IT, NL, PL, PT)
+    :type language: str
 
-    :rtype: None
+    :rtype: Product9Ages
     """
     es = config.elastic_server
 
@@ -49,12 +50,12 @@ def disorder_by_orphacode(orphacode, language):  # noqa: E501
 
     Access every information related to a disorder object by its ORPHAcode # noqa: E501
 
-    :param orphacode: The ORPHAcode is a unique identifier to reference an Orphanet's concept
+    :param orphacode: The ORPHAcode is a unique identifier to reference an Orphanet&#x27;s concept
     :type orphacode: int
-    :param language: Specify the language in the list supported by Orphanet (EN, FR, ES, DE, IT, PT, NL, PL)
-    :type language: dict | bytes
+    :param language: Specify the language in the list supported by Orphanet (CS, DE, EN, ES, FR, IT, NL, PL, PT)
+    :type language: str
 
-    :rtype: None
+    :rtype: Product1
     """
     es = config.elastic_server
 
@@ -83,12 +84,12 @@ def epidemiology_by_orphacode(orphacode, language):  # noqa: E501
 
     Access every information related to a disorder object by its ORPHAcode # noqa: E501
 
-    :param orphacode: The ORPHAcode is a unique identifier to reference an Orphanet's concept
+    :param orphacode: The ORPHAcode is a unique identifier to reference an Orphanet&#x27;s concept
     :type orphacode: int
-    :param language: Specify the language in the list supported by Orphanet (EN, FR, ES, DE, IT, PT, NL, PL)
-    :type language: dict | bytes
+    :param language: Specify the language in the list supported by Orphanet (CS, DE, EN, ES, FR, IT, NL, PL, PT)
+    :type language: str
 
-    :rtype: None
+    :rtype: Product9Prev
     """
     es = config.elastic_server
 
@@ -116,10 +117,10 @@ def gene_by_disorder_orphacode(orphacode):  # noqa: E501
 
     Access every information related to a disorder object by its ORPHAcode # noqa: E501
 
-    :param orphacode: The ORPHAcode is a unique identifier to reference an Orphanet's concept
+    :param orphacode: The ORPHAcode is a unique identifier to reference an Orphanet&#x27;s concept
     :type orphacode: int
 
-    :rtype: None
+    :rtype: Product6
     """
     es = config.elastic_server
 
@@ -145,18 +146,50 @@ def gene_by_disorder_orphacode(orphacode):  # noqa: E501
 
 
 def hierarchy_by_orphacode(orphacode):  # noqa: E501
-    """Hierarchical classification of disorder by ORPHAcode
+    """Hierarchical classification of disorder by ORPHAcode in all classifications
 
-    Query one disorder by its ORPHAcode and gives its Orphanet classification number, the list of its children and parents. # noqa: E501
+    Query one disorder by its ORPHAcode and gives the list of occurences in Orphanet&#x27;s classifications with parents and childs disorder ORPHAcode number, the list of its children and parents. # noqa: E501
 
-    :param orphacode: The ORPHAcode is a unique identifier to reference an Orphanet's concept
+    :param orphacode: The ORPHAcode is a unique identifier to reference an Orphanet&#x27;s concept
     :type orphacode: int
 
-    :rtype: None
+    :rtype: Product3ClassificationList
     """
     es = config.elastic_server
 
     index = "en_product3_146"
+
+    query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
+
+    response = es.search(index=index, body=query)
+    # print(response)
+
+    try:
+        response = response["hits"]["hits"][0]["_source"]
+    except KeyError:
+        response = "404"
+        print(response)
+    except IndexError:
+        response = "404"
+        print(response)
+    return response
+
+
+def hierarchy_id_by_orphacode(orphacode, hchid):  # noqa: E501
+    """Hierarchical classification of disorder by ORPHAcode in selected classification
+
+    Query one disorder by its ORPHAcode and gives the list of parents and childs disorder in the selected Orphanet&#x27;s classification # noqa: E501
+
+    :param orphacode: The ORPHAcode is a unique identifier to reference an Orphanet&#x27;s concept
+    :type orphacode: int
+    :param hchid: The hierarchy ID (hchID) is a number which refers to an Orphanet classification
+    :type hchid: int
+
+    :rtype: Product3Classification
+    """
+    es = config.elastic_server
+
+    index = "en_product3_{}".format(hchid)
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
@@ -179,12 +212,12 @@ def phenotype_by_orphacode(orphacode, language):  # noqa: E501
 
     Access every information related to a disorder object by its ORPHAcode # noqa: E501
 
-    :param orphacode: The ORPHAcode is a unique identifier to reference an Orphanet's concept
+    :param orphacode: The ORPHAcode is a unique identifier to reference an Orphanet&#x27;s concept
     :type orphacode: int
-    :param language: Specify the language in the list supported by Orphanet (EN, FR, ES, DE, IT, PT, NL, PL)
-    :type language: dict | bytes
+    :param language: Specify the language in the list supported by Orphanet (CS, DE, EN, ES, FR, IT, NL, PL, PT)
+    :type language: str
 
-    :rtype: None
+    :rtype: Product4HPO
     """
     es = config.elastic_server
 
