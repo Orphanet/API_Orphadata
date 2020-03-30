@@ -11,6 +11,8 @@ from swagger_server.models.product9_ages import Product9Ages  # noqa: E501
 from swagger_server.models.product9_prev import Product9Prev  # noqa: E501
 from swagger_server import util
 
+import elasticsearch
+
 
 def age_by_orphacode(orphacode, language):  # noqa: E501
     """Disorder by ORPHAcode with age of onset
@@ -27,21 +29,11 @@ def age_by_orphacode(orphacode, language):  # noqa: E501
     es = config.elastic_server
 
     index = "product9_ages"
-    loc_index = "{}_{}".format(language.lower(), index)
+    index = "{}_{}".format(language.lower(), index)
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = es.search(index=loc_index, body=query)
-    # print(response)
-
-    try:
-        response = response["hits"]["hits"][0]["_source"]
-    except KeyError:
-        response = "404"
-        print(response)
-    except IndexError:
-        response = "404"
-        print(response)
+    response = handle_response(es, index, query)
     return response
 
 
@@ -60,22 +52,11 @@ def disorder_by_orphacode(orphacode, language):  # noqa: E501
     es = config.elastic_server
 
     index = "product1"
-    loc_index = "{}_{}".format(language.lower(), index)
+    index = "{}_{}".format(language.lower(), index)
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = es.search(index=loc_index, body=query)
-    # print(response)
-
-    try:
-        response = response["hits"]["hits"][0]["_source"]
-    except KeyError:
-        response = "404"
-        print(response)
-    except IndexError:
-        response = "404"
-        print(response)
-
+    response = handle_response(es, index, query)
     return response
 
 
@@ -94,21 +75,11 @@ def epidemiology_by_orphacode(orphacode, language):  # noqa: E501
     es = config.elastic_server
 
     index = "product9_prev"
-    loc_index = "{}_{}".format(language.lower(), index)
+    index = "{}_{}".format(language.lower(), index)
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = es.search(index=loc_index, body=query)
-    # print(response)
-
-    try:
-        response = response["hits"]["hits"][0]["_source"]
-    except KeyError:
-        response = "404"
-        print(response)
-    except IndexError:
-        response = "404"
-        print(response)
+    response = handle_response(es, index, query)
     return response
 
 
@@ -124,24 +95,11 @@ def gene_by_disorder_orphacode(orphacode):  # noqa: E501
     """
     es = config.elastic_server
 
-    index = "new_product6_04032020"
+    index = "en_product6"
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    try:
-        response = es.search(index=index, body=query)
-        # print(response)
-    except:
-        print("500")
-
-    try:
-        response = response["hits"]["hits"][0]["_source"]
-    except KeyError:
-        response = "404"
-        print(response)
-    except IndexError:
-        response = "404"
-        print(response)
+    response = handle_response(es, index, query)
     return response
 
 
@@ -161,18 +119,7 @@ def hierarchy_by_orphacode(orphacode):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = es.search(index=index, body=query)
-    # print(response)
-
-    try:
-        response = [elem["_source"] for elem in response["hits"]["hits"]]
-
-    except KeyError:
-        response = "404"
-        print(response)
-    except IndexError:
-        response = "404"
-        print(response)
+    response = handle_response_list(es, index, query)
     return response
 
 
@@ -194,17 +141,7 @@ def hierarchy_id_by_orphacode(orphacode, hchid):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = es.search(index=index, body=query)
-    # print(response)
-
-    try:
-        response = response["hits"]["hits"][0]["_source"]
-    except KeyError:
-        response = "404"
-        print(response)
-    except IndexError:
-        response = "404"
-        print(response)
+    response = handle_response(es, index, query)
     return response
 
 
@@ -222,13 +159,41 @@ def phenotype_by_orphacode(orphacode, language):  # noqa: E501
     """
     es = config.elastic_server
 
-    index = "product4_hpo"
-    loc_index = "{}_{}".format(language.lower(), index)
+    index = "product4"
+    index = "{}_{}".format(language.lower(), index)
 
-    query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
+    query = "{\"query\": {\"match\": {\"Disorder.ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = es.search(index=loc_index, body=query)
-    # print(response)
+    response = handle_response(es, index, query)
+    return response
+
+
+def handle_response(es, index, query):
+    try:
+        response = es.search(index=index, body=query)
+        # print(response)
+    except elasticsearch.exceptions.NotFoundError:
+        response = "Server Error: Index not found"
+        print(response)
+        return response
+
+    try:
+        response = response["hits"]["hits"][0]["_source"]
+    except KeyError:
+        response = "404"
+        print(response)
+    except IndexError:
+        response = "404"
+        print(response)
+    return response
+
+
+def handle_response_list(es, index, query):
+    try:
+        response = es.search(index=index, body=query)
+        # print(response)
+    except:
+        print("500")
 
     try:
         response = response["hits"]["hits"][0]["_source"]

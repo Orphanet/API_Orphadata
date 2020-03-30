@@ -180,7 +180,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/product4_HPO"
+                $ref: "#/components/schemas/product4"
         "403":
           description: Access denied
         "404":
@@ -273,12 +273,14 @@ components:
   securitySchemes:
     UserSecurity:
       type: apiKey
-      in: header
       name: SIMPLE-API-KEY
+      in: header
+      x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_UserSecurity
     AdminSecurity:
       type: apiKey
-      in: header
       name: ADMIN-API-KEY
+      in: header
+      x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_AdminSecurity
   schemas:
     product1:
       type: object
@@ -297,9 +299,12 @@ components:
           items:
             type: object
             properties:
+              Value:
+                type: string
+                example: "1"
               Label:
                 type: string
-                example: "on-line"
+                example: "None"
         Synonym:
           type: array
           items:
@@ -308,9 +313,6 @@ components:
         DisorderType:
           type: string
           example: "Malformation syndrome"
-        DisorderNature:
-          type: string
-          example: "Clinical entity"
         DisorderGroup:
           type: string
           example: "Disorder"
@@ -343,8 +345,14 @@ components:
                 type: string
                 example: "None"
               Disorder2:
-                type: string
-                example: "Weissenbacher-Zweymuller syndrome"
+                type: object
+                properties:
+                  ORPHAcode:
+                    type: string
+                    example: "3450"
+                  Name:
+                    type: string
+                    example: "Weissenbacher-Zweymuller syndrome"
               DisorderDisorderAssociationType:
                 type: string
                 example: "Moved to"
@@ -357,7 +365,7 @@ components:
                 type: string
                 example: "Stickler syndrome type 3 is a rare, genetic, multiple congenital anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism (midface hypoplasia, depressed nasal bridge, small nose with upturned tip, cleft palate, Pierre Robin sequence), bilateral, pronounced sensorineural hearing loss, and skeletal/joint anomalies (including spondyloepiphyseal dysplasia, arthralgia/arthropathy), in the absence of ocular abnormalities."
       required:
-        - ORPHAcode
+      - ORPHAcode
     product3_classification_list:
       type: array
       items:
@@ -385,38 +393,60 @@ components:
             type: string
             example: "['293888', '293899', '293910']"
       required:
-        - ORPHAcode
-    product4_HPO:
+      - ORPHAcode
+    product4:
       type: object
       properties:
-        ORPHAcode:
-          type: string
-          example: "827"
-        Name:
-          type: string
-          example: "Stargardt disease"
-        HPODisorderAssociation:
-          type: array
-          items:
-            type: object
-            properties:
-              HPO:
+        Disorder:
+          type: object
+          properties:
+            ORPHAcode:
+              type: string
+              example: "881"
+            ExpertLink:
+              type: string
+              example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=881"
+            Name:
+              type: string
+              example: "Turner syndrome"
+            DisorderType:
+              type: string
+              example: "Malformation syndrome"
+            DisorderGroup:
+              type: string
+              example: "Disorder"
+            HPODisorderAssociation:
+              type: array
+              items:
                 type: object
                 properties:
-                  HPOId:
+                  HPO:
+                    type: object
+                    properties:
+                      HPOId:
+                        type: string
+                        example: "HP:0000137"
+                      HPOTerm:
+                        type: string
+                        example: "Abnormality of the ovary"
+                  HPOFrequency:
                     type: string
-                    example: "HP:0007663"
-                  HPOTerm:
+                    example: "Very frequent (99-80%)"
+                  DiagnosticCriteria:
                     type: string
-                    example: "Reduced visual acuity"
-              HPOFrequency:
-                type: string
-                example: "Obligate (100%)"
-              DiagnosticCriteria:
-                type: string
-                example: "None"
-      required:
-        - ORPHAcode
+                    example: "None"
+        Source:
+          type: string
+          example: "28705803[PMID]_17047017[PMID]_22707402[PMID]_25517026[PMID]_25438673[PMID]_27008889[PMID]_25573747[PMID]_26039527[PMID]_26874361[PMID]_26744895[PMID]_20594638[PMID]_22802424[PMID]_23603786[PMID]_24731013[PMID]_14752843[PMID]_23173989[PMID]_18839441[PMID]_17873120[PMID]"
+        ValidationStatus:
+          type: string
+          example: "y"
+        Online:
+          type: string
+          example: "y"
+        ValidationDate:
+          type: string
+          example: "2016-10-19 00:00:00.0"
     product6:
       type: object
       properties:
@@ -489,7 +519,7 @@ components:
                 type: string
                 example: "Assessed"
       required:
-        - ORPHAcode
+      - ORPHAcode
     product6_gene:
       type: object
       properties:
@@ -562,7 +592,7 @@ components:
                     type: string
                     example: "Disorder"
       required:
-        - Symbol
+      - Symbol
     product9_ages:
       type: object
       properties:
@@ -578,6 +608,9 @@ components:
         DisorderType:
           type: string
           example: "Disease"
+        DisorderGroup:
+          type: string
+          example: "Disorder"
         AverageAgeOfOnset:
           type: array
           items:
@@ -594,7 +627,7 @@ components:
             type: string
             example: "['Autosomal dominant']"
       required:
-        - ORPHAcode
+      - ORPHAcode
     product9_prev:
       type: object
       properties:
@@ -610,6 +643,9 @@ components:
         DisorderType:
           type: string
           example: "Disease"
+        DisorderGroup:
+          type: string
+          example: "Disorder"
         Prevalence:
           type: array
           items:
@@ -637,7 +673,7 @@ components:
                 type: string
                 example: "Validated"
       required:
-        - ORPHAcode
+      - ORPHAcode
   responses:
     "403":
       description: Access denied
