@@ -22,7 +22,11 @@ def gene_by_symbol(symbol):  # noqa: E501
 
     index = "en_product6_gene"
 
-    query = "{\"query\": {\"match\": {\"Symbol\": \"" + symbol.upper() + "\"}}}"
+    query = "{\"query\": {\"match\": {\"Symbol\": \"" + symbol + "\"}}}"
+
+    # query = "{\"query\": {\"bool\":{\"should\": [{\"match\": {\"Symbol\": \"" + symbol + "\"}}," \
+    #                                            " {\"match\": {\"Synonym\": \"" + symbol + "\"}}]" \
+    #                                                                                       "}}}"
 
     response = single_res(es, index, query)
     return response
