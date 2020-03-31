@@ -15,7 +15,7 @@ class Product9Prev(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, orph_acode: str=None, expert_link: str=None, name: str=None, disorder_type: str=None, prevalence: List[Product9PrevPrevalence]=None):  # noqa: E501
+    def __init__(self, orph_acode: str=None, expert_link: str=None, name: str=None, disorder_type: str=None, disorder_group: str=None, prevalence: List[Product9PrevPrevalence]=None):  # noqa: E501
         """Product9Prev - a model defined in Swagger
 
         :param orph_acode: The orph_acode of this Product9Prev.  # noqa: E501
@@ -26,6 +26,8 @@ class Product9Prev(Model):
         :type name: str
         :param disorder_type: The disorder_type of this Product9Prev.  # noqa: E501
         :type disorder_type: str
+        :param disorder_group: The disorder_group of this Product9Prev.  # noqa: E501
+        :type disorder_group: str
         :param prevalence: The prevalence of this Product9Prev.  # noqa: E501
         :type prevalence: List[Product9PrevPrevalence]
         """
@@ -34,6 +36,7 @@ class Product9Prev(Model):
             'expert_link': str,
             'name': str,
             'disorder_type': str,
+            'disorder_group': str,
             'prevalence': List[Product9PrevPrevalence]
         }
 
@@ -42,12 +45,14 @@ class Product9Prev(Model):
             'expert_link': 'ExpertLink',
             'name': 'Name',
             'disorder_type': 'DisorderType',
+            'disorder_group': 'DisorderGroup',
             'prevalence': 'Prevalence'
         }
         self._orph_acode = orph_acode
         self._expert_link = expert_link
         self._name = name
         self._disorder_type = disorder_type
+        self._disorder_group = disorder_group
         self._prevalence = prevalence
 
     @classmethod
@@ -146,6 +151,27 @@ class Product9Prev(Model):
         """
 
         self._disorder_type = disorder_type
+
+    @property
+    def disorder_group(self) -> str:
+        """Gets the disorder_group of this Product9Prev.
+
+
+        :return: The disorder_group of this Product9Prev.
+        :rtype: str
+        """
+        return self._disorder_group
+
+    @disorder_group.setter
+    def disorder_group(self, disorder_group: str):
+        """Sets the disorder_group of this Product9Prev.
+
+
+        :param disorder_group: The disorder_group of this Product9Prev.
+        :type disorder_group: str
+        """
+
+        self._disorder_group = disorder_group
 
     @property
     def prevalence(self) -> List[Product9PrevPrevalence]:

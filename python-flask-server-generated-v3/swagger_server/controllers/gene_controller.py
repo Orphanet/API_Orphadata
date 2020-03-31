@@ -5,7 +5,7 @@ import config
 from swagger_server.models.product6_gene import Product6Gene  # noqa: E501
 from swagger_server import util
 
-from controllers.query_handlers import *
+from controllers.query_controller import *
 
 
 def gene_by_symbol(symbol):  # noqa: E501

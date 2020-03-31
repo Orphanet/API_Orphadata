@@ -22,26 +22,29 @@ python-flask-server-v3.requirements.txt:
 ## Server setup
 
 Create a server stub with the OpenAPI v3 description 
-([swagger_v3_Orphadata](./BU_swagger_v3_Orphadata.yaml))
+([swagger_v3_Orphadata](backup_manual_code/BU_swagger_v3_Orphadata.yaml))
 with Python3-flask.
 
 Two possibilities:
 * Use the [online swagger-codegen](https://editor.swagger.io/)
+(frequent new releases and features, potentially unstable)
 * Use the [swagger-codegen-cli.jar](./tools/swagger-codegen-cli.jar)
 from this distribution and follow the 
 [swagger codegen instructions](./tools/swagger%20codegen%20instructions.txt)
 
 
-/!\ Backup the manually created/edited files /!\
+/!\ Backup the manually created/edited files to 
+[backup_manual_code](./backup_manual_code) /!\
 
 
-Delete the [python-flask-server-v3](./python-flask-server-v3) folder and
+Delete the [python-flask-server-generated-v3](./python-flask-server-generated-v3) folder and
 replace it with the new version.
 
-
-
-
-
+Check the content of the files from [backup_manual_code](./backup_manual_code)
+(do not override because of the change made to the API contract, new modules or descriptions can be needed):
+* "_controller" suffixed files must be compared to those in [python-flask-server-generated-v3/swagger_server/controllers](./python-flask-server-generated-v3/swagger_server/controllers)
+* requirements.txt (do not override because new modules can be needed)
+* config.py to [python-flask-server-generated-v3/swagger_server](./python-flask-server-generated-v3/swagger_server)
 
 
 

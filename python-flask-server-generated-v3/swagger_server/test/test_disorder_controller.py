@@ -8,7 +8,7 @@ from six import BytesIO
 from swagger_server.models.product1 import Product1  # noqa: E501
 from swagger_server.models.product3_classification import Product3Classification  # noqa: E501
 from swagger_server.models.product3_classification_list import Product3ClassificationList  # noqa: E501
-from swagger_server.models.product4_hpo import Product4HPO  # noqa: E501
+from swagger_server.models.product4 import Product4  # noqa: E501
 from swagger_server.models.product6 import Product6  # noqa: E501
 from swagger_server.models.product9_ages import Product9Ages  # noqa: E501
 from swagger_server.models.product9_prev import Product9Prev  # noqa: E501

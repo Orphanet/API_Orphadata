@@ -14,7 +14,7 @@ class Product9Ages(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, orph_acode: str=None, expert_link: str=None, name: str=None, disorder_type: str=None, average_age_of_onset: List[str]=None, average_age_of_death: List[str]=None, type_of_inheritance: List[str]=None):  # noqa: E501
+    def __init__(self, orph_acode: str=None, expert_link: str=None, name: str=None, disorder_type: str=None, disorder_group: str=None, average_age_of_onset: List[str]=None, average_age_of_death: List[str]=None, type_of_inheritance: List[str]=None):  # noqa: E501
         """Product9Ages - a model defined in Swagger
 
         :param orph_acode: The orph_acode of this Product9Ages.  # noqa: E501
@@ -25,6 +25,8 @@ class Product9Ages(Model):
         :type name: str
         :param disorder_type: The disorder_type of this Product9Ages.  # noqa: E501
         :type disorder_type: str
+        :param disorder_group: The disorder_group of this Product9Ages.  # noqa: E501
+        :type disorder_group: str
         :param average_age_of_onset: The average_age_of_onset of this Product9Ages.  # noqa: E501
         :type average_age_of_onset: List[str]
         :param average_age_of_death: The average_age_of_death of this Product9Ages.  # noqa: E501
@@ -37,6 +39,7 @@ class Product9Ages(Model):
             'expert_link': str,
             'name': str,
             'disorder_type': str,
+            'disorder_group': str,
             'average_age_of_onset': List[str],
             'average_age_of_death': List[str],
             'type_of_inheritance': List[str]
@@ -47,6 +50,7 @@ class Product9Ages(Model):
             'expert_link': 'ExpertLink',
             'name': 'Name',
             'disorder_type': 'DisorderType',
+            'disorder_group': 'DisorderGroup',
             'average_age_of_onset': 'AverageAgeOfOnset',
             'average_age_of_death': 'AverageAgeOfDeath',
             'type_of_inheritance': 'TypeOfInheritance'
@@ -55,6 +59,7 @@ class Product9Ages(Model):
         self._expert_link = expert_link
         self._name = name
         self._disorder_type = disorder_type
+        self._disorder_group = disorder_group
         self._average_age_of_onset = average_age_of_onset
         self._average_age_of_death = average_age_of_death
         self._type_of_inheritance = type_of_inheritance
@@ -155,6 +160,27 @@ class Product9Ages(Model):
         """
 
         self._disorder_type = disorder_type
+
+    @property
+    def disorder_group(self) -> str:
+        """Gets the disorder_group of this Product9Ages.
+
+
+        :return: The disorder_group of this Product9Ages.
+        :rtype: str
+        """
+        return self._disorder_group
+
+    @disorder_group.setter
+    def disorder_group(self, disorder_group: str):
+        """Sets the disorder_group of this Product9Ages.
+
+
+        :param disorder_group: The disorder_group of this Product9Ages.
+        :type disorder_group: str
+        """
+
+        self._disorder_group = disorder_group
 
     @property
     def average_age_of_onset(self) -> List[str]:

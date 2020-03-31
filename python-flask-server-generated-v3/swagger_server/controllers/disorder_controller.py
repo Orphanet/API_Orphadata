@@ -5,13 +5,13 @@ import config
 from swagger_server.models.product1 import Product1  # noqa: E501
 from swagger_server.models.product3_classification import Product3Classification  # noqa: E501
 from swagger_server.models.product3_classification_list import Product3ClassificationList  # noqa: E501
-from swagger_server.models.product4_hpo import Product4HPO  # noqa: E501
+from swagger_server.models.product4 import Product4  # noqa: E501
 from swagger_server.models.product6 import Product6  # noqa: E501
 from swagger_server.models.product9_ages import Product9Ages  # noqa: E501
 from swagger_server.models.product9_prev import Product9Prev  # noqa: E501
 from swagger_server import util
 
-import elasticsearch
+from controllers.query_controller import *
 
 
 def age_by_orphacode(orphacode, language):  # noqa: E501
@@ -33,7 +33,7 @@ def age_by_orphacode(orphacode, language):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = handle_response(es, index, query)
+    response = single_res(es, index, query)
     return response
 
 
@@ -56,7 +56,7 @@ def disorder_by_orphacode(orphacode, language):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = handle_response(es, index, query)
+    response = single_res(es, index, query)
     return response
 
 
@@ -79,7 +79,7 @@ def epidemiology_by_orphacode(orphacode, language):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = handle_response(es, index, query)
+    response = single_res(es, index, query)
     return response
 
 
@@ -99,7 +99,7 @@ def gene_by_disorder_orphacode(orphacode):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = handle_response(es, index, query)
+    response = single_res(es, index, query)
     return response
 
 
@@ -119,7 +119,7 @@ def hierarchy_by_orphacode(orphacode):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = handle_response_list(es, index, query)
+    response = multiple_res(es, index, query)
     return response
 
 
@@ -141,7 +141,7 @@ def hierarchy_id_by_orphacode(orphacode, hchid):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = handle_response(es, index, query)
+    response = single_res(es, index, query)
     return response
 
 
@@ -164,43 +164,5 @@ def phenotype_by_orphacode(orphacode, language):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"Disorder.ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = handle_response(es, index, query)
-    return response
-
-
-def handle_response(es, index, query):
-    try:
-        response = es.search(index=index, body=query)
-        # print(response)
-    except elasticsearch.exceptions.NotFoundError:
-        response = "Server Error: Index not found"
-        print(response)
-        return response
-
-    try:
-        response = response["hits"]["hits"][0]["_source"]
-    except KeyError:
-        response = "404"
-        print(response)
-    except IndexError:
-        response = "404"
-        print(response)
-    return response
-
-
-def handle_response_list(es, index, query):
-    try:
-        response = es.search(index=index, body=query)
-        # print(response)
-    except:
-        print("500")
-
-    try:
-        response = response["hits"]["hits"][0]["_source"]
-    except KeyError:
-        response = "404"
-        print(response)
-    except IndexError:
-        response = "404"
-        print(response)
+    response = single_res(es, index, query)
     return response

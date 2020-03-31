@@ -14,19 +14,24 @@ class Product1DisorderFlag(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, label: str=None):  # noqa: E501
+    def __init__(self, value: str=None, label: str=None):  # noqa: E501
         """Product1DisorderFlag - a model defined in Swagger
 
+        :param value: The value of this Product1DisorderFlag.  # noqa: E501
+        :type value: str
         :param label: The label of this Product1DisorderFlag.  # noqa: E501
         :type label: str
         """
         self.swagger_types = {
+            'value': str,
             'label': str
         }
 
         self.attribute_map = {
+            'value': 'Value',
             'label': 'Label'
         }
+        self._value = value
         self._label = label
 
     @classmethod
@@ -39,6 +44,27 @@ class Product1DisorderFlag(Model):
         :rtype: Product1DisorderFlag
         """
         return util.deserialize_model(dikt, cls)
+
+    @property
+    def value(self) -> str:
+        """Gets the value of this Product1DisorderFlag.
+
+
+        :return: The value of this Product1DisorderFlag.
+        :rtype: str
+        """
+        return self._value
+
+    @value.setter
+    def value(self, value: str):
+        """Sets the value of this Product1DisorderFlag.
+
+
+        :param value: The value of this Product1DisorderFlag.
+        :type value: str
+        """
+
+        self._value = value
 
     @property
     def label(self) -> str:

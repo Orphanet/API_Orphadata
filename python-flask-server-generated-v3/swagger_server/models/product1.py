@@ -18,7 +18,7 @@ class Product1(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, orph_acode: str=None, expert_link: str=None, name: str=None, disorder_flag: List[Product1DisorderFlag]=None, synonym: List[str]=None, disorder_type: str=None, disorder_nature: str=None, disorder_group: str=None, external_reference: List[Product1ExternalReference]=None, disorder_disorder_association: List[Product1DisorderDisorderAssociation]=None, textual_information: List[Product1TextualInformation]=None):  # noqa: E501
+    def __init__(self, orph_acode: str=None, expert_link: str=None, name: str=None, disorder_flag: List[Product1DisorderFlag]=None, synonym: List[str]=None, disorder_type: str=None, disorder_group: str=None, external_reference: List[Product1ExternalReference]=None, disorder_disorder_association: List[Product1DisorderDisorderAssociation]=None, textual_information: List[Product1TextualInformation]=None):  # noqa: E501
         """Product1 - a model defined in Swagger
 
         :param orph_acode: The orph_acode of this Product1.  # noqa: E501
@@ -33,8 +33,6 @@ class Product1(Model):
         :type synonym: List[str]
         :param disorder_type: The disorder_type of this Product1.  # noqa: E501
         :type disorder_type: str
-        :param disorder_nature: The disorder_nature of this Product1.  # noqa: E501
-        :type disorder_nature: str
         :param disorder_group: The disorder_group of this Product1.  # noqa: E501
         :type disorder_group: str
         :param external_reference: The external_reference of this Product1.  # noqa: E501
@@ -51,7 +49,6 @@ class Product1(Model):
             'disorder_flag': List[Product1DisorderFlag],
             'synonym': List[str],
             'disorder_type': str,
-            'disorder_nature': str,
             'disorder_group': str,
             'external_reference': List[Product1ExternalReference],
             'disorder_disorder_association': List[Product1DisorderDisorderAssociation],
@@ -65,7 +62,6 @@ class Product1(Model):
             'disorder_flag': 'DisorderFlag',
             'synonym': 'Synonym',
             'disorder_type': 'DisorderType',
-            'disorder_nature': 'DisorderNature',
             'disorder_group': 'DisorderGroup',
             'external_reference': 'ExternalReference',
             'disorder_disorder_association': 'DisorderDisorderAssociation',
@@ -77,7 +73,6 @@ class Product1(Model):
         self._disorder_flag = disorder_flag
         self._synonym = synonym
         self._disorder_type = disorder_type
-        self._disorder_nature = disorder_nature
         self._disorder_group = disorder_group
         self._external_reference = external_reference
         self._disorder_disorder_association = disorder_disorder_association
@@ -221,27 +216,6 @@ class Product1(Model):
         """
 
         self._disorder_type = disorder_type
-
-    @property
-    def disorder_nature(self) -> str:
-        """Gets the disorder_nature of this Product1.
-
-
-        :return: The disorder_nature of this Product1.
-        :rtype: str
-        """
-        return self._disorder_nature
-
-    @disorder_nature.setter
-    def disorder_nature(self, disorder_nature: str):
-        """Sets the disorder_nature of this Product1.
-
-
-        :param disorder_nature: The disorder_nature of this Product1.
-        :type disorder_nature: str
-        """
-
-        self._disorder_nature = disorder_nature
 
     @property
     def disorder_group(self) -> str:

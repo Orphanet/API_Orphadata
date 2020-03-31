@@ -6,6 +6,7 @@ from datetime import date, datetime  # noqa: F401
 from typing import List, Dict  # noqa: F401
 
 from swagger_server.models.base_model_ import Model
+from swagger_server.models.product1_disorder2 import Product1Disorder2  # noqa: F401,E501
 from swagger_server import util
 
 
@@ -14,19 +15,19 @@ class Product1DisorderDisorderAssociation(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, disorder1: str=None, disorder2: str=None, disorder_disorder_association_type: str=None):  # noqa: E501
+    def __init__(self, disorder1: str=None, disorder2: Product1Disorder2=None, disorder_disorder_association_type: str=None):  # noqa: E501
         """Product1DisorderDisorderAssociation - a model defined in Swagger
 
         :param disorder1: The disorder1 of this Product1DisorderDisorderAssociation.  # noqa: E501
         :type disorder1: str
         :param disorder2: The disorder2 of this Product1DisorderDisorderAssociation.  # noqa: E501
-        :type disorder2: str
+        :type disorder2: Product1Disorder2
         :param disorder_disorder_association_type: The disorder_disorder_association_type of this Product1DisorderDisorderAssociation.  # noqa: E501
         :type disorder_disorder_association_type: str
         """
         self.swagger_types = {
             'disorder1': str,
-            'disorder2': str,
+            'disorder2': Product1Disorder2,
             'disorder_disorder_association_type': str
         }
 
@@ -72,22 +73,22 @@ class Product1DisorderDisorderAssociation(Model):
         self._disorder1 = disorder1
 
     @property
-    def disorder2(self) -> str:
+    def disorder2(self) -> Product1Disorder2:
         """Gets the disorder2 of this Product1DisorderDisorderAssociation.
 
 
         :return: The disorder2 of this Product1DisorderDisorderAssociation.
-        :rtype: str
+        :rtype: Product1Disorder2
         """
         return self._disorder2
 
     @disorder2.setter
-    def disorder2(self, disorder2: str):
+    def disorder2(self, disorder2: Product1Disorder2):
         """Sets the disorder2 of this Product1DisorderDisorderAssociation.
 
 
         :param disorder2: The disorder2 of this Product1DisorderDisorderAssociation.
-        :type disorder2: str
+        :type disorder2: Product1Disorder2
         """
 
         self._disorder2 = disorder2
