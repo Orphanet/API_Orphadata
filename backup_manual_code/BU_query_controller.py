@@ -14,8 +14,10 @@ def handle_query(es, index, query):
         response = es.search(index=index, body=query)
         # print(response)
     except elasticsearch.exceptions.NotFoundError:
-        response = "Server Error: Index not found"
-        print(response)
+        response = ("Server Error: Index not found", 404)
+        # print(response)
+    except elasticsearch.exceptions.ConnectionError:
+        response = ("Elasticsearch node unavailable", 503)
     return response
 
 
@@ -30,17 +32,17 @@ def single_res(es, index, query):
     :return: single dictionary on success or string error code
     """
     response = handle_query(es, index, query)
-    if isinstance(response, str):
+    if isinstance(response, tuple):
         pass
     else:
         try:
             response = response["hits"]["hits"][0]["_source"]
         except KeyError:
-            response = "404"
-            print(response)
+            response = ("Query not found", 404)
+            # print(response)
         except IndexError:
-            response = "404"
-            print(response)
+            response = ("Query not found", 404)
+            # print(response)
     return response
 
 
@@ -61,9 +63,9 @@ def multiple_res(es, index, query):
         try:
             response = [elem["_source"] for elem in response["hits"]["hits"]]
         except KeyError:
-            response = "404"
-            print(response)
+            response = ("Query not found", 404)
+            # print(response)
         except IndexError:
-            response = "404"
-            print(response)
+            response = ("Query not found", 404)
+            # print(response)
     return response

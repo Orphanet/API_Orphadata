@@ -18,6 +18,7 @@ python-flask-server-v3.requirements.txt:
     elasticsearch == 7.6
     python_dateutil == 2.6.0
     setuptools >= 21.0.0
+    Flask-Testing >= 0.8.0
 
 ## Server setup
 
