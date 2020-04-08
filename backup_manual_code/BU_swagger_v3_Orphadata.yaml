@@ -14,120 +14,146 @@ externalDocs:
   description: For further information, checks Orphadata main site
   url: http://www.orphadata.org/cgi-bin/index.php
 servers:
-- url: /
-  description: URL for Orphadata's API server
+  - url: /
+    description: URL for Orphadata's API server
 security:
-- UserSecurity: []
-- AdminSecurity: []
+  - UserSecurity: []
+  - AdminSecurity: []
 tags:
-- name: disorder
-  description: Full list of API operation for disorders
-  externalDocs:
-    description: Disorder or Disease object according to Orphanet Ontology
-    url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
-- name: gene
-  description: Full list of API operation for genes
-  externalDocs:
-    description: Gene referenced by Orphanet
-    url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C16612
-- name: orphaclassif
-  description: Hierarchical classification
-  externalDocs:
-    description: Orphanet's hierarchical classification of disorder
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: product1
-  description: Operations for product 1
-  externalDocs:
-    description: Disorder or Disease object according to Orphanet Ontology
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: associated gene
-  description: Operations for associated genes
-  externalDocs:
-    description: Genes referenced by Orphanet
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: phenotype
-  description: Operations for phenotype
-  externalDocs:
-    description: Phenotypes referenced by Orphanet, Human Phenotype Ontology (HPO)
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: epidemiology
-  description: Operations for epidemiology
-  externalDocs:
-    description: Epidemiological data referenced by Orphanet
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: clinical entity
+    description: Full list of API operation for clinical entities
+    externalDocs:
+      description: Disorder or Disease object according to Orphanet Ontology
+      url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
+  - name: product1
+    description: Operations for product 1
+    externalDocs:
+      description: Disorder or Disease object according to Orphanet Ontology
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: orphaclassif
+    description: Hierarchical classification, Product 3
+    externalDocs:
+      description: Orphanet's hierarchical classification of clinical entities
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: phenotype
+    description: Operations for phenotype, Product 4
+    externalDocs:
+      description: Phenotypes referenced by Orphanet, Human Phenotype Ontology (HPO)
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: clinical entity associated gene
+    description: Operations for clinical entity associated genes, Product 6
+    externalDocs:
+      description: Genes referenced by Orphanet
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: gene
+    description: Full list of API operation for genes, Product 6
+    externalDocs:
+      description: Gene referenced by Orphanet
+      url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C16612
+  - name: epidemiology
+    description: Operations for epidemiology, Product 9
+    externalDocs:
+      description: Epidemiological data referenced by Orphanet
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 paths:
+  /product1/orphacode/{orphacode}/language/{language}:
+    get:
+      tags:
+      - clinical entity
+      - product1
+      summary: clinical entity by ORPHAcode for product 1
+      description: Access every information related to a clinical entity object by its ORPHAcode
+      operationId: disorder_by_orphacode
+      parameters:
+      - $ref: '#/components/parameters/orphacode'
+      - $ref: '#/components/parameters/language'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product1'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
   /orphaclassif/orphacode/{orphacode}:
     get:
       tags:
-      - disorder
+      - clinical entity
       - orphaclassif
-      summary: Hierarchical classification of disorder by ORPHAcode in all classifications
-      description: Query one disorder by its ORPHAcode and gives the list of occurences in Orphanet's classifications with parents and childs disorder ORPHAcode
-        number, the list of its children and parents.
+      summary: Hierarchical classification of clinical entities by ORPHAcode in all classifications
+      description: Query one clinical entity by its ORPHAcode and gives the list of occurences
+        in Orphanet's classifications with parents and childs clinical entity ORPHAcode number,
+        the list of its children and parents.
       operationId: hierarchy_by_orphacode
       parameters:
-      - $ref: "#/components/parameters/orphacode"
+        - $ref: '#/components/parameters/orphacode'
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/product3_classification_list"
+                $ref: '#/components/schemas/product3_classification_list'
         "403":
           description: Access denied
         "404":
-          description: Queried disorder not found
+          description: Queried clinical entity not found
         "500":
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.disorder_controller
   /orphaclassif/orphacode/{orphacode}/hchid/{hchid}:
     get:
       tags:
-      - disorder
+      - clinical entity
       - orphaclassif
-      summary: Hierarchical classification of disorder by ORPHAcode in selected classification
-      description: Query one disorder by its ORPHAcode and gives the list of parents and childs disorder in the selected Orphanet's classification
+      summary: Hierarchical classification of clinical entities by ORPHAcode in selected classification
+      description: Query one clinical entity by its ORPHAcode and gives the list of parents
+        and childs clinical entity in the selected Orphanet's classification
       operationId: hierarchy_id_by_orphacode
       parameters:
-      - $ref: "#/components/parameters/orphacode"
-      - $ref: "#/components/parameters/hchid"
+      - $ref: '#/components/parameters/orphacode'
+      - $ref: '#/components/parameters/hchid'
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/product3_classification"
+                $ref: '#/components/schemas/product3'
         "403":
           description: Access denied
         "404":
-          description: Queried disorder not found
+          description: Queried clinical entity not found
         "500":
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.disorder_controller
-  /product1/orphacode/{orphacode}/{language}:
+  /phenotype/orphacode/{orphacode}/language/{language}:
     get:
       tags:
-      - disorder
-      - product1
-      summary: Disorder by ORPHAcode for product 1
-      description: Access every information related to a disorder object by its ORPHAcode
-      operationId: disorder_by_orphacode
+      - clinical entity
+      - phenotype
+      summary: Disorder by ORPHAcode with its associated phenotype
+      description: Access every information related to a clinical entity by its ORPHAcode
+      operationId: phenotype_by_orphacode
       parameters:
-      - $ref: "#/components/parameters/orphacode"
-      - $ref: "#/components/parameters/language"
+      - $ref: '#/components/parameters/orphacode'
+      - $ref: '#/components/parameters/language'
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/product1"
+                $ref: '#/components/schemas/product4'
         "403":
           description: Access denied
         "404":
@@ -136,24 +162,23 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.disorder_controller
   /associatedgene/orphacode/{orphacode}:
     get:
       tags:
-      - disorder
-      - associated gene
+      - clinical entity
+      - clinical entity associated gene
       summary: Disorder by ORPHAcode with associated genes
-      description: Access every information related to a disorder object by its ORPHAcode
+      description: Access every information related to a clinical entity by its ORPHAcode
       operationId: gene_by_disorder_orphacode
       parameters:
-      - $ref: "#/components/parameters/orphacode"
+      - $ref: '#/components/parameters/orphacode'
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/product6"
+                $ref: '#/components/schemas/product6'
         "403":
           description: Access denied
         "404":
@@ -162,88 +187,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.disorder_controller
-  /phenotype/orphacode/{orphacode}/{language}:
-    get:
-      tags:
-      - disorder
-      - phenotype
-      summary: Disorder by ORPHAcode with its associated phenotype
-      description: Access every information related to a disorder object by its ORPHAcode
-      operationId: phenotype_by_orphacode
-      parameters:
-      - $ref: "#/components/parameters/orphacode"
-      - $ref: "#/components/parameters/language"
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/product4"
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.disorder_controller
-  /epidemiology/orphacode/{orphacode}/{language}:
-    get:
-      tags:
-      - disorder
-      - epidemiology
-      summary: Disorder by ORPHAcode with epidemiological data
-      description: Access every information related to a disorder object by its ORPHAcode
-      operationId: epidemiology_by_orphacode
-      parameters:
-      - $ref: "#/components/parameters/orphacode"
-      - $ref: "#/components/parameters/language"
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/product9_prev"
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.disorder_controller
-  /age/orphacode/{orphacode}/{language}:
-    get:
-      tags:
-      - disorder
-      - epidemiology
-      summary: Disorder by ORPHAcode with age of onset
-      description: Access every information related to a disorder object by its ORPHAcode
-      operationId: age_by_orphacode
-      parameters:
-      - $ref: "#/components/parameters/orphacode"
-      - $ref: "#/components/parameters/language"
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/product9_ages"
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.disorder_controller
   /gene/symbol/{symbol}:
     get:
       tags:
@@ -252,14 +195,14 @@ paths:
       description: Access every information related to a gene by its symbol
       operationId: gene_by_symbol
       parameters:
-      - $ref: "#/components/parameters/symbol"
+      - $ref: '#/components/parameters/symbol'
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/product6_gene"
+                $ref: '#/components/schemas/product6_gene'
         "403":
           description: Access denied
         "404":
@@ -268,19 +211,59 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.gene_controller
+  /epidemiology/orphacode/{orphacode}/language/{language}:
+    get:
+      tags:
+      - clinical entity
+      - epidemiology
+      summary: Disorder by ORPHAcode with epidemiological data
+      description: Access every information related to a clinical entity by its ORPHAcode
+      operationId: epidemiology_by_orphacode
+      parameters:
+      - $ref: '#/components/parameters/orphacode'
+      - $ref: '#/components/parameters/language'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product9_prev'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+  /natural_history/orphacode/{orphacode}/language/{language}:
+    get:
+      tags:
+      - clinical entity
+      - epidemiology
+      summary: Disorder by ORPHAcode with age of onset
+      description: Access every information related to a clinical entity by its ORPHAcode
+      operationId: age_by_orphacode
+      parameters:
+      - $ref: '#/components/parameters/orphacode'
+      - $ref: '#/components/parameters/language'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product9_ages'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
 components:
-  securitySchemes:
-    UserSecurity:
-      type: apiKey
-      name: SIMPLE-API-KEY
-      in: header
-      x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_UserSecurity
-    AdminSecurity:
-      type: apiKey
-      name: ADMIN-API-KEY
-      in: header
-      x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_AdminSecurity
   schemas:
     product1:
       type: object
@@ -369,8 +352,8 @@ components:
     product3_classification_list:
       type: array
       items:
-        $ref: "#/components/schemas/product3_classification"
-    product3_classification:
+        $ref: "#/components/schemas/product3"
+    product3:
       type: object
       properties:
         name:
@@ -447,6 +430,8 @@ components:
         ValidationDate:
           type: string
           example: "2016-10-19 00:00:00.0"
+      required:
+      - ORPHAcode
     product6:
       type: object
       properties:
@@ -592,7 +577,7 @@ components:
                     type: string
                     example: "Disorder"
       required:
-      - Symbol
+      - ORPHAcode
     product9_ages:
       type: object
       properties:
@@ -685,7 +670,8 @@ components:
     hchid:
       name: hchid
       in: path
-      description: The hierarchy ID (hchID) is a number which refers to an Orphanet classification
+      description: The hierarchy ID (hchID) is a number which refers to an Orphanet
+        classification
       required: true
       style: simple
       explode: false
@@ -696,8 +682,8 @@ components:
     language:
       name: language
       in: path
-      description: Specify the language in the list supported by Orphanet (CS, DE, EN,
-        ES, FR, IT, NL, PL, PT)
+      description: Specify the language in the list supported by Orphanet (CS, DE,
+        EN, ES, FR, IT, NL, PL, PT)
       required: true
       style: simple
       explode: false
@@ -736,3 +722,14 @@ components:
       explode: false
       schema:
         type: string
+  securitySchemes:
+    UserSecurity:
+      type: apiKey
+      name: SIMPLE-API-KEY
+      in: header
+      x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_UserSecurity
+    AdminSecurity:
+      type: apiKey
+      name: ADMIN-API-KEY
+      in: header
+      x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_AdminSecurity

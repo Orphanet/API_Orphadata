@@ -85,7 +85,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/product3_classification_list'
+                  $ref: '#/components/schemas/product3_classification_list'
         "403":
           description: Access denied
         "404":
