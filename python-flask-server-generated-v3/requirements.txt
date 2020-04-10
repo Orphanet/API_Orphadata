@@ -1,4 +1,0 @@
-connexion == 2.2.0
-python_dateutil == 2.6.0
-setuptools >= 21.0.0
-Flask-Testing >= 0.8.0

@@ -56,6 +56,56 @@ tags:
       description: Epidemiological data referenced by Orphanet
       url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 paths:
+  /product1/language/{language}:
+    get:
+      tags:
+      - clinical entity
+      - product1
+      summary: Get all product 1 in selected language
+      description: Get the list of all clinical entity referenced in product 1 for the selected language
+      operationId: product1_all_orphacode
+      parameters:
+      - $ref: '#/components/parameters/language'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product1_list'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+  /product1/list_orphacode/language/{language}:
+    get:
+      tags:
+      - clinical entity
+      - product1
+      summary: List ORPHAcode for product 1 in selected language
+      description: Get the list of ORPHAcode usable to query product 1 in selected language
+      operationId: product1_list_orphacode
+      parameters:
+      - $ref: '#/components/parameters/language'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_orphacode'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
   /product1/orphacode/{orphacode}/language/{language}:
     get:
       tags:
@@ -63,7 +113,7 @@ paths:
       - product1
       summary: clinical entity by ORPHAcode for product 1
       description: Access every information related to a clinical entity object by its ORPHAcode
-      operationId: disorder_by_orphacode
+      operationId: product1_by_orphacode
       parameters:
       - $ref: '#/components/parameters/orphacode'
       - $ref: '#/components/parameters/language'
@@ -74,6 +124,81 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/product1'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+  /orphaclassif/list_hchid:
+    get:
+      tags:
+      - clinical entity
+      - orphaclassif
+      summary: List hierarchical ID (hchid)
+      description: Get the list of hierarchical ID (hchid) usable to select an Orphanet's classification
+      operationId: hierarchy_list_hchid
+      parameters:
+      - $ref: '#/components/parameters/hchid'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_hchid'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+  /orphaclassif/list_orphacode/hchid/{hchid}:
+    get:
+      tags:
+      - clinical entity
+      - orphaclassif
+      summary: List ORPHAcode for selected classification
+      description: Get the list of ORPHAcode usable to query the selected classification
+      operationId: hierarchy_list_orphacode
+      parameters:
+      - $ref: '#/components/parameters/hchid'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_orphacode'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+  /orphaclassif/hchid/{hchid}:
+    get:
+      tags:
+      - clinical entity
+      - orphaclassif
+      summary: Get the full selected classification
+      description: Get the list of all clinical entity referenced in orphaclassif for the selected classification
+      operationId: hierarchy_all_orphacode
+      parameters:
+      - $ref: '#/components/parameters/hchid'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product3_classification_list'
         "403":
           description: Access denied
         "404":
@@ -136,6 +261,56 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
+  /phenotype/language/{language}:
+    get:
+      tags:
+      - clinical entity
+      - phenotype
+      summary: Get all phenotype in selected language
+      description: Get the list of all clinical entity referenced in phenotype for the selected language
+      operationId: phenotype_all_orphacode
+      parameters:
+      - $ref: '#/components/parameters/language'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product4_list'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+  /phenotype/list_orphacode/language/{language}:
+    get:
+      tags:
+      - clinical entity
+      - phenotype
+      summary: List ORPHAcode for phenotype in selected language
+      description: Get the list of ORPHAcode usable to query phenotype in selected language
+      operationId: phenotype_list_orphacode
+      parameters:
+      - $ref: '#/components/parameters/language'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_orphacode'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
   /phenotype/orphacode/{orphacode}/language/{language}:
     get:
       tags:
@@ -162,6 +337,52 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
+  /associatedgene:
+    get:
+      tags:
+      - clinical entity
+      - clinical entity associated gene
+      summary: Get all associatedgene
+      description: Get the list of all clinical entity referenced in associatedgene
+      operationId: associatedgene_all_orphacode
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product6_list'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+  /associatedgene/list_orphacode:
+    get:
+      tags:
+      - clinical entity
+      - clinical entity associated gene
+      summary: List ORPHAcode for clinical entity associated gene
+      description: Get the list of ORPHAcode usable to query clinical entity associated gene in selected language
+      operationId: associatedgene_list_orphacode
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_orphacode'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
   /associatedgene/orphacode/{orphacode}:
     get:
       tags:
@@ -169,7 +390,7 @@ paths:
       - clinical entity associated gene
       summary: Disorder by ORPHAcode with associated genes
       description: Access every information related to a clinical entity by its ORPHAcode
-      operationId: gene_by_disorder_orphacode
+      operationId: associatedgene_orphacode
       parameters:
       - $ref: '#/components/parameters/orphacode'
       responses:
@@ -187,13 +408,57 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
+  /gene:
+    get:
+      tags:
+      - gene
+      summary: Get all genes
+      description: Get the list of all clinical entity referenced in gene
+      operationId: gene_all_symbol
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product6_gene_list'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+  /gene/list_symbol:
+    get:
+      tags:
+      - gene
+      summary: List gene symbol to query by gene
+      description: Get the list of gene symbol usable to query by gene
+      operationId: gene_list_symbol
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_symbol'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
   /gene/symbol/{symbol}:
     get:
       tags:
       - gene
       summary: Gene by gene symbol with associated rare disorder
       description: Access every information related to a gene by its symbol
-      operationId: gene_by_symbol
+      operationId: gene_by_symbolv
       parameters:
       - $ref: '#/components/parameters/symbol'
       responses:
@@ -203,6 +468,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/product6_gene'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+  /epidemiology/language/{language}:
+    get:
+      tags:
+      - clinical entity
+      - epidemiology
+      summary: Get all epidemiology in selected language
+      description: Get the list of all clinical entity referenced in epidemiology for the selected language
+      operationId: epidemiology_all_orphacode
+      parameters:
+      - $ref: '#/components/parameters/language'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product9_prev_list'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+  /epidemiology/list_orphacode/language/{language}:
+    get:
+      tags:
+      - clinical entity
+      - epidemiology
+      summary: List ORPHAcode for epidemiology in selected language
+      description: Get the list of ORPHAcode usable to query epidemiology in selected language
+      operationId: epidemiology_list_orphacode
+      parameters:
+      - $ref: '#/components/parameters/language'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_orphacode'
         "403":
           description: Access denied
         "404":
@@ -237,6 +552,56 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
+  /natural_history/language/{language}:
+    get:
+      tags:
+      - clinical entity
+      - epidemiology
+      summary: Get all natural_history in selected language
+      description: Get the list of all clinical entity referenced in natural_history for the selected language
+      operationId: natural_history_all_orphacode
+      parameters:
+      - $ref: '#/components/parameters/language'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product9_ages_list'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+  /natural_history/list_orphacode/language/{language}:
+    get:
+      tags:
+      - clinical entity
+      - epidemiology
+      summary: List ORPHAcode for natural history in selected language
+      description: Get the list of ORPHAcode usable to query natural history of clinical entity in selected language
+      operationId: natural_history_list_orphacode
+      parameters:
+      - $ref: '#/components/parameters/language'
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/list_orphacode'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
   /natural_history/orphacode/{orphacode}/language/{language}:
     get:
       tags:
@@ -244,7 +609,7 @@ paths:
       - epidemiology
       summary: Disorder by ORPHAcode with age of onset
       description: Access every information related to a clinical entity by its ORPHAcode
-      operationId: age_by_orphacode
+      operationId: natural_history_by_orphacode
       parameters:
       - $ref: '#/components/parameters/orphacode'
       - $ref: '#/components/parameters/language'
@@ -265,6 +630,10 @@ paths:
           description: Unknown internal error
 components:
   schemas:
+    product1_list:
+      type: array
+      items:
+        $ref: "#/components/schemas/product1"
     product1:
       type: object
       properties:
@@ -282,20 +651,26 @@ components:
           items:
             type: object
             properties:
-              Value:
-                type: string
-                example: "1"
               Label:
                 type: string
-                example: "None"
+                example: "on-line"
         Synonym:
           type: array
           items:
             type: string
             example: "['AD OSMED', 'Stickler syndrome type 3', 'Stickler syndrome, non-ocular type']"
         DisorderType:
+          type: object
+          properties:
+            ORPHAcode:
+              type: string
+              example: "377789"
+            Name:
+              type: string
+              example: "Malformation syndrome"
+        DisorderNature:
           type: string
-          example: "Malformation syndrome"
+          example: "Clinical entity"
         DisorderGroup:
           type: string
           example: "Disorder"
@@ -311,14 +686,26 @@ components:
                 type: string
                 example: "C537494"
               DisorderMappingRelation:
-                type: string
-                example: "E (exact mapping (the terms and the concepts are equivalent))"
+                type: object
+                properties:
+                  ORPHAcode:
+                    type: string
+                    example: "377807"
+                  Name:
+                    type: string
+                    example: "E (exact mapping (the terms and the concepts are equivalent))"
               DisorderMappingICDRelation:
                 type: string
                 example: "None"
               DisorderMappingValidationStatus:
-                type: string
-                example: "Validated"
+                type: object
+                properties:
+                  ORPHAcode:
+                    type: string
+                    example: "377819"
+                  Name:
+                    type: string
+                    example: "Validated"
         DisorderDisorderAssociation:
           type: array
           items:
@@ -365,6 +752,9 @@ components:
         hch_id:
           type: string
           example: "146"
+        hch_tag:
+          type: string
+          example: "Orphanet classification of rare cardiac diseases"
         parents:
           type: array
           items:
@@ -377,6 +767,10 @@ components:
             example: "['293888', '293899', '293910']"
       required:
       - ORPHAcode
+    product4_list:
+      type: array
+      items:
+        $ref: "#/components/schemas/product4"
     product4:
       type: object
       properties:
@@ -420,7 +814,7 @@ components:
                     example: "None"
         Source:
           type: string
-          example: "28705803[PMID]_17047017[PMID]_22707402[PMID]_25517026[PMID]_25438673[PMID]_27008889[PMID]_25573747[PMID]_26039527[PMID]_26874361[PMID]_26744895[PMID]_20594638[PMID]_22802424[PMID]_23603786[PMID]_24731013[PMID]_14752843[PMID]_23173989[PMID]_18839441[PMID]_17873120[PMID]"
+          example: "28705803[PMID]_17047017[PMID]_22707402[PMID]_25517026[PMID]_25438673[PMID]"
         ValidationStatus:
           type: string
           example: "y"
@@ -430,8 +824,10 @@ components:
         ValidationDate:
           type: string
           example: "2016-10-19 00:00:00.0"
-      required:
-      - ORPHAcode
+    product6_list:
+      type: array
+      items:
+        $ref: "#/components/schemas/product6"
     product6:
       type: object
       properties:
@@ -505,6 +901,10 @@ components:
                 example: "Assessed"
       required:
       - ORPHAcode
+    product6_gene_list:
+      type: array
+      items:
+        $ref: "#/components/schemas/product6_gene"
     product6_gene:
       type: object
       properties:
@@ -577,7 +977,11 @@ components:
                     type: string
                     example: "Disorder"
       required:
-      - ORPHAcode
+      - Symbol
+    product9_ages_list:
+      type: array
+      items:
+        $ref: "#/components/schemas/product9_ages"
     product9_ages:
       type: object
       properties:
@@ -613,6 +1017,10 @@ components:
             example: "['Autosomal dominant']"
       required:
       - ORPHAcode
+    product9_prev_list:
+      type: array
+      items:
+        $ref: "#/components/schemas/product9_prev"
     product9_prev:
       type: object
       properties:
@@ -659,6 +1067,21 @@ components:
                 example: "Validated"
       required:
       - ORPHAcode
+    list_orphacode:
+      type: array
+      items:
+        type: string
+        example: "['58', '558']"
+    list_hchid:
+      type: array
+      items:
+        type: string
+        example: "['146', '233']"
+    list_symbol:
+      type: array
+      items:
+        type: string
+        example: "['KIF7']"
   responses:
     "403":
       description: Access denied
