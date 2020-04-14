@@ -35,7 +35,11 @@ def associatedgene_all_orphacode():  # noqa: E501
 
     query = "{\"query\": {\"match_all\": {}}}"
 
-    response = multiple_res(es, index, query)
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
     return response
 
 
@@ -47,7 +51,22 @@ def associatedgene_list_orphacode():  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "en_product6"
+
+    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response = [elem["ORPHAcode"] for elem in response]
+    return response
 
 
 def associatedgene_orphacode(orphacode):  # noqa: E501
@@ -87,7 +106,11 @@ def epidemiology_all_orphacode(language):  # noqa: E501
 
     query = "{\"query\": {\"match_all\": {}}}"
 
-    response = multiple_res(es, index, query)
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
     return response
 
 
@@ -124,7 +147,23 @@ def epidemiology_list_orphacode(language):  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product9_prev"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response = [elem["ORPHAcode"] for elem in response]
+    return response
 
 
 def hierarchy_all_orphacode(hchid):  # noqa: E501
@@ -139,12 +178,16 @@ def hierarchy_all_orphacode(hchid):  # noqa: E501
     """
     es = config.elastic_server
 
-    index = "product3"
+    index = "en_product3"
     index = "{}_{}".format(index, hchid)
 
     query = "{\"query\": {\"match_all\": {}}}"
 
-    response = multiple_res(es, index, query)
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
     return response
 
 
@@ -164,7 +207,11 @@ def hierarchy_by_orphacode(orphacode):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = multiple_res(es, index, query)
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
     return response
 
 
@@ -233,7 +280,11 @@ def natural_history_all_orphacode(language):  # noqa: E501
 
     query = "{\"query\": {\"match_all\": {}}}"
 
-    response = multiple_res(es, index, query)
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
     return response
 
 
@@ -270,7 +321,23 @@ def natural_history_list_orphacode(language):  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product9_ages"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response = [elem["ORPHAcode"] for elem in response]
+    return response
 
 
 def phenotype_all_orphacode(language):  # noqa: E501
@@ -290,7 +357,11 @@ def phenotype_all_orphacode(language):  # noqa: E501
 
     query = "{\"query\": {\"match_all\": {}}}"
 
-    response = multiple_res(es, index, query)
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
     return response
 
 
@@ -327,7 +398,23 @@ def phenotype_list_orphacode(language):  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product4"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"Disorder.ORPHAcode\"]}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response = [elem["Disorder"]["ORPHAcode"] for elem in response]
+    return response
 
 
 def product1_all_orphacode(language):  # noqa: E501
@@ -347,7 +434,11 @@ def product1_all_orphacode(language):  # noqa: E501
 
     query = "{\"query\": {\"match_all\": {}}}"
 
-    response = multiple_res(es, index, query)
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
     return response
 
 
@@ -384,4 +475,20 @@ def product1_list_orphacode(language):  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product1"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response = [elem["ORPHAcode"] for elem in response]
+    return response
