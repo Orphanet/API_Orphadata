@@ -237,13 +237,11 @@ def hierarchy_id_by_orphacode(orphacode, hchid):  # noqa: E501
     return response
 
 
-def hierarchy_list_hchid(hchid):  # noqa: E501
+def hierarchy_list_hchid():  # noqa: E501
     """List hierarchical ID (hchid)
 
-    Get the list of hierarchical ID (hchid) usable to select an Orphanet's classification # noqa: E501
+    Get the list of hierarchical ID (hchid) usable to select an Orphanet&#x27;s classification # noqa: E501
 
-    :param hchid: The hierarchy ID (hchID) is a number which refers to an Orphanet classification
-    :type hchid: int
 
     :rtype: ListHchid
     """

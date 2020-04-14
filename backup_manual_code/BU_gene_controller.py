@@ -1,10 +1,11 @@
 import connexion
 import six
 
-import config
+
 from swagger_server.models.product6_gene import Product6Gene  # noqa: E501
 from swagger_server import util
 
+import config
 from controllers.query_controller import *
 
 

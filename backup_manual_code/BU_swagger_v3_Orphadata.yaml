@@ -456,7 +456,7 @@ paths:
       - gene
       summary: Gene by gene symbol with associated rare disorder
       description: Access every information related to a gene by its symbol
-      operationId: gene_by_symbolv
+      operationId: gene_by_symbol
       parameters:
       - $ref: '#/components/parameters/symbol'
       responses:
