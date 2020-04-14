@@ -140,8 +140,6 @@ paths:
       summary: List hierarchical ID (hchid)
       description: Get the list of hierarchical ID (hchid) usable to select an Orphanet's classification
       operationId: hierarchy_list_hchid
-      parameters:
-      - $ref: '#/components/parameters/hchid'
       responses:
         "200":
           description: Successful operation
