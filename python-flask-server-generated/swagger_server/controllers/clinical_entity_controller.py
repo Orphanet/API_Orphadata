@@ -240,14 +240,24 @@ def hierarchy_id_by_orphacode(orphacode, hchid):  # noqa: E501
 def hierarchy_list_hchid(hchid):  # noqa: E501
     """List hierarchical ID (hchid)
 
-    Get the list of hierarchical ID (hchid) usable to select an Orphanet&#x27;s classification # noqa: E501
+    Get the list of hierarchical ID (hchid) usable to select an Orphanet's classification # noqa: E501
 
     :param hchid: The hierarchy ID (hchID) is a number which refers to an Orphanet classification
     :type hchid: int
 
     :rtype: ListHchid
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "en_product3_*"
+
+    response = es.indices.get_alias(index)
+
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response = [elem.split("_")[2] for elem in response]
+    return response
 
 
 def hierarchy_list_orphacode(hchid):  # noqa: E501
@@ -260,7 +270,23 @@ def hierarchy_list_orphacode(hchid):  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "en_product3"
+    index = "{}_{}".format(index, hchid)
+
+    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response = [elem["ORPHAcode"] for elem in response]
+    return response
 
 
 def natural_history_all_orphacode(language):  # noqa: E501
