@@ -7,7 +7,7 @@
 The API description is written according to OpenAPI v3 standards.
 
 The server stub has been auto-generated from the description
- with swagger-codegen version 3.0.18 in Python3-flask.
+ with swagger-codegen version 3.0.19 in Python3-flask.
 
 Developed with Elasticsearch 7.X.
 
@@ -38,7 +38,7 @@ from this distribution and follow the
 [backup_manual_code](./backup_manual_code) /!\
 
 
-Delete the [python-flask-server-generated-v3](./python-flask-server-generated-v3) folder and
+Delete the [python-flask-server-generated](./python-flask-server-generated) folder and
 replace it with the new version.
 
 Check the content of the files from [backup_manual_code](./backup_manual_code)
