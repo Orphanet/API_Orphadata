@@ -43,10 +43,17 @@ replace it with the new version.
 
 Check the content of the files from [backup_manual_code](./backup_manual_code)
 (do not override because of the change made to the API contract, new modules or descriptions can be needed):
-* "_controller" suffixed files must be compared to those in [python-flask-server-generated-v3/swagger_server/controllers](./python-flask-server-generated-v3/swagger_server/controllers)
+* "test" prefixed files must go to [python-flask-server-generated/swagger_server/test](./python-flask-server-generated/swagger_server/test)
+* "_controller" suffixed files (except "test" prefixed files) 
+must be compared to those in 
+[python-flask-server-generated/swagger_server/controllers](./python-flask-server-generated/swagger_server/controllers)
 * requirements.txt (do not override because new modules can be needed)
-* config.py to [python-flask-server-generated-v3/swagger_server](./python-flask-server-generated-v3/swagger_server)
+* config.py to [python-flask-server-generated-v3/swagger_server](./python-flask-server-generated/swagger_server)
 
+The required packages can be installed by launching the following command
+in the operating system's console (preferentially virtual environment console)
+from the server's root [python-flask-server-generated-v3/swagger_server](./python-flask-server-generated/swagger_server)
+    
+    pip3 install -r requirements.txt
 
-
-
+Note that 'test-requirements.txt' is auto generated and has not been used
