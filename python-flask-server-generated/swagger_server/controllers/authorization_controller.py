@@ -12,9 +12,15 @@ TOKEN_DB = {
     }
 }
 
+ADMIN_TOKEN_DB = {
+    'admin': {
+        'uid': "admin"
+    }
+}
+
 
 def check_AdminSecurity(api_key, required_scopes):
-    info = TOKEN_DB.get(api_key, None)
+    info = ADMIN_TOKEN_DB.get(api_key, None)
     if not info:
         raise OAuthProblem('Invalid token')
     return {'test_key': info}

@@ -21,7 +21,7 @@ class TestGeneController(BaseTestCase):
         """
         response = self.client.open(
             '/gene',
-            method='GET', headers={"ADMIN-API-KEY": "test-key"})
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -32,7 +32,7 @@ class TestGeneController(BaseTestCase):
         """
         response = self.client.open(
             '/gene/symbol/{symbol}'.format(symbol="KIF7"),
-            method='GET', headers={"ADMIN-API-KEY": "test-key"})
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -45,7 +45,7 @@ class TestGeneController(BaseTestCase):
         """
         response = self.client.open(
             '/gene/symbol/{symbol}'.format(symbol='not_possible'),
-            method='GET', headers={"ADMIN-API-KEY": "test-key"})
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
         self.assert404(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -56,7 +56,7 @@ class TestGeneController(BaseTestCase):
         """
         response = self.client.open(
             '/gene/list_symbol',
-            method='GET', headers={"ADMIN-API-KEY": "test-key"})
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 

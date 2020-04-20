@@ -58,3 +58,17 @@ from the server's root [python-flask-server-generated-v3/swagger_server](./pytho
     pip3 install connexion[swagger-ui]
 
 Note that 'test-requirements.txt' is auto generated and has not been used
+
+## Authorization by APIkey:
+Mandatory in request header:
+* "admin" for admin level
+    
+        curl -X GET "http://localhost:8080/orphaclassif/list_hchid"
+             -H  "accept: application/json"
+             -H  "ADMIN-API-KEY: admin"
+
+* "test" for user level
+
+        curl -X GET "http://localhost:8080/orphaclassif/list_hchid"
+             -H  "accept: application/json"
+             -H  "SIMPLE-API-KEY: test"

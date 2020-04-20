@@ -1,1 +1,0 @@
-java -jar ./swagger-codegen-cli.jar generate -i ./swagger_v3_Orphadata.yaml -l python-flask -o ./python_server
