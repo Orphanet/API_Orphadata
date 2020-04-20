@@ -14,7 +14,7 @@ Developed with Elasticsearch 7.X.
 Other modules requirement are referenced in 
 python-flask-server-v3.requirements.txt:
     
-    connexion == 2.2.0
+    connexion == 2.6.0
     elasticsearch == 7.6
     python_dateutil == 2.6.0
     setuptools >= 21.0.0
@@ -55,5 +55,6 @@ in the operating system's console (preferentially virtual environment console)
 from the server's root [python-flask-server-generated-v3/swagger_server](./python-flask-server-generated/swagger_server)
     
     pip3 install -r requirements.txt
+    pip3 install connexion[swagger-ui]
 
 Note that 'test-requirements.txt' is auto generated and has not been used

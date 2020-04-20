@@ -1,4 +1,4 @@
-connexion == 2.2.0
+connexion == 2.6.0
 elasticsearch == 7.6
 python_dateutil == 2.6.0
 setuptools >= 21.0.0
