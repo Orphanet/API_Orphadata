@@ -33,6 +33,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/associatedgene',
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -44,6 +46,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/associatedgene/list_orphacode',
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -55,6 +59,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/associatedgene/orphacode/{orphacode}'.format(orphacode=93),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -66,6 +72,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/epidemiology/language/{language}'.format(language='EN'),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -77,6 +85,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/epidemiology/orphacode/{orphacode}/language/{language}'.format(orphacode=558, language='EN'),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -88,6 +98,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/epidemiology/list_orphacode/language/{language}'.format(language='EN'),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -99,6 +111,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/orphaclassif/hchid/{hchid}'.format(hchid=146),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -110,6 +124,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/orphaclassif/orphacode/{orphacode}'.format(orphacode=558),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -121,6 +137,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/orphaclassif/orphacode/{orphacode}/hchid/{hchid}'.format(orphacode=558, hchid=147),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -132,6 +150,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/orphaclassif/list_hchid',
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -143,6 +163,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/orphaclassif/list_orphacode/hchid/{hchid}'.format(hchid=146),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -154,6 +176,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/natural_history/language/{language}'.format(language='EN'),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -165,6 +189,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/natural_history/orphacode/{orphacode}/language/{language}'.format(orphacode=558, language='EN'),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -176,6 +202,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/natural_history/list_orphacode/language/{language}'.format(language='EN'),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -187,6 +215,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/phenotype/language/{language}'.format(language='EN'),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -198,6 +228,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/phenotype/orphacode/{orphacode}/language/{language}'.format(orphacode=558, language='EN'),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -209,6 +241,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/phenotype/list_orphacode/language/{language}'.format(language='EN'),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -220,6 +254,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/product1/language/{language}'.format(language='EN'),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -231,6 +267,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/product1/orphacode/{orphacode}/language/{language}'.format(orphacode=558, language='EN'),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -242,6 +280,8 @@ class TestClinicalEntityController(BaseTestCase):
         response = self.client.open(
             '/product1/list_orphacode/language/{language}'.format(language='EN'),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 

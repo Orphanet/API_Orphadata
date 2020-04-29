@@ -1,5 +1,4 @@
 import connexion
-import six
 
 from swagger_server.models.list_symbol import ListSymbol  # noqa: E501
 from swagger_server.models.product6_gene import Product6Gene  # noqa: E501
