@@ -250,6 +250,8 @@ def hierarchy_list_hchid():  # noqa: E501
 
     try:
         response = es.indices.get_alias(index)
+        if isinstance(response, dict) and not response:
+            response = ("Server Error: Index not found", 404)
     except elasticsearch.exceptions.NotFoundError:
         response = ("Server Error: Index not found", 404)
     except elasticsearch.exceptions.ConnectionError:

@@ -3,7 +3,6 @@
 from __future__ import absolute_import
 
 from flask import json
-from six import BytesIO
 
 from swagger_server.models.list_hchid import ListHchid  # noqa: E501
 from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
