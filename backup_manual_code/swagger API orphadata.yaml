@@ -1,9 +1,7 @@
 openapi: 3.0.1
 info:
   title: Orphadata API
-  description: Orphadata provides APIs for the scientific community with comprehensive,
-    quality data sets related to rare diseases and orphan drugs from the Orphanet
-    knowledge base.
+  description: Orphadata provides APIs for the scientific community with comprehensive, quality data sets related to rare diseases and orphan drugs from the Orphanet knowledge base.
   termsOfService: http://www.orphadata.org/cgi-bin/index.php
   contact:
     name: Orphadata team
@@ -13,86 +11,58 @@ info:
     url: https://creativecommons.org/licenses/by/4.0/
   version: 1.0.0
 externalDocs:
-  description: For further information, consult Orphadata website and other services
-    from Orphanet
+  description: For further information, consult Orphadata website and other services from Orphanet
   url: http://www.orphadata.org/cgi-bin/index.php
 servers:
-- url: /
-  description: URL for Orphadata's API server
+  - url: /
+    description: URL for Orphadata's API server
 security:
-- UserSecurity: []
-- AdminSecurity: []
+  - UserSecurity: []
+  - AdminSecurity: []
 tags:
-- name: Rare diseases and cross-referencing
-  description: Product 1
-  externalDocs:
-    description: Search for clinical entity informations and alignements with other
-      terminologies in English, french, german, spanish,dutch, italian, portguese,
-      polish and czech are available.The result is a collection of data including
-      ORPHAcode, preferred term, synonyms, definition, the group and type, and the
-      characterisation of the alignment between the clinical entity and ICD-10, UMLS,
-      MesH, MedDra, and OMIM systems in the selected language.
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Classifications of rare diseases
-  description: Product 3
-  externalDocs:
-    description: Search for Orphanet classifications, a multi-hierarchical and polyparental
-      system built on the Orphanet nomenclature and organised around the major medical
-      specialties and based on clinical criteria according to diagnostic and therapeutic
-      relevance. The result is a collection of data including the ORPHAcode and the
-      preferred term of the clinical entity with a data set or each classification
-      where the clinical entity is present (Hchid, the unique identifier of the classification,
-      name of the classification, ORPHAcode and preferred term of the n+1 and the
-      n-1 clinical entities).
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Rare diseases and associated phenotypes
-  description: Product 4
-  externalDocs:
-    description: Search for rare diseases annotated with Human Phenotype Ontology
-      (HPO) terms. The result is the collection of HPO phenotypes characterized by
-      frequency (obligate, very frequent, frequent, occasional, very rare or excluded)
-      and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic
-      sign of the rare disease. Source (PMID references), the date and the validation’s
-      status of the association between the rare disease and HPO terms is also available.
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Rare diseases and associated gene
-  description: Product 6
-  externalDocs:
-    description: Search for rare diseases and their associated genes. The result is
-      a collection of data including the genetic international nomenclature, the gene
-      typology, the chromosomal location, the cross-mappings with other international
-      genetic databases, the relationship between genes and the searched disease.
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Genes associated to rare diseases
-  description: Genes and related informations
-  externalDocs:
-    description: Search for gene informations. The result is a collection of data
-      including symbol, synonyms, name, typology, chromosomal location and cross-mappings
-      with other international genetic databases are also available.typolo and its
-      relationships with rare diseases.
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Epidemiological data on rare diseases
-  description: Product 9
-  externalDocs:
-    description: Search for epidemiological data or natural history of a rare disease.
-      The result is all informations on point prevalence, birth prevalence, lifelong
-      prevalence and incidence, or the number of cases/families reported together
-      with their respective intervals per geographical area (country, continent) per
-      clinicla entities. Inheritance, interval average age of onset and interval average
-      age of death of clinical entities are also available.
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: Orphanet Rare diseases
+    description: Clinical entities and related informations.
+    externalDocs:
+      description: Search for Clinical entities and related informations in english, french, german, spanish,dutch, italian, portguese, polish or czech. The result is a collection of data including ORPHAcode, preferred term, synonyms, definition, belonging to a classification, epidemiology, natural history, associated genes, phenotypes etc... to a specific clinical entity in the selected language.
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: Rare diseases and cross-referencing
+    description: Product 1
+    externalDocs:
+      description: Search for clinical entity informations and alignements with other terminologies in English, french, german, spanish,dutch, italian, portguese, polish and czech are available.The result is a collection of data including ORPHAcode, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language.
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: Classifications of rare diseases
+    description: Product 3
+    externalDocs:
+      description: Search for Orphanet classifications, a multi-hierarchical and polyparental system built on the Orphanet nomenclature and organised around the major medical specialties and based on clinical criteria according to diagnostic and therapeutic relevance. The result is a collection of data including the ORPHAcode and the preferred term of the clinical entity with a data set or each classification where the clinical entity is present (Hchid, the unique identifier of the classification, name of the classification, ORPHAcode and preferred term of the n+1 and the n-1 clinical entities).
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: Rare diseases and associated phenotypes
+    description: Product 4
+    externalDocs:
+      description: Search for rare diseases annotated with Human Phenotype Ontology (HPO) terms. The result is the collection of HPO phenotypes characterized by frequency (obligate, very frequent, frequent, occasional, very rare or excluded) and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic sign of the rare disease. Source (PMID references), the date and the validation’s status of the association between the rare disease and HPO terms is also available.
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: Rare diseases and associated gene
+    description: Product 6
+    externalDocs:
+      description: Search for rare diseases and their associated genes. The result is a collection of data including the genetic international nomenclature, the gene typology, the chromosomal location, the cross-mappings with other international genetic databases, the relationship between genes and the searched disease.
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: Genes associated to rare diseases
+    description: Genes and related informations
+    externalDocs:
+      description: Search for gene informations. The result is a collection of data including symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases are also available.typolo and its relationships with rare diseases.
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+  - name: Epidemiological data on rare diseases
+    description: Product 9
+    externalDocs:
+      description: Search for epidemiological data or natural history of a rare disease. The result is all informations on point prevalence, birth prevalence, lifelong prevalence and incidence, or the number of cases/families reported together with their respective intervals per geographical area (country, continent) per clinicla entities. Inheritance, interval average age of onset and interval average age of death of clinical entities are also available.
+      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 paths:
   /product1/language/{language}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Rare diseases and cross-referencing
-      summary: Get all clinical entities informations and their cross-referencing
-        in the selected language.
-      description: The result is a collection of rare diseases informations including
-        ORPHAcode, the stable URL pointing to the specific page of the clinical entity
-        on the Orphanet website, preferred term, synonyms, definition, the group and
-        type, and the characterisation of the alignment between the clinical entity
-        and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language
+      summary: Get all clinical entities informations and their cross-referencing in the selected language.
+      description: The result is a collection of rare diseases informations including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language
       operationId: product1_all_orphacode
       parameters:
       - name: language
@@ -130,10 +100,10 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
   /product1/list_orphacode/language/{language}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Rare diseases and cross-referencing
       summary: Get the list of ORPHAcodes available in the selected language.
       description: The result is a collection of ORPHAcodes in the selected language.
@@ -174,32 +144,16 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
   /product1/orphacode/{orphacode}/language/{language}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Rare diseases and cross-referencing
-      summary: Get informations and cross-referencing of a clinical entity searching
-        by its ORPHAcode in the selected language.
-      description: The result is a set of data including ORPHAcode, the stable URL
-        pointing to the specific page of the clinical entity on the Orphanet website,
-        preferred term, synonyms, definition, the group and type, and the characterisation
-        of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra,
-        and OMIM systems in the selected language.
+      summary: Get informations and cross-referencing of a clinical entity searching by its ORPHAcode in the selected language.
+      description: The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language.
       operationId: product1_by_orphacode
       parameters:
-      - name: orphacode
-        in: path
-        description: a unique and time-stable numerical identifier attributed randomly
-          by the database upon creation of the entity.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
-          format: int32
+      - $ref: '#/components/parameters/orphacode'
       - name: language
         in: path
         description: Specify the language in the list supported by Orphanet (CS, DE,
@@ -235,15 +189,13 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
   /classification/list_hchid:
     get:
       tags:
+      - Orphanet Rare diseases
       - Classifications of rare diseases
-      summary: Get the list of identifiers of all Orphanet Rare Diseases Classifications
-        available.
-      description: The result is a collection of the unique identifier of each rare
-        diseases classification available.
+      summary: Get the list of identifiers of all Orphanet Rare Diseases Classifications available.
+      description: The result is a collection of the unique identifier of each rare diseases classification available.
       operationId: hierarchy_list_hchid
       responses:
         "200":
@@ -260,27 +212,16 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
   /classification/list_orphacode/hchid/{hchid}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Classifications of rare diseases
       summary: Get the list of ORPHAcodes available for a selected classification.
-      description: The result is a collection of ORPHAcodes present in the selected
-        classification.
+      description: The result is a collection of ORPHAcodes present in the selected classification.
       operationId: hierarchy_list_orphacode
       parameters:
-      - name: hchid
-        in: path
-        description: The hierarchy ID (hchID) is a specific identifier attributed
-          to an Orphanet classification.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
+      - $ref: '#/components/parameters/hchid'
       responses:
         "200":
           description: Successful operation
@@ -296,27 +237,16 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
   /classification/hchid/{hchid}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Classifications of rare diseases
       summary: Get the organisation of all ORPHAcodes available for a selected classification.
-      description: The result is a collection of ORPHAcodes organised as children
-        and parents in the selected classification.
+      description: The result is a collection of ORPHAcodes organised as children and parents in the selected classification.
       operationId: hierarchy_all_orphacode
       parameters:
-      - name: hchid
-        in: path
-        description: The hierarchy ID (hchID) is a specific identifier attributed
-          to an Orphanet classification.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
+      - $ref: '#/components/parameters/hchid'
       responses:
         "200":
           description: Successful operation
@@ -332,10 +262,10 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
   /classification/orphacode/{orphacode}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Classifications of rare diseases
       summary: Hierarchical classification of clinical entities by ORPHAcode in all
         classifications
@@ -344,18 +274,7 @@ paths:
         entity ORPHAcode number, the list of its children and parents.
       operationId: hierarchy_by_orphacode
       parameters:
-      - name: orphacode
-        in: path
-        description: a unique and time-stable numerical identifier attributed randomly
-          by the database upon creation of the entity.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
-          format: int32
+      - $ref: '#/components/parameters/orphacode'
       responses:
         "200":
           description: Successful operation
@@ -371,10 +290,10 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
   /classification/orphacode/{orphacode}/hchid/{hchid}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Classifications of rare diseases
       summary: Hierarchical classification of clinical entities by ORPHAcode in selected
         classification
@@ -382,29 +301,8 @@ paths:
         parents and childs clinical entity in the selected Orphanet's classification
       operationId: hierarchy_id_by_orphacode
       parameters:
-      - name: orphacode
-        in: path
-        description: a unique and time-stable numerical identifier attributed randomly
-          by the database upon creation of the entity.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
-          format: int32
-      - name: hchid
-        in: path
-        description: The hierarchy ID (hchID) is a specific identifier attributed
-          to an Orphanet classification.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
+      - $ref: '#/components/parameters/orphacode'
+      - $ref: '#/components/parameters/hchid'
       responses:
         "200":
           description: Successful operation
@@ -420,19 +318,13 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
   /phenotype/language/{language}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Rare diseases and associated phenotypes
-      summary: Get all clinical entities with their associated phenotypes in the selected
-        language.
-      description: The result is a collection of clinical entities with their associated
-        HPO phenotypes characterized by frequency (obligate, very frequent, frequent,
-        occasional, very rare or excluded) and whether the annotated HPO term is a
-        major diagnostic criterion or a pathognomonic sign of the rare disease. Source
-        (PMID references), the date and the validation’s status of the association
-        between the rare disease and HPO terms is also available.
+      summary: Get all clinical entities with their associated phenotypes in the selected language.
+      description: The result is a collection of clinical entities with their associated HPO phenotypes characterized by frequency (obligate, very frequent, frequent, occasional, very rare or excluded) and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic sign of the rare disease. Source (PMID references), the date and the validation’s status of the association between the rare disease and HPO terms is also available.
       operationId: phenotype_all_orphacode
       parameters:
       - name: language
@@ -470,13 +362,12 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_phenotypes_controller
   /phenotype/list_orphacode/language/{language}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Rare diseases and associated phenotypes
-      summary: Get list of ORPHAcodes associated to HPO phenotypes in the selected
-        language.
+      summary: Get list of ORPHAcodes associated to HPO phenotypes in the selected language.
       description: The result is a collection of ORPHAcodes in the selected language.
       operationId: phenotype_list_orphacode
       parameters:
@@ -515,35 +406,16 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_phenotypes_controller
   /phenotype/orphacode/{orphacode}/language/{language}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Rare diseases and associated phenotypes
-      summary: Get informations and associated HPO phenotypes of a clinical entity
-        searching by its ORPHAcode in the selected language.
-      description: The result is a set of data including ORPHAcode, the stable URL
-        pointing to the specific page of the clinical entity on the Orphanet website,
-        preferred term, the group and type, and the associated HPO phenotypes. The
-        annotation is characterized by frequency (obligate, very frequent, frequent,
-        occasional, very rare or excluded) and whether the annotated HPO term is a
-        major diagnostic criterion or a pathognomonic sign of the rare disease. Source
-        (PMID references), the date and the validation’s status of the association
-        between the rare disease and HPO terms is also made available.
+      summary: Get informations and associated HPO phenotypes of a clinical entity searching by its ORPHAcode in the selected language.
+      description: The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, the group and type, and the associated HPO phenotypes. The annotation is characterized by frequency (obligate, very frequent, frequent, occasional, very rare or excluded) and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic sign of the rare disease. Source (PMID references), the date and the validation’s status of the association between the rare disease and HPO terms is also made available.
       operationId: phenotype_by_orphacode
       parameters:
-      - name: orphacode
-        in: path
-        description: a unique and time-stable numerical identifier attributed randomly
-          by the database upon creation of the entity.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
-          format: int32
+      - $ref: '#/components/parameters/orphacode'
       - name: language
         in: path
         description: Specify the language in the list supported by Orphanet (CS, DE,
@@ -579,17 +451,13 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_phenotypes_controller
   /associatedgene:
     get:
       tags:
+      - Orphanet Rare diseases
       - Rare diseases and associated gene
       summary: Get all rare diseases associated to at least one gene.
-      description: The result is a collection of clinical entities (ORPHAcode, preferred
-        term, the stable URL pointing to the specific page of the clinical entity
-        on the Orphanet website, group and type) and their genes associations. For
-        each gene, symbol, synonyms, name, typology, chromosomal location and cross-mappings
-        with other international genetic databases are also available.
+      description: The result is a collection of clinical entities (ORPHAcode, preferred term, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, group and type) and their genes associations. For each gene, symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases are also available.
       operationId: associatedgene_all_orphacode
       responses:
         "200":
@@ -606,14 +474,13 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
   /associatedgene/list_orphacode:
     get:
       tags:
+      - Orphanet Rare diseases
       - Rare diseases and associated gene
       summary: Get the list of ORPHAcodes associated to at least one gene.
-      description: The result is a collection of ORPHAcodes associated to at least
-        one gene.
+      description: The result is a collection of ORPHAcodes associated to at least one gene.
       operationId: associatedgene_list_orphacode
       responses:
         "200":
@@ -630,32 +497,16 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
   /associatedgene/orphacode/{orphacode}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Rare diseases and associated gene
-      summary: Get associated genes and genes information of a clinical entity searching
-        by its ORPHAcode.
-      description: The result is a set of data includes ORPhacode, preferred term,
-        expertlink, group and type of the selected clinical entity, relationship between
-        genes and the searched disease and symbol, synonyms, name, typology, chromosomal
-        location and cross-mappings with other international genetic databases of
-        selected genes.
+      summary: Get associated genes and genes information of a clinical entity searching by its ORPHAcode.
+      description: The result is a set of data includes ORPhacode, preferred term, expertlink, group and type of the selected clinical entity, relationship between genes and the searched disease and symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases of selected genes.
       operationId: associatedgene_orphacode
       parameters:
-      - name: orphacode
-        in: path
-        description: a unique and time-stable numerical identifier attributed randomly
-          by the database upon creation of the entity.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
-          format: int32
+      - $ref: '#/components/parameters/orphacode'
       responses:
         "200":
           description: Successful operation
@@ -671,16 +522,12 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
   /gene:
     get:
       tags:
       - Genes associated to rare diseases
       summary: Get all genes associated to at leat one clinical entity and its information.
-      description: The result is a set of data includes symbol, synonyms, name, typology,
-        chromosomal location and cross-mappings with other international genetic databases
-        of selected genes and their relationship to clinical entities. For clinical
-        entity, ORPhacode, preferred term, expertlink, group and type are also available.
+      description: The result is a set of data includes symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases of selected genes and their relationship to clinical entities. For clinical entity, ORPhacode, preferred term, expertlink, group and type are also available.
       operationId: gene_all_symbol
       responses:
         "200":
@@ -697,14 +544,12 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.genes_associated_to_rare_diseases_controller
   /gene/list_symbol:
     get:
       tags:
       - Genes associated to rare diseases
       summary: Get all symbols of genes associated to at leat one clinical entity.
-      description: The result is a list of gene symbols (official HGNC-approved gene
-        symbols) associated to at least one clinical entity.
+      description: The result is a list of gene symbols (official HGNC-approved gene symbols) associated to at least one clinical entity.
       operationId: gene_list_symbol
       responses:
         "200":
@@ -721,17 +566,12 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.genes_associated_to_rare_diseases_controller
   /gene/symbol/{symbol}:
     get:
       tags:
       - Genes associated to rare diseases
-      summary: Get genes informations and associated clinical entity searching by
-        gene symbol.
-      description: The result is a set of data includes symbol, synonyms, name, typology,
-        chromosomal location and cross-mappings with other international genetic databases
-        of selected genes and their relationship to clinical entities. For clinical
-        entity, ORPhacode, preferred term, expertlink, group and type are also available.
+      summary: Get genes informations and associated clinical entity searching by gene symbol.
+      description: The result is a set of data includes symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases of selected genes and their relationship to clinical entities. For clinical entity, ORPhacode, preferred term, expertlink, group and type are also available.
       operationId: gene_by_symbol
       parameters:
       - name: symbol
@@ -757,18 +597,13 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.genes_associated_to_rare_diseases_controller
   /epidemiology/language/{language}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Epidemiological data on rare diseases
-      summary: Get all clinical entities with their epidemiological dataset in the
-        selected language.
-      description: The result is a collection of clinical entities (ORPhacode, preferred
-        term, expertlink) and associated epidemiological data characterized as point
-        prevalence, birth prevalence, lifelong prevalence and incidence, or the number
-        of cases/families reported together with their respective intervals per geographical
-        area (country, continent) and translated in the selected language.
+      summary: Get all clinical entities with their epidemiological dataset in the selected language.
+      description: The result is a collection of clinical entities (ORPhacode, preferred term, expertlink) and associated epidemiological data characterized as point prevalence, birth prevalence, lifelong prevalence and incidence, or the number of cases/families reported together with their respective intervals per geographical area (country, continent) and translated in the selected language.
       operationId: epidemiology_all_orphacode
       parameters:
       - name: language
@@ -806,13 +641,12 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
   /epidemiology/list_orphacode/language/{language}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Epidemiological data on rare diseases
-      summary: Get the list of ORPHAcodes associated to at least one epidemiological
-        data.
+      summary: Get the list of ORPHAcodes associated to at least one epidemiological data.
       description: The result is a collection of ORPHAcodes in the selected language.
       operationId: epidemiology_list_orphacode
       parameters:
@@ -851,33 +685,16 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
   /epidemiology/orphacode/{orphacode}/language/{language}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Epidemiological data on rare diseases
-      summary: Get epideliological informations of a clinical entity searching by
-        its ORPHAcode in the selected language.
-      description: The result is a set of data including ORPHAcode, the stable URL
-        pointing to the specific page of the clinical entity on the Orphanet website,
-        preferred term, the group and type, and the associated point prevalence, birth
-        prevalence, lifelong prevalence and incidence, or the number of cases/families
-        reported together with their respective intervals per geographical area (country,
-        continent) when exist.
+      summary: Get epideliological informations of a clinical entity searching by its ORPHAcode in the selected language.
+      description: The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, the group and type, and the associated point prevalence, birth prevalence, lifelong prevalence and incidence, or the number of cases/families reported together with their respective intervals per geographical area (country, continent) when exist.
       operationId: epidemiology_by_orphacode
       parameters:
-      - name: orphacode
-        in: path
-        description: a unique and time-stable numerical identifier attributed randomly
-          by the database upon creation of the entity.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
-          format: int32
+      - $ref: '#/components/parameters/orphacode'
       - name: language
         in: path
         description: Specify the language in the list supported by Orphanet (CS, DE,
@@ -913,17 +730,13 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
   /natural_history/language/{language}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Epidemiological data on rare diseases
-      summary: Get all clinical entities with their natural history data in the selected
-        language.
-      description: The result is a collection of clinical entities (ORPhacode, preferred
-        term, expertlink) and associated natural history data characterized by informations
-        on inheritance, interval average age of onset and interval average age of
-        death.
+      summary: Get all clinical entities with their natural history data in the selected language.
+      description: The result is a collection of clinical entities (ORPhacode, preferred term, expertlink) and associated natural history data characterized by informations on inheritance, interval average age of onset and interval average age of death.
       operationId: natural_history_all_orphacode
       parameters:
       - name: language
@@ -961,13 +774,12 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
   /natural_history/list_orphacode/language/{language}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Epidemiological data on rare diseases
-      summary: Get the list of ORPHAcodes associated to at least one natural history
-        data.
+      summary: Get the list of ORPHAcodes associated to at least one natural history data.
       description: The result is a collection of ORPHAcodes in the selected language.
       operationId: natural_history_list_orphacode
       parameters:
@@ -1006,31 +818,16 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
   /natural_history/orphacode/{orphacode}/language/{language}:
     get:
       tags:
+      - Orphanet Rare diseases
       - Epidemiological data on rare diseases
-      summary: Get natural history informations of a clinical entity searching by
-        its ORPHAcode in the selected language.
-      description: The result is a set of data including ORPHAcode, the stable URL
-        pointing to the specific page of the clinical entity on the Orphanet website,
-        preferred term, the group and type, and the associated inheritance, age of
-        onset and age of death when exist.
+      summary: Get natural history informations of a clinical entity searching by its ORPHAcode in the selected language.
+      description: The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, the group and type, and the associated inheritance, age of onset and age of death when exist.
       operationId: natural_history_by_orphacode
       parameters:
-      - name: orphacode
-        in: path
-        description: a unique and time-stable numerical identifier attributed randomly
-          by the database upon creation of the entity.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          minimum: 0
-          exclusiveMinimum: true
-          type: integer
-          format: int32
+      - $ref: '#/components/parameters/orphacode'
       - name: language
         in: path
         description: Specify the language in the list supported by Orphanet (CS, DE,
@@ -1066,7 +863,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
 components:
   schemas:
     product1_list:
@@ -1095,8 +891,7 @@ components:
           type: array
           items:
             type: string
-            example: '["AD OSMED", "Stickler syndrome type 3", "Stickler syndrome,
-              non-ocular type]'
+            example: '["AD OSMED", "Stickler syndrome type 3", "Stickler syndrome, non-ocular type]'
         DisorderType:
           $ref: '#/components/schemas/product1_DisorderType'
         DisorderNature:
@@ -1156,8 +951,7 @@ components:
         DisorderNature: Clinical entity
         DisorderGroup: Disorder
         Synonym:
-        - '["AD OSMED", "Stickler syndrome type 3", "Stickler syndrome, non-ocular
-          type"]'
+        - '["AD OSMED", "Stickler syndrome type 3", "Stickler syndrome, non-ocular type"]'
         TextualInformation:
         - Definition: Stickler syndrome type 3 is a rare, genetic, multiple congenital
             anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism
@@ -1200,26 +994,21 @@ components:
           type: array
           items:
             type: string
-            example: '[247]'
+            example: [247]
         childs:
           type: array
-          example:
-          - 293888
-          - 293899
-          - 293910
           items:
             type: string
+          example: [293888, 293899, 293910]
       example:
         ORPHAcode: 217656
         hch_id: 146
         hch_tag: Orphanet classification of rare cardiac diseases
         name: Familial isolated arrhythmogenic right ventricular dysplasia
         childs:
-        - - 293888
-          - 293899
-          - 293910
+        - [293888, 293899, 293910]
         parents:
-        - - 247
+        - [247]
     product4_list:
       type: array
       items:
@@ -1240,10 +1029,10 @@ components:
           example: "y"
         ValidationDate:
           type: string
-          example: '{}'
+          example: 2016-10-19 00:00:00.0
       example:
         ValidationStatus: "y"
-        ValidationDate: {}
+        ValidationDate: 2016-10-19 00:00:00.0
         Online: "y"
         Disorder:
           ORPHAcode: 881
@@ -1301,8 +1090,7 @@ components:
             - Reference: ENSG00000166813
               Source: Ensembl
             Symbol: KIF7
-            Synonym:
-            - JBTS12
+            Synonym: ["JBTS12"]
             GeneType: gene with protein product
             Locus:
             - GeneLocus: 15q26.1
@@ -1320,8 +1108,7 @@ components:
             - Reference: ENSG00000166813
               Source: Ensembl
             Symbol: KIF7
-            Synonym:
-            - JBTS12
+            Synonym: ["JBTS12"]
             GeneType: gene with protein product
             Locus:
             - GeneLocus: 15q26.1
@@ -1355,7 +1142,7 @@ components:
           type: array
           items:
             type: string
-            example: '["JBTS12"]'
+            example: ["JBTS12"]
         GeneType:
           type: string
           example: gene with protein product
@@ -1397,8 +1184,7 @@ components:
             Name: Multiple epiphyseal dysplasia, Al-Gazali type
           DisorderGeneAssociationType: Disease-causing germline mutation(s) in
           SourceOfValidation: 22587682[PMID]
-        Synonym:
-        - JBTS12
+        Synonym: ["JBTS12"]
         GeneType: gene with protein product
         Locus:
         - GeneLocus: 15q26.1
@@ -1432,32 +1218,26 @@ components:
           example: Disorder
         AverageAgeOfOnset:
           type: array
-          example:
-          - All ages
           items:
             type: string
+          example: ["All ages"]
         AverageAgeOfDeath:
           type: array
-          example:
-          - any ages
           items:
             type: string
+          example: ["any ages"]
         TypeOfInheritance:
           type: array
-          example:
-          - Autosomal dominant
           items:
             type: string
+          example: ["Autosomal dominant"]
       example:
-        AverageAgeOfOnset:
-        - All ages
-        AverageAgeOfDeath:
-        - any ages
+        AverageAgeOfOnset: ["All ages"]
+        AverageAgeOfDeath: ["any ages"]
         ORPHAcode: 58
         ExpertLink: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58
         DisorderGroup: Disorder
-        TypeOfInheritance:
-        - Autosomal dominant
+        TypeOfInheritance: ["Autosomal dominant"]
         DisorderType: Disease
         Name: Alexander disease
     product9_prev_list:
@@ -1511,24 +1291,19 @@ components:
         Name: Multiple epiphyseal dysplasia, Al-Gazali type
     list_orphacode:
       type: array
-      example:
-      - 58
-      - 558
       items:
         type: integer
+      example: [58, 558]
     list_hchid:
       type: array
-      example:
-      - 146
-      - 233
       items:
         type: integer
+      example: [146, 233]
     list_symbol:
       type: array
-      example:
-      - KIF7
       items:
         type: string
+      example: ["KIF7"]
     product1_DisorderFlag:
       type: object
       properties:
@@ -1751,7 +1526,7 @@ components:
           type: array
           items:
             type: string
-            example: '["JBTS12"]'
+            example: ["JBTS12"]
         GeneType:
           type: string
           example: gene with protein product
@@ -1771,7 +1546,7 @@ components:
           Source: Ensembl
         Symbol: KIF7
         Synonym:
-        - - JBTS12
+        - ["JBTS12"]
         GeneType: gene with protein product
         Locus:
         - GeneLocus: 15q26.1
@@ -1803,7 +1578,7 @@ components:
             Source: Ensembl
           Symbol: KIF7
           Synonym:
-          - - JBTS12
+          - ["JBTS12"]
           GeneType: gene with protein product
           Locus:
           - GeneLocus: 15q26.1
@@ -1904,8 +1679,7 @@ components:
     hchid:
       name: hchid
       in: path
-      description: The hierarchy ID (hchID) is a specific identifier attributed to
-        an Orphanet classification.
+      description: The hierarchy ID (hchID) is a specific identifier attributed to an Orphanet classification.
       required: true
       style: simple
       explode: false
@@ -1937,8 +1711,7 @@ components:
     orphacode:
       name: orphacode
       in: path
-      description: a unique and time-stable numerical identifier attributed randomly
-        by the database upon creation of the entity.
+      description: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
       required: true
       style: simple
       explode: false
@@ -1967,4 +1740,3 @@ components:
       name: ADMIN-API-KEY
       in: header
       x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_AdminSecurity
-
