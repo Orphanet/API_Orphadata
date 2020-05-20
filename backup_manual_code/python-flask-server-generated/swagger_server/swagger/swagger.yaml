@@ -1,17 +1,17 @@
 openapi: 3.0.1
 info:
   title: Orphadata API
-  description: Orphadata provides APIs for the scientific community with comprehensive, quality data sets related to rare diseases and orphan drugs from the Orphanet knowledge base.
-  termsOfService: http://www.orphadata.org/cgi-bin/index.php
+  description: Provide API to Orphadata
+  termsOfService: https://www.orpha.net/consor/cgi-bin/Education_AboutOrphanet.php?lng=EN
   contact:
-    name: Orphadata team
-    email: data.orphanet@inserm.fr
+    name: maintainer
+    email: cyril.bigot@inserm.fr
   license:
-    name: Commons Attribution 4.0 International (CC BY 4.0)
-    url: https://creativecommons.org/licenses/by/4.0/
+    name: CC-BY-NC-SA
+    url: https://creativecommons.org/licenses/by-nc-sa/3.0/fr/
   version: 1.0.0
 externalDocs:
-  description: For further information, consult Orphadata website and other services from Orphanet
+  description: For further information, checks Orphadata main site
   url: http://www.orphadata.org/cgi-bin/index.php
 servers:
 - url: /
@@ -20,40 +20,40 @@ security:
 - UserSecurity: []
 - AdminSecurity: []
 tags:
-- name: Orphanet Rare diseases
-  description: Clinical entities and related informations.
-  externalDocs: 
-    description: Search for Clinical entities and related informations in english, french, german, spanish,dutch, italian, portguese, polish or czech. The result is a collection of data including ORPHAcode, preferred term, synonyms, definition, belonging to a classification, epidemiology, natural history, associated genes, phenotypes etc... to a specific clinical entity in the selected language.
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Rare diseases and cross-referencing
-  description: Product 1
+- name: clinical entity
+  description: Full list of API operation for clinical entities
   externalDocs:
-    description: Search for clinical entity informations and alignements with other terminologies in English, french, german, spanish,dutch, italian, portguese, polish and czech are available.The result is a collection of data including ORPHAcode, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language.
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Classifications of rare diseases
-  description: Product 3
+    description: Disorder or Disease object according to Orphanet Ontology
+    url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C2991&viewMode=All&siblings=false
+- name: product1
+  description: Operations for product 1
   externalDocs:
-    description: Search for Orphanet classifications, a multi-hierarchical and polyparental system built on the Orphanet nomenclature and organised around the major medical specialties and based on clinical criteria according to diagnostic and therapeutic relevance. The result is a collection of data including the ORPHAcode and the preferred term of the clinical entity with a data set or each classification where the clinical entity is present (Hchid, the unique identifier of the classification, name of the classification, ORPHAcode and preferred term of the n+1 and the n-1 clinical entities).
+    description: Disorder or Disease object according to Orphanet Ontology
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Rare diseases and associated phenotypes
-  description: Product 4
+- name: orphaclassif
+  description: Hierarchical classification, Product 3
   externalDocs:
-    description: Search for rare diseases annotated with Human Phenotype Ontology (HPO) terms. The result is the collection of HPO phenotypes characterized by frequency (obligate, very frequent, frequent, occasional, very rare or excluded) and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic sign of the rare disease. Source (PMID references), the date and the validation’s status of the association between the rare disease and HPO terms is also available. 
+    description: Orphanet's hierarchical classification of clinical entities
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Rare diseases and associated gene
-  description: Product 6
+- name: phenotype
+  description: Operations for phenotype, Product 4
   externalDocs:
-    description: Search for rare diseases and their associated genes. The result is a collection of data including the genetic international nomenclature, the gene typology, the chromosomal location, the cross-mappings with other international genetic databases, the relationship between genes and the searched disease.
+    description: Phenotypes referenced by Orphanet, Human Phenotype Ontology (HPO)
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Genes associated to rare diseases
-  description: Genes and related informations
+- name: clinical entity associated gene
+  description: Operations for clinical entity associated genes, Product 6
   externalDocs:
-    description: Search for gene informations. The result is a collection of data including symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases are also available.typolo and its relationships with rare diseases.
+    description: Genes referenced by Orphanet
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Epidemiologicald data on rare diseases
-  description: Product 9
+- name: gene
+  description: Full list of API operation for genes, Product 6
   externalDocs:
-    description: Search for epidemiological data or natural history of a rare disease. The result is all informations on point prevalence, birth prevalence, lifelong prevalence and incidence, or the number of cases/families reported together with their respective intervals per geographical area (country, continent) per clinicla entities. Inheritance, interval average age of onset and interval average age of death of clinical entities are also available.
+    description: Gene referenced by Orphanet
+    url: https://www.ebi.ac.uk/ols/ontologies/ncit/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FNCIT_C16612
+- name: epidemiology
+  description: Operations for epidemiology, Product 9
+  externalDocs:
+    description: Epidemiological data referenced by Orphanet
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 paths:
   /product1/language/{language}:
@@ -61,8 +61,9 @@ paths:
       tags:
       - clinical entity
       - product1
-      summary: Get all clinical entities informations and their cross-referencing in the selected language.
-      description: The result is a collection of rare diseases informations including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language
+      summary: Get all product 1 in selected language
+      description: Get the list of all clinical entity referenced in product 1 for
+        the selected language
       operationId: product1_all_orphacode
       parameters:
       - name: language
@@ -106,8 +107,9 @@ paths:
       tags:
       - clinical entity
       - product1
-      summary: Get the list of ORPHAcodes available in the selected language.
-      description: The result is a collection of ORPHAcodes in the selected language. 
+      summary: List ORPHAcode for product 1 in selected language
+      description: Get the list of ORPHAcode usable to query product 1 in selected
+        language
       operationId: product1_list_orphacode
       parameters:
       - name: language
@@ -151,13 +153,15 @@ paths:
       tags:
       - clinical entity
       - product1
-      summary: Get informations and cross-referencing of a clinical entity searching by its ORPHAcode in the selected language.
-      description: The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language.
+      summary: clinical entity by ORPHAcode for product 1
+      description: Access every information related to a clinical entity object by
+        its ORPHAcode
       operationId: product1_by_orphacode
       parameters:
       - name: orphacode
         in: path
-        description: The ORPHAcode is a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+        description: The ORPHAcode is a unique identifier to reference an Orphanet's
+          concept
         required: true
         style: simple
         explode: false
@@ -207,8 +211,9 @@ paths:
       tags:
       - clinical entity
       - orphaclassif
-      summary: Get the list of identifiers of all Orphanet Rare Diseases Classifications available.
-      description: The result is a collection of the unique identifier of each rare diseases classification available.
+      summary: List hierarchical ID (hchid)
+      description: Get the list of hierarchical ID (hchid) usable to select an Orphanet's
+        classification
       operationId: hierarchy_list_hchid
       responses:
         "200":
@@ -231,13 +236,14 @@ paths:
       tags:
       - clinical entity
       - orphaclassif
-      summary: Get the list of ORPHAcodes available for a selected classification.
-      description: The result is a collection of ORPHAcodes present in the selected classification.
+      summary: List ORPHAcode for selected classification
+      description: Get the list of ORPHAcode usable to query the selected classification
       operationId: hierarchy_list_orphacode
       parameters:
       - name: hchid
         in: path
-        description: The hierarchy ID (hchID) is a specific identifier attributed to an Orphanet classification.
+        description: The hierarchy ID (hchID) is a number which refers to an Orphanet
+          classification
         required: true
         style: simple
         explode: false
@@ -266,13 +272,15 @@ paths:
       tags:
       - clinical entity
       - orphaclassif
-      summary: Get the organisation of all ORPHAcodes available for a selected classification.
-      description: The result is a collection of ORPHAcodes organised as children and parents in the selected classification.
+      summary: Get the full selected classification
+      description: Get the list of all clinical entity referenced in orphaclassif
+        for the selected classification
       operationId: hierarchy_all_orphacode
       parameters:
       - name: hchid
         in: path
-        description: The hierarchy ID (hchID) is a specific identifier attributed to an Orphanet classification.
+        description: The hierarchy ID (hchID) is a number which refers to an Orphanet
+          classification
         required: true
         style: simple
         explode: false
@@ -310,7 +318,8 @@ paths:
       parameters:
       - name: orphacode
         in: path
-        description: The ORPHAcode is a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+        description: The ORPHAcode is a unique identifier to reference an Orphanet's
+          concept
         required: true
         style: simple
         explode: false
@@ -348,7 +357,8 @@ paths:
       parameters:
       - name: orphacode
         in: path
-        description: The ORPHAcode is a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+        description: The ORPHAcode is a unique identifier to reference an Orphanet's
+          concept
         required: true
         style: simple
         explode: false
@@ -359,7 +369,8 @@ paths:
           format: int32
       - name: hchid
         in: path
-        description: The hierarchy ID (hchID) is a specific identifier attributed to an Orphanet classification.
+        description: The hierarchy ID (hchID) is a number which refers to an Orphanet
+          classification
         required: true
         style: simple
         explode: false
@@ -388,8 +399,9 @@ paths:
       tags:
       - clinical entity
       - phenotype
-      summary: Get all clinical entities with their associated phenotypes in the selected language.
-      description: The result is a collection of clinical entities with their associated HPO phenotypes characterized by frequency (obligate, very frequent, frequent, occasional, very rare or excluded) and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic sign of the rare disease. Source (PMID references), the date and the validation’s status of the association between the rare disease and HPO terms is also available.
+      summary: Get all phenotype in selected language
+      description: Get the list of all clinical entity referenced in phenotype for
+        the selected language
       operationId: phenotype_all_orphacode
       parameters:
       - name: language
@@ -433,8 +445,9 @@ paths:
       tags:
       - clinical entity
       - phenotype
-      summary: Get list of ORPHAcodes associated to HPO phenotypes in the selected language. 
-      description: The result is a collection of ORPHAcodes in the selected language.
+      summary: List ORPHAcode for phenotype in selected language
+      description: Get the list of ORPHAcode usable to query phenotype in selected
+        language
       operationId: phenotype_list_orphacode
       parameters:
       - name: language
@@ -478,13 +491,14 @@ paths:
       tags:
       - clinical entity
       - phenotype
-      summary: Get informations and associated HPO phenotypes of a clinical entity searching by its ORPHAcode in the selected language.
-      description: The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, the group and type, and the associated HPO phenotypes. The annotation is characterized by frequency (obligate, very frequent, frequent, occasional, very rare or excluded) and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic sign of the rare disease. Source (PMID references), the date and the validation’s status of the association between the rare disease and HPO terms is also made available.
+      summary: Disorder by ORPHAcode with its associated phenotype
+      description: Access every information related to a clinical entity by its ORPHAcode
       operationId: phenotype_by_orphacode
       parameters:
       - name: orphacode
         in: path
-        description: The ORPHAcode is a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+        description: The ORPHAcode is a unique identifier to reference an Orphanet's
+          concept
         required: true
         style: simple
         explode: false
@@ -534,8 +548,8 @@ paths:
       tags:
       - clinical entity
       - clinical entity associated gene
-      summary: Get all rare diseases associated to at least one gene.
-      description: The result is a collection of clinical entities (ORPHAcode, preferred term, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, group and type) and their genes associations. For each gene, symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases are also available.
+      summary: Get all associatedgene
+      description: Get the list of all clinical entity referenced in associatedgene
       operationId: associatedgene_all_orphacode
       responses:
         "200":
@@ -558,8 +572,9 @@ paths:
       tags:
       - clinical entity
       - clinical entity associated gene
-      summary: Get the list of ORPHAcodes associated to at least one gene.
-      description: The result is a collection of ORPHAcodes associated to at least one gene.
+      summary: List ORPHAcode for clinical entity associated gene
+      description: Get the list of ORPHAcode usable to query clinical entity associated
+        gene in selected language
       operationId: associatedgene_list_orphacode
       responses:
         "200":
@@ -582,13 +597,14 @@ paths:
       tags:
       - clinical entity
       - clinical entity associated gene
-      summary: Get associated genes and genes information of a clinical entity searching by its ORPHAcode.
-      description: The result is a set of data includes ORPhacode, preferred term, expertlink, group and type of the selected clinical entity, relationship between genes and the searched disease and symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases of selected genes.
+      summary: Disorder by ORPHAcode with associated genes
+      description: Access every information related to a clinical entity by its ORPHAcode
       operationId: associatedgene_orphacode
       parameters:
       - name: orphacode
         in: path
-        description: The ORPHAcode is a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+        description: The ORPHAcode is a unique identifier to reference an Orphanet's
+          concept
         required: true
         style: simple
         explode: false
@@ -617,8 +633,8 @@ paths:
     get:
       tags:
       - gene
-      summary: Get all genes associated to at leat one clinical entity and its information.
-      description: The result is a set of data includes symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases of selected genes and their relationship to clinical entities. For clinical entity, ORPhacode, preferred term, expertlink, group and type are also available. 
+      summary: Get all genes
+      description: Get the list of all clinical entity referenced in gene
       operationId: gene_all_symbol
       responses:
         "200":
@@ -640,8 +656,8 @@ paths:
     get:
       tags:
       - gene
-      summary: Get all symbols of genes associated to at leat one clinical entity.
-      description: The result is a list of gene symbols (official HGNC-approved gene symbols) associated to at least one clinical entity.
+      summary: List gene symbol to query by gene
+      description: Get the list of gene symbol usable to query by gene
       operationId: gene_list_symbol
       responses:
         "200":
@@ -663,8 +679,8 @@ paths:
     get:
       tags:
       - gene
-      summary: Get genes informations and associated clinical entity searching by gene symbol.
-      description: The result is a set of data includes symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases of selected genes and their relationship to clinical entities. For clinical entity, ORPhacode, preferred term, expertlink, group and type are also available.
+      summary: Gene by gene symbol with associated rare disorder
+      description: Access every information related to a gene by its symbol
       operationId: gene_by_symbol
       parameters:
       - name: symbol
@@ -696,8 +712,9 @@ paths:
       tags:
       - clinical entity
       - epidemiology
-      summary: Get all clinical entities with their epidemiological dataset in the selected language.
-      description: The result is a collection of clinical entities (ORPhacode, preferred term, expertlink) and associated epidemiological data characterized as point prevalence, birth prevalence, lifelong prevalence and incidence, or the number of cases/families reported together with their respective intervals per geographical area (country, continent) and translated in the selected language.
+      summary: Get all epidemiology in selected language
+      description: Get the list of all clinical entity referenced in epidemiology
+        for the selected language
       operationId: epidemiology_all_orphacode
       parameters:
       - name: language
@@ -741,8 +758,9 @@ paths:
       tags:
       - clinical entity
       - epidemiology
-      summary: Get the list of ORPHAcodes associated to at least one epidemiological data.
-      description: The result is a collection of ORPHAcodes in the selected language.
+      summary: List ORPHAcode for epidemiology in selected language
+      description: Get the list of ORPHAcode usable to query epidemiology in selected
+        language
       operationId: epidemiology_list_orphacode
       parameters:
       - name: language
@@ -786,13 +804,14 @@ paths:
       tags:
       - clinical entity
       - epidemiology
-      summary: Get epideliological informations of a clinical entity searching by its ORPHAcode in the selected language.
-      description: The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, the group and type, and the associated point prevalence, birth prevalence, lifelong prevalence and incidence, or the number of cases/families reported together with their respective intervals per geographical area (country, continent) when exist.
+      summary: Disorder by ORPHAcode with epidemiological data
+      description: Access every information related to a clinical entity by its ORPHAcode
       operationId: epidemiology_by_orphacode
       parameters:
       - name: orphacode
         in: path
-        description: The ORPHAcode is a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+        description: The ORPHAcode is a unique identifier to reference an Orphanet's
+          concept
         required: true
         style: simple
         explode: false
@@ -842,8 +861,9 @@ paths:
       tags:
       - clinical entity
       - epidemiology
-      summary: Get all clinical entities with their natural history data in the selected language.
-      description: The result is a collection of clinical entities (ORPhacode, preferred term, expertlink) and associated natural history data characterized by informations on inheritance, interval average age of onset and interval average age of death.
+      summary: Get all natural_history in selected language
+      description: Get the list of all clinical entity referenced in natural_history
+        for the selected language
       operationId: natural_history_all_orphacode
       parameters:
       - name: language
@@ -887,8 +907,9 @@ paths:
       tags:
       - clinical entity
       - epidemiology
-      summary: Get the list of ORPHAcodes associated to at least one natural history data.
-      description: The result is a collection of ORPHAcodes in the selected language.
+      summary: List ORPHAcode for natural history in selected language
+      description: Get the list of ORPHAcode usable to query natural history of clinical
+        entity in selected language
       operationId: natural_history_list_orphacode
       parameters:
       - name: language
@@ -932,13 +953,14 @@ paths:
       tags:
       - clinical entity
       - epidemiology
-      summary: Get natural history informations of a clinical entity searching by its ORPHAcode in the selected language.
-      description: The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, the group and type, and the associated inheritance, age of onset and age of death when exist.
+      summary: Disorder by ORPHAcode with age of onset
+      description: Access every information related to a clinical entity by its ORPHAcode
       operationId: natural_history_by_orphacode
       parameters:
       - name: orphacode
         in: path
-        description: The ORPHAcode is a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+        description: The ORPHAcode is a unique identifier to reference an Orphanet's
+          concept
         required: true
         style: simple
         explode: false
@@ -1819,7 +1841,8 @@ components:
     hchid:
       name: hchid
       in: path
-      description: The hierarchy ID (hchID) is a specific identifier attributed to an Orphanet classification.
+      description: The hierarchy ID (hchID) is a number which refers to an Orphanet
+        classification
       required: true
       style: simple
       explode: false
@@ -1851,7 +1874,8 @@ components:
     orphacode:
       name: orphacode
       in: path
-      description: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+      description: The ORPHAcode is a unique identifier to reference an Orphanet's
+        concept
       required: true
       style: simple
       explode: false

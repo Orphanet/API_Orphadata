@@ -1,5 +1,4 @@
 import connexion
-import six
 
 from swagger_server.models.list_hchid import ListHchid  # noqa: E501
 from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
@@ -249,12 +248,19 @@ def hierarchy_list_hchid():  # noqa: E501
 
     index = "en_product3_*"
 
-    response = es.indices.get_alias(index)
+    try:
+        response = es.indices.get_alias(index)
+        if isinstance(response, dict) and not response:
+            response = ("Server Error: Index not found", 404)
+    except elasticsearch.exceptions.NotFoundError:
+        response = ("Server Error: Index not found", 404)
+    except elasticsearch.exceptions.ConnectionError:
+        response = ("Elasticsearch node unavailable", 503)
 
     if isinstance(response, str) or isinstance(response, tuple):
         pass
     else:
-        response = [elem.split("_")[2] for elem in response]
+        response = [key.split("_")[2] for key, elem in response.items()]
     return response
 
 

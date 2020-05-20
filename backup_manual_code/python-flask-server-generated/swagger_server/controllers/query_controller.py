@@ -114,10 +114,12 @@ def multiple_res(es, index, query, size):
         except IndexError:
             response = ("Query not found", 404)
             # print(response)
+        if isinstance(response, list) and not response:
+            response = ("Query not found", 404)
     return response
 
 
-def uncapped_res(es, index, query, size, scroll_timeout, sid=False):
+def uncapped_res(es, index, query, size, scroll_timeout):
     """
     When the query can return more object than the ES limit (10000)
     Handle the query with ES then perform error verification related to the response
@@ -127,13 +129,9 @@ def uncapped_res(es, index, query, size, scroll_timeout, sid=False):
     :param query: elasticsearch valid query
     :param size: number of responses to return
     :param scroll_timeout: duration of scroll instance between calls
-    :param sid: scroll index returned by previous call, False otherwise
     :return: list of dictionary on success or string error code
     """
-    if not sid:
-        # No sid, init scroll
-        response = init_scroll_query(es, index, query, size, scroll_timeout)
-        new_data_size = True
+    response = init_scroll_query(es, index, query, size, scroll_timeout)
     if isinstance(response, str) or isinstance(response, tuple):
         # ES node related error comes out as tuple or string
         return response
@@ -150,6 +148,7 @@ def uncapped_res(es, index, query, size, scroll_timeout, sid=False):
         except IndexError:
             data = ("Query not found", 404)
             # print(response)
+        new_data_size = True
         while new_data_size:
             response = next_scroll_query(es, sid, scroll_timeout)
             try:
