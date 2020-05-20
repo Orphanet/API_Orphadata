@@ -1,11 +1,13 @@
 import connexion
-import six
 
 from swagger_server.models.list_hchid import ListHchid  # noqa: E501
 from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
 from swagger_server.models.product3 import Product3  # noqa: E501
 from swagger_server.models.product3_classification_list import Product3ClassificationList  # noqa: E501
 from swagger_server import util
+
+import config
+from controllers.query_controller import *
 
 
 def hierarchy_all_orphacode(hchid):  # noqa: E501
@@ -18,7 +20,19 @@ def hierarchy_all_orphacode(hchid):  # noqa: E501
 
     :rtype: Product3ClassificationList
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "en_product3"
+    index = "{}_{}".format(index, hchid)
+
+    query = "{\"query\": {\"match_all\": {}}}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    return response
 
 
 def hierarchy_by_orphacode(orphacode):  # noqa: E501
@@ -31,7 +45,18 @@ def hierarchy_by_orphacode(orphacode):  # noqa: E501
 
     :rtype: Product3ClassificationList
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "en_product3_*"
+
+    query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    return response
 
 
 def hierarchy_id_by_orphacode(orphacode, hchid):  # noqa: E501
@@ -46,7 +71,14 @@ def hierarchy_id_by_orphacode(orphacode, hchid):  # noqa: E501
 
     :rtype: Product3
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "en_product3_{}".format(hchid)
+
+    query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
+
+    response = single_res(es, index, query)
+    return response
 
 
 def hierarchy_list_hchid():  # noqa: E501
@@ -57,7 +89,24 @@ def hierarchy_list_hchid():  # noqa: E501
 
     :rtype: ListHchid
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "en_product3_*"
+
+    try:
+        response = es.indices.get_alias(index)
+        if isinstance(response, dict) and not response:
+            response = ("Server Error: Index not found", 404)
+    except elasticsearch.exceptions.NotFoundError:
+        response = ("Server Error: Index not found", 404)
+    except elasticsearch.exceptions.ConnectionError:
+        response = ("Elasticsearch node unavailable", 503)
+
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response = [key.split("_")[2] for key, elem in response.items()]
+    return response
 
 
 def hierarchy_list_orphacode(hchid):  # noqa: E501
@@ -70,4 +119,21 @@ def hierarchy_list_orphacode(hchid):  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "en_product3"
+    index = "{}_{}".format(index, hchid)
+
+    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response = [elem["ORPHAcode"] for elem in response]
+    return response
+

@@ -1,10 +1,12 @@
 import connexion
-import six
 
 from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
 from swagger_server.models.product6 import Product6  # noqa: E501
 from swagger_server.models.product6_list import Product6List  # noqa: E501
 from swagger_server import util
+
+import config
+from controllers.query_controller import *
 
 
 def associatedgene_all_orphacode():  # noqa: E501
@@ -15,7 +17,18 @@ def associatedgene_all_orphacode():  # noqa: E501
 
     :rtype: Product6List
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "en_product6"
+
+    query = "{\"query\": {\"match_all\": {}}}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    return response
 
 
 def associatedgene_list_orphacode():  # noqa: E501
@@ -26,7 +39,22 @@ def associatedgene_list_orphacode():  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "en_product6"
+
+    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response = [elem["ORPHAcode"] for elem in response]
+    return response
 
 
 def associatedgene_orphacode(orphacode):  # noqa: E501
@@ -39,4 +67,11 @@ def associatedgene_orphacode(orphacode):  # noqa: E501
 
     :rtype: Product6
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "en_product6"
+
+    query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
+
+    response = single_res(es, index, query)
+    return response

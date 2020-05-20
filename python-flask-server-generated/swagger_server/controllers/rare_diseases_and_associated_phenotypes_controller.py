@@ -1,10 +1,12 @@
 import connexion
-import six
 
 from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
 from swagger_server.models.product4 import Product4  # noqa: E501
 from swagger_server.models.product4_list import Product4List  # noqa: E501
 from swagger_server import util
+
+import config
+from controllers.query_controller import *
 
 
 def phenotype_all_orphacode(language):  # noqa: E501
@@ -17,7 +19,19 @@ def phenotype_all_orphacode(language):  # noqa: E501
 
     :rtype: Product4List
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product4"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match_all\": {}}}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    return response
 
 
 def phenotype_by_orphacode(orphacode, language):  # noqa: E501
@@ -32,7 +46,15 @@ def phenotype_by_orphacode(orphacode, language):  # noqa: E501
 
     :rtype: Product4
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product4"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match\": {\"Disorder.ORPHAcode\": " + str(orphacode) + "}}}"
+
+    response = single_res(es, index, query)
+    return response
 
 
 def phenotype_list_orphacode(language):  # noqa: E501
@@ -45,4 +67,20 @@ def phenotype_list_orphacode(language):  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product4"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"Disorder.ORPHAcode\"]}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response = [elem["Disorder"]["ORPHAcode"] for elem in response]
+    return response

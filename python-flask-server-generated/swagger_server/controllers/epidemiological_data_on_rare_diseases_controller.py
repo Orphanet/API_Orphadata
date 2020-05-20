@@ -1,5 +1,4 @@
 import connexion
-import six
 
 from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
 from swagger_server.models.product9_ages import Product9Ages  # noqa: E501
@@ -7,6 +6,9 @@ from swagger_server.models.product9_ages_list import Product9AgesList  # noqa: E
 from swagger_server.models.product9_prev import Product9Prev  # noqa: E501
 from swagger_server.models.product9_prev_list import Product9PrevList  # noqa: E501
 from swagger_server import util
+
+import config
+from controllers.query_controller import *
 
 
 def epidemiology_all_orphacode(language):  # noqa: E501
@@ -19,7 +21,19 @@ def epidemiology_all_orphacode(language):  # noqa: E501
 
     :rtype: Product9PrevList
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product9_prev"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match_all\": {}}}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    return response
 
 
 def epidemiology_by_orphacode(orphacode, language):  # noqa: E501
@@ -34,7 +48,15 @@ def epidemiology_by_orphacode(orphacode, language):  # noqa: E501
 
     :rtype: Product9Prev
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product9_prev"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
+
+    response = single_res(es, index, query)
+    return response
 
 
 def epidemiology_list_orphacode(language):  # noqa: E501
@@ -47,7 +69,23 @@ def epidemiology_list_orphacode(language):  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product9_prev"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response = [elem["ORPHAcode"] for elem in response]
+    return response
 
 
 def natural_history_all_orphacode(language):  # noqa: E501
@@ -60,7 +98,19 @@ def natural_history_all_orphacode(language):  # noqa: E501
 
     :rtype: Product9AgesList
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product9_ages"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match_all\": {}}}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    return response
 
 
 def natural_history_by_orphacode(orphacode, language):  # noqa: E501
@@ -75,7 +125,15 @@ def natural_history_by_orphacode(orphacode, language):  # noqa: E501
 
     :rtype: Product9Ages
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product9_ages"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
+
+    response = single_res(es, index, query)
+    return response
 
 
 def natural_history_list_orphacode(language):  # noqa: E501
@@ -88,4 +146,20 @@ def natural_history_list_orphacode(language):  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product9_ages"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response = [elem["ORPHAcode"] for elem in response]
+    return response

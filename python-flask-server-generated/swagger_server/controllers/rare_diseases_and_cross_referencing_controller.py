@@ -1,10 +1,12 @@
 import connexion
-import six
 
 from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
 from swagger_server.models.product1 import Product1  # noqa: E501
 from swagger_server.models.product1_list import Product1List  # noqa: E501
 from swagger_server import util
+
+import config
+from controllers.query_controller import *
 
 
 def product1_all_orphacode(language):  # noqa: E501
@@ -17,7 +19,19 @@ def product1_all_orphacode(language):  # noqa: E501
 
     :rtype: Product1List
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product1"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match_all\": {}}}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    return response
 
 
 def product1_by_orphacode(orphacode, language):  # noqa: E501
@@ -32,7 +46,15 @@ def product1_by_orphacode(orphacode, language):  # noqa: E501
 
     :rtype: Product1
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product1"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
+
+    response = single_res(es, index, query)
+    return response
 
 
 def product1_list_orphacode(language):  # noqa: E501
@@ -45,4 +67,20 @@ def product1_list_orphacode(language):  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    return 'do some magic!'
+    es = config.elastic_server
+
+    index = "product1"
+    index = "{}_{}".format(language.lower(), index)
+
+    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
+
+    size = 1000
+
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response = [elem["ORPHAcode"] for elem in response]
+    return response
