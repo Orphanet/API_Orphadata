@@ -20,8 +20,10 @@ class TestRareDiseasesAndCrossReferencingController(BaseTestCase):
         Get all clinical entities informations and their cross-referencing in the selected language.
         """
         response = self.client.open(
-            '/product1/language/{language}'.format(language='language_example'),
-            method='GET')
+            '/product1/language/{language}'.format(language='EN'),
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -31,8 +33,10 @@ class TestRareDiseasesAndCrossReferencingController(BaseTestCase):
         Get informations and cross-referencing of a clinical entity searching by its ORPHAcode in the selected language.
         """
         response = self.client.open(
-            '/product1/orphacode/{orphacode}/language/{language}'.format(orphacode=1, language='language_example'),
-            method='GET')
+            '/product1/orphacode/{orphacode}/language/{language}'.format(orphacode=558, language='EN'),
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -42,8 +46,10 @@ class TestRareDiseasesAndCrossReferencingController(BaseTestCase):
         Get the list of ORPHAcodes available in the selected language.
         """
         response = self.client.open(
-            '/product1/list_orphacode/language/{language}'.format(language='language_example'),
-            method='GET')
+            '/product1/list_orphacode/language/{language}'.format(language='EN'),
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 

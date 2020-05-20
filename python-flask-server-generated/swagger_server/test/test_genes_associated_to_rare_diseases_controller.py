@@ -21,7 +21,9 @@ class TestGenesAssociatedToRareDiseasesController(BaseTestCase):
         """
         response = self.client.open(
             '/gene',
-            method='GET')
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -31,9 +33,24 @@ class TestGenesAssociatedToRareDiseasesController(BaseTestCase):
         Get genes informations and associated clinical entity searching by gene symbol.
         """
         response = self.client.open(
-            '/gene/symbol/{symbol}'.format(symbol='symbol_example'),
-            method='GET')
+            '/gene/symbol/{symbol}'.format(symbol="KIF7"),
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
+                       'Response body is : ' + response.data.decode('utf-8'))
+
+    def test_gene_by_invalid_symbol(self):
+        """Test case for gene_by_symbol
+
+        Invalid symbol
+
+        Gene by gene symbol with associated rare disorder
+        """
+        response = self.client.open(
+            '/gene/symbol/{symbol}'.format(symbol='not_possible'),
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        self.assert404(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
     def test_gene_list_symbol(self):
@@ -43,7 +60,9 @@ class TestGenesAssociatedToRareDiseasesController(BaseTestCase):
         """
         response = self.client.open(
             '/gene/list_symbol',
-            method='GET')
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 

@@ -21,7 +21,9 @@ class TestRareDiseasesAndAssociatedGeneController(BaseTestCase):
         """
         response = self.client.open(
             '/associatedgene',
-            method='GET')
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -32,7 +34,9 @@ class TestRareDiseasesAndAssociatedGeneController(BaseTestCase):
         """
         response = self.client.open(
             '/associatedgene/list_orphacode',
-            method='GET')
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -42,8 +46,10 @@ class TestRareDiseasesAndAssociatedGeneController(BaseTestCase):
         Get associated genes and genes information of a clinical entity searching by its ORPHAcode.
         """
         response = self.client.open(
-            '/associatedgene/orphacode/{orphacode}'.format(orphacode=1),
-            method='GET')
+            '/associatedgene/orphacode/{orphacode}'.format(orphacode=93),
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 

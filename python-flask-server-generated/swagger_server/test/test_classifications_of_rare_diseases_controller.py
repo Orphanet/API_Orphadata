@@ -21,8 +21,10 @@ class TestClassificationsOfRareDiseasesController(BaseTestCase):
         Get the organisation of all ORPHAcodes available for a selected classification.
         """
         response = self.client.open(
-            '/classification/hchid/{hchid}'.format(hchid=1),
-            method='GET')
+            '/classification/hchid/{hchid}'.format(hchid=146),
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -32,8 +34,10 @@ class TestClassificationsOfRareDiseasesController(BaseTestCase):
         Hierarchical classification of clinical entities by ORPHAcode in all classifications
         """
         response = self.client.open(
-            '/classification/orphacode/{orphacode}'.format(orphacode=1),
-            method='GET')
+            '/classification/orphacode/{orphacode}'.format(orphacode=558),
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -43,8 +47,10 @@ class TestClassificationsOfRareDiseasesController(BaseTestCase):
         Hierarchical classification of clinical entities by ORPHAcode in selected classification
         """
         response = self.client.open(
-            '/classification/orphacode/{orphacode}/hchid/{hchid}'.format(orphacode=1, hchid=1),
-            method='GET')
+            '/classification/orphacode/{orphacode}/hchid/{hchid}'.format(orphacode=558, hchid=147),
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -55,7 +61,9 @@ class TestClassificationsOfRareDiseasesController(BaseTestCase):
         """
         response = self.client.open(
             '/classification/list_hchid',
-            method='GET')
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -65,8 +73,10 @@ class TestClassificationsOfRareDiseasesController(BaseTestCase):
         Get the list of ORPHAcodes available for a selected classification.
         """
         response = self.client.open(
-            '/classification/list_orphacode/hchid/{hchid}'.format(hchid=1),
-            method='GET')
+            '/classification/list_orphacode/hchid/{hchid}'.format(hchid=146),
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 

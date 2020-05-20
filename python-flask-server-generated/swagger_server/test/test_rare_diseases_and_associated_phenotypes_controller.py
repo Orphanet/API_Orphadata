@@ -20,8 +20,10 @@ class TestRareDiseasesAndAssociatedPhenotypesController(BaseTestCase):
         Get all clinical entities with their associated phenotypes in the selected language.
         """
         response = self.client.open(
-            '/phenotype/language/{language}'.format(language='language_example'),
-            method='GET')
+            '/phenotype/language/{language}'.format(language='EN'),
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -31,8 +33,10 @@ class TestRareDiseasesAndAssociatedPhenotypesController(BaseTestCase):
         Get informations and associated HPO phenotypes of a clinical entity searching by its ORPHAcode in the selected language.
         """
         response = self.client.open(
-            '/phenotype/orphacode/{orphacode}/language/{language}'.format(orphacode=1, language='language_example'),
-            method='GET')
+            '/phenotype/orphacode/{orphacode}/language/{language}'.format(orphacode=558, language='EN'),
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
@@ -42,8 +46,10 @@ class TestRareDiseasesAndAssociatedPhenotypesController(BaseTestCase):
         Get list of ORPHAcodes associated to HPO phenotypes in the selected language.
         """
         response = self.client.open(
-            '/phenotype/list_orphacode/language/{language}'.format(language='language_example'),
-            method='GET')
+            '/phenotype/list_orphacode/language/{language}'.format(language='EN'),
+            method='GET', headers={"SIMPLE-API-KEY": "test"})
+        if isinstance(response.json, str):
+            response.status = "500"
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))
 
