@@ -22,7 +22,7 @@ security:
 tags:
   - name: Orphanet Rare diseases
     description: Clinical entities and related informations.
-    externalDocs: 
+    externalDocs:
       description: Search for Clinical entities and related informations in english, french, german, spanish,dutch, italian, portguese, polish or czech. The result is a collection of data including ORPHAcode, preferred term, synonyms, definition, belonging to a classification, epidemiology, natural history, associated genes, phenotypes etc... to a specific clinical entity in the selected language.
       url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
   - name: Rare diseases and cross-referencing
@@ -38,7 +38,7 @@ tags:
   - name: Rare diseases and associated phenotypes
     description: Product 4
     externalDocs:
-      description: Search for rare diseases annotated with Human Phenotype Ontology (HPO) terms. The result is the collection of HPO phenotypes characterized by frequency (obligate, very frequent, frequent, occasional, very rare or excluded) and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic sign of the rare disease. Source (PMID references), the date and the validation’s status of the association between the rare disease and HPO terms is also available. 
+      description: Search for rare diseases annotated with Human Phenotype Ontology (HPO) terms. The result is the collection of HPO phenotypes characterized by frequency (obligate, very frequent, frequent, occasional, very rare or excluded) and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic sign of the rare disease. Source (PMID references), the date and the validation’s status of the association between the rare disease and HPO terms is also available.
       url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
   - name: Rare diseases and associated gene
     description: Product 6
@@ -100,14 +100,13 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /product1/list_orphacode/language/{language}:
     get:
       tags:
       - Orphanet Rare diseases
       - Rare diseases and cross-referencing
       summary: Get the list of ORPHAcodes available in the selected language.
-      description: The result is a collection of ORPHAcodes in the selected language. 
+      description: The result is a collection of ORPHAcodes in the selected language.
       operationId: product1_list_orphacode
       parameters:
       - name: language
@@ -145,7 +144,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /product1/orphacode/{orphacode}/language/{language}:
     get:
       tags:
@@ -191,7 +189,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /classification/list_hchid:
     get:
       tags:
@@ -215,7 +212,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /classification/list_orphacode/hchid/{hchid}:
     get:
       tags:
@@ -241,7 +237,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /classification/hchid/{hchid}:
     get:
       tags:
@@ -267,7 +262,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /classification/orphacode/{orphacode}:
     get:
       tags:
@@ -296,7 +290,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /classification/orphacode/{orphacode}/hchid/{hchid}:
     get:
       tags:
@@ -325,7 +318,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /phenotype/language/{language}:
     get:
       tags:
@@ -370,13 +362,12 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /phenotype/list_orphacode/language/{language}:
     get:
       tags:
       - Orphanet Rare diseases
       - Rare diseases and associated phenotypes
-      summary: Get list of ORPHAcodes associated to HPO phenotypes in the selected language. 
+      summary: Get list of ORPHAcodes associated to HPO phenotypes in the selected language.
       description: The result is a collection of ORPHAcodes in the selected language.
       operationId: phenotype_list_orphacode
       parameters:
@@ -415,7 +406,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /phenotype/orphacode/{orphacode}/language/{language}:
     get:
       tags:
@@ -461,7 +451,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /associatedgene:
     get:
       tags:
@@ -485,7 +474,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /associatedgene/list_orphacode:
     get:
       tags:
@@ -509,7 +497,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /associatedgene/orphacode/{orphacode}:
     get:
       tags:
@@ -535,13 +522,12 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /gene:
     get:
       tags:
       - Genes associated to rare diseases
       summary: Get all genes associated to at leat one clinical entity and its information.
-      description: The result is a set of data includes symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases of selected genes and their relationship to clinical entities. For clinical entity, ORPhacode, preferred term, expertlink, group and type are also available. 
+      description: The result is a set of data includes symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases of selected genes and their relationship to clinical entities. For clinical entity, ORPhacode, preferred term, expertlink, group and type are also available.
       operationId: gene_all_symbol
       responses:
         "200":
@@ -558,7 +544,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.gene_controller
   /gene/list_symbol:
     get:
       tags:
@@ -581,7 +566,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.gene_controller
   /gene/symbol/{symbol}:
     get:
       tags:
@@ -613,7 +597,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.gene_controller
   /epidemiology/language/{language}:
     get:
       tags:
@@ -658,7 +641,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /epidemiology/list_orphacode/language/{language}:
     get:
       tags:
@@ -703,7 +685,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /epidemiology/orphacode/{orphacode}/language/{language}:
     get:
       tags:
@@ -749,7 +730,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /natural_history/language/{language}:
     get:
       tags:
@@ -794,7 +774,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /natural_history/list_orphacode/language/{language}:
     get:
       tags:
@@ -839,7 +818,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
   /natural_history/orphacode/{orphacode}/language/{language}:
     get:
       tags:
@@ -885,7 +863,6 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.clinical_entity_controller
 components:
   schemas:
     product1_list:
