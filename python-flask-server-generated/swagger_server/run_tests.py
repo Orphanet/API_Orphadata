@@ -8,5 +8,6 @@ modules_to_test = ("test.test_classifications_of_rare_diseases_controller",
                    "test.test_rare_diseases_and_cross_referencing_controller"
                    )
 
-suite = unittest.TestLoader().loadTestsFromNames(modules_to_test)
-unittest.TextTestRunner(verbosity=2).run(suite)
+if __name__ == "__main__":
+    suite = unittest.TestLoader().loadTestsFromNames(modules_to_test)
+    unittest.TextTestRunner(verbosity=2).run(suite)

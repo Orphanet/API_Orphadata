@@ -1,16 +1,18 @@
-FROM python:3.6-alpine
+FROM python:3.8-slim
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY requirements.txt /usr/src/app/
+COPY ./requirements.txt .
 
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-COPY . /usr/src/app
+COPY ./swagger_server/ ./swagger_server/
+
+COPY ./docker_main.py .
 
 EXPOSE 8080
 
 ENTRYPOINT ["python3"]
 
-CMD ["-m", "swagger_server"]
+CMD ["./docker_main.py"]
