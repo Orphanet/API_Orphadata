@@ -14,16 +14,16 @@ class Product1DisorderType(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, orph_acode: str=None, name: str=None):  # noqa: E501
+    def __init__(self, orph_acode: int=None, name: str=None):  # noqa: E501
         """Product1DisorderType - a model defined in Swagger
 
         :param orph_acode: The orph_acode of this Product1DisorderType.  # noqa: E501
-        :type orph_acode: str
+        :type orph_acode: int
         :param name: The name of this Product1DisorderType.  # noqa: E501
         :type name: str
         """
         self.swagger_types = {
-            'orph_acode': str,
+            'orph_acode': int,
             'name': str
         }
 
@@ -46,22 +46,22 @@ class Product1DisorderType(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def orph_acode(self) -> str:
+    def orph_acode(self) -> int:
         """Gets the orph_acode of this Product1DisorderType.
 
 
         :return: The orph_acode of this Product1DisorderType.
-        :rtype: str
+        :rtype: int
         """
         return self._orph_acode
 
     @orph_acode.setter
-    def orph_acode(self, orph_acode: str):
+    def orph_acode(self, orph_acode: int):
         """Sets the orph_acode of this Product1DisorderType.
 
 
         :param orph_acode: The orph_acode of this Product1DisorderType.
-        :type orph_acode: str
+        :type orph_acode: int
         """
 
         self._orph_acode = orph_acode

@@ -14,15 +14,15 @@ class Product3(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, name: str=None, orph_acode: str=None, hch_id: str=None, hch_tag: str=None, parents: List[str]=None, childs: List[str]=None):  # noqa: E501
+    def __init__(self, name: str=None, orph_acode: int=None, hch_id: int=None, hch_tag: str=None, parents: List[str]=None, childs: List[str]=None):  # noqa: E501
         """Product3 - a model defined in Swagger
 
         :param name: The name of this Product3.  # noqa: E501
         :type name: str
         :param orph_acode: The orph_acode of this Product3.  # noqa: E501
-        :type orph_acode: str
+        :type orph_acode: int
         :param hch_id: The hch_id of this Product3.  # noqa: E501
-        :type hch_id: str
+        :type hch_id: int
         :param hch_tag: The hch_tag of this Product3.  # noqa: E501
         :type hch_tag: str
         :param parents: The parents of this Product3.  # noqa: E501
@@ -32,8 +32,8 @@ class Product3(Model):
         """
         self.swagger_types = {
             'name': str,
-            'orph_acode': str,
-            'hch_id': str,
+            'orph_acode': int,
+            'hch_id': int,
             'hch_tag': str,
             'parents': List[str],
             'childs': List[str]
@@ -87,22 +87,22 @@ class Product3(Model):
         self._name = name
 
     @property
-    def orph_acode(self) -> str:
+    def orph_acode(self) -> int:
         """Gets the orph_acode of this Product3.
 
 
         :return: The orph_acode of this Product3.
-        :rtype: str
+        :rtype: int
         """
         return self._orph_acode
 
     @orph_acode.setter
-    def orph_acode(self, orph_acode: str):
+    def orph_acode(self, orph_acode: int):
         """Sets the orph_acode of this Product3.
 
 
         :param orph_acode: The orph_acode of this Product3.
-        :type orph_acode: str
+        :type orph_acode: int
         """
         if orph_acode is None:
             raise ValueError("Invalid value for `orph_acode`, must not be `None`")  # noqa: E501
@@ -110,22 +110,22 @@ class Product3(Model):
         self._orph_acode = orph_acode
 
     @property
-    def hch_id(self) -> str:
+    def hch_id(self) -> int:
         """Gets the hch_id of this Product3.
 
 
         :return: The hch_id of this Product3.
-        :rtype: str
+        :rtype: int
         """
         return self._hch_id
 
     @hch_id.setter
-    def hch_id(self, hch_id: str):
+    def hch_id(self, hch_id: int):
         """Sets the hch_id of this Product3.
 
 
         :param hch_id: The hch_id of this Product3.
-        :type hch_id: str
+        :type hch_id: int
         """
 
         self._hch_id = hch_id

@@ -18,7 +18,7 @@ setup(
     name=NAME,
     version=VERSION,
     description="Orphadata API",
-    author_email="cyril.bigot@inserm.fr",
+    author_email="data.orphanet@inserm.fr",
     url="",
     keywords=["Swagger", "Orphadata API"],
     install_requires=REQUIRES,
@@ -28,6 +28,6 @@ setup(
     entry_points={
         'console_scripts': ['swagger_server=swagger_server.__main__:main']},
     long_description="""\
-    Provide API to Orphadata
+    Orphadata provides APIs for the scientific community with comprehensive, quality data sets related to rare diseases and orphan drugs from the Orphanet knowledge base.
     """
 )

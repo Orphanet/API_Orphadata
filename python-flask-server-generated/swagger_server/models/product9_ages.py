@@ -14,11 +14,11 @@ class Product9Ages(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, orph_acode: str=None, expert_link: str=None, name: str=None, disorder_type: str=None, disorder_group: str=None, average_age_of_onset: List[str]=None, average_age_of_death: List[str]=None, type_of_inheritance: List[str]=None):  # noqa: E501
+    def __init__(self, orph_acode: int=None, expert_link: str=None, name: str=None, disorder_type: str=None, disorder_group: str=None, average_age_of_onset: List[str]=None, average_age_of_death: List[str]=None, type_of_inheritance: List[str]=None):  # noqa: E501
         """Product9Ages - a model defined in Swagger
 
         :param orph_acode: The orph_acode of this Product9Ages.  # noqa: E501
-        :type orph_acode: str
+        :type orph_acode: int
         :param expert_link: The expert_link of this Product9Ages.  # noqa: E501
         :type expert_link: str
         :param name: The name of this Product9Ages.  # noqa: E501
@@ -35,7 +35,7 @@ class Product9Ages(Model):
         :type type_of_inheritance: List[str]
         """
         self.swagger_types = {
-            'orph_acode': str,
+            'orph_acode': int,
             'expert_link': str,
             'name': str,
             'disorder_type': str,
@@ -76,22 +76,22 @@ class Product9Ages(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def orph_acode(self) -> str:
+    def orph_acode(self) -> int:
         """Gets the orph_acode of this Product9Ages.
 
 
         :return: The orph_acode of this Product9Ages.
-        :rtype: str
+        :rtype: int
         """
         return self._orph_acode
 
     @orph_acode.setter
-    def orph_acode(self, orph_acode: str):
+    def orph_acode(self, orph_acode: int):
         """Sets the orph_acode of this Product9Ages.
 
 
         :param orph_acode: The orph_acode of this Product9Ages.
-        :type orph_acode: str
+        :type orph_acode: int
         """
         if orph_acode is None:
             raise ValueError("Invalid value for `orph_acode`, must not be `None`")  # noqa: E501

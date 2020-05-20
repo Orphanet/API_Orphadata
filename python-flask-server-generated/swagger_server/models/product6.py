@@ -15,11 +15,11 @@ class Product6(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, orph_acode: str=None, expert_link: str=None, name: str=None, disorder_type: str=None, disorder_group: str=None, disorder_gene_association: List[Product6DisorderGeneAssociation]=None):  # noqa: E501
+    def __init__(self, orph_acode: int=None, expert_link: str=None, name: str=None, disorder_type: str=None, disorder_group: str=None, disorder_gene_association: List[Product6DisorderGeneAssociation]=None):  # noqa: E501
         """Product6 - a model defined in Swagger
 
         :param orph_acode: The orph_acode of this Product6.  # noqa: E501
-        :type orph_acode: str
+        :type orph_acode: int
         :param expert_link: The expert_link of this Product6.  # noqa: E501
         :type expert_link: str
         :param name: The name of this Product6.  # noqa: E501
@@ -32,7 +32,7 @@ class Product6(Model):
         :type disorder_gene_association: List[Product6DisorderGeneAssociation]
         """
         self.swagger_types = {
-            'orph_acode': str,
+            'orph_acode': int,
             'expert_link': str,
             'name': str,
             'disorder_type': str,
@@ -67,22 +67,22 @@ class Product6(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def orph_acode(self) -> str:
+    def orph_acode(self) -> int:
         """Gets the orph_acode of this Product6.
 
 
         :return: The orph_acode of this Product6.
-        :rtype: str
+        :rtype: int
         """
         return self._orph_acode
 
     @orph_acode.setter
-    def orph_acode(self, orph_acode: str):
+    def orph_acode(self, orph_acode: int):
         """Sets the orph_acode of this Product6.
 
 
         :param orph_acode: The orph_acode of this Product6.
-        :type orph_acode: str
+        :type orph_acode: int
         """
         if orph_acode is None:
             raise ValueError("Invalid value for `orph_acode`, must not be `None`")  # noqa: E501
