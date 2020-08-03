@@ -7,7 +7,7 @@
 The API description is written according to OpenAPI v3 standards.
 
 The server stub has been auto-generated from the description
- with swagger-codegen version 3.0.19 in Python3-flask.
+ with swagger-codegen version 3.0.21 in Python3-flask.
 
 Developed with Elasticsearch 7.X.
 

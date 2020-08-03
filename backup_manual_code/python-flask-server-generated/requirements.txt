@@ -1,6 +1,0 @@
-swagger-ui == 0.0.6
-connexion == 2.6.0
-elasticsearch == 7.6
-python_dateutil == 2.6.0
-setuptools >= 21.0.0
-Flask-Testing >= 0.8.0
