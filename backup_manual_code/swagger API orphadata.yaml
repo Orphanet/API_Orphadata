@@ -20,11 +20,6 @@ security:
   - UserSecurity: []
   - AdminSecurity: []
 tags:
-  - name: Orphanet Rare diseases
-    description: Clinical entities and related informations.
-    externalDocs:
-      description: Search for Clinical entities and related informations in english, french, german, spanish,dutch, italian, portguese, polish or czech. The result is a collection of data including ORPHAcode, preferred term, synonyms, definition, belonging to a classification, epidemiology, natural history, associated genes, phenotypes etc... to a specific clinical entity in the selected language.
-      url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
   - name: Rare diseases and cross-referencing
     description: Product 1
     externalDocs:
@@ -59,7 +54,6 @@ paths:
   /product1/language/{language}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Rare diseases and cross-referencing
       summary: Get all clinical entities informations and their cross-referencing in the selected language.
       description: The result is a collection of rare diseases informations including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language
@@ -103,7 +97,6 @@ paths:
   /product1/list_orphacode/language/{language}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Rare diseases and cross-referencing
       summary: Get the list of ORPHAcodes available in the selected language.
       description: The result is a collection of ORPHAcodes in the selected language.
@@ -147,7 +140,6 @@ paths:
   /product1/orphacode/{orphacode}/language/{language}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Rare diseases and cross-referencing
       summary: Get informations and cross-referencing of a clinical entity searching by its ORPHAcode in the selected language.
       description: The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language.
@@ -192,7 +184,6 @@ paths:
   /classification/list_hchid:
     get:
       tags:
-      - Orphanet Rare diseases
       - Classifications of rare diseases
       summary: Get the list of identifiers of all Orphanet Rare Diseases Classifications available.
       description: The result is a collection of the unique identifier of each rare diseases classification available.
@@ -215,7 +206,6 @@ paths:
   /classification/list_orphacode/hchid/{hchid}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Classifications of rare diseases
       summary: Get the list of ORPHAcodes available for a selected classification.
       description: The result is a collection of ORPHAcodes present in the selected classification.
@@ -240,7 +230,6 @@ paths:
   /classification/hchid/{hchid}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Classifications of rare diseases
       summary: Get the organisation of all ORPHAcodes available for a selected classification.
       description: The result is a collection of ORPHAcodes organised as children and parents in the selected classification.
@@ -265,7 +254,6 @@ paths:
   /classification/orphacode/{orphacode}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Classifications of rare diseases
       summary: Hierarchical classification of clinical entities by ORPHAcode in all
         classifications
@@ -293,7 +281,6 @@ paths:
   /classification/orphacode/{orphacode}/hchid/{hchid}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Classifications of rare diseases
       summary: Hierarchical classification of clinical entities by ORPHAcode in selected
         classification
@@ -321,7 +308,6 @@ paths:
   /phenotype/language/{language}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Rare diseases and associated phenotypes
       summary: Get all clinical entities with their associated phenotypes in the selected language.
       description: The result is a collection of clinical entities with their associated HPO phenotypes characterized by frequency (obligate, very frequent, frequent, occasional, very rare or excluded) and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic sign of the rare disease. Source (PMID references), the date and the validation’s status of the association between the rare disease and HPO terms is also available.
@@ -365,7 +351,6 @@ paths:
   /phenotype/list_orphacode/language/{language}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Rare diseases and associated phenotypes
       summary: Get list of ORPHAcodes associated to HPO phenotypes in the selected language.
       description: The result is a collection of ORPHAcodes in the selected language.
@@ -409,7 +394,6 @@ paths:
   /phenotype/orphacode/{orphacode}/language/{language}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Rare diseases and associated phenotypes
       summary: Get informations and associated HPO phenotypes of a clinical entity searching by its ORPHAcode in the selected language.
       description: The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, the group and type, and the associated HPO phenotypes. The annotation is characterized by frequency (obligate, very frequent, frequent, occasional, very rare or excluded) and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic sign of the rare disease. Source (PMID references), the date and the validation’s status of the association between the rare disease and HPO terms is also made available.
@@ -454,7 +438,6 @@ paths:
   /associatedgene:
     get:
       tags:
-      - Orphanet Rare diseases
       - Rare diseases and associated gene
       summary: Get all rare diseases associated to at least one gene.
       description: The result is a collection of clinical entities (ORPHAcode, preferred term, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, group and type) and their genes associations. For each gene, symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases are also available.
@@ -477,7 +460,6 @@ paths:
   /associatedgene/list_orphacode:
     get:
       tags:
-      - Orphanet Rare diseases
       - Rare diseases and associated gene
       summary: Get the list of ORPHAcodes associated to at least one gene.
       description: The result is a collection of ORPHAcodes associated to at least one gene.
@@ -500,7 +482,6 @@ paths:
   /associatedgene/orphacode/{orphacode}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Rare diseases and associated gene
       summary: Get associated genes and genes information of a clinical entity searching by its ORPHAcode.
       description: The result is a set of data includes ORPhacode, preferred term, expertlink, group and type of the selected clinical entity, relationship between genes and the searched disease and symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases of selected genes.
@@ -600,7 +581,6 @@ paths:
   /epidemiology/language/{language}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Epidemiological data on rare diseases
       summary: Get all clinical entities with their epidemiological dataset in the selected language.
       description: The result is a collection of clinical entities (ORPhacode, preferred term, expertlink) and associated epidemiological data characterized as point prevalence, birth prevalence, lifelong prevalence and incidence, or the number of cases/families reported together with their respective intervals per geographical area (country, continent) and translated in the selected language.
@@ -644,7 +624,6 @@ paths:
   /epidemiology/list_orphacode/language/{language}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Epidemiological data on rare diseases
       summary: Get the list of ORPHAcodes associated to at least one epidemiological data.
       description: The result is a collection of ORPHAcodes in the selected language.
@@ -688,7 +667,6 @@ paths:
   /epidemiology/orphacode/{orphacode}/language/{language}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Epidemiological data on rare diseases
       summary: Get epideliological informations of a clinical entity searching by its ORPHAcode in the selected language.
       description: The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, the group and type, and the associated point prevalence, birth prevalence, lifelong prevalence and incidence, or the number of cases/families reported together with their respective intervals per geographical area (country, continent) when exist.
@@ -733,7 +711,6 @@ paths:
   /natural_history/language/{language}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Epidemiological data on rare diseases
       summary: Get all clinical entities with their natural history data in the selected language.
       description: The result is a collection of clinical entities (ORPhacode, preferred term, expertlink) and associated natural history data characterized by informations on inheritance, interval average age of onset and interval average age of death.
@@ -777,7 +754,6 @@ paths:
   /natural_history/list_orphacode/language/{language}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Epidemiological data on rare diseases
       summary: Get the list of ORPHAcodes associated to at least one natural history data.
       description: The result is a collection of ORPHAcodes in the selected language.
@@ -821,7 +797,6 @@ paths:
   /natural_history/orphacode/{orphacode}/language/{language}:
     get:
       tags:
-      - Orphanet Rare diseases
       - Epidemiological data on rare diseases
       summary: Get natural history informations of a clinical entity searching by its ORPHAcode in the selected language.
       description: The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, the group and type, and the associated inheritance, age of onset and age of death when exist.
