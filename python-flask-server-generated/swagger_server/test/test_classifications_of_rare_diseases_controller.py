@@ -23,6 +23,7 @@ class TestClassificationsOfRareDiseasesController(BaseTestCase):
         response = self.client.open(
             '/classification/hchid/{hchid}'.format(hchid=146),
             method='GET', headers={"SIMPLE-API-KEY": "test"})
+        # print(response.data)
         if isinstance(response.json, str):
             response.status = "500"
         self.assert200(response,

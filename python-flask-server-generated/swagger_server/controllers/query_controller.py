@@ -1,4 +1,6 @@
 import elasticsearch
+import yaml
+from flask import make_response
 
 
 def handle_query(es, index, query, size=1):
@@ -18,6 +20,8 @@ def handle_query(es, index, query, size=1):
         response = ("Server Error: Index not found", 404)
         # print(response)
     except elasticsearch.exceptions.ConnectionError:
+        response = ("Elasticsearch node unavailable", 503)
+    except elasticsearch.exceptions.TransportError:
         response = ("Elasticsearch node unavailable", 503)
     return response
 
@@ -168,3 +172,10 @@ def uncapped_res(es, index, query, size, scroll_timeout):
                 # print(response)
         es.clear_scroll(scroll_id=sid)
     return data
+
+
+def if_yaml(mime_type, response):
+    if mime_type == "application/yaml":
+        response = make_response(yaml.dump(response), 200)
+        response.mimetype = "application/yaml"
+    return response
