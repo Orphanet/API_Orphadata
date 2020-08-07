@@ -21,15 +21,11 @@ def main():
     # defaultModelsExpandDepth = -1 => do not display data models
     app.app.jinja_env.globals["defaultModelsExpandDepth"] = "-1"
 
-    @app.route('/Orphadata-local/favicon.ico')
-    def favicon_rdcode():
-        return send_from_directory(os.path.join(app.root_path),
-                                   'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
-    @app.route('/favicon.ico')
-    def favicon():
-        return send_from_directory(os.path.join(app.root_path),
-                                   'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    # Workaround to serve media in development server
+    # Comment for production
+    @app.route("/media/<image>")
+    def media_for_dev(image):
+        return send_from_directory("../media/", image)
 
     # Force the direct encoding of accents in json
     # app.app.config['JSON_AS_ASCII'] = False

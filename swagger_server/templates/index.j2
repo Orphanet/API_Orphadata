@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <title>{{ title | default('API Orphadata') }}</title>
     <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
-    <link rel="icon" type="image/png" href="favicon.ico" sizes="32x32" />
-    <link rel="icon" type="image/png" href="favicon.ico" sizes="16x16" />
+    <link rel="icon" type="image/png" href="./media/favicon.ico"/>
     <style>
       html
       {
@@ -34,20 +33,24 @@
         align-items: center;
         justify-content: space-around;
       }
+      #image_right
+      {
+        padding: 0px 0px 9px 0px;
+      }
     </style>
   </head>
 
   <body>
     <div id="image_head">
         <div></div>
-        <div>
+        <div id="image_left">
             <a href="https://www.orpha.net/consor/cgi-bin/index.php">
                 <img src="./media/logo_orphanet_transp.png" alt="orphanet" height="50px";>
             </a>
         </div>
-        <div>
+        <div id="image_right">
             <a href="http://www.orphadata.org/cgi-bin/index.php">
-                <img src="./media/logo-orphadata.png" alt="orphadata" height="70px";>
+                <img src="./media/logo-orphadata.png" alt="orphadata" height="52px";>
             </a>
         </div>
         <div></div>
