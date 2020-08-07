@@ -43,16 +43,16 @@ replace it with the new version.
 
 Check the content of the files from [backup_manual_code](./backup_manual_code)
 (do not override because of the change made to the API contract, new modules or descriptions can be needed):
-* "test" prefixed files must go to [python-flask-server-generated/swagger_server/test](./python-flask-server-generated/swagger_server/test)
+* "test" prefixed files must go to [python-flask-server-generated/swagger_server/test](swagger_server/test)
 * "_controller" suffixed files (except "test" prefixed files) 
 must be compared to those in 
-[python-flask-server-generated/swagger_server/controllers](./python-flask-server-generated/swagger_server/controllers)
+[python-flask-server-generated/swagger_server/controllers](swagger_server/controllers)
 * requirements.txt (do not override because new modules can be needed)
-* config.py to [python-flask-server-generated-v3/swagger_server](./python-flask-server-generated/swagger_server)
+* config.py to [python-flask-server-generated-v3/swagger_server](swagger_server)
 
 The required packages can be installed by launching the following command
 in the operating system's console (preferentially virtual environment console)
-from the server's root [python-flask-server-generated-v3/swagger_server](./python-flask-server-generated/swagger_server)
+from the server's root [python-flask-server-generated-v3/swagger_server](swagger_server)
     
     pip3 install -r requirements.txt
     pip3 install connexion[swagger-ui]
