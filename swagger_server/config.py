@@ -18,4 +18,6 @@ elastic_server = Elasticsearch(hosts=["localhost"])
 # elastic_server = Elasticsearch(hosts=[es_url], api_key=(es_api_key["id"], es_api_key["api_key"]))
 
 
+scroll_size = 2000  # per scroll, not limiting
 scroll_timeout = "2m"
+

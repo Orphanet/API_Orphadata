@@ -20,7 +20,7 @@ def associatedgene_all_orphacode():  # noqa: E501
 
     query = "{\"query\": {\"match_all\": {}}}"
 
-    size = 1000
+    size = config.scroll_size  # per scroll, not limiting
 
     scroll_timeout = config.scroll_timeout
 
@@ -42,7 +42,7 @@ def associatedgene_list_orphacode():  # noqa: E501
 
     query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
 
-    size = 1000
+    size = config.scroll_size  # per scroll, not limiting
 
     scroll_timeout = config.scroll_timeout
 

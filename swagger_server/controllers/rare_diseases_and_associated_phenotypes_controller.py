@@ -23,7 +23,7 @@ def phenotype_all_orphacode(language):  # noqa: E501
 
     query = "{\"query\": {\"match_all\": {}}}"
 
-    size = 1000
+    size = config.scroll_size  # per scroll, not limiting
 
     scroll_timeout = config.scroll_timeout
 
@@ -71,7 +71,7 @@ def phenotype_list_orphacode(language):  # noqa: E501
 
     query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"Disorder.ORPHAcode\"]}"
 
-    size = 1000
+    size = config.scroll_size  # per scroll, not limiting
 
     scroll_timeout = config.scroll_timeout
 

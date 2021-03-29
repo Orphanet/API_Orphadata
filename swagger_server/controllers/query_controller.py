@@ -33,7 +33,7 @@ def init_scroll_query(es, index, query, size, scroll_timeout):
     :param es: elasticsearch instance see elasticsearch module
     :param index: elasticsearch index name (handle wildcard)
     :param query: elasticsearch valid query
-    :param size: optional number of responses to return
+    :param size: optional number of responses to return PER SCROLL
     :param scroll_timeout: duration of scroll instance between calls
     :return: elasticsearch response object on success or error string
     """

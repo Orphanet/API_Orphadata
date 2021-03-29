@@ -24,7 +24,7 @@ def hierarchy_all_orphacode(hchid):  # noqa: E501
 
     query = "{\"query\": {\"match_all\": {}}}"
 
-    size = 1000
+    size = config.scroll_size  # per scroll, not limiting
 
     scroll_timeout = config.scroll_timeout
 
@@ -48,7 +48,7 @@ def hierarchy_by_orphacode(orphacode):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    size = 1000
+    size = config.scroll_size  # per scroll, not limiting
 
     scroll_timeout = config.scroll_timeout
 
@@ -123,7 +123,7 @@ def hierarchy_list_orphacode(hchid):  # noqa: E501
 
     query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
 
-    size = 1000
+    size = config.scroll_size  # per scroll, not limiting
 
     scroll_timeout = config.scroll_timeout
 

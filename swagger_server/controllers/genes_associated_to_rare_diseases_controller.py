@@ -20,7 +20,7 @@ def gene_all_symbol():  # noqa: E501
 
     query = "{\"query\": {\"match_all\": {}}}"
 
-    size = 1000
+    size = config.scroll_size  # per scroll, not limiting
 
     scroll_timeout = config.scroll_timeout
 
@@ -66,7 +66,7 @@ def gene_list_symbol():  # noqa: E501
 
     query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"Symbol\"]}"
 
-    size = 1000
+    size = config.scroll_size  # per scroll, not limiting
 
     scroll_timeout = config.scroll_timeout
 
