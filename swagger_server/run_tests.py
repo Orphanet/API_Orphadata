@@ -1,4 +1,5 @@
 import unittest
+import os
 import pathlib
 
 # modules_to_test = ("*")
@@ -8,10 +9,11 @@ import pathlib
 
 # unittest.loader.discover(".\\RDcode_API_server\\swagger_server\\test")
 
+user_name = os.getlogin()
+
 if __name__ == "__main__":
     loader = unittest.TestLoader()
-    # C:\Users\Cyrlynx\PycharmProjects\API_RDcode\RDcode_API_server\swagger_server\test
-    start_dir = str(pathlib.Path(r"C:\Users\cbigot\PycharmProjects\API_Orphadata\python-flask-server-generated\swagger_server\test"))
+    start_dir = str(pathlib.Path(r"C:\Users\{}\PycharmProjects\API_Orphadata\swagger_server\test".format(user_name)))
     suite = loader.discover(start_dir)
 
     runner = unittest.TextTestRunner()

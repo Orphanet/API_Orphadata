@@ -25,8 +25,18 @@ def check_AdminSecurity(api_key, required_scopes):
     return {'test_key': info}
 
 
+# def check_UserSecurity(api_key, required_scopes):
+#     """
+#     user key must be in TOKEN_DB
+#     """
+#     info = TOKEN_DB.get(api_key, None)
+#     if not info:
+#         raise OAuthProblem('Invalid token')
+#     return info
+
+
 def check_UserSecurity(api_key, required_scopes):
-    info = TOKEN_DB.get(api_key, None)
-    if not info:
-        raise OAuthProblem('Invalid token')
-    return info
+    """
+    Unlocked user version
+    """
+    return {'test_key': 'test_value'}
