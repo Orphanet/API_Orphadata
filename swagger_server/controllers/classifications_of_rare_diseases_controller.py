@@ -89,6 +89,7 @@ def hierarchy_list_hchid():  # noqa: E501
     es = config.elastic_server
 
     index = "en_product3_*"
+    # print([x.split('_')[2] for x in es.indices.get(index)])
 
     try:
         response = es.indices.get_alias(index)
@@ -102,7 +103,7 @@ def hierarchy_list_hchid():  # noqa: E501
     if isinstance(response, str) or isinstance(response, tuple):
         pass
     else:
-        response = [key.split("_")[2] for key, elem in response.items()]
+        response = sorted([key.split("_")[2] for key, elem in response.items()])
     return response
 
 

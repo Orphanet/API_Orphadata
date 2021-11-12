@@ -12,7 +12,13 @@ VERSION = "1.0.0"
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 
-REQUIRES = ["connexion"]
+REQUIRES = [
+    "swagger-ui-bundle==0.0.6",
+    "connexion==2.6.0",
+    "elasticsearch==7.6",
+    "python_dateutil==2.6.0",
+    "Flask-Testing >= 0.8.0"
+    ]
 
 setup(
     name=NAME,
@@ -26,7 +32,7 @@ setup(
     package_data={'': ['swagger/swagger.yaml']},
     include_package_data=True,
     entry_points={
-        'console_scripts': ['swagger_server=swagger_server.__main__:main']},
+        'console_scripts': ['swagger_server=swagger_server.API_main:main']},
     long_description="""\
     Orphadata provides APIs for the scientific community with comprehensive, quality data sets related to rare diseases and orphan drugs from the Orphanet knowledge base.
     """

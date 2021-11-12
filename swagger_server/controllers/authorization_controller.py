@@ -39,4 +39,4 @@ def check_UserSecurity(api_key, required_scopes):
     """
     Unlocked user version
     """
-    return {'test_key': 'test_value'}
+    return {'test_key': 'test'}

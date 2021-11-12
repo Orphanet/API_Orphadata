@@ -3,7 +3,8 @@
 import os
 
 import connexion
-from flask import send_from_directory
+from flask import send_from_directory, send_file
+# from livereload import Server
 
 from swagger_server import encoder
 
@@ -11,7 +12,7 @@ from swagger_server import encoder
 def main():
     # swagger_url => path to ui
     options = {'swagger_url': '/'}
-    app = connexion.App(__name__, specification_dir='swagger/', options=options)
+    app = connexion.App(__name__, specification_dir='./swagger/', options=options)
     app.app.json_encoder = encoder.JSONEncoder
     app.add_api('swagger.yaml', arguments={'title': 'API Orphadata'}, pythonic_params=True)
 
@@ -27,14 +28,22 @@ def main():
     def media_for_dev(image):
         return send_from_directory("../media/", image)
 
+
+    @app.route('/my-styles.css')
+    def custom_css_theme():
+        return send_file('../media/css/theme-newspaper.css')
+
     # Force the direct encoding of accents in json
     # app.app.config['JSON_AS_ASCII'] = False
 
     # Remove A-z sorting in json
     # app.app.config['JSON_SORT_KEYS'] = False
-    return app
+    application = app.app
+    return application
 
 
 if __name__ == '__main__':
     app = main()
-    app.run(port=8080)
+    # server = Server(app.wsgi_app)
+    # server.serve()
+    app.run(port=8080, debug=True, extra_files=['./swagger_server/swagger/swagger.yaml'])

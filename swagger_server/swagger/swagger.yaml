@@ -19,14 +19,25 @@ externalDocs:
 servers:
 - url: /
   description: URL for Orphadata's API server
-security:
-- UserSecurity: []
-- AdminSecurity: []
+# security:
+# - UserSecurity: []
+# - AdminSecurity: []
 tags:
+- name: Catalog of aggregated data from Orphanet
+  description: Generic
+  externalDocs:
+    description: >
+      Search for all available data products of Orphanet accessible in different languages
+      such as english (en), french (fr), german (de), spanish (es), dutch (nl), italian (it), 
+      portguese (pt), polish (pl), czech (cs), turkish (tr), russian (ru) and chinese (zh).
+      The results include a list of ORPHAcode and their preferred term, plus key product-related 
+      informations useful to query more detailed resources from specific available products.
+    url: http://www.orphadata.org/cgi-bin/index.php
 - name: Rare diseases and cross-referencing
   description: Product 1
   externalDocs:
-    description: Search for clinical entity informations and alignements with other
+    description: >
+      Search for clinical entity informations and alignements with other
       terminologies in English, french, german, spanish,dutch, italian, portguese,
       polish and czech are available.The result is a collection of data including
       ORPHAcode, preferred term, synonyms, definition, the group and type, and the
@@ -63,13 +74,19 @@ tags:
       typology, the chromosomal location, the cross-mappings with other international
       genetic databases, the relationship between genes and the searched disease.
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Genes associated to rare diseases
-  description: Genes and related informations
+- name: Medical specialties of rare diseases
+  description: Product 7
   externalDocs:
-    description: Search for gene informations. The result is a collection of data
-      including symbol, synonyms, name, typology, chromosomal location and cross-mappings
-      with other international genetic databases are also available.typolo and its
-      relationships with rare diseases.
+    description: The Orphanet classification of rare diseases has a polyparental structure.
+      It implies that a clinical entity is included in as many classification hierarchies as 
+      necessary depending on its clinical presentation and the medical specialties to which 
+      it is relevant. In order to enable the sorting out of all rare diseases by medical 
+      specialty and avoid multiple counting of multiclassified entities in statistical analysis,
+      a linearisation process is applied in the Orphanet database to attribute one medical
+      specialty to each clinical entity. 
+      The dataset provided in this section includes all rare diseases present in the Orphanet
+      nomenclature each with the medical specialty attributed as the preferential parent by Orphanet.
+      It is updated once a month.
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Epidemiological data on rare diseases
   description: Product 9
@@ -82,13 +99,239 @@ tags:
       age of death of clinical entities are also available.
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 paths:
-  /product1/language/{language}:
+  /orphadata/generics:
+    get:
+      tags:
+      - Catalog of aggregated data from Orphanet
+      summary: Get generic informations about all available ORPHADATA products
+      # description: >
+      #   The result is a list of all available products described with their product ID,
+      #   product name, product description and the languages in which products can be retrieved. 
+      operationId: products_description
+      responses:
+        "200":
+          description: Successful operation
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
+  /orphadata/generics/rd-cross-referencing:
+    get:
+      tags:
+      - Catalog of aggregated data from Orphanet
+      summary: Get generic informations useful to make more detailed requests on product 1 data
+      description: >
+        The result is a list of rare diseases informations including
+        ORPHAcode, preferred term, and a mapping reference of the clinical entity
+        and the OMIM system in the selected language
+      operationId: generic_product1
+      parameters:
+      - in: query
+        name: lang
+        description: a language in the list supported by Orphanet (cs, de,
+          en, es, fr, it, nl, pl, pt)
+        required: false
+        schema:
+          type: string
+          default: en
+          enum:
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+      responses:
+        "200":
+          description: Successful operation
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
+  /orphadata/generics/rd-classification:
+    get:
+      tags:
+      - Catalog of aggregated data from Orphanet
+      summary: Get generic informations useful to make more detailed requests on product 3 data
+      description: >
+        The result is a list of the orphanet classification of rare diseases. 
+        Each orphanet classification is represented with its hchId, hchTag
+        and a list of ORPHAcodes and their preferred term associated to rare
+        diseases belonging to it.
+      operationId: generic_product3
+      responses:
+        "200":
+          description: Successful operation
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller  
+  /orphadata/generics/rd-phenotypes/langs/{language}:
+    get:
+      tags:
+      - Catalog of aggregated data from Orphanet
+      summary: Get generic informations useful to make more detailed requests on product 4 data
+      description: >
+        The result is a list of rare diseases informations including
+        ORPHAcode, preferred term, and a list of their associated HPOs
+      operationId: generic_product4
+      parameters:
+      - name: language
+        in: path
+        description: Specify the language in the list supported by Orphanet (DE,
+          EN, ES, FR, IT, NL, PT)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: EN
+          enum:
+          - DE
+          - EN
+          - ES
+          - FR
+          - IT
+          - NL
+          - PT
+      responses:
+        "200":
+          description: Successful operation
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
+  /orphadata/generics/rd-associated-genes/langs/en:
+    get:
+      tags:
+      - Catalog of aggregated data from Orphanet
+      summary: Get generic informations useful to make more detailed requests on product 6 data
+      description: >
+        The result is a list of rare diseases informations including
+        ORPHAcode, preferred term, and a list of their associated genes.
+      operationId: generic_product6
+      responses:
+        "200":
+          description: Successful operation
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
+  /orphadata/generics/rd-medical-specialties/langs/en:
+    get:
+      tags:
+      - Catalog of aggregated data from Orphanet
+      summary: Get generic informations useful to make more detailed requests on product 7 data
+      description: >
+        The result is a list of the clinical entities at the disorder level 
+        and their preferential parent, both referred to as  their related 
+        ORPHAcode and preferred term.
+      operationId: generic_product7
+      responses:
+        "200":
+          description: Successful operation
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
+  /orphadata/generics/rd-epidemiology/{cat}/lang/{language}:
+    get:
+      tags:
+      - Catalog of aggregated data from Orphanet
+      summary: Get generic informations useful to make more detailed requests on product 9 data
+      description: The result is a collection of clinical entities (ORPhacode, preferred
+        term, expertlink) and associated epidemiological data characterized as point
+        prevalence, birth prevalence, lifelong prevalence and incidence, or the number
+        of cases/families reported together with their respective intervals per geographical
+        area (country, continent) and translated in the selected language.
+      operationId: generic_product9
+      parameters:
+      - name: language
+        in: path
+        description: Specify the language in the list supported by Orphanet (CS, DE,
+          EN, ES, FR, IT, NL, PL, PT)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: EN
+          enum:
+          - CS
+          - DE
+          - EN
+          - ES
+          - FR
+          - IT
+          - NL
+          - PL
+          - PT
+          - RU
+      - name: cat
+        in: path
+        description: Specify the desired category of epidemiological data (prev or ages) 
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: prev
+          enum:
+          - prev
+          - ages
+      responses:
+        "200":
+          description: Successful operation
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
+  /orphadata/details/rd-cross-referencing/langs/{language}:
     get:
       tags:
       - Rare diseases and cross-referencing
       summary: Get all clinical entities informations and their cross-referencing
         in the selected language.
-      description: The result is a collection of rare diseases informations including
+      description: >
+        The result is a collection of rare diseases informations including
         ORPHAcode, the stable URL pointing to the specific page of the clinical entity
         on the Orphanet website, preferred term, synonyms, definition, the group and
         type, and the characterisation of the alignment between the clinical entity
@@ -131,7 +374,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
-  /product1/list_orphacode/language/{language}:
+  /orphadata/details/rd-cross-referencing/langs/{language}/orphacodes:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -175,7 +418,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
-  /product1/orphacode/{orphacode}/language/{language}:
+  /orphadata/details/rd-cross-referencing/langs/{language}/orphacodes/{orphacode}:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -236,7 +479,214 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
-  /classification/list_hchid:
+  /orphadata/details/rd-cross-referencing/langs/{language}/names/{name}:
+    get:
+      tags:
+      - Rare diseases and cross-referencing
+      summary: Get informations and cross-referencing of a clinical entity searching
+        by its name in the selected language.
+      description: The result is a set of data including ORPHAcode, the stable URL
+        pointing to the specific page of the clinical entity on the Orphanet website,
+        preferred term, synonyms, definition, the group and type, and the characterisation
+        of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra,
+        and OMIM systems in the selected language.
+      operationId: product1_by_name
+      parameters:
+      - name: name
+        in: path
+        description: the preferred name of a disease
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: language
+        in: path
+        description: Specify the language in the list supported by Orphanet (CS, DE,
+          EN, ES, FR, IT, NL, PL, PT)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: EN
+          enum:
+          - CS
+          - DE
+          - EN
+          - ES
+          - FR
+          - IT
+          - NL
+          - PL
+          - PT
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product1'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
+  /orphadata/details/rd-cross-referencing/langs/{language}/omims/{omim}:
+    get:
+      tags:
+      - Rare diseases and cross-referencing
+      summary: Get informations and cross-referencing of a clinical entity searching
+        by an OMIM reference in the selected language.
+      description: The result is a list of clinical entites matching the given OMIM reference
+      operationId: product1_by_omim
+      parameters:
+      - name: omim
+        in: path
+        description: OMIM reference
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: language
+        in: path
+        description: Specify the language in the list supported by Orphanet (CS, DE,
+          EN, ES, FR, IT, NL, PL, PT)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: en
+          enum:
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product1'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
+  /orphadata/details/rd-cross-referencing/langs/{language}/icds:
+    get:
+      tags:
+      - Rare diseases and cross-referencing
+      summary: Get all ICD-10 references in the selected language.
+      description: The result is a list of ICD-10 references
+      operationId: product1_list_icds
+      parameters:
+      - name: language
+        in: path
+        description: Specify the language in the list supported by Orphanet (CS, DE,
+          EN, ES, FR, IT, NL, PL, PT)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: en
+          enum:
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product1'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
+  /orphadata/details/rd-cross-referencing/langs/{language}/icds/{icd}:
+    get:
+      tags:
+      - Rare diseases and cross-referencing
+      summary: Get informations and cross-referencing of a clinical entity searching
+        by an ICD-10 reference in the selected language.
+      description: The result is a list of clinical entites matching the given ICD-10 reference
+      operationId: product1_by_icd
+      parameters:
+      - name: icd
+        in: path
+        description: ICD-10 reference
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: language
+        in: path
+        description: Specify the language in the list supported by Orphanet (CS, DE,
+          EN, ES, FR, IT, NL, PL, PT)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: en
+          enum:
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product1'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
+  /orphadata/details/rd-classification/list_hchid:
     get:
       tags:
       - Classifications of rare diseases
@@ -261,7 +711,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
-  /classification/list_orphacode/hchid/{hchid}:
+  /orphadata/details/rd-classification/list_orphacode/hchid/{hchid}:
     get:
       tags:
       - Classifications of rare diseases
@@ -297,7 +747,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
-  /classification/hchid/{hchid}:
+  /orphadata/details/rd-classification/hchid/{hchid}:
     get:
       tags:
       - Classifications of rare diseases
@@ -333,7 +783,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
-  /classification/orphacode/{orphacode}:
+  /orphadata/details/rd-classification/orphacode/{orphacode}:
     get:
       tags:
       - Classifications of rare diseases
@@ -372,7 +822,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
-  /classification/orphacode/{orphacode}/hchid/{hchid}:
+  /orphadata/details/rd-classification/orphacode/{orphacode}/hchid/{hchid}:
     get:
       tags:
       - Classifications of rare diseases
@@ -421,7 +871,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
-  /phenotype/language/{language}:
+  /orphadata/details/rd-phenotypes/langs/{language}:
     get:
       tags:
       - Rare diseases and associated phenotypes
@@ -471,7 +921,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_phenotypes_controller
-  /phenotype/list_orphacode/language/{language}:
+  /orphadata/details/rd-phenotypes/langs/{language}/orphacodes:
     get:
       tags:
       - Rare diseases and associated phenotypes
@@ -516,7 +966,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_phenotypes_controller
-  /phenotype/orphacode/{orphacode}/language/{language}:
+  /orphadata/details/rd-phenotypes/langs/{language}/orphacodes/{orphacode}:
     get:
       tags:
       - Rare diseases and associated phenotypes
@@ -580,7 +1030,72 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_phenotypes_controller
-  /associatedgene:
+  /orphadata/details/rd-phenotypes/langs/{language}/hpoids/{hpoids}:
+    get:
+      tags:
+      - Rare diseases and associated phenotypes
+      summary: Get informations and associated HPO phenotypes in a selected language 
+        for all clinical entities matching a given list of HPO IDs.
+      description: The result is a set of data related to matching clinical entities.
+        Each element of the list is a clinical entity described by its ORPHAcode, the stable URL
+        pointing to its specific page on the Orphanet website,
+        preferred term, the group and type, and the associated HPO phenotypes. The
+        annotation is characterized by frequency (obligate, very frequent, frequent,
+        occasional, very rare or excluded) and whether the annotated HPO term is a
+        major diagnostic criterion or a pathognomonic sign of the rare disease. Source
+        (PMID references), the date and the validation’s status of the association
+        between the rare disease and HPO terms is also made available.
+      operationId: phenotype_by_hpo_id
+      parameters:
+      - name: hpoids
+        in: path
+        description: a comma-separated list of HPO IDs
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+      - name: language
+        in: path
+        description: Specify the language in the list supported by Orphanet (CS, DE,
+          EN, ES, FR, IT, NL, PL, PT)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          default: EN
+          enum:
+          - CS
+          - DE
+          - EN
+          - ES
+          - FR
+          - IT
+          - NL
+          - PL
+          - PT
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product4'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_phenotypes_controller
+  /orphadata/details/rd-associated-genes:
     get:
       tags:
       - Rare diseases and associated gene
@@ -607,7 +1122,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
-  /associatedgene/list_orphacode:
+  /orphadata/details/rd-associated-genes/orphacodes:
     get:
       tags:
       - Rare diseases and associated gene
@@ -631,7 +1146,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
-  /associatedgene/orphacode/{orphacode}:
+  /orphadata/details/rd-associated-genes/orphacodes/{orphacode}:
     get:
       tags:
       - Rare diseases and associated gene
@@ -672,23 +1187,21 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
-  /gene:
+  /orphadata/details/rd-associated-genes/genes:
     get:
       tags:
-      - Genes associated to rare diseases
-      summary: Get all genes associated to at leat one clinical entity and its information.
-      description: The result is a set of data includes symbol, synonyms, name, typology,
-        chromosomal location and cross-mappings with other international genetic databases
-        of selected genes and their relationship to clinical entities. For clinical
-        entity, ORPhacode, preferred term, expertlink, group and type are also available.
-      operationId: gene_all_symbol
+      - Rare diseases and associated gene
+      summary: Get the list genes associated to at least one clinical entity.
+      description: The result is a collection of genes associated to at least
+        one clinical entity. Each gene is presented by its name(s) and symbol(s)
+      operationId: associatedgene_list_genes
       responses:
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/product6_gene_list'
+                $ref: '#/components/schemas/list_orphacode'
         "403":
           description: Access denied
         "404":
@@ -697,46 +1210,24 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.genes_associated_to_rare_diseases_controller
-  /gene/list_symbol:
+      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
+  /orphadata/details/rd-associated-genes/genes/symbols/{gene_symbol}:
     get:
       tags:
-      - Genes associated to rare diseases
-      summary: Get all symbols of genes associated to at leat one clinical entity.
-      description: The result is a list of gene symbols (official HGNC-approved gene
-        symbols) associated to at least one clinical entity.
-      operationId: gene_list_symbol
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/list_symbol'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.genes_associated_to_rare_diseases_controller
-  /gene/symbol/{symbol}:
-    get:
-      tags:
-      - Genes associated to rare diseases
-      summary: Get genes informations and associated clinical entity searching by
-        gene symbol.
-      description: The result is a set of data includes symbol, synonyms, name, typology,
-        chromosomal location and cross-mappings with other international genetic databases
-        of selected genes and their relationship to clinical entities. For clinical
-        entity, ORPhacode, preferred term, expertlink, group and type are also available.
-      operationId: gene_by_symbol
+      - Rare diseases and associated gene
+      summary: Get associated genes and genes information of a clinical entity searching
+        by its ORPHAcode.
+      description: The result is a set of data includes ORPhacode, preferred term,
+        expertlink, group and type of the selected clinical entity, relationship between
+        genes and the searched disease and symbol, synonyms, name, typology, chromosomal
+        location and cross-mappings with other international genetic databases of
+        selected genes.
+      operationId: associatedgene_by_gene_symbol
       parameters:
-      - name: symbol
+      - name: gene_symbol
         in: path
-        description: The symbol is an identifier to reference a gene
+        description: a unique and time-stable numerical identifier attributed randomly
+          by the database upon creation of the entity.
         required: true
         style: simple
         explode: false
@@ -748,7 +1239,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/product6_gene'
+                $ref: '#/components/schemas/product6'
         "403":
           description: Access denied
         "404":
@@ -757,8 +1248,164 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.genes_associated_to_rare_diseases_controller
-  /epidemiology/language/{language}:
+      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
+  /orphadata/details/rd-associated-genes/genes/names/{gene_name}:
+    get:
+      tags:
+      - Rare diseases and associated gene
+      summary: Get associated genes and genes information of a clinical entity searching
+        by its ORPHAcode.
+      description: The result is a set of data includes ORPhacode, preferred term,
+        expertlink, group and type of the selected clinical entity, relationship between
+        genes and the searched disease and symbol, synonyms, name, typology, chromosomal
+        location and cross-mappings with other international genetic databases of
+        selected genes.
+      operationId: associatedgene_by_gene_name
+      parameters:
+      - name: gene_name
+        in: path
+        description: a unique and time-stable numerical identifier attributed randomly
+          by the database upon creation of the entity.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product6'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
+  /orphadata/details/rd-medical-specialties/langs/en/orphacodes/{orphacode}:
+    get:
+      tags:
+      - Medical specialties of rare diseases
+      summary: Get informations and associated HPO phenotypes of a clinical entity
+        searching by its ORPHAcode in the selected language.
+      description: The result is a set of data including ORPHAcode, the stable URL
+        pointing to the specific page of the clinical entity on the Orphanet website,
+        preferred term, the group and type, and the associated HPO phenotypes. The
+        annotation is characterized by frequency (obligate, very frequent, frequent,
+        occasional, very rare or excluded) and whether the annotated HPO term is a
+        major diagnostic criterion or a pathognomonic sign of the rare disease. Source
+        (PMID references), the date and the validation’s status of the association
+        between the rare disease and HPO terms is also made available.
+      operationId: medical_specialty_parent_by_orphacode
+      parameters:
+      - name: orphacode
+        in: path
+        description: a unique and time-stable numerical identifier attributed randomly
+          by the database upon creation of the entity.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product4'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.medical_specialties_controller
+  /orphadata/details/rd-medical-specialties/langs/en/parents:
+    get:
+      tags:
+      - Medical specialties of rare diseases
+      summary: Get informations about all available medical specialties.
+      description: The result is a set of data including ORPHAcode, the stable URL
+        pointing to the specific page of the clinical entity on the Orphanet website,
+        preferred term, the group and type, and the associated HPO phenotypes. The
+        annotation is characterized by frequency (obligate, very frequent, frequent,
+        occasional, very rare or excluded) and whether the annotated HPO term is a
+        major diagnostic criterion or a pathognomonic sign of the rare disease. Source
+        (PMID references), the date and the validation’s status of the association
+        between the rare disease and HPO terms is also made available.
+      operationId: medical_specialty_parents
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product4'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.medical_specialties_controller
+  /orphadata/details/rd-medical-specialties/langs/en/parents/{parentcode}:
+    get:
+      tags:
+      - Medical specialties of rare diseases
+      summary: Get informations and associated HPO phenotypes of a clinical entity
+        searching by its ORPHAcode in the selected language.
+      description: The result is a set of data including ORPHAcode, the stable URL
+        pointing to the specific page of the clinical entity on the Orphanet website,
+        preferred term, the group and type, and the associated HPO phenotypes. The
+        annotation is characterized by frequency (obligate, very frequent, frequent,
+        occasional, very rare or excluded) and whether the annotated HPO term is a
+        major diagnostic criterion or a pathognomonic sign of the rare disease. Source
+        (PMID references), the date and the validation’s status of the association
+        between the rare disease and HPO terms is also made available.
+      operationId: medical_specialty_orphacode_by_parent
+      parameters:
+      - name: parentcode
+        in: path
+        description: a unique and time-stable numerical identifier attributed randomly
+          by the database upon creation of the entity.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          minimum: 0
+          exclusiveMinimum: true
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product4'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.medical_specialties_controller
+  /orphadata/details/rd-epidemiology/language/{language}:
     get:
       tags:
       - Epidemiological data on rare diseases
@@ -807,7 +1454,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
-  /epidemiology/list_orphacode/language/{language}:
+  /orphadata/details/rd-epidemiology/list_orphacode/language/{language}:
     get:
       tags:
       - Epidemiological data on rare diseases
@@ -852,7 +1499,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
-  /epidemiology/orphacode/{orphacode}/language/{language}:
+  /orphadata/details/rd-epidemiology/orphacode/{orphacode}/language/{language}:
     get:
       tags:
       - Epidemiological data on rare diseases
@@ -914,7 +1561,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
-  /natural_history/language/{language}:
+  /orphadata/details/rd-natural_history/language/{language}:
     get:
       tags:
       - Epidemiological data on rare diseases
@@ -962,7 +1609,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
-  /natural_history/list_orphacode/language/{language}:
+  /orphadata/details/rd-natural_history/list_orphacode/language/{language}:
     get:
       tags:
       - Epidemiological data on rare diseases
@@ -1007,7 +1654,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
-  /natural_history/orphacode/{orphacode}/language/{language}:
+  /orphadata/details/rd-natural_history/orphacode/{orphacode}/language/{language}:
     get:
       tags:
       - Epidemiological data on rare diseases
@@ -1956,15 +2603,15 @@ components:
       explode: false
       schema:
         type: string
-  securitySchemes:
-    UserSecurity:
-      type: apiKey
-      name: SIMPLE-API-KEY
-      in: header
-      x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_UserSecurity
-    AdminSecurity:
-      type: apiKey
-      name: ADMIN-API-KEY
-      in: header
-      x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_AdminSecurity
+  # securitySchemes:
+  #   UserSecurity:
+  #     type: apiKey
+  #     name: SIMPLE-API-KEY
+  #     in: header
+  #     x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_UserSecurity
+  #   AdminSecurity:
+  #     type: apiKey
+  #     name: ADMIN-API-KEY
+  #     in: header
+  #     x-apikeyInfoFunc: swagger_server.controllers.authorization_controller.check_AdminSecurity
 

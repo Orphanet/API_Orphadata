@@ -53,6 +53,99 @@ def phenotype_by_orphacode(orphacode, language):  # noqa: E501
     response = single_res(es, index, query)
     return response
 
+def phenotype_by_hpo_id(language, hpoids):
+    es = config.elastic_server
+    
+    index = "product4"
+    index = "{}_{}".format(language.lower(), index)
+    # query = {
+    #     "query":{
+    #         "match": {
+    #             "Disorder.HPODisorderAssociation.HPO.HPOId": str(hpoids)
+    #         }
+    #     },
+    #     '_source': {
+    #         'includes': ["Disorder"],
+    #         'excludes': [
+    #             "Disorder.HPO*",
+    #             "Disorder.Typolo*",
+    #             "Disorder.Dis*",
+    #             "Disorder.OrphanetURL",
+    #             ]
+    #     }
+    # }
+
+    # query = {
+    #     "query":{
+    #         "constant_score": {
+    #             "filter": {
+    #                 "match": {
+    #                     "Disorder.HPODisorderAssociation.HPO.HPOId": str(hpoids)
+    #                 }
+    #             }
+    #         }
+    #     },
+    #     '_source': {
+    #         'includes': ["Disorder"],
+    #         'excludes': [
+    #             "Disorder.HPO*",
+    #             "Disorder.Typolo*",
+    #             "Disorder.Dis*",
+    #             "Disorder.OrphanetURL",
+    #             ]
+    #     }
+    # }
+    # hpoids = ['HP:0001249', 'HP:0001257', 'HP:0001250']
+
+    # filter = []
+    # for hpo_id in hpoids:
+    #     filter.append(
+    #         {
+    #             "match": {
+    #                 "Disorder.HPODisorderAssociation.HPO.HPOId": str(hpo_id) 
+    #             }
+    #         }
+    #     )
+
+
+    # query = {
+    #     "query": {
+    #         "bool": {
+    #             "filter": {
+    #                 "terms": {
+    #                     "Disorder.HPODisorderAssociation.HPO.HPOId.keyword": hpoids,
+    #                     "operator": "AND"
+    #                 }
+    #             }
+    #         }
+    #     }
+    # }
+
+    query = {
+        "query": {
+            "match": {
+                "Disorder.HPODisorderAssociation.HPO.HPOId": {
+                    "query": ' '.join(hpoids),
+                    "operator": "AND"
+                }
+            }
+        }
+    }
+
+
+    size = config.scroll_size  # per scroll, not limiting
+    scroll_timeout = config.scroll_timeout
+
+    response = uncapped_res(es, index, query, size, scroll_timeout)
+    # response_parsed = [{"ORPHAcode": x["Disorder"]["ORPHAcode"], "PreferredTerm": x["Disorder"]["Preferred term"], "HPOs": x["Disorder"]["HPODisorderAssociation"]} for x in response]
+    # response_parsed = []
+    # for res in response:
+    #     dic = {"ORPHAcode": res["Disorder"]["ORPHAcode"], "PreferredTerm": res["Disorder"]["Preferred term"]}
+    #     dic["HPOs"] = sorted([ x["HPO"]["HPOId"] for x in res["Disorder"]["HPODisorderAssociation"] ])
+    #     response_parsed.append(dic)
+
+    return response
+
 
 def phenotype_list_orphacode(language):  # noqa: E501
     """Get list of ORPHAcodes associated to HPO phenotypes in the selected language.

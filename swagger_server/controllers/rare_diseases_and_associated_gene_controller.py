@@ -3,7 +3,7 @@ from swagger_server.models.product6 import Product6  # noqa: E501
 from swagger_server.models.product6_list import Product6List  # noqa: E501
 
 import config
-from controllers.query_controller import *
+import controllers.query_controller as qc
 
 
 def associatedgene_all_orphacode():  # noqa: E501
@@ -24,7 +24,7 @@ def associatedgene_all_orphacode():  # noqa: E501
 
     scroll_timeout = config.scroll_timeout
 
-    response = uncapped_res(es, index, query, size, scroll_timeout)
+    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
     return response
 
 
@@ -46,11 +46,11 @@ def associatedgene_list_orphacode():  # noqa: E501
 
     scroll_timeout = config.scroll_timeout
 
-    response = uncapped_res(es, index, query, size, scroll_timeout)
+    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
     if isinstance(response, str) or isinstance(response, tuple):
         pass
     else:
-        response = [elem["ORPHAcode"] for elem in response]
+        response = sorted([elem["ORPHAcode"] for elem in response])
     return response
 
 
@@ -70,5 +70,91 @@ def associatedgene_orphacode(orphacode):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = single_res(es, index, query)
+    response = qc.single_res(es, index, query)
+    return response
+
+
+def associatedgene_list_genes():  # noqa: E501
+    """Get the list of ORPHAcodes associated to at least one gene.
+
+    The result is a collection of ORPHAcodes associated to at least one gene. # noqa: E501
+
+
+    :rtype: ListOrphacode
+    """
+    es = config.elastic_server
+
+    index = "en_product6"
+
+    query = {
+        "query": {
+            "match_all": {}
+        }, 
+        "_source":["DisorderGeneAssociation"]
+    }
+
+    size = config.scroll_size  # per scroll, not limiting
+    scroll_timeout = config.scroll_timeout
+
+    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
+    if isinstance(response, str) or isinstance(response, tuple):
+        pass
+    else:
+        response_parsed = []
+        for hit in response:
+            for gene in hit["DisorderGeneAssociation"]:
+                response_parsed.append({'preferredTerm': gene["Gene"]["Preferred term"], 'symbol': gene["Gene"]["Symbol"]})
+    
+    return sorted(list(set(response_parsed)))
+
+
+def associatedgene_by_gene_symbol(gene_symbol):
+    es = config.elastic_server
+    index = "en_product6"
+
+    query = {
+        "query": {
+            "bool": {
+                "filter": {
+                    "match": {"DisorderGeneAssociation.Gene.Symbol": str(gene_symbol)}
+                }
+            }
+        },
+        # "_source": ["ORPHAcode"]
+    }
+
+    response = qc.multiple_res(es, index, query, size=5000)
+
+    return response
+
+
+def associatedgene_by_gene_name(gene_name):
+    es = config.elastic_server
+    index = "en_product6"
+
+    # query = {
+    #     "query": {
+    #         "bool": {
+    #             "must": {
+    #                 "match": {"DisorderGeneAssociation.Gene.Preferred term": str(gene_name)}
+    #             }
+    #         }
+    #     },
+    #     "_source": ["ORPHAcode", "DisorderGeneAssociation.Gene.Preferred term", "DisorderGeneAssociation.Gene.Symbol"]
+    # }
+
+    query = {
+        "query": {
+            "match_phrase": {
+                "DisorderGeneAssociation.Gene.Preferred term": {
+                    "query": str(gene_name),
+                    "slop": 0,
+                }
+            }
+        },
+        # "_source": ["ORPHAcode", "DisorderGeneAssociation.Gene.Preferred term", "DisorderGeneAssociation.Gene.Symbol"]
+    }
+
+    response = qc.multiple_res(es, index, query, size=5000)
+
     return response

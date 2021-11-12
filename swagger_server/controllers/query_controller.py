@@ -20,9 +20,9 @@ def handle_query(es, index, query, size=1):
         response = ("Server Error: Index not found", 404)
         # print(response)
     except elasticsearch.exceptions.ConnectionError:
-        response = ("Elasticsearch node unavailable", 503)
+        response = ("ConnectionError type, Elasticsearch node unavailable", 503)
     except elasticsearch.exceptions.TransportError:
-        response = ("Elasticsearch node unavailable", 503)
+        response = ("TransportError type, Elasticsearch node unavailable", 503)
     return response
 
 
