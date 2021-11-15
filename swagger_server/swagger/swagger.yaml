@@ -149,6 +149,9 @@ paths:
           - nl
           - pl
           - pt
+          - ru
+          - tr
+          - zh
       responses:
         "200":
           description: Successful operation
@@ -349,7 +352,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
-  /orphadata/details/rd-cross-referencing/langs/{language}:
+  /orphadata/details/rd-cross-referencing:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -363,26 +366,26 @@ paths:
         and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language
       operationId: product1_all_orphacode
       parameters:
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
+          - tr
+          - zh
       responses:
         "200":
           description: Successful operation
@@ -399,7 +402,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
-  /orphadata/details/rd-cross-referencing/langs/{language}/orphacodes:
+  /orphadata/details/rd-cross-referencing/orphacodes:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -407,26 +410,26 @@ paths:
       description: The result is a collection of ORPHAcodes in the selected language.
       operationId: product1_list_orphacode
       parameters:
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
+          - tr
+          - zh
       responses:
         "200":
           description: Successful operation
@@ -443,7 +446,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
-  /orphadata/details/rd-cross-referencing/langs/{language}/orphacodes/{orphacode}:
+  /orphadata/details/rd-cross-referencing/orphacodes/{orphacode}:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -468,26 +471,26 @@ paths:
           exclusiveMinimum: true
           type: integer
           format: int32
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
+          - tr
+          - zh
       responses:
         "200":
           description: Successful operation
@@ -504,7 +507,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
-  /orphadata/details/rd-cross-referencing/langs/{language}/names/{name}:
+  /orphadata/details/rd-cross-referencing/names/{name}:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -525,26 +528,26 @@ paths:
         explode: false
         schema:
           type: string
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
+          - tr
+          - zh
       responses:
         "200":
           description: Successful operation
@@ -561,7 +564,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
-  /orphadata/details/rd-cross-referencing/langs/{language}/omims/{omim}:
+  /orphadata/details/rd-cross-referencing/omims/{omim}:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -578,13 +581,10 @@ paths:
         explode: false
         schema:
           type: string
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
           default: en
@@ -598,6 +598,9 @@ paths:
           - nl
           - pl
           - pt
+          - ru
+          - tr
+          - zh
       responses:
         "200":
           description: Successful operation
@@ -614,7 +617,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
-  /orphadata/details/rd-cross-referencing/langs/{language}/icds:
+  /orphadata/details/rd-cross-referencing/icds:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -622,13 +625,10 @@ paths:
       description: The result is a list of ICD-10 references
       operationId: product1_list_icds
       parameters:
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
           default: en
@@ -642,6 +642,9 @@ paths:
           - nl
           - pl
           - pt
+          - ru
+          - tr
+          - zh
       responses:
         "200":
           description: Successful operation
@@ -658,7 +661,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
-  /orphadata/details/rd-cross-referencing/langs/{language}/icds/{icd}:
+  /orphadata/details/rd-cross-referencing/icds/{icd}:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -675,13 +678,10 @@ paths:
         explode: false
         schema:
           type: string
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
           default: en
@@ -695,6 +695,9 @@ paths:
           - nl
           - pl
           - pt
+          - ru
+          - tr
+          - zh
       responses:
         "200":
           description: Successful operation
@@ -711,7 +714,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
-  /orphadata/details/rd-classification/list_hchid:
+  /orphadata/details/rd-classification/hchids:
     get:
       tags:
       - Classifications of rare diseases
@@ -736,7 +739,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
-  /orphadata/details/rd-classification/list_orphacode/hchid/{hchid}:
+  /orphadata/details/rd-classification/hchids/{hchid}/orphacodes:
     get:
       tags:
       - Classifications of rare diseases
@@ -772,7 +775,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
-  /orphadata/details/rd-classification/hchid/{hchid}:
+  /orphadata/details/rd-classification/hchids/{hchid}:
     get:
       tags:
       - Classifications of rare diseases

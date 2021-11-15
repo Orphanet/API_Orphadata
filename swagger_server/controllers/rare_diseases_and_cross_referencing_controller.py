@@ -8,7 +8,7 @@ from flask import request
 
 
 
-def product1_all_orphacode(language):  # noqa: E501
+def product1_all_orphacode():  # noqa: E501
     """Get all clinical entities informations and their cross-referencing in the selected language.
 
     The result is a collection of rare diseases informations including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language # noqa: E501
@@ -19,23 +19,21 @@ def product1_all_orphacode(language):  # noqa: E501
     :rtype: Product1List
     """
     es = config.elastic_server
+    lang = request.args.get("lang", "en")
 
     index = "product1"
-    index = "{}_{}".format(language.lower(), index)
+    index = "{}_{}".format(lang.lower(), index)
 
-    query = "{\"query\": {\"match_all\": {}}}"
-
-    
+    query = "{\"query\": {\"match_all\": {}}}"    
 
     size = config.scroll_size  # per scroll, not limiting
-
     scroll_timeout = config.scroll_timeout
 
     response = qc.uncapped_res(es, index, query, size, scroll_timeout)
     return response
 
 
-def product1_by_orphacode(orphacode, language):  # noqa: E501
+def product1_by_orphacode(orphacode):  # noqa: E501
     """Get informations and cross-referencing of a clinical entity searching by its ORPHAcode in the selected language.
 
     The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language. # noqa: E501
@@ -48,9 +46,10 @@ def product1_by_orphacode(orphacode, language):  # noqa: E501
     :rtype: Product1
     """
     es = config.elastic_server
+    lang = request.args.get("lang", "en")
 
     index = "product1"
-    index = "{}_{}".format(language.lower(), index)
+    index = "{}_{}".format(lang.lower(), index)
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
@@ -58,7 +57,7 @@ def product1_by_orphacode(orphacode, language):  # noqa: E501
     return response
 
 
-def product1_by_name(name, language):  # noqa: E501
+def product1_by_name(name):  # noqa: E501
     """Get informations and cross-referencing of a clinical entity searching by its name in the selected language.
 
     The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language. # noqa: E501
@@ -72,9 +71,10 @@ def product1_by_name(name, language):  # noqa: E501
     """
     # print(request.args)
     es = config.elastic_server
+    lang = request.args.get("lang", "en")
 
     index = "product1"
-    index = "{}_{}".format(language.lower(), index)
+    index = "{}_{}".format(lang.lower(), index)
 
     query = {
         "query": {
@@ -88,7 +88,7 @@ def product1_by_name(name, language):  # noqa: E501
     return response
 
 
-def product1_list_orphacode(language):  # noqa: E501
+def product1_list_orphacode():  # noqa: E501
     """Get the list of ORPHAcodes available in the selected language.
 
     The result is a collection of ORPHAcodes in the selected language. # noqa: E501
@@ -99,10 +99,10 @@ def product1_list_orphacode(language):  # noqa: E501
     :rtype: ListOrphacode
     """
     es = config.elastic_server
+    lang = request.args.get("lang", "en")
 
     index = "product1"
-    # index = "{}_{}".format(language.lower(), index)
-    index = "{}_{}_args".format(language.lower(), index)
+    index = "{}_{}_args".format(lang.lower(), index)
 
     # query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
 
@@ -118,7 +118,6 @@ def product1_list_orphacode(language):  # noqa: E501
 
 
     size = config.scroll_size  # per scroll, not limiting
-
     scroll_timeout = config.scroll_timeout
 
     response = qc.uncapped_res(es, index, query, size, scroll_timeout)
@@ -131,11 +130,12 @@ def product1_list_orphacode(language):  # noqa: E501
     # return response
 
 
-def product1_by_omim(language, omim):
+def product1_by_omim(omim):
     es = config.elastic_server
+    lang = request.args.get("lang", "en")
 
     index = "product1"
-    index = "{}_{}".format(language.lower(), index)
+    index = "{}_{}".format(lang.lower(), index)
 
     query = {
         "query": {
@@ -161,7 +161,7 @@ def product1_by_omim(language, omim):
     return response
 
 
-def product1_list_icds(language):  # noqa: E501
+def product1_list_icds():  # noqa: E501
     """Get the list of ICD-10 available in the selected language.
 
     The result is a collection of ICD-10 references in the selected language. # noqa: E501
@@ -172,10 +172,10 @@ def product1_list_icds(language):  # noqa: E501
     :rtype: ListOrphacode
     """
     es = config.elastic_server
+    lang = request.args.get("lang", "en")
 
     index = "product1"
-    # index = "{}_{}".format(language.lower(), index)
-    index = "{}_{}".format(language.lower(), index)
+    index = "{}_{}".format(lang.lower(), index)
 
     query = {
         "query": {
@@ -215,11 +215,12 @@ def product1_list_icds(language):  # noqa: E501
     return sorted(list(set(response_parsed)))
 
 
-def product1_by_icd(language, icd):
+def product1_by_icd(icd):
     es = config.elastic_server
+    lang = request.args.get("lang", "en")
 
     index = "product1"
-    index = "{}_{}".format(language.lower(), index)
+    index = "{}_{}".format(lang.lower(), index)
 
     # query = {
     #     "query": {
