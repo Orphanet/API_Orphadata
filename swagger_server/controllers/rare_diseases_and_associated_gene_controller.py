@@ -105,10 +105,10 @@ def associatedgene_list_genes():  # noqa: E501
             for gene in hit["DisorderGeneAssociation"]:
                 response_parsed.append({'preferredTerm': gene["Gene"]["Preferred term"], 'symbol': gene["Gene"]["Symbol"]})
     
-    return sorted(list(set(response_parsed)))
+    return sorted(response_parsed, key=lambda x: x["preferredTerm"])
 
 
-def associatedgene_by_gene_symbol(gene_symbol):
+def associatedgene_by_gene_symbol(symbol):
     es = config.elastic_server
     index = "en_product6"
 
@@ -116,7 +116,7 @@ def associatedgene_by_gene_symbol(gene_symbol):
         "query": {
             "bool": {
                 "filter": {
-                    "match": {"DisorderGeneAssociation.Gene.Symbol": str(gene_symbol)}
+                    "match": {"DisorderGeneAssociation.Gene.Symbol": str(symbol)}
                 }
             }
         },
@@ -128,7 +128,7 @@ def associatedgene_by_gene_symbol(gene_symbol):
     return response
 
 
-def associatedgene_by_gene_name(gene_name):
+def associatedgene_by_gene_name(name):
     es = config.elastic_server
     index = "en_product6"
 
@@ -147,7 +147,7 @@ def associatedgene_by_gene_name(gene_name):
         "query": {
             "match_phrase": {
                 "DisorderGeneAssociation.Gene.Preferred term": {
-                    "query": str(gene_name),
+                    "query": str(name),
                     "slop": 0,
                 }
             }

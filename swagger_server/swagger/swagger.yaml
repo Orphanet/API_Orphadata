@@ -88,15 +88,23 @@ tags:
       nomenclature each with the medical specialty attributed as the preferential parent by Orphanet.
       It is updated once a month.
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Epidemiological data on rare diseases
-  description: Product 9
+- name: Epidemiology of rare diseases
+  description: Product 9-a
   externalDocs:
-    description: Search for epidemiological data or natural history of a rare disease.
-      The result is all informations on point prevalence, birth prevalence, lifelong
-      prevalence and incidence, or the number of cases/families reported together
-      with their respective intervals per geographical area (country, continent) per
-      clinicla entities. Inheritance, interval average age of onset and interval average
-      age of death of clinical entities are also available.
+    description: Orphanet collects and curates data concerning the epidemiology of 
+      rare diseases. A systematic survey of the literature is carried out in order
+      to estimate the prevalence and incidence of rare diseases. The rare diseases
+      epidemiology dataset includes rare diseases (ORPHAcode, preferred name,
+      classification level, and typology) with available point prevalence, birth 
+      prevalence, lifelong prevalence and incidence, or the number of families reported
+      together with their respective intervals per geographical area.
+    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+- name: Natural history of rare diseases
+  description: Product 9-b
+  externalDocs:
+    description: The rare diseases natural history dataset includes rare diseases 
+      (ORPHAcode, preferred name, classification level, and typology) with available data 
+      related to type of inheritance, interval average age of onset and/or age of death.
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 paths:
   /orphadata/generics:
@@ -811,7 +819,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
-  /orphadata/details/rd-classification/orphacode/{orphacode}:
+  /orphadata/details/rd-classification/orphacodes/{orphacode}/hchids:
     get:
       tags:
       - Classifications of rare diseases
@@ -850,7 +858,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
-  /orphadata/details/rd-classification/orphacode/{orphacode}/hchid/{hchid}:
+  /orphadata/details/rd-classification/orphacodes/{orphacode}/hchids/{hchid}:
     get:
       tags:
       - Classifications of rare diseases
@@ -899,7 +907,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
-  /orphadata/details/rd-phenotypes/langs/{language}:
+  /orphadata/details/rd-phenotypes:
     get:
       tags:
       - Rare diseases and associated phenotypes
@@ -913,26 +921,22 @@ paths:
         between the rare disease and HPO terms is also available.
       operationId: phenotype_all_orphacode
       parameters:
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
       responses:
         "200":
           description: Successful operation
@@ -949,7 +953,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_phenotypes_controller
-  /orphadata/details/rd-phenotypes/langs/{language}/orphacodes:
+  /orphadata/details/rd-phenotypes/orphacodes:
     get:
       tags:
       - Rare diseases and associated phenotypes
@@ -958,26 +962,22 @@ paths:
       description: The result is a collection of ORPHAcodes in the selected language.
       operationId: phenotype_list_orphacode
       parameters:
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
       responses:
         "200":
           description: Successful operation
@@ -994,7 +994,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_phenotypes_controller
-  /orphadata/details/rd-phenotypes/langs/{language}/orphacodes/{orphacode}:
+  /orphadata/details/rd-phenotypes/orphacodes/{orphacode}:
     get:
       tags:
       - Rare diseases and associated phenotypes
@@ -1022,26 +1022,22 @@ paths:
           exclusiveMinimum: true
           type: integer
           format: int32
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
       responses:
         "200":
           description: Successful operation
@@ -1058,7 +1054,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_phenotypes_controller
-  /orphadata/details/rd-phenotypes/langs/{language}/hpoids/{hpoids}:
+  /orphadata/details/rd-phenotypes/hpoids/{hpoids}:
     get:
       tags:
       - Rare diseases and associated phenotypes
@@ -1087,26 +1083,22 @@ paths:
           uniqueItems: true
           items:
             type: string
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
       responses:
         "200":
           description: Successful operation
@@ -1239,7 +1231,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
-  /orphadata/details/rd-associated-genes/genes/symbols/{gene_symbol}:
+  /orphadata/details/rd-associated-genes/genes/symbols/{symbol}:
     get:
       tags:
       - Rare diseases and associated gene
@@ -1252,7 +1244,7 @@ paths:
         selected genes.
       operationId: associatedgene_by_gene_symbol
       parameters:
-      - name: gene_symbol
+      - name: symbol
         in: path
         description: a unique and time-stable numerical identifier attributed randomly
           by the database upon creation of the entity.
@@ -1277,7 +1269,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
-  /orphadata/details/rd-associated-genes/genes/names/{gene_name}:
+  /orphadata/details/rd-associated-genes/genes/names/{name}:
     get:
       tags:
       - Rare diseases and associated gene
@@ -1290,7 +1282,7 @@ paths:
         selected genes.
       operationId: associatedgene_by_gene_name
       parameters:
-      - name: gene_name
+      - name: name
         in: path
         description: a unique and time-stable numerical identifier attributed randomly
           by the database upon creation of the entity.
@@ -1315,7 +1307,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
-  /orphadata/details/rd-medical-specialties/langs/en/orphacodes/{orphacode}:
+  /orphadata/details/rd-medical-specialties/orphacodes/{orphacode}:
     get:
       tags:
       - Medical specialties of rare diseases
@@ -1359,7 +1351,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.medical_specialties_controller
-  /orphadata/details/rd-medical-specialties/langs/en/parents:
+  /orphadata/details/rd-medical-specialties/parents:
     get:
       tags:
       - Medical specialties of rare diseases
@@ -1389,7 +1381,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.medical_specialties_controller
-  /orphadata/details/rd-medical-specialties/langs/en/parents/{parentcode}:
+  /orphadata/details/rd-medical-specialties/parents/{parentcode}:
     get:
       tags:
       - Medical specialties of rare diseases
@@ -1433,10 +1425,10 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.medical_specialties_controller
-  /orphadata/details/rd-epidemiology/language/{language}:
+  /orphadata/details/rd-epidemiology:
     get:
       tags:
-      - Epidemiological data on rare diseases
+      - Epidemiology of rare diseases
       summary: Get all clinical entities with their epidemiological dataset in the
         selected language.
       description: The result is a collection of clinical entities (ORPhacode, preferred
@@ -1446,26 +1438,24 @@ paths:
         area (country, continent) and translated in the selected language.
       operationId: epidemiology_all_orphacode
       parameters:
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
       responses:
         "200":
           description: Successful operation
@@ -1482,35 +1472,33 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
-  /orphadata/details/rd-epidemiology/list_orphacode/language/{language}:
+  /orphadata/details/rd-epidemiology/orphacodes:
     get:
       tags:
-      - Epidemiological data on rare diseases
+      - Epidemiology of rare diseases
       summary: Get the list of ORPHAcodes associated to at least one epidemiological
         data.
       description: The result is a collection of ORPHAcodes in the selected language.
       operationId: epidemiology_list_orphacode
       parameters:
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
       responses:
         "200":
           description: Successful operation
@@ -1527,10 +1515,10 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
-  /orphadata/details/rd-epidemiology/orphacode/{orphacode}/language/{language}:
+  /orphadata/details/rd-epidemiology/orphacodes/{orphacode}:
     get:
       tags:
-      - Epidemiological data on rare diseases
+      - Epidemiology of rare diseases
       summary: Get epideliological informations of a clinical entity searching by
         its ORPHAcode in the selected language.
       description: The result is a set of data including ORPHAcode, the stable URL
@@ -1553,26 +1541,24 @@ paths:
           exclusiveMinimum: true
           type: integer
           format: int32
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
       responses:
         "200":
           description: Successful operation
@@ -1589,10 +1575,10 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
-  /orphadata/details/rd-natural_history/language/{language}:
+  /orphadata/details/rd-natural_history:
     get:
       tags:
-      - Epidemiological data on rare diseases
+      - Natural history of rare diseases
       summary: Get all clinical entities with their natural history data in the selected
         language.
       description: The result is a collection of clinical entities (ORPhacode, preferred
@@ -1601,26 +1587,24 @@ paths:
         death.
       operationId: natural_history_all_orphacode
       parameters:
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
       responses:
         "200":
           description: Successful operation
@@ -1637,35 +1621,33 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
-  /orphadata/details/rd-natural_history/list_orphacode/language/{language}:
+  /orphadata/details/rd-natural_history/orphacodes:
     get:
       tags:
-      - Epidemiological data on rare diseases
+      - Natural history of rare diseases
       summary: Get the list of ORPHAcodes associated to at least one natural history
         data.
       description: The result is a collection of ORPHAcodes in the selected language.
       operationId: natural_history_list_orphacode
       parameters:
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
       responses:
         "200":
           description: Successful operation
@@ -1682,10 +1664,10 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
-  /orphadata/details/rd-natural_history/orphacode/{orphacode}/language/{language}:
+  /orphadata/details/rd-natural_history/orphacodes/{orphacode}:
     get:
       tags:
-      - Epidemiological data on rare diseases
+      - Natural history of rare diseases
       summary: Get natural history informations of a clinical entity searching by
         its ORPHAcode in the selected language.
       description: The result is a set of data including ORPHAcode, the stable URL
@@ -1706,26 +1688,24 @@ paths:
           exclusiveMinimum: true
           type: integer
           format: int32
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
       responses:
         "200":
           description: Successful operation

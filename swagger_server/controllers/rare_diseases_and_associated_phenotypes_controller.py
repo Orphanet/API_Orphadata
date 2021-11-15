@@ -1,12 +1,13 @@
 from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
 from swagger_server.models.product4 import Product4  # noqa: E501
 from swagger_server.models.product4_list import Product4List  # noqa: E501
+from flask import request
 
 import config
 from controllers.query_controller import *
 
 
-def phenotype_all_orphacode(language):  # noqa: E501
+def phenotype_all_orphacode():  # noqa: E501
     """Get all clinical entities with their associated phenotypes in the selected language.
 
     The result is a collection of clinical entities with their associated HPO phenotypes characterized by frequency (obligate, very frequent, frequent, occasional, very rare or excluded) and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic sign of the rare disease. Source (PMID references), the date and the validation’s status of the association between the rare disease and HPO terms is also available. # noqa: E501
@@ -17,9 +18,10 @@ def phenotype_all_orphacode(language):  # noqa: E501
     :rtype: Product4List
     """
     es = config.elastic_server
+    lang = request.args.get("lang", "en")
 
     index = "product4"
-    index = "{}_{}".format(language.lower(), index)
+    index = "{}_{}".format(lang.lower(), index)
 
     query = "{\"query\": {\"match_all\": {}}}"
 
@@ -31,7 +33,7 @@ def phenotype_all_orphacode(language):  # noqa: E501
     return response
 
 
-def phenotype_by_orphacode(orphacode, language):  # noqa: E501
+def phenotype_by_orphacode(orphacode):  # noqa: E501
     """Get informations and associated HPO phenotypes of a clinical entity searching by its ORPHAcode in the selected language.
 
     The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, the group and type, and the associated HPO phenotypes. The annotation is characterized by frequency (obligate, very frequent, frequent, occasional, very rare or excluded) and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic sign of the rare disease. Source (PMID references), the date and the validation’s status of the association between the rare disease and HPO terms is also made available. # noqa: E501
@@ -44,20 +46,23 @@ def phenotype_by_orphacode(orphacode, language):  # noqa: E501
     :rtype: Product4
     """
     es = config.elastic_server
+    lang = request.args.get("lang", "en")
 
     index = "product4"
-    index = "{}_{}".format(language.lower(), index)
+    index = "{}_{}".format(lang.lower(), index)
 
     query = "{\"query\": {\"match\": {\"Disorder.ORPHAcode\": " + str(orphacode) + "}}}"
 
     response = single_res(es, index, query)
     return response
 
-def phenotype_by_hpo_id(language, hpoids):
+def phenotype_by_hpo_id(hpoids):
     es = config.elastic_server
-    
+    lang = request.args.get("lang", "en")
+
     index = "product4"
-    index = "{}_{}".format(language.lower(), index)
+    index = "{}_{}".format(lang.lower(), index)
+
     # query = {
     #     "query":{
     #         "match": {
@@ -147,7 +152,7 @@ def phenotype_by_hpo_id(language, hpoids):
     return response
 
 
-def phenotype_list_orphacode(language):  # noqa: E501
+def phenotype_list_orphacode():  # noqa: E501
     """Get list of ORPHAcodes associated to HPO phenotypes in the selected language.
 
     The result is a collection of ORPHAcodes in the selected language. # noqa: E501
@@ -158,9 +163,10 @@ def phenotype_list_orphacode(language):  # noqa: E501
     :rtype: ListOrphacode
     """
     es = config.elastic_server
+    lang = request.args.get("lang", "en")
 
     index = "product4"
-    index = "{}_{}".format(language.lower(), index)
+    index = "{}_{}".format(lang.lower(), index)
 
     query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"Disorder.ORPHAcode\"]}"
 
