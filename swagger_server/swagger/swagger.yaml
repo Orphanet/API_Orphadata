@@ -184,7 +184,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.catalog_products_controller  
-  /orphadata/generics/rd-phenotypes/langs/{language}:
+  /orphadata/generics/rd-phenotypes:
     get:
       tags:
       - Catalog of aggregated data from Orphanet
@@ -194,24 +194,21 @@ paths:
         ORPHAcode, preferred term, and a list of their associated HPOs
       operationId: generic_product4
       parameters:
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (DE,
-          EN, ES, FR, IT, NL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: a language in the list supported by Orphanet (de,
+          en, es, fr, it, pt, nl)
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PT
+          - de
+          - en
+          - fr
+          - it
+          - nl
+          - pt
       responses:
         "200":
           description: Successful operation
@@ -224,7 +221,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
-  /orphadata/generics/rd-associated-genes/langs/en:
+  /orphadata/generics/rd-associated-genes:
     get:
       tags:
       - Catalog of aggregated data from Orphanet
@@ -245,7 +242,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
-  /orphadata/generics/rd-medical-specialties/langs/en:
+  /orphadata/generics/rd-medical-specialties:
     get:
       tags:
       - Catalog of aggregated data from Orphanet
@@ -267,7 +264,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
-  /orphadata/generics/rd-epidemiology/{cat}/lang/{language}:
+  /orphadata/generics/rd-natural-history:
     get:
       tags:
       - Catalog of aggregated data from Orphanet
@@ -277,41 +274,69 @@ paths:
         prevalence, birth prevalence, lifelong prevalence and incidence, or the number
         of cases/families reported together with their respective intervals per geographical
         area (country, continent) and translated in the selected language.
-      operationId: generic_product9
+      operationId: generic_product9_ages
       parameters:
-      - name: language
-        in: path
-        description: Specify the language in the list supported by Orphanet (CS, DE,
-          EN, ES, FR, IT, NL, PL, PT)
-        required: true
-        style: simple
-        explode: false
+      - in: query
+        name: lang
+        description: a language in the list supported by Orphanet (cs, de,
+          en, es, fr, it, nl, pl, pt, ru)
+        required: false
         schema:
           type: string
-          default: EN
+          default: en
           enum:
-          - CS
-          - DE
-          - EN
-          - ES
-          - FR
-          - IT
-          - NL
-          - PL
-          - PT
-          - RU
-      - name: cat
-        in: path
-        description: Specify the desired category of epidemiological data (prev or ages) 
-        required: true
-        style: simple
-        explode: false
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
+      responses:
+        "200":
+          description: Successful operation
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
+  /orphadata/generics/rd-epidemiology:
+    get:
+      tags:
+      - Catalog of aggregated data from Orphanet
+      summary: Get generic informations useful to make more detailed requests on product 9 data
+      description: The result is a collection of clinical entities (ORPhacode, preferred
+        term, expertlink) and associated epidemiological data characterized as point
+        prevalence, birth prevalence, lifelong prevalence and incidence, or the number
+        of cases/families reported together with their respective intervals per geographical
+        area (country, continent) and translated in the selected language.
+      operationId: generic_product9_prev
+      parameters:
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
         schema:
           type: string
-          default: prev
+          default: en
           enum:
-          - prev
-          - ages
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
       responses:
         "200":
           description: Successful operation
