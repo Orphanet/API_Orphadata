@@ -1,0 +1,9 @@
+body {
+    font-size: 12px;
+}
+
+.swagger-ui .op-block-tag-section {
+    color: red !important;
+    font-size: 12px !important;
+
+}
