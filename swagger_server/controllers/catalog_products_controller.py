@@ -94,7 +94,7 @@ def generic_product3():
         response = es.get(
             index=index,
             id=doc_id,
-            _source_excludes=['items.clinicalEntities']
+            # _source_excludes=['items.clinicalEntities']
         )
     except es_exceptions.NotFoundError:
         return ("Server Error: Index not found", 404)

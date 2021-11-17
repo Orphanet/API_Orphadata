@@ -2,6 +2,8 @@ from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
 from swagger_server.models.product6 import Product6  # noqa: E501
 from swagger_server.models.product6_list import Product6List  # noqa: E501
 
+import elasticsearch.exceptions as es_exceptions
+
 import config
 import controllers.query_controller as qc
 
@@ -37,21 +39,43 @@ def associatedgene_list_orphacode():  # noqa: E501
     :rtype: ListOrphacode
     """
     es = config.elastic_server
+    index = "orphadata"
 
-    index = "en_product6"
+    query = {
+        'query': {
+            'bool': {
+                'filter': {
+                    'term': {
+                        "productId.keyword": {
+                            'value': 'en_product6'
+                        }
+                    }
 
-    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
+                }
+            }
+        },
+        '_source': {
+            'excludes': ['items.associatedGenes']
+        }
+        
+    }
 
     size = config.scroll_size  # per scroll, not limiting
-
     scroll_timeout = config.scroll_timeout
 
-    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
-    if isinstance(response, str) or isinstance(response, tuple):
-        pass
-    else:
-        response = sorted([elem["ORPHAcode"] for elem in response])
-    return response
+    try:
+        # response = es.get(index=index, id=doc_id)
+        response = qc.uncapped_res(es, index, query, size, scroll_timeout)
+    except es_exceptions.NotFoundError:
+        return ("Server Error: Index not found", 404)
+        # print(response)
+    except es_exceptions.ConnectionError:
+        return ("Elasticsearch node unavailable", 503)
+    except es_exceptions.TransportError:
+        return ("Elasticsearch node unavailable", 503)
+
+    return response[0]
+
 
 
 def associatedgene_orphacode(orphacode):  # noqa: E501
@@ -101,9 +125,12 @@ def associatedgene_list_genes():  # noqa: E501
         pass
     else:
         response_parsed = []
+        _met = []
         for hit in response:
             for gene in hit["DisorderGeneAssociation"]:
-                response_parsed.append({'preferredTerm': gene["Gene"]["Preferred term"], 'symbol': gene["Gene"]["Symbol"]})
+                if gene["Gene"]["Preferred term"] not in _met:
+                    _met.append(gene["Gene"]["Preferred term"])
+                    response_parsed.append({'preferredTerm': gene["Gene"]["Preferred term"], 'symbol': gene["Gene"]["Symbol"]})
     
     return sorted(response_parsed, key=lambda x: x["preferredTerm"])
 
@@ -114,9 +141,9 @@ def associatedgene_by_gene_symbol(symbol):
 
     query = {
         "query": {
-            "bool": {
-                "filter": {
-                    "match": {"DisorderGeneAssociation.Gene.Symbol": str(symbol)}
+            "term": {
+                "DisorderGeneAssociation.Gene.Symbol": {
+                    'value': str(symbol)
                 }
             }
         },

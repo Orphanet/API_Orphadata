@@ -165,18 +165,37 @@ def phenotype_list_orphacode():  # noqa: E501
     es = config.elastic_server
     lang = request.args.get("lang", "en")
 
-    index = "product4"
-    index = "{}_{}".format(lang.lower(), index)
+    index = "orphadata"
+    doc_id = '{}_product4'.format(lang.lower())
 
-    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"Disorder.ORPHAcode\"]}"
+    query = {
+        'query': {
+            'bool': {
+                'filter': {
+                    'term': {
+                        "productId.keyword": {
+                            'value': 'en_product4'
+                        }
+                    }
+
+                }
+            }
+        },
+        '_source': ['items.ORPHAcode', 'items.PreferredTerm']
+    }
 
     size = config.scroll_size  # per scroll, not limiting
-
     scroll_timeout = config.scroll_timeout
 
-    response = uncapped_res(es, index, query, size, scroll_timeout)
-    if isinstance(response, str) or isinstance(response, tuple):
-        pass
-    else:
-        response = [elem["Disorder"]["ORPHAcode"] for elem in response]
-    return response
+    try:
+        # response = es.get(index=index, id=doc_id)
+        response = uncapped_res(es, index, query, size, scroll_timeout)
+    except es_exceptions.NotFoundError:
+        return ("Server Error: Index not found", 404)
+        # print(response)
+    except es_exceptions.ConnectionError:
+        return ("Elasticsearch node unavailable", 503)
+    except es_exceptions.TransportError:
+        return ("Elasticsearch node unavailable", 503)
+
+    return response[0]

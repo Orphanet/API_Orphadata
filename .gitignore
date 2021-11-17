@@ -1,1 +1,12 @@
-/venv/
+venv/
+myenv/
+env/
+.env
+
+.idea
+
+build/
+
+tools/
+
+**__pycache__**

@@ -263,7 +263,7 @@ def product1_by_icd(icd):
                 }
             }
         },
-        "_source": ['ExternalReference.Source','ExternalReference.Reference']
+        # "_source": ['ExternalReference.Source','ExternalReference.Reference']
     }    
 
     response = qc.multiple_res(es=es, index=index, query=query, size=2000)

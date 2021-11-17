@@ -3,6 +3,8 @@ from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
 from swagger_server.models.product3 import Product3  # noqa: E501
 from swagger_server.models.product3_classification_list import Product3ClassificationList  # noqa: E501
 
+import elasticsearch.exceptions as es_exceptions
+
 import config
 from controllers.query_controller import *
 
@@ -88,23 +90,28 @@ def hierarchy_list_hchid():  # noqa: E501
     """
     es = config.elastic_server
 
-    index = "en_product3_*"
-    # print([x.split('_')[2] for x in es.indices.get(index)])
+    index = "orphadata"
+    doc_id = 'product3'.format()
 
     try:
-        response = es.indices.get_alias(index)
-        if isinstance(response, dict) and not response:
-            response = ("Server Error: Index not found", 404)
-    except elasticsearch.exceptions.NotFoundError:
-        response = ("Server Error: Index not found", 404)
-    except elasticsearch.exceptions.ConnectionError:
-        response = ("Elasticsearch node unavailable", 503)
+        response = es.get(
+            index=index,
+            id=doc_id,
+            _source_excludes=['items.clinicalEntities', 'items.clinicalEntityNb']
+        )
+    except es_exceptions.NotFoundError:
+        return ("Server Error: Index not found", 404)
+        # print(response)
+    except es_exceptions.ConnectionError:
+        return ("Elasticsearch node unavailable", 503)
+    except es_exceptions.TransportError:
+        return ("Elasticsearch node unavailable", 503)
 
     if isinstance(response, str) or isinstance(response, tuple):
         pass
-    else:
-        response = sorted([key.split("_")[2] for key, elem in response.items()])
-    return response
+    # else:
+    #     response = sorted([key.split("_")[2] for key, elem in response.items()])
+    return response['_source']
 
 
 def hierarchy_list_orphacode(hchid):  # noqa: E501
@@ -122,16 +129,17 @@ def hierarchy_list_orphacode(hchid):  # noqa: E501
     index = "en_product3"
     index = "{}_{}".format(index, hchid)
 
-    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
+    query = {
+        "query": {
+            "match_all": {}
+        },
+        "_source":["ORPHAcode", "name"]
+    }
 
     size = config.scroll_size  # per scroll, not limiting
 
     scroll_timeout = config.scroll_timeout
 
     response = uncapped_res(es, index, query, size, scroll_timeout)
-    if isinstance(response, str) or isinstance(response, tuple):
-        pass
-    else:
-        response = [elem["ORPHAcode"] for elem in response]
     return response
 

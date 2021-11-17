@@ -76,6 +76,10 @@
   color: #3b4151
 }
 
+.swagger-ui .opblock-tag small .renderedMarkdown {
+  text-align: left !important;
+}
+
 .swagger-ui .parаmeter__type {
   font-size: 12px;
   padding: 5px 0;
@@ -445,6 +449,11 @@
 
 .swagger-ui .opblock-body pre {
   font-size: 12px;
+  height: fit-content;
+  max-height: 800px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  scrollbar-color: #fff;
   margin: 0;
   padding: 10px;
   white-space: pre-wrap;
@@ -1204,6 +1213,12 @@
   padding: 10px 0
 }
 
+
+/* .swagger-ui table.parameters thead {
+  visibility: hidden;
+} */
+
+
 .swagger-ui table thead tr td, .swagger-ui table thead tr th {
   font-size: 12px;
   font-weight: 700;
@@ -1227,8 +1242,8 @@
 }
 
 .swagger-ui .parameter__name {
-  font-size: 16px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 600;
   font-family: Titillium Web, sans-serif;
   color: #3b4151
 }
@@ -1237,11 +1252,18 @@
   font-weight: 700
 }
 
+.swagger-ui .parameter__name.required span {
+  font-weight: 700;
+  font-size: 9px;
+  top: -8px;
+}
+
+
 .swagger-ui .parameter__name.required:after {
-  font-size: 10px;
+  font-size: 9px;
   position: relative;
   top: -6px;
-  padding: 5px;
+  padding: 4px;
   content: "required";
   color: rgba(255, 0, 0, .6)
 }
@@ -1253,6 +1275,12 @@
   font-weight: 600;
   color: #888
 }
+
+.swagger-ui .parameter__type {
+  font-size: 14px;
+  /* font-style: italic; */
+}
+
 
 .swagger-ui .table-container {
   padding: 20px

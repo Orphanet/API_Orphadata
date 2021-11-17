@@ -89,7 +89,7 @@ tags:
       It is updated once a month.
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Epidemiology of rare diseases
-  description: Product 9-a
+  description: Product 9 (prev)
   externalDocs:
     description: Orphanet collects and curates data concerning the epidemiology of 
       rare diseases. A systematic survey of the literature is carried out in order
@@ -100,7 +100,7 @@ tags:
       together with their respective intervals per geographical area.
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Natural history of rare diseases
-  description: Product 9-b
+  description: Product 9 (ages)
   externalDocs:
     description: The rare diseases natural history dataset includes rare diseases 
       (ORPHAcode, preferred name, classification level, and typology) with available data 
@@ -476,7 +476,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/list_orphacode'
+                $ref: '#/components/schemas/product1_list_orphacodes'
         "403":
           description: Access denied
         "404":
@@ -691,7 +691,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/product1'
+                $ref: '#/components/schemas/product1_list_icds'
         "403":
           description: Access denied
         "404":
@@ -805,7 +805,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/list_orphacode'
+                $ref: '#/components/schemas/product3_orphacodes_by_hchid'
         "403":
           description: Access denied
         "404":
@@ -880,7 +880,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/product3_classification_list'
+                $ref: '#/components/schemas/product3_hchids_by_orphacode'
         "403":
           description: Access denied
         "404":
@@ -929,7 +929,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/product3'
+                $ref: '#/components/schemas/product3_orphacode_in_hchid'
         "403":
           description: Access denied
         "404":
@@ -1016,7 +1016,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/list_orphacode'
+                $ref: '#/components/schemas/product4_list_orphacodes'
         "403":
           description: Access denied
         "404":
@@ -1137,7 +1137,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/product4'
+                $ref: '#/components/schemas/product4_list'
         "403":
           description: Access denied
         "404":
@@ -1188,7 +1188,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/list_orphacode'
+                $ref: '#/components/schemas/product6_list_orphacodes'
         "403":
           description: Access denied
         "404":
@@ -1243,7 +1243,7 @@ paths:
     get:
       tags:
       - Rare diseases and associated gene
-      summary: Get the list genes associated to at least one clinical entity.
+      summary: Get the list of genes associated to at least one clinical entity.
       description: The result is a collection of genes associated to at least
         one clinical entity. Each gene is presented by its name(s) and symbol(s)
       operationId: associatedgene_list_genes
@@ -1253,7 +1253,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/list_orphacode'
+                $ref: '#/components/schemas/array_genes_product6'
         "403":
           description: Access denied
         "404":
@@ -1267,8 +1267,8 @@ paths:
     get:
       tags:
       - Rare diseases and associated gene
-      summary: Get associated genes and genes information of a clinical entity searching
-        by its ORPHAcode.
+      summary: Get informations about a clinical entity
+        that has a given gene symbol amongst its associated genes.
       description: The result is a set of data includes ORPhacode, preferred term,
         expertlink, group and type of the selected clinical entity, relationship between
         genes and the searched disease and symbol, synonyms, name, typology, chromosomal
@@ -1291,7 +1291,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/product6'
+                $ref: '#/components/schemas/product6_list'
         "403":
           description: Access denied
         "404":
@@ -1305,8 +1305,9 @@ paths:
     get:
       tags:
       - Rare diseases and associated gene
-      summary: Get associated genes and genes information of a clinical entity searching
-        by its ORPHAcode.
+      summary: Get informations about a clinical entity
+        whose at least one of its associated genes has a preferred term 
+        containing or mathing the given name.
       description: The result is a set of data includes ORPhacode, preferred term,
         expertlink, group and type of the selected clinical entity, relationship between
         genes and the searched disease and symbol, synonyms, name, typology, chromosomal
@@ -1329,7 +1330,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/product6'
+                $ref: '#/components/schemas/product6_list'
         "403":
           description: Access denied
         "404":
@@ -1343,7 +1344,8 @@ paths:
     get:
       tags:
       - Medical specialties of rare diseases
-      summary: Get informations and associated HPO phenotypes of a clinical entity
+      summary: Get informations of a clinical entity given its ORPHAnumber 
+        about its medical specialties belonging.
         searching by its ORPHAcode in the selected language.
       description: The result is a set of data including ORPHAcode, the stable URL
         pointing to the specific page of the clinical entity on the Orphanet website,
@@ -1373,7 +1375,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/product4'
+                $ref: '#/components/schemas/product7'
         "403":
           description: Access denied
         "404":
@@ -1403,7 +1405,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/product4'
+                $ref: '#/components/schemas/product7_medical_specialties'
         "403":
           description: Access denied
         "404":
@@ -1447,7 +1449,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/product4'
+                $ref: '#/components/schemas/product7_array'
         "403":
           description: Access denied
         "404":
@@ -1537,7 +1539,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/list_orphacode'
+                $ref: '#/components/schemas/product9_prev_list_orphacodes'
         "403":
           description: Access denied
         "404":
@@ -1686,7 +1688,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/list_orphacode'
+                $ref: '#/components/schemas/product9_ages_list_orphacodes'
         "403":
           description: Access denied
         "404":
@@ -1957,7 +1959,7 @@ components:
       properties:
         productName:
           type: string
-          example: "Linearisation of rare diseases"
+          example: "Medical specialties of rare diseases"
         productId:
           type: string
           example: "en_product7"
@@ -2043,114 +2045,98 @@ components:
       items:
         $ref: '#/components/schemas/product1'
     product1:
-      # required:
-      # - ORPHAcode
       type: object
       properties:
+        Date:
+          type: string
+          example: "2021-10-01 04:35:49"
         ORPHAcode:
           type: integer
-          example: 166100
-        ExpertLink:
+          example: 3450
+        preferredTerm:
           type: string
-          example: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166100
-        Name:
-          type: string
-          example: Autosomal dominant otospondylomegaepiphyseal dysplasia
-        DisorderFlag:
-          type: array
-          items:
-            $ref: '#/components/schemas/product1_DisorderFlag'
-        Synonym:
+          example: Weissenbacher-Zweymuller syndrome
+        synonym:
           type: array
           items:
             type: string
-            example: '["AD OSMED", "Stickler syndrome type 3", "Stickler syndrome,
-              non-ocular type]'
-        DisorderType:
-          $ref: '#/components/schemas/product1_DisorderType'
-        DisorderNature:
-          type: string
-          example: Clinical entity
-        DisorderGroup:
-          type: string
-          example: Disorder
-        ExternalReference:
-          type: array
-          items:
-            $ref: '#/components/schemas/product1_ExternalReference'
-        DisorderDisorderAssociation:
-          type: array
-          items:
-            $ref: '#/components/schemas/product1_DisorderDisorderAssociation'
-        TextualInformation:
+          example:
+            - "Pierre Robin sequence-fetal chondrodysplasia syndrome"
+            - "Pierre Robin syndrome-fetal chondrodysplasia syndrome"
+        summaryInformation:
           type: array
           items:
             $ref: '#/components/schemas/product1_TextualInformation'
-      example:
-        DisorderFlag:
-        - Label: on-line
-        - Label: on-line
-        ORPHAcode: 166100
-        ExpertLink: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166100
-        ExternalReference:
-        - DisorderMappingICDRelation: None
-          Reference: C537494
-          DisorderMappingValidationStatus:
-            ORPHAcode: 377819
-            Name: Validated
-          Source: MeSH
-          DisorderMappingRelation:
-            ORPHAcode: 377807
-            Name: E (exact mapping (the terms and the concepts are equivalent))
-        - DisorderMappingICDRelation: None
-          Reference: C537494
-          DisorderMappingValidationStatus:
-            ORPHAcode: 377819
-            Name: Validated
-          Source: MeSH
-          DisorderMappingRelation:
-            ORPHAcode: 377807
-            Name: E (exact mapping (the terms and the concepts are equivalent))
-        DisorderDisorderAssociation:
-        - DisorderDisorderAssociationType: Moved to
-          Disorder1: None
-          Disorder2:
-            ORPHAcode: 3450
-            Name: Weissenbacher-Zweymuller syndrome
-        - DisorderDisorderAssociationType: Moved to
-          Disorder1: None
-          Disorder2:
-            ORPHAcode: 3450
-            Name: Weissenbacher-Zweymuller syndrome
-        DisorderNature: Clinical entity
-        DisorderGroup: Disorder
-        Synonym:
-        - '["AD OSMED", "Stickler syndrome type 3", "Stickler syndrome, non-ocular
-          type"]'
-        TextualInformation:
-        - Definition: Stickler syndrome type 3 is a rare, genetic, multiple congenital
-            anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism
-            (midface hypoplasia, depressed nasal bridge, small nose with upturned
-            tip, cleft palate, Pierre Robin sequence), bilateral, pronounced sensorineural
-            hearing loss, and skeletal/joint anomalies (including spondyloepiphyseal
-            dysplasia, arthralgia/arthropathy), in the absence of ocular abnormalities.
-        - Definition: Stickler syndrome type 3 is a rare, genetic, multiple congenital
-            anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism
-            (midface hypoplasia, depressed nasal bridge, small nose with upturned
-            tip, cleft palate, Pierre Robin sequence), bilateral, pronounced sensorineural
-            hearing loss, and skeletal/joint anomalies (including spondyloepiphyseal
-            dysplasia, arthralgia/arthropathy), in the absence of ocular abnormalities.
-        DisorderType:
-          ORPHAcode: 377789
-          Name: Malformation syndrome
-        Name: Autosomal dominant otospondylomegaepiphyseal dysplasia
+        orphanetURL:
+          type: string
+          example: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=3450
+        externalReference:
+          type: array
+          items:
+            $ref: '#/components/schemas/product1_ExternalReference'
+        disorderFlag:
+          type: array
+          items:
+            $ref: '#/components/schemas/product1_DisorderFlag'
+        disorderGroup:
+          type: string
+          example: Disorder
+        typology:
+          type: string
+          example: Malformation syndrome
+        disorderDisorderAssociation:
+          type: array
+          items:
+            $ref: '#/components/schemas/product1_DisorderDisorderAssociation'
+    product1_list_icds:
+      type: object
+      properties:
+        productName:
+          type: string
+          example: "Rare diseases and alignment with terminologies and databases"
+        productId:
+          type: string
+          example: "en_product1"
+        language:
+          type: string
+          example: EN
+        ICD-10s:
+          type: array
+          items:
+            type: string
+          example:
+            - "A00.0"
+            - "A00.1"
+            - "A00.9"
+            - "A01.0"
+            - "A01.1"
+            - "A01.2"
+            - ...          
     product3_classification_list:
       type: array
       items:
         $ref: '#/components/schemas/product3'
+    product3_orphacode_in_hchid:
+      type: object
+      properties:
+        productId:
+          type: string
+          example: en_product3
+        productName:
+          type: string
+          example: Clinical classifications of rare diseases
+        language:
+          type: string
+          example: EN
+        param_ORPHAcode:
+          type: integer
+          example: 217656
+        param_hchid:
+          type: integer
+          example: 146
+        items:
+          $ref: '#/components/schemas/product3'
     product3:
-      required:
-      - ORPHAcode
       type: object
       properties:
         name:
@@ -2169,13 +2155,8 @@ components:
           type: array
           items:
             type: string
-            example: '[247]'
         childs:
           type: array
-          example:
-          - 293888
-          - 293899
-          - 293910
           items:
             type: string
       example:
@@ -2184,11 +2165,61 @@ components:
         hch_tag: Orphanet classification of rare cardiac diseases
         name: Familial isolated arrhythmogenic right ventricular dysplasia
         childs:
-        - - 293888
+          - 293888
           - 293899
           - 293910
         parents:
-        - - 247
+          - 247
+    product3_hchids_by_orphacode:
+      type: object
+      properties:
+        productId:
+          type: string
+          example: en_product3
+        productName:
+          type: string
+          example: Clinical classifications of rare diseases
+        language:
+          type: string
+          example: EN
+        param_ORPHAcode:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/product3'
+      example:
+        productId: en_product3
+        productName: Clinical classifications of rare diseases
+        language: EN
+        param_ORPHAcode: 558
+        items:
+          - ORPHAcode: 558
+            hch_id: 147
+            hch_tag: Orphanet classification of rare developmental anomalies during embryogenesis
+            name: Marfan syndrome
+            childs:
+              - 284963
+              - 284973
+            parents:
+              - 512292
+              - 498448
+              - 139030
+          - ORPHAcode: 558
+            hch_id: 156
+            hch_tag: Orphanet classification of rare genetic diseases
+            name: Marfan syndrome
+            childs:
+              - 284963
+              - 284973
+            parents:
+              - 522564
+              - 522554
+              - 498448
+              - 139030
+              - 285014
+              - 284993
+          - ...
     product4_list:
       type: array
       items:
@@ -2209,10 +2240,12 @@ components:
           example: "y"
         ValidationDate:
           type: string
-          example: '{}'
+        Date:
+          type: string
       example:
         ValidationStatus: "y"
-        ValidationDate: {}
+        ValidationDate: "2016-06-01 00:00:00.0"
+        Date: "2021-10-01 04:44:18"
         Online: "y"
         Disorder:
           ORPHAcode: 881
@@ -2223,14 +2256,14 @@ components:
               HPOTerm: Abnormality of the ovary
               HPOId: HP:0000137
             HPOFrequency: Very frequent (99-80%)
-            DiagnosticCriteria: None
+            DiagnosticCriteria: null
           - HPO:
               HPOTerm: Abnormality of the ovary
               HPOId: HP:0000137
             HPOFrequency: Very frequent (99-80%)
-            DiagnosticCriteria: None
-          DisorderType: Malformation syndrome
-          Name: Turner syndrome
+            DiagnosticCriteria: null
+          - ...
+          preferredTerm: Turner syndrome
         Source: 28705803[PMID]_17047017[PMID]_22707402[PMID]_25517026[PMID]_25438673[PMID]
     product6_list:
       type: array
@@ -2244,13 +2277,13 @@ components:
         ORPHAcode:
           type: integer
           example: 166024
-        ExpertLink:
+        orphanetURL:
           type: string
           example: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
-        Name:
+        preferredTerm:
           type: string
           example: Multiple epiphyseal dysplasia, Al-Gazali type
-        DisorderType:
+        Typology:
           type: string
           example: Disease
         DisorderGroup:
@@ -2261,6 +2294,11 @@ components:
           items:
             $ref: '#/components/schemas/product6_DisorderGeneAssociation'
       example:
+        ORPHAcode: 166024
+        preferredTerm: Multiple epiphyseal dysplasia, Al-Gazali type
+        DisorderGroup: Disorder
+        Typology: Disease
+        orphanetURL: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
         DisorderGeneAssociation:
         - DisorderGeneAssociationStatus: Assessed
           Gene:
@@ -2276,35 +2314,9 @@ components:
             Locus:
             - GeneLocus: 15q26.1
               LocusKey: "1"
-            - GeneLocus: 15q26.1
-              LocusKey: "1"
-            Name: kinesin family member 7
+            preferredTerm: kinesin family member 7
           DisorderGeneAssociationType: Disease-causing germline mutation(s) in
           SourceOfValidation: 22587682[PMID]
-        - DisorderGeneAssociationStatus: Assessed
-          Gene:
-            ExternalReference:
-            - Reference: ENSG00000166813
-              Source: Ensembl
-            - Reference: ENSG00000166813
-              Source: Ensembl
-            Symbol: KIF7
-            Synonym:
-            - JBTS12
-            GeneType: gene with protein product
-            Locus:
-            - GeneLocus: 15q26.1
-              LocusKey: "1"
-            - GeneLocus: 15q26.1
-              LocusKey: "1"
-            Name: kinesin family member 7
-          DisorderGeneAssociationType: Disease-causing germline mutation(s) in
-          SourceOfValidation: 22587682[PMID]
-        ORPHAcode: 166024
-        ExpertLink: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
-        DisorderGroup: Disorder
-        DisorderType: Disease
-        Name: Multiple epiphyseal dysplasia, Al-Gazali type
     product6_gene_list:
       type: array
       items:
@@ -2375,6 +2387,71 @@ components:
         - GeneLocus: 15q26.1
           LocusKey: "1"
         Name: kinesin family member 7
+    product7:
+      type: object
+      properties:
+        ORPHAcode:
+          type: integer
+        preferredTerm:
+          type: string
+        orphanetURL:
+          type: string
+        date:
+          type: string
+        disorderDisorderAssociation:
+          type: array
+          items:
+            $ref: '#/components/schemas/product7_disorderDisorderAssociation'
+      example:
+        ORPHAcode: 558
+        preferredTerm: Marfan syndrome
+        orphanetURL: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=558
+        date: "2021-10-01 04:49:04"
+        disorderDisorderAssociation:
+          disorderDisorderAssociationType: Preferential parent
+          rootDisorder: null
+          targetDisorder:
+            ORPHAcode: 98023
+            preferredTerm: Rare systemic or rheumatologic disease
+    product7_array:
+      type: array
+      items:
+        $ref: '#components/schemas/product7'
+    product7_disorderDisorderAssociation:
+      type: object
+      properties:
+        disorderDisorderAssociationType:
+          type: string
+        rootDisorder:
+          type: string
+        targetDisorder:
+          $ref: '#/components/schemas/product7_targetDisorder'
+    product7_targetDisorder:
+      type: object
+      properties:
+        ORPHAcode:
+          type: integer
+        preferredTerm:
+          type: string
+    product7_medical_specialties:
+      type: array
+      items:
+        type: object
+        properties:
+          ORPHAcode:
+            type: integer
+          preferredTerm:
+            type: string
+      example:
+        - ORPHAcode: 57146
+          preferredTerm: Rare hepatic disease
+        - ORPHAcode: 68329
+          preferredTerm: Rare maxillo-facial surgical disease
+        - ORPHAcode: 68367
+          preferredTerm: Rare inborn errors of metabolism
+        - ORPHAcode: 68416
+          preferredTerm: Rare infectious disease
+        - ...
     product9_ages_list:
       type: array
       items:
@@ -2387,48 +2464,51 @@ components:
         ORPHAcode:
           type: integer
           example: 58
-        ExpertLink:
+        orphanetURL:
           type: string
           example: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58
-        Name:
+        preferredTerm:
           type: string
           example: Alexander disease
-        DisorderType:
+        typology:
           type: string
           example: Disease
-        DisorderGroup:
+        date:
+          type: string
+        disorderGroup:
           type: string
           example: Disorder
-        AverageAgeOfOnset:
+        averageAgeOfOnset:
           type: array
           example:
           - All ages
           items:
             type: string
-        AverageAgeOfDeath:
+        averageAgeOfDeath:
           type: array
           example:
           - any ages
           items:
             type: string
-        TypeOfInheritance:
+        typeOfInheritance:
           type: array
           example:
           - Autosomal dominant
           items:
             type: string
       example:
-        AverageAgeOfOnset:
+        averageAgeOfOnset:
         - All ages
-        AverageAgeOfDeath:
+        averageAgeOfDeath:
         - any ages
         ORPHAcode: 58
-        ExpertLink: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58
-        DisorderGroup: Disorder
-        TypeOfInheritance:
+        orphanetURL: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58
+        disorderGroup: Disorder
+        date: "2021-10-01 04:49:26"
+        typeOfInheritance:
         - Autosomal dominant
-        DisorderType: Disease
-        Name: Alexander disease
+        typology: Disease
+        preferredTerm: Alexander disease
     product9_prev_list:
       type: array
       items:
@@ -2441,57 +2521,228 @@ components:
         ORPHAcode:
           type: integer
           example: 166024
-        ExpertLink:
+        orphanetURL:
           type: string
           example: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
-        Name:
+        preferredTerm:
           type: string
           example: Multiple epiphyseal dysplasia, Al-Gazali type
-        DisorderType:
+        typology:
           type: string
           example: Disease
-        DisorderGroup:
+        disorderGroup:
           type: string
           example: Disorder
-        Prevalence:
+        prevalence:
           type: array
           items:
             $ref: '#/components/schemas/product9_prev_Prevalence'
       example:
         ORPHAcode: 166024
-        ExpertLink: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
-        Prevalence:
-        - PrevalenceGeographic: Worldwide
-          PrevalenceType: Cases/families
-          PrevalenceQualification: Case
-          PrevalenceValidationStatus: Validated
-          PrevalenceClass: None
-          Source: 11389160[PMID]_9689990[PMID]_ [EXPERT]
-          ValMoy: "4.0"
-        - PrevalenceGeographic: Worldwide
-          PrevalenceType: Cases/families
-          PrevalenceQualification: Case
-          PrevalenceValidationStatus: Validated
-          PrevalenceClass: None
-          Source: 11389160[PMID]_9689990[PMID]_ [EXPERT]
-          ValMoy: "4.0"
-        DisorderGroup: Disorder
-        DisorderType: Disease
-        Name: Multiple epiphyseal dysplasia, Al-Gazali type
-    list_orphacode:
+        orphanetURL: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
+        prevalence:
+        - prevalenceGeographic: Worldwide
+          prevalenceType: Cases/families
+          prevalenceQualification: Case
+          prevalenceValidationStatus: Validated
+          prevalenceClass: null
+          source: 11389160[PMID]_9689990[PMID]_ [EXPERT]
+          valMoy: "4.0"
+        - prevalenceGeographic: Worldwide
+          prevalenceType: Point prevalence
+          prevalenceQualification: Class only
+          prevalenceValidationStatus: Validated
+          prevalenceClass: <1 / 1 000 000
+          source: ORPHANET_11389160[PMID]_9689990[PMID]
+          palMoy: "0.0"
+        disorderGroup: Disorder
+        typology: Disease
+        preferredTerm: Multiple epiphyseal dysplasia, Al-Gazali type
+    array_orphacodes:
       type: array
-      example:
-      - 58
-      - 558
       items:
-        type: integer
+        type: object
+        properties:
+          ORPHAcode:
+            type: integer
+          preferredTerm:
+            type: string
+      example:
+        - ORPHAcode: 166024
+          preferredTerm: "Multiple epiphyseal dysplasia, Al-Gazali type"
+        - ORPHAcode: 58
+          preferredTerm: "Alexander disease"
+        - ORPHAcode: 166032
+          preferredTerm: "Multiple epiphyseal dysplasia, with miniepiphyses"
+        - ORPHAcode: 61
+          preferredTerm: "Alpha-mannosidosis"
+        - ...
+    array_genes_product6:
+      type: array
+      items:
+        type: object
+        properties:
+          symbol:
+            type: string
+          preferredTerm:
+            type: string
+      example:
+        - symbol: GBE1
+          preferredTerm: "1,4-alpha-glucan branching enzyme 1"
+        - symbol: AGPAT2
+          preferredTerm: "1-acylglycerol-3-phosphate O-acyltransferase 2"
+        - symbol: HPGD
+          preferredTerm: "15-hydroxyprostaglandin dehydrogenase"
+        - symbol: OAS1
+          preferredTerm: "2'-5'-oligoadenylate synthetase 1"
+        - ...
+    product1_list_orphacodes:
+      type: object
+      properties:
+        productName:
+          type: string
+          example: "Rare diseases and alignment with terminologies and databases"
+        productId:
+          type: string
+          example: "en_product1"
+        language:
+          type: string
+          example: EN
+        ORPHAcodes:
+          $ref: '#/components/schemas/array_orphacodes'
+    product3_list_orphacodes:
+      type: object
+      properties:
+        productName:
+          type: string
+          example: "Clinical classifications of rare diseases"
+        productId:
+          type: string
+          example: "en_product3"
+        language:
+          type: string
+          example: EN
+        ORPHAcodes:
+          $ref: '#/components/schemas/array_orphacodes'
+    product3_orphacodes_by_hchid:
+      type: object
+      properties:
+        productName:
+          type: string
+          example: "Clinical classifications of rare diseases"
+        productId:
+          type: string
+          example: "en_product3"
+        language:
+          type: string
+          example: EN
+        hchId:
+          type: object
+          properties:
+            ID:
+              type: integer
+              example: 146            
+            ORPHAcodes:
+              $ref: '#/components/schemas/array_orphacodes'
+    product4_list_orphacodes:
+      type: object
+      properties:
+        productName:
+          type: string
+          example: "Phenotypes associated with rare diseases"
+        productId:
+          type: string
+          example: "en_product4"
+        language:
+          type: string
+          example: EN
+        ORPHAcodes:
+          $ref: '#/components/schemas/array_orphacodes'
+    product6_list_orphacodes:
+      type: object
+      properties:
+        productName:
+          type: string
+          example: "Genes associated with rare diseases"
+        productId:
+          type: string
+          example: "en_product6"
+        language:
+          type: string
+          example: EN
+        ORPHAcodes:
+          $ref: '#/components/schemas/array_orphacodes'
+    product7_list_orphacodes:
+      type: object
+      properties:
+        productName:
+          type: string
+          example: "Medical specialties of rare diseases"
+        productId:
+          type: string
+          example: "en_product7"
+        language:
+          type: string
+          example: EN
+        ORPHAcodes:
+          $ref: '#/components/schemas/array_orphacodes'
+    product9_prev_list_orphacodes:
+      type: object
+      properties:
+        productName:
+          type: string
+          example: "Epidemiological data associated with rare diseases"
+        productId:
+          type: string
+          example: "en_product9_prev"
+        language:
+          type: string
+          example: EN
+        items:
+          $ref: '#/components/schemas/array_orphacodes'
+    product9_ages_list_orphacodes:
+      type: object
+      properties:
+        productName:
+          type: string
+          example: "Natural history of rare diseases"
+        productId:
+          type: string
+          example: "en_product9_ages"
+        language:
+          type: string
+          example: EN
+        items:
+          $ref: '#/components/schemas/array_orphacodes'
     list_hchid:
-      type: array
+      type: object
+      properties:
+        productId:
+          type: string
+          example: en_product3
+        productName:
+          type: string
+          example: Clinical classifications of rare diseases
+        hchids:
+          type: array
+          items:
+            type: object
+            properties:
+              hchId:
+                type: integer
+              hchTag:
+                type: string
       example:
-      - 146
-      - 233
-      items:
-        type: integer
+        productId: en_product3
+        productName: Clinical classifications of rare diseases
+        hchids:
+          - hchId: 146
+            hchTag: Orphanet classification of rare cardiac diseases
+          - hchId: 147
+            hchTag: Orphanet classification of rare developmental anomalies during embryogenesis
+          - hchId: 148
+            hchTag: Orphanet classification of rare cardiac malformations
+          - ...
     list_symbol:
       type: array
       example:
@@ -2499,13 +2750,21 @@ components:
       items:
         type: string
     product1_DisorderFlag:
-      type: object
-      properties:
-        Label:
-          type: string
-          example: on-line
-      example:
-        Label: on-line
+      type: array
+      items:
+        type: object
+        properties:
+          label:
+            type: string
+          value:
+            type: integer
+        example:
+          - label: "Inactive"
+            value: 8192
+          - label: "Deprecated entity"
+            value: 256
+          - label: 
+            value: 1
     product1_DisorderType:
       type: object
       properties:
@@ -2547,74 +2806,69 @@ components:
       properties:
         Source:
           type: string
-          example: MeSH
         Reference:
           type: string
-          example: C537494
         DisorderMappingRelation:
-          $ref: '#/components/schemas/product1_DisorderMappingRelation'
+          type: string
         DisorderMappingICDRelation:
           type: string
           example: None
         DisorderMappingValidationStatus:
-          $ref: '#/components/schemas/product1_DisorderMappingValidationStatus'
+          type: string
       example:
-        DisorderMappingICDRelation: None
-        Reference: C537494
-        DisorderMappingValidationStatus:
-          ORPHAcode: 377819
-          Name: Validated
-        Source: MeSH
-        DisorderMappingRelation:
-          ORPHAcode: 377807
-          Name: E (exact mapping (the terms and the concepts are equivalent))
-    product1_Disorder2:
+        - DisorderMappingICDRelation: None
+          Reference: 4351
+          DisorderMappingValidationStatus: Validated
+          Source: GARD
+          DisorderMappingRelation: E (exact mapping (the terms and the concepts are equivalent))
+        - DisorderMappingICDRelation: null
+          DisorderMappingRelation: "E (Exact mapping: the two concepts are equivalent)"
+          DisorderMappingValidationStatus: "Validated"
+          Reference: "277610"
+          Source: "OMIM"
+        - DisorderMappingICDRelation: null
+          DisorderMappingRelation: "E (Exact mapping: the two concepts are equivalent)"
+          DisorderMappingValidationStatus: "Validated"
+          Reference: "C1848488"
+          Source: "UMLS"
+    product1_targetDisorder:
       type: object
       properties:
         ORPHAcode:
           type: integer
-          example: 3450
-        Name:
+          example: 166100
+        preferredTerm:
           type: string
-          example: Weissenbacher-Zweymuller syndrome
-      example:
-        ORPHAcode: 3450
-        Name: Weissenbacher-Zweymuller syndrome
+          example: "Autosomal dominant otospondylomegaepiphyseal dysplasia"
     product1_DisorderDisorderAssociation:
       type: object
       properties:
-        Disorder1:
+        rootDisorder:
           type: string
           example: None
-        Disorder2:
-          $ref: '#/components/schemas/product1_Disorder2'
+        targetDisorder:
+          $ref: '#/components/schemas/product1_targetDisorder'
         DisorderDisorderAssociationType:
           type: string
           example: Moved to
       example:
-        DisorderDisorderAssociationType: Moved to
-        Disorder1: None
-        Disorder2:
-          ORPHAcode: 3450
-          Name: Weissenbacher-Zweymuller syndrome
+        disorderDisorderAssociationType: Moved to
+        rootDisorder: null
+        targetDisorder:
+          ORPHAcode: 166100
+          preferredTerm: "Autosomal dominant otospondylomegaepiphyseal dysplasia"
     product1_TextualInformation:
       type: object
       properties:
-        Definition:
+        definition:
           type: string
-          example: Stickler syndrome type 3 is a rare, genetic, multiple congenital
+      example:
+        - definition: Stickler syndrome type 3 is a rare, genetic, multiple congenital
             anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism
             (midface hypoplasia, depressed nasal bridge, small nose with upturned
             tip, cleft palate, Pierre Robin sequence), bilateral, pronounced sensorineural
             hearing loss, and skeletal/joint anomalies (including spondyloepiphyseal
             dysplasia, arthralgia/arthropathy), in the absence of ocular abnormalities.
-      example:
-        Definition: Stickler syndrome type 3 is a rare, genetic, multiple congenital
-          anomalies/dysmorphic syndrome characterized by craniofacial dysmorphism
-          (midface hypoplasia, depressed nasal bridge, small nose with upturned tip,
-          cleft palate, Pierre Robin sequence), bilateral, pronounced sensorineural
-          hearing loss, and skeletal/joint anomalies (including spondyloepiphyseal
-          dysplasia, arthralgia/arthropathy), in the absence of ocular abnormalities.
     product4_Disorder_HPO:
       type: object
       properties:
@@ -2650,15 +2904,12 @@ components:
         ORPHAcode:
           type: integer
           example: 881
-        ExpertLink:
+        orphanetURL:
           type: string
           example: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=881
-        Name:
+        preferredTerm:
           type: string
           example: Turner syndrome
-        DisorderType:
-          type: string
-          example: Malformation syndrome
         DisorderGroup:
           type: string
           example: Disorder
@@ -2710,7 +2961,7 @@ components:
     product6_Gene:
       type: object
       properties:
-        Name:
+        preferredTerm:
           type: string
           example: kinesin family member 7
         Symbol:

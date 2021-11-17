@@ -71,23 +71,32 @@ def epidemiology_list_orphacode():  # noqa: E501
     :rtype: ListOrphacode
     """
     es = config.elastic_server
-    lang = request.args.get("lang", "en")
+    index = "orphadata"
 
-    index = "product9_prev"
-    index = "{}_{}".format(lang.lower(), index)
+    query = {
+        'query': {
+            'bool': {
+                'filter': {
+                    'term': {
+                        "productId.keyword": {
+                            'value': 'en_product9_prev'
+                        }
+                    }
 
-    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
+                }
+            }
+        },
+        '_source': {
+            # 'excludes': ['items.associatedGenes']
+        }        
+    }
 
     size = config.scroll_size  # per scroll, not limiting
-
     scroll_timeout = config.scroll_timeout
-
+    
     response = uncapped_res(es, index, query, size, scroll_timeout)
-    if isinstance(response, str) or isinstance(response, tuple):
-        pass
-    else:
-        response = [elem["ORPHAcode"] for elem in response]
-    return response
+
+    return response[0]
 
 
 def natural_history_all_orphacode():  # noqa: E501
@@ -151,20 +160,29 @@ def natural_history_list_orphacode():  # noqa: E501
     :rtype: ListOrphacode
     """
     es = config.elastic_server
-    lang = request.args.get("lang", "en")
+    index = "orphadata"
 
-    index = "product9_ages"
-    index = "{}_{}".format(lang.lower(), index)
-    
-    query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
+    query = {
+        'query': {
+            'bool': {
+                'filter': {
+                    'term': {
+                        "productId.keyword": {
+                            'value': 'en_product9_ages'
+                        }
+                    }
+
+                }
+            }
+        },
+        '_source': {
+            # 'excludes': ['items.associatedGenes']
+        }        
+    }
 
     size = config.scroll_size  # per scroll, not limiting
-
     scroll_timeout = config.scroll_timeout
-
+    
     response = uncapped_res(es, index, query, size, scroll_timeout)
-    if isinstance(response, str) or isinstance(response, tuple):
-        pass
-    else:
-        response = [elem["ORPHAcode"] for elem in response]
-    return response
+
+    return response[0]
