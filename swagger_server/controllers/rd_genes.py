@@ -1,7 +1,3 @@
-from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
-from swagger_server.models.product6 import Product6  # noqa: E501
-from swagger_server.models.product6_list import Product6List  # noqa: E501
-
 import elasticsearch.exceptions as es_exceptions
 
 import config

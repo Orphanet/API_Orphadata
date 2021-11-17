@@ -10,3 +10,5 @@ build/
 tools/
 
 **__pycache__**
+query_test*
+**egg-info**

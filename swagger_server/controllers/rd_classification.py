@@ -1,12 +1,7 @@
-from swagger_server.models.list_hchid import ListHchid  # noqa: E501
-from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
-from swagger_server.models.product3 import Product3  # noqa: E501
-from swagger_server.models.product3_classification_list import Product3ClassificationList  # noqa: E501
-
 import elasticsearch.exceptions as es_exceptions
 
 import config
-from controllers.query_controller import *
+import controllers.query_controller as qc
 
 
 def hierarchy_all_orphacode(hchid):  # noqa: E501
@@ -30,7 +25,7 @@ def hierarchy_all_orphacode(hchid):  # noqa: E501
 
     scroll_timeout = config.scroll_timeout
 
-    response = uncapped_res(es, index, query, size, scroll_timeout)
+    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
     return response
 
 
@@ -54,7 +49,7 @@ def hierarchy_by_orphacode(orphacode):  # noqa: E501
 
     scroll_timeout = config.scroll_timeout
 
-    response = uncapped_res(es, index, query, size, scroll_timeout)
+    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
     return response
 
 
@@ -76,7 +71,7 @@ def hierarchy_id_by_orphacode(orphacode, hchid):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = single_res(es, index, query)
+    response = qc.single_res(es, index, query)
     return response
 
 
@@ -140,6 +135,6 @@ def hierarchy_list_orphacode(hchid):  # noqa: E501
 
     scroll_timeout = config.scroll_timeout
 
-    response = uncapped_res(es, index, query, size, scroll_timeout)
+    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
     return response
 

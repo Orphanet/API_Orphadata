@@ -1,10 +1,8 @@
-from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
-from swagger_server.models.product4 import Product4  # noqa: E501
-from swagger_server.models.product4_list import Product4List  # noqa: E501
 from flask import request
+import elasticsearch.exceptions as es_exceptions
 
 import config
-from controllers.query_controller import *
+import controllers.query_controller as qc
 
 
 def phenotype_all_orphacode():  # noqa: E501
@@ -29,7 +27,7 @@ def phenotype_all_orphacode():  # noqa: E501
 
     scroll_timeout = config.scroll_timeout
 
-    response = uncapped_res(es, index, query, size, scroll_timeout)
+    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
     return response
 
 
@@ -53,7 +51,7 @@ def phenotype_by_orphacode(orphacode):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"Disorder.ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = single_res(es, index, query)
+    response = qc.single_res(es, index, query)
     return response
 
 def phenotype_by_hpo_id(hpoids):
@@ -141,7 +139,7 @@ def phenotype_by_hpo_id(hpoids):
     size = config.scroll_size  # per scroll, not limiting
     scroll_timeout = config.scroll_timeout
 
-    response = uncapped_res(es, index, query, size, scroll_timeout)
+    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
     # response_parsed = [{"ORPHAcode": x["Disorder"]["ORPHAcode"], "PreferredTerm": x["Disorder"]["Preferred term"], "HPOs": x["Disorder"]["HPODisorderAssociation"]} for x in response]
     # response_parsed = []
     # for res in response:
@@ -189,7 +187,7 @@ def phenotype_list_orphacode():  # noqa: E501
 
     try:
         # response = es.get(index=index, id=doc_id)
-        response = uncapped_res(es, index, query, size, scroll_timeout)
+        response = qc.uncapped_res(es, index, query, size, scroll_timeout)
     except es_exceptions.NotFoundError:
         return ("Server Error: Index not found", 404)
         # print(response)

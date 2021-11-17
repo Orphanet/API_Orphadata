@@ -1,11 +1,8 @@
-from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
-from swagger_server.models.product1 import Product1  # noqa: E501
-from swagger_server.models.product1_list import Product1List  # noqa: E501
+import elasticsearch.exceptions as es_exceptions
+from flask import request
 
 import config
 from controllers import query_controller as qc
-from flask import request
-
 
 
 def product1_all_orphacode():  # noqa: E501

@@ -130,7 +130,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_generic
   /orphadata/generics/rd-cross-referencing:
     get:
       tags:
@@ -178,7 +178,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_generic
   /orphadata/generics/rd-classification:
     get:
       tags:
@@ -205,7 +205,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller  
+      x-openapi-router-controller: swagger_server.controllers.rd_generic  
   /orphadata/generics/rd-phenotypes:
     get:
       tags:
@@ -246,7 +246,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_generic
   /orphadata/generics/rd-associated-genes:
     get:
       tags:
@@ -271,7 +271,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_generic
   /orphadata/generics/rd-medical-specialties:
     get:
       tags:
@@ -298,7 +298,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_generic
   /orphadata/generics/rd-natural-history:
     get:
       tags:
@@ -345,7 +345,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_generic
   /orphadata/generics/rd-epidemiology:
     get:
       tags:
@@ -391,7 +391,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.catalog_products_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_generic
   /orphadata/details/rd-cross-referencing:
     get:
       tags:
@@ -441,7 +441,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_references
   /orphadata/details/rd-cross-referencing/orphacodes:
     get:
       tags:
@@ -485,7 +485,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_references
   /orphadata/details/rd-cross-referencing/orphacodes/{orphacode}:
     get:
       tags:
@@ -546,7 +546,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_references
   /orphadata/details/rd-cross-referencing/names/{name}:
     get:
       tags:
@@ -603,7 +603,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_references
   /orphadata/details/rd-cross-referencing/omims/{omim}:
     get:
       tags:
@@ -656,7 +656,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_references
   /orphadata/details/rd-cross-referencing/icds:
     get:
       tags:
@@ -700,7 +700,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_references
   /orphadata/details/rd-cross-referencing/icds/{icd}:
     get:
       tags:
@@ -753,7 +753,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_cross_referencing_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_references
   /orphadata/details/rd-classification/hchids:
     get:
       tags:
@@ -778,7 +778,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_classification
   /orphadata/details/rd-classification/hchids/{hchid}/orphacodes:
     get:
       tags:
@@ -814,7 +814,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_classification
   /orphadata/details/rd-classification/hchids/{hchid}:
     get:
       tags:
@@ -850,7 +850,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_classification
   /orphadata/details/rd-classification/orphacodes/{orphacode}/hchids:
     get:
       tags:
@@ -889,7 +889,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_classification
   /orphadata/details/rd-classification/orphacodes/{orphacode}/hchids/{hchid}:
     get:
       tags:
@@ -938,7 +938,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.classifications_of_rare_diseases_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_classification
   /orphadata/details/rd-phenotypes:
     get:
       tags:
@@ -984,7 +984,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_phenotypes_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_phenotypes
   /orphadata/details/rd-phenotypes/orphacodes:
     get:
       tags:
@@ -1025,7 +1025,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_phenotypes_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_phenotypes
   /orphadata/details/rd-phenotypes/orphacodes/{orphacode}:
     get:
       tags:
@@ -1085,7 +1085,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_phenotypes_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_phenotypes
   /orphadata/details/rd-phenotypes/hpoids/{hpoids}:
     get:
       tags:
@@ -1146,7 +1146,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_phenotypes_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_phenotypes
   /orphadata/details/rd-associated-genes:
     get:
       tags:
@@ -1173,7 +1173,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_genes
   /orphadata/details/rd-associated-genes/orphacodes:
     get:
       tags:
@@ -1197,7 +1197,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_genes
   /orphadata/details/rd-associated-genes/orphacodes/{orphacode}:
     get:
       tags:
@@ -1238,7 +1238,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_genes
   /orphadata/details/rd-associated-genes/genes:
     get:
       tags:
@@ -1262,7 +1262,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_genes
   /orphadata/details/rd-associated-genes/genes/symbols/{symbol}:
     get:
       tags:
@@ -1300,7 +1300,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_genes
   /orphadata/details/rd-associated-genes/genes/names/{name}:
     get:
       tags:
@@ -1339,7 +1339,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rare_diseases_and_associated_gene_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_genes
   /orphadata/details/rd-medical-specialties/orphacodes/{orphacode}:
     get:
       tags:
@@ -1384,7 +1384,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.medical_specialties_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_medical_specialties
   /orphadata/details/rd-medical-specialties/parents:
     get:
       tags:
@@ -1414,7 +1414,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.medical_specialties_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_medical_specialties
   /orphadata/details/rd-medical-specialties/parents/{parentcode}:
     get:
       tags:
@@ -1458,7 +1458,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.medical_specialties_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_medical_specialties
   /orphadata/details/rd-epidemiology:
     get:
       tags:
@@ -1505,7 +1505,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_epidemiological
   /orphadata/details/rd-epidemiology/orphacodes:
     get:
       tags:
@@ -1548,7 +1548,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_epidemiological
   /orphadata/details/rd-epidemiology/orphacodes/{orphacode}:
     get:
       tags:
@@ -1608,7 +1608,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_epidemiological
   /orphadata/details/rd-natural_history:
     get:
       tags:
@@ -1654,7 +1654,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_epidemiological
   /orphadata/details/rd-natural_history/orphacodes:
     get:
       tags:
@@ -1697,7 +1697,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_epidemiological
   /orphadata/details/rd-natural_history/orphacodes/{orphacode}:
     get:
       tags:
@@ -1755,7 +1755,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.epidemiological_data_on_rare_diseases_controller
+      x-openapi-router-controller: swagger_server.controllers.rd_epidemiological
 components:
   schemas:
     genericAll:
