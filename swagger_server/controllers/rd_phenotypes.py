@@ -132,20 +132,12 @@ def phenotype_by_hpo_id(hpoids):
                     "operator": "AND"
                 }
             }
-        }
+        },
+        # '_source': ['Disorder.ORPHAcode']
     }
 
-
-    size = config.scroll_size  # per scroll, not limiting
-    scroll_timeout = config.scroll_timeout
-
-    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
-    # response_parsed = [{"ORPHAcode": x["Disorder"]["ORPHAcode"], "PreferredTerm": x["Disorder"]["Preferred term"], "HPOs": x["Disorder"]["HPODisorderAssociation"]} for x in response]
-    # response_parsed = []
-    # for res in response:
-    #     dic = {"ORPHAcode": res["Disorder"]["ORPHAcode"], "PreferredTerm": res["Disorder"]["Preferred term"]}
-    #     dic["HPOs"] = sorted([ x["HPO"]["HPOId"] for x in res["Disorder"]["HPODisorderAssociation"] ])
-    #     response_parsed.append(dic)
+    # response = qc.uncapped_res(es, index, query, size=config.scroll_size, scroll_timeout=config.scroll_timeout)
+    response = qc.es_scroll(es, index, query)
 
     return response
 
@@ -197,3 +189,32 @@ def phenotype_list_orphacode():  # noqa: E501
         return ("Elasticsearch node unavailable", 503)
 
     return response[0]
+
+
+
+# es = config.elastic_server
+# lang = "en"
+
+# index = "product4"
+# index = "{}_{}".format(lang.lower(), index)
+
+# hpoids = ['HP:0000137']
+
+# query = {
+#     "query": {
+#         "match": {
+#             "Disorder.HPODisorderAssociation.HPO.HPOId": {
+#                 "query": ' '.join(hpoids),
+#                 "operator": "AND"
+#             }
+#         }
+#     }
+# }
+
+# from elasticsearch.helpers import scan as es_helpers_scan
+
+# response = [x['_source'] for x in es_helpers_scan(es, query=query, index=index)]
+
+
+# for ele in response:
+#     print(ele['Disorder']['ORPHAcode'])

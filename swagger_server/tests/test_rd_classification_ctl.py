@@ -6,9 +6,8 @@ from logging import BASIC_FORMAT
 from flask import json
 from six import BytesIO
 
-from swagger_server.tests import BaseTestCase
+from swagger_server.tests import BaseTestCase, URL_ENDPOINTS
 
-import nose
 
 
 class TestRDClassifications(BaseTestCase):
@@ -31,7 +30,8 @@ class TestRDClassifications(BaseTestCase):
         CHECK:
             - response status is 200
         """
-        url_endpoint = '{}/hchids'.format(self.BASE_URL_API)
+        # url_endpoint = '{}/hchids'.format(self.BASE_URL_API)
+        url_endpoint = URL_ENDPOINTS.get('classification_hchids')
 
         response = self.client.get(url_endpoint)
 

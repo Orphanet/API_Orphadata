@@ -1,6 +1,9 @@
 import elasticsearch
-import yaml
+from elasticsearch.helpers import scan as es_helpers_scan
 from flask import make_response
+import yaml
+
+from config import scroll_size, scroll_timeout
 
 
 def handle_query(es, index, query, size=1):
@@ -48,7 +51,7 @@ def init_scroll_query(es, index, query, size, scroll_timeout):
     return response
 
 
-def next_scroll_query(es, sid, scroll_timeout):
+def next_scroll_query(es, sid, scroll_timeout=scroll_timeout):
     """
     Fetch a scrollable ES query and handle a first layer of error
 
@@ -94,7 +97,7 @@ def single_res(es, index, query):
     return response
 
 
-def multiple_res(es, index, query, size):
+def multiple_res(es, index, query, size=scroll_size):
     """
     When the query can return a reasonable (N << 10000) number of object (ES limit = 10000)
     Handle the query with ES then perform error verification related to the response
@@ -105,7 +108,7 @@ def multiple_res(es, index, query, size):
     :param size: number of responses to return
     :return: list of dictionary on success or string error code
     """
-    response = handle_query(es, index, query, size=size)
+    response = handle_query(es, index, query, size)
     if isinstance(response, str) or isinstance(response, tuple):
         # ES node related error comes out as tuple or string
         pass
@@ -123,7 +126,7 @@ def multiple_res(es, index, query, size):
     return response
 
 
-def uncapped_res(es, index, query, size, scroll_timeout):
+def uncapped_res(es, index, query, size=scroll_size, scroll_timeout=scroll_timeout):
     """
     When the query can return more object than the ES limit (10000)
     Handle the query with ES then perform error verification related to the response
@@ -135,7 +138,7 @@ def uncapped_res(es, index, query, size, scroll_timeout):
     :param scroll_timeout: duration of scroll instance between calls
     :return: list of dictionary on success or string error code
     """
-    response = init_scroll_query(es, index, query, size, scroll_timeout)
+    response = init_scroll_query(es, index, query, size=scroll_size, scroll_timeout=scroll_timeout)
     if isinstance(response, str) or isinstance(response, tuple):
         # ES node related error comes out as tuple or string
         return response
@@ -176,7 +179,41 @@ def uncapped_res(es, index, query, size, scroll_timeout):
             if isinstance(data, list) and not response:
                 data = ("Query not found", 404)
         es.clear_scroll(scroll_id=sid)
+
+    if not data:
+        data = ("Query not found", 404)
+
     return data
+
+def es_scroll(es, index, query, size=scroll_size, scroll_timeout=scroll_timeout):
+    """
+    When the query can return more object than the ES limit (10000)
+    Handle the query with ES then perform error verification related to the response
+
+    :param es: elasticsearch instance see elasticsearch module
+    :param index: elasticsearch index name (handle wildcard)
+    :param query: elasticsearch valid query
+    :param size: number of responses to return
+    :param scroll_timeout: duration of scroll instance between calls
+    :return: list of dictionary on success or string error code
+    """
+
+    response_generator = es_helpers_scan(
+        client=es,
+        query=query,
+        index=index,
+        scroll=scroll_timeout,
+        size=size
+    )
+
+    try:
+        response = [x['_source'] for x in response_generator]
+        if not response:
+            return ("Query not found", 404)
+        else:
+            return response
+    except:
+        return ("Something went wrong with es_scroll function", 400)    
 
 
 def if_yaml(mime_type, response):
