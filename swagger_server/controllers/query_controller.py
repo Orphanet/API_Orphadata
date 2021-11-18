@@ -152,6 +152,9 @@ def uncapped_res(es, index, query, size, scroll_timeout):
         except IndexError:
             data = ("Query not found", 404)
             # print(response)
+        if isinstance(data, list) and not response:
+            data = ("Query not found", 404)
+
         new_data_size = True
         while new_data_size:
             response = next_scroll_query(es, sid, scroll_timeout)
@@ -170,6 +173,8 @@ def uncapped_res(es, index, query, size, scroll_timeout):
             except IndexError:
                 data = ("Query not found", 404)
                 # print(response)
+            if isinstance(data, list) and not response:
+                data = ("Query not found", 404)
         es.clear_scroll(scroll_id=sid)
     return data
 

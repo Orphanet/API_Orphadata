@@ -47,9 +47,10 @@ def hierarchy_by_orphacode(orphacode):  # noqa: E501
 
     size = config.scroll_size  # per scroll, not limiting
 
-    scroll_timeout = config.scroll_timeout
+    # scroll_timeout = config.scroll_timeout
 
-    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
+    # response = qc.uncapped_res(es, index, query, size, scroll_timeout)
+    response = qc.multiple_res(es, index, query, size)
     return response
 
 

@@ -7,7 +7,8 @@ from flask import send_from_directory, send_file
 # from livereload import Server
 
 from swagger_server import encoder
-
+# import werkzeug
+# werkzeug.cached_property = werkzeug.utils.cached_property
 
 def main():
     # swagger_url => path to ui
@@ -39,7 +40,7 @@ def main():
     # Remove A-z sorting in json
     # app.app.config['JSON_SORT_KEYS'] = False
     application = app.app
-    return application
+    application.run(port=8080, debug=True, extra_files=['./swagger_server/swagger/swagger.yaml'])
 
 
 if __name__ == '__main__':

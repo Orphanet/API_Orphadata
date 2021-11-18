@@ -5,10 +5,7 @@ from __future__ import absolute_import
 from flask import json
 from six import BytesIO
 
-from swagger_server.models.list_orphacode import ListOrphacode  # noqa: E501
-from swagger_server.models.product1 import Product1  # noqa: E501
-from swagger_server.models.product1_list import Product1List  # noqa: E501
-from swagger_server.test import BaseTestCase
+from swagger_server.tests import BaseTestCase
 
 
 class TestRareDiseasesAndCrossReferencingController(BaseTestCase):
