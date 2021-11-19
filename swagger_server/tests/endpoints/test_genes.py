@@ -25,13 +25,6 @@ The general SAC (Setup, Action, Check) procedures are as follow:
 from __future__ import absolute_import
 from swagger_server.tests import BaseTestCase, URL_ENDPOINTS
 
-# 'genes_base': '/orphadata/details/rd-associated-genes',
-# 'genes_orphacodes': '/orphadata/details/rd-associated-genes/orphacodes',
-# 'genes_by_orphacode': '/orphadata/details/rd-associated-genes/orphacodes/{}',
-# 'genes_genes': '/orphadata/details/rd-associated-genes/genes',
-# 'genes_by_symbol': '/orphadata/details/rd-associated-genes/genes/symbols/{}',
-# 'genes_by_name': '/orphadata/details/rd-associated-genes/genes/names/{}',
-
 
 class TestGenesEndpointsStatus(BaseTestCase):
     """Tests response status of classification relative endpoints
