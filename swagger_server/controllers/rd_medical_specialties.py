@@ -6,11 +6,7 @@ import swagger_server.controllers.query_controller as qc
 from swagger_server.controllers.response_handler import ResponseWrapper
 
 
-PRODUCT = {
-    'ID': 'product7',
-    'name': 'Medical specialties of rare diseases',
-    'lang': 'en',
-}
+PRODUCT = config.PRODUCTS.get('product7')
 
 es_client = config.elastic_server
 index = "en_product7"
