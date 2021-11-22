@@ -6,24 +6,24 @@ from swagger_server.controllers.response_handler import ResponseWrapper
 
 
 PRODUCT = {
-    'ID': 'product9_prev',
-    'name': 'Epidemiology of rare diseases',
+    'ID': 'product9_ages',
+    'name': 'Natural history of rare diseases',
     'lang': 'en',
 }
 
 es_client = config.elastic_server
-index_base = "product9_prev"
+index_base = "product9_ages"
 
 
-def query_epidemiology_base():  # noqa: E501
-    """Get all clinical entities with their epidemiological dataset in the selected language.
+def query_history_base():  # noqa: E501
+    """Get all clinical entities with their natural history data in the selected language.
 
-    The result is a collection of clinical entities (ORPhacode, preferred term, expertlink) and associated epidemiological data characterized as point prevalence, birth prevalence, lifelong prevalence and incidence, or the number of cases/families reported together with their respective intervals per geographical area (country, continent) and translated in the selected language. # noqa: E501
+    The result is a collection of clinical entities (ORPhacode, preferred term, expertlink) and associated natural history data characterized by informations on inheritance, interval average age of onset and interval average age of death. # noqa: E501
 
     :param language: Specify the language in the list supported by Orphanet (CS, DE, EN, ES, FR, IT, NL, PL, PT)
     :type language: str
 
-    :rtype: Product9PrevList
+    :rtype: Product9AgesList
     """
     lang = request.args.get("lang", "en")
     if PRODUCT['lang'] != lang.lower():
@@ -44,8 +44,8 @@ def query_epidemiology_base():  # noqa: E501
     return wrapped_response.get()
 
 
-def query_epidemiology_orphacodes():  # noqa: E501
-    """Get the list of ORPHAcodes associated to at least one epidemiological data.
+def query_history_orphacodes():  # noqa: E501
+    """Get the list of ORPHAcodes associated to at least one natural history data.
 
     The result is a collection of ORPHAcodes in the selected language. # noqa: E501
 
@@ -66,7 +66,7 @@ def query_epidemiology_orphacodes():  # noqa: E501
                 'filter': {
                     'term': {
                         "productId.keyword": {
-                            'value': '{}_product9_prev'.format(lang.lower())
+                            'value': '{}_{}'.format(lang.lower(), index_base)
                         }
                     }
 
@@ -84,19 +84,18 @@ def query_epidemiology_orphacodes():  # noqa: E501
     return wrapped_response.get()
 
 
-def query_epidemiology_by_orphacode(orphacode):  # noqa: E501
-    """Get epideliological informations of a clinical entity searching by its ORPHAcode in the selected language.
+def query_history_by_orphacode(orphacode):  # noqa: E501
+    """Get natural history informations of a clinical entity searching by its ORPHAcode in the selected language.
 
-    The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, the group and type, and the associated point prevalence, birth prevalence, lifelong prevalence and incidence, or the number of cases/families reported together with their respective intervals per geographical area (country, continent) when exist. # noqa: E501
+    The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, the group and type, and the associated inheritance, age of onset and age of death when exist. # noqa: E501
 
     :param orphacode: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
     :type orphacode: int
     :param language: Specify the language in the list supported by Orphanet (CS, DE, EN, ES, FR, IT, NL, PL, PT)
     :type language: str
 
-    :rtype: Product9Prev
+    :rtype: Product9Ages
     """
-    
     lang = request.args.get("lang", "en")
     if PRODUCT['lang'] != lang.lower():
         PRODUCT['lang'] = lang.lower()

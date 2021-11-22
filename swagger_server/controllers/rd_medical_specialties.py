@@ -1,8 +1,22 @@
-import config
-import controllers.query_controller as qc
+import elasticsearch.exceptions as es_exceptions
+from flask import request
+
+from swagger_server import config
+import swagger_server.controllers.query_controller as qc
+from swagger_server.controllers.response_handler import ResponseWrapper
 
 
-def medical_specialty_parent_by_orphacode(orphacode):  # noqa: E501
+PRODUCT = {
+    'ID': 'product7',
+    'name': 'Medical specialties of rare diseases',
+    'lang': 'en',
+}
+
+es_client = config.elastic_server
+index = "en_product7"
+
+
+def query_linearization_by_orphacode(orphacode):  # noqa: E501
     """Get associated genes and genes information of a clinical entity searching by its ORPHAcode.
 
     The result is a set of data includes ORPhacode, preferred term, expertlink, group and type of the selected clinical entity, relationship between genes and the searched disease and symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases of selected genes. # noqa: E501
@@ -12,8 +26,7 @@ def medical_specialty_parent_by_orphacode(orphacode):  # noqa: E501
 
     :rtype: Product6
     """
-    es = config.elastic_server
-    index = "en_product7"
+    request.args.params = {'ORPHAcode': orphacode}
 
     query = {
         "query": {
@@ -24,13 +37,13 @@ def medical_specialty_parent_by_orphacode(orphacode):  # noqa: E501
         # "_source": ["ORPHAcode"]
     }
 
-    response = qc.single_res(es, index, query)
-    return response
+    response = qc.single_res(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+
+    return wrapped_response.get()
 
 
-def medical_specialty_parents():
-    es = config.elastic_server
-    index = "en_product7"
+def query_linearization_parents():
 
     query = {
         "query": {
@@ -39,27 +52,32 @@ def medical_specialty_parents():
         "_source": ["DisorderDisorderAssociation.TargetDisorder"]
     }
 
-    response = qc.multiple_res(es, index, query, size=config.scroll_size)
+    response = qc.multiple_res(es_client, index, query)
 
-    response_parsed = []
-    for hit in response:
-        parent = {
-            "ORPHAcode": hit["DisorderDisorderAssociation"][0]["TargetDisorder"]["ORPHAcode"],
-            "Preferred term": hit["DisorderDisorderAssociation"][0]["TargetDisorder"]["Preferred term"]
-            }
-        if parent not in response_parsed:
-            response_parsed.append(parent)
+    if not isinstance(response, tuple):      
+        response_parsed = []
+        for hit in response:
+            parent = {
+                "ORPHAcode": hit["DisorderDisorderAssociation"][0]["TargetDisorder"]["ORPHAcode"],
+                "Preferred term": hit["DisorderDisorderAssociation"][0]["TargetDisorder"]["Preferred term"]
+                }
+            if parent not in response_parsed:
+                response_parsed.append(parent)
+    else:
+        response_parsed = response
 
-    return sorted(response_parsed, key=lambda x: x["ORPHAcode"])
+    wrapped_response = ResponseWrapper(ctl_response=sorted(response_parsed, key=lambda x: x["ORPHAcode"]), request=request, product=PRODUCT)
 
-def medical_specialty_orphacode_by_parent(parentcode):  # noqa: E501
+    return wrapped_response.get()
+    
+
+def query_linearization_by_parent(parentcode):  # noqa: E501
     """Get the list of ORPHAcodes associated to at least one gene.
 
     The result is a collection of ORPHAcodes associated to at least one gene. # noqa: E501
 
     """
-    es = config.elastic_server
-    index = "en_product7"
+    request.args.params = {'ORPHAcode': parentcode}
 
     query = {
         "query": {
@@ -70,6 +88,7 @@ def medical_specialty_orphacode_by_parent(parentcode):  # noqa: E501
         # "_source": ["ORPHAcode"]
     }
 
-    response = qc.multiple_res(es, index, query, size=config.scroll_size)
+    response = qc.multiple_res(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 
-    return response
+    return wrapped_response.get()

@@ -1,11 +1,3 @@
-from elasticsearch import Elasticsearch
-
-# Elasticsearch
-elastic_server = Elasticsearch(hosts=["localhost"])
-scroll_size = 2000  # nb of query per scroll, not limiting
-scroll_timeout = "2m"
-
-# API endpoints
 URL_ENDPOINTS = {    
 	'generics_base': '/orphadata/generics',
 	'generics_references': '/orphadata/generics/rd-cross-referencing',
@@ -47,22 +39,3 @@ URL_ENDPOINTS = {
 	'history_orphacodes': '/orphadata/details/rd-natural_history/orphacodes',
 	'history_by_orphacode': '/orphadata/details/rd-natural_history/orphacodes/{}'
 }
-
-
-# Local test from docker
-# elastic_server = Elasticsearch(hosts=["host.docker.internal"])
-
-# Online
-# Check redmine ticket http://redminor.orpha.net/issues/
-# ES endpoint
-# es_url = "https://"
-# es_api_key = {"id": "",
-#               "name": "",
-#               "api_key": ""
-#               }
-# elastic_server = Elasticsearch(hosts=[es_url], api_key=(es_api_key["id"], es_api_key["api_key"]))
-
-# Elasticsearch scroll function: get paginated results to bypass the max query size
-
-
-

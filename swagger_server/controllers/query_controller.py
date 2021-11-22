@@ -1,9 +1,11 @@
 import elasticsearch
+from elasticsearch.client import Elasticsearch
+import elasticsearch.exceptions as es_exceptions
 from elasticsearch.helpers import scan as es_helpers_scan
 from flask import make_response
 import yaml
 
-from config import scroll_size, scroll_timeout
+from swagger_server.config import scroll_size, scroll_timeout
 
 
 def handle_query(es, index, query, size=1):
@@ -19,12 +21,12 @@ def handle_query(es, index, query, size=1):
     try:
         response = es.search(index=index, body=query, size=size)
         # print(response)
-    except elasticsearch.exceptions.NotFoundError:
+    except es_exceptions.NotFoundError:
         response = ("Server Error: Index not found", 404)
         # print(response)
-    except elasticsearch.exceptions.ConnectionError:
+    except es_exceptions.ConnectionError:
         response = ("ConnectionError type, Elasticsearch node unavailable", 503)
-    except elasticsearch.exceptions.TransportError:
+    except es_exceptions.TransportError:
         response = ("TransportError type, Elasticsearch node unavailable", 503)
     return response
 
@@ -43,10 +45,10 @@ def init_scroll_query(es, index, query, size, scroll_timeout):
     try:
         response = es.search(index=index, body=query, size=size, scroll=scroll_timeout)
         # print(response)
-    except elasticsearch.exceptions.NotFoundError:
+    except es_exceptions.NotFoundError:
         response = ("Server Error: Index not found", 404)
         # print(response)
-    except elasticsearch.exceptions.ConnectionError:
+    except es_exceptions.ConnectionError:
         response = ("Elasticsearch node unavailable", 503)
     return response
 
@@ -63,10 +65,10 @@ def next_scroll_query(es, sid, scroll_timeout=scroll_timeout):
     try:
         response = es.scroll(scroll_id=sid, scroll=scroll_timeout)
         # print(response)
-    except elasticsearch.exceptions.NotFoundError:
+    except es_exceptions.NotFoundError:
         response = ("Server Error: Index not found", 404)
         # print(response)
-    except elasticsearch.exceptions.ConnectionError:
+    except es_exceptions.ConnectionError:
         response = ("Elasticsearch node unavailable", 503)
     return response
 
@@ -138,7 +140,7 @@ def uncapped_res(es, index, query, size=scroll_size, scroll_timeout=scroll_timeo
     :param scroll_timeout: duration of scroll instance between calls
     :return: list of dictionary on success or string error code
     """
-    response = init_scroll_query(es, index, query, size=scroll_size, scroll_timeout=scroll_timeout)
+    response = init_scroll_query(es, index, query, size=size, scroll_timeout=scroll_timeout)
     if isinstance(response, str) or isinstance(response, tuple):
         # ES node related error comes out as tuple or string
         return response
@@ -213,7 +215,63 @@ def es_scroll(es, index, query, size=scroll_size, scroll_timeout=scroll_timeout)
         else:
             return response
     except:
-        return ("Something went wrong with es_scroll function", 400)    
+        return ("Query not found", 404)
+
+
+def es_get(es, index, id, **kwargs):
+    """Query used to retrieve a document and its source or stored fields from a particular index
+
+    :param es: elasticsearch client instance
+    :param index: name of the index
+    :param id: document id
+    :param kwargs[arg]: optional parameters in the GET API of elasticsearch
+        :arg    _source:            True or false to return the _source field or not,
+                                    or a list of fields to return
+        :arg    _source_excludes:   A list of fields to exclude from the
+                                    returned _source field
+        :arg    _source_includes:   A list of fields to extract and return
+                                    from the _source field
+        :arg    preference:         Specify the node or shard the operation should
+                                    be performed on (default: random)
+        :arg    realtime:           Specify whether to perform the operation in
+                                    realtime or search mode
+        :arg    refresh:            Refresh the shard containing the document before
+                                    performing the operation
+        :arg    routing:            Specific routing value
+        :arg    stored_fields:      A comma-separated list of stored fields to
+                                    return in the response
+        :arg    version:            Explicit version number for concurrency control
+        :arg    version_type:       Specific version type  Valid choices:
+                                    internal, external, external_gte, force
+    """
+
+    optional_parameters = {
+        "_source",
+        "_source_excludes",
+        "_source_includes",
+        "preference",
+        "realtime",
+        "refresh",
+        "routing",
+        "stored_fields",
+        "version",
+        "version_type",
+    }
+
+    try:
+        if not kwargs:
+            response = es.get(index=index, id=id)
+        else:
+            response = es.get(index=index, id=id, **kwargs)
+    except es_exceptions.NotFoundError:
+        return ("Server Error: Index not found", 404)
+        # print(response)
+    except es_exceptions.ConnectionError:
+        return ("Elasticsearch node unavailable", 503)
+    except es_exceptions.TransportError:
+        return ("Elasticsearch node unavailable", 503)
+    
+    return response['_source']
 
 
 def if_yaml(mime_type, response):

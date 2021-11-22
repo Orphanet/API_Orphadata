@@ -1,10 +1,22 @@
 import elasticsearch.exceptions as es_exceptions
+from flask import request
 
-import config
-import controllers.query_controller as qc
+from swagger_server import config
+from swagger_server.controllers import query_controller as qc
+from swagger_server.controllers.response_handler import ResponseWrapper
 
 
-def associatedgene_all_orphacode():  # noqa: E501
+PRODUCT = {
+    'ID': 'product6',
+    'name': 'Rare diseases and associated gene',
+    'lang': 'en',
+}
+
+es_client = config.elastic_server
+index = "en_product6"
+
+
+def query_genes_base():  # noqa: E501
     """Get all rare diseases associated to at least one gene.
 
     The result is a collection of clinical entities (ORPHAcode, preferred term, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, group and type) and their genes associations. For each gene, symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases are also available. # noqa: E501
@@ -12,21 +24,20 @@ def associatedgene_all_orphacode():  # noqa: E501
 
     :rtype: Product6List
     """
-    es = config.elastic_server
+    query = {
+        "query": {
+            "match_all": {}
+        },
+        # '_source': 'ORPHAcode'
+    }
 
-    index = "en_product6"
-
-    query = "{\"query\": {\"match_all\": {}}}"
-
-    size = config.scroll_size  # per scroll, not limiting
-
-    scroll_timeout = config.scroll_timeout
-
-    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
-    return response
+    response = qc.es_scroll(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
 
 
-def associatedgene_list_orphacode():  # noqa: E501
+def query_genes_orphacodes():  # noqa: E501
     """Get the list of ORPHAcodes associated to at least one gene.
 
     The result is a collection of ORPHAcodes associated to at least one gene. # noqa: E501
@@ -34,7 +45,6 @@ def associatedgene_list_orphacode():  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    es = config.elastic_server
     index = "orphadata"
 
     query = {
@@ -46,7 +56,6 @@ def associatedgene_list_orphacode():  # noqa: E501
                             'value': 'en_product6'
                         }
                     }
-
                 }
             }
         },
@@ -56,25 +65,13 @@ def associatedgene_list_orphacode():  # noqa: E501
         
     }
 
-    size = config.scroll_size  # per scroll, not limiting
-    scroll_timeout = config.scroll_timeout
-
-    try:
-        # response = es.get(index=index, id=doc_id)
-        response = qc.uncapped_res(es, index, query, size, scroll_timeout)
-    except es_exceptions.NotFoundError:
-        return ("Server Error: Index not found", 404)
-        # print(response)
-    except es_exceptions.ConnectionError:
-        return ("Elasticsearch node unavailable", 503)
-    except es_exceptions.TransportError:
-        return ("Elasticsearch node unavailable", 503)
-
-    return response[0]
+    response = qc.es_scroll(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response[0]['items'], request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
 
 
-
-def associatedgene_orphacode(orphacode):  # noqa: E501
+def query_genes_by_orphacode(orphacode):  # noqa: E501
     """Get associated genes and genes information of a clinical entity searching by its ORPHAcode.
 
     The result is a set of data includes ORPhacode, preferred term, expertlink, group and type of the selected clinical entity, relationship between genes and the searched disease and symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases of selected genes. # noqa: E501
@@ -84,28 +81,28 @@ def associatedgene_orphacode(orphacode):  # noqa: E501
 
     :rtype: Product6
     """
-    es = config.elastic_server
+    request.args.params = {'ORPHAcode': orphacode}
 
-    index = "en_product6"
+    query = {
+        "query": {
+            "match": {
+                "ORPHAcode": str(orphacode)
+            }
+        }
+    }
 
-    query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
+    response = qc.single_res(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
 
-    response = qc.single_res(es, index, query)
-    return response
 
-
-def associatedgene_list_genes():  # noqa: E501
+def query_genes_genes():  # noqa: E501
     """Get the list of ORPHAcodes associated to at least one gene.
 
     The result is a collection of ORPHAcodes associated to at least one gene. # noqa: E501
 
-
-    :rtype: ListOrphacode
     """
-    es = config.elastic_server
-
-    index = "en_product6"
-
     query = {
         "query": {
             "match_all": {}
@@ -113,27 +110,25 @@ def associatedgene_list_genes():  # noqa: E501
         "_source":["DisorderGeneAssociation"]
     }
 
-    size = config.scroll_size  # per scroll, not limiting
-    scroll_timeout = config.scroll_timeout
-
-    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
-    if isinstance(response, str) or isinstance(response, tuple):
-        pass
-    else:
+    response = qc.es_scroll(es_client, index, query)
+    if not isinstance(response, tuple):      
         response_parsed = []
-        _met = []
+        is_seen = []
         for hit in response:
             for gene in hit["DisorderGeneAssociation"]:
-                if gene["Gene"]["Preferred term"] not in _met:
-                    _met.append(gene["Gene"]["Preferred term"])
+                if gene["Gene"]["Preferred term"] not in is_seen:
+                    is_seen.append(gene["Gene"]["Preferred term"])
                     response_parsed.append({'preferredTerm': gene["Gene"]["Preferred term"], 'symbol': gene["Gene"]["Symbol"]})
+    else:
+        response_parsed = response
+
+    wrapped_response = ResponseWrapper(ctl_response=sorted(response_parsed, key=lambda x: x["preferredTerm"]), request=request, product=PRODUCT)
     
-    return sorted(response_parsed, key=lambda x: x["preferredTerm"])
+    return wrapped_response.get()
 
 
-def associatedgene_by_gene_symbol(symbol):
-    es = config.elastic_server
-    index = "en_product6"
+def query_genes_by_symbol(symbol):
+    request.args.params = {'symbol': symbol}
 
     query = {
         "query": {
@@ -146,25 +141,14 @@ def associatedgene_by_gene_symbol(symbol):
         # "_source": ["ORPHAcode"]
     }
 
-    response = qc.multiple_res(es, index, query, size=5000)
+    response = qc.multiple_res(es_client, index, query, size=5000)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
 
-    return response
 
-
-def associatedgene_by_gene_name(name):
-    es = config.elastic_server
-    index = "en_product6"
-
-    # query = {
-    #     "query": {
-    #         "bool": {
-    #             "must": {
-    #                 "match": {"DisorderGeneAssociation.Gene.Preferred term": str(gene_name)}
-    #             }
-    #         }
-    #     },
-    #     "_source": ["ORPHAcode", "DisorderGeneAssociation.Gene.Preferred term", "DisorderGeneAssociation.Gene.Symbol"]
-    # }
+def query_genes_by_name(name):
+    request.args.params = {'name': name}
 
     query = {
         "query": {
@@ -178,6 +162,7 @@ def associatedgene_by_gene_name(name):
         # "_source": ["ORPHAcode", "DisorderGeneAssociation.Gene.Preferred term", "DisorderGeneAssociation.Gene.Symbol"]
     }
 
-    response = qc.multiple_res(es, index, query, size=5000)
-
-    return response
+    response = qc.multiple_res(es_client, index, query, size=5000)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    
+    return wrapped_response.get()

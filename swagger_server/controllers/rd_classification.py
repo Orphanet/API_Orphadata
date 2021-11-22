@@ -1,35 +1,46 @@
 import elasticsearch.exceptions as es_exceptions
+from flask import request
 
-import config
-import controllers.query_controller as qc
+from swagger_server import config
+import swagger_server.controllers.query_controller as qc
+from swagger_server.controllers.response_handler import ResponseWrapper
 
 
-def hierarchy_all_orphacode(hchid):  # noqa: E501
+PRODUCT = {
+    'ID': 'product3',
+    'name': 'Clinical classifications of rare diseases',
+    'lang': 'en',
+}
+
+es_client = config.elastic_server
+index_base = "en_product3_"
+
+
+def query_classification_by_hchid(hchid):  # noqa: E501
     """Get the organisation of all ORPHAcodes available for a selected classification.
 
     The result is a collection of ORPHAcodes organised as children and parents in the selected classification. # noqa: E501
 
     :param hchid: The hierarchy ID (hchID) is a specific identifier attributed to an Orphanet classification.
     :type hchid: int
-
-    :rtype: Product3ClassificationList
     """
-    es = config.elastic_server
+    request.args.params = {'hchID': hchid}
 
-    index = "en_product3"
-    index = "{}_{}".format(index, hchid)
+    index = "{}{}".format(index_base, hchid)
 
-    query = "{\"query\": {\"match_all\": {}}}"
+    query = {
+        'query': {
+            'match_all': {}
+        }
+    }
 
-    size = config.scroll_size  # per scroll, not limiting
-
-    scroll_timeout = config.scroll_timeout
-
-    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
-    return response
+    response = qc.multiple_res(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
 
 
-def hierarchy_by_orphacode(orphacode):  # noqa: E501
+def query_classification_hchids_by_orphacode(orphacode):  # noqa: E501
     """Hierarchical classification of clinical entities by ORPHAcode in all classifications
 
     Query one clinical entity by its ORPHAcode and gives the list of occurences in Orphanet&#x27;s classifications with parents and childs clinical entity ORPHAcode number, the list of its children and parents. # noqa: E501
@@ -39,22 +50,23 @@ def hierarchy_by_orphacode(orphacode):  # noqa: E501
 
     :rtype: Product3ClassificationList
     """
-    es = config.elastic_server
+    request.args.params = {'ORPHAcode': orphacode}
 
-    index = "en_product3_*"
+    index = index_base + '*'
 
-    query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
+    query = {
+        "query": {
+            "match": {"ORPHAcode": str(orphacode)}
+        }
+    }
 
-    size = config.scroll_size  # per scroll, not limiting
+    response = qc.multiple_res(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 
-    # scroll_timeout = config.scroll_timeout
-
-    # response = qc.uncapped_res(es, index, query, size, scroll_timeout)
-    response = qc.multiple_res(es, index, query, size)
-    return response
+    return wrapped_response.get()
 
 
-def hierarchy_id_by_orphacode(orphacode, hchid):  # noqa: E501
+def query_classification_by_orphacode_and_hchid(orphacode, hchid):  # noqa: E501
     """Hierarchical classification of clinical entities by ORPHAcode in selected classification
 
     Query one clinical entity by its ORPHAcode and gives the list of parents and childs clinical entity in the selected Orphanet&#x27;s classification # noqa: E501
@@ -66,17 +78,19 @@ def hierarchy_id_by_orphacode(orphacode, hchid):  # noqa: E501
 
     :rtype: Product3
     """
-    es = config.elastic_server
+    request.args.params = {'ORPHAcode': orphacode, 'hchID': hchid}
 
-    index = "en_product3_{}".format(hchid)
+    index = "{}{}".format(index_base, hchid)
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
-    response = qc.single_res(es, index, query)
-    return response
+    response = qc.single_res(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
 
 
-def hierarchy_list_hchid():  # noqa: E501
+def query_classification_hchids():  # noqa: E501
     """Get the list of identifiers of all Orphanet Rare Diseases Classifications available.
 
     The result is a collection of the unique identifier of each rare diseases classification available. # noqa: E501
@@ -84,13 +98,11 @@ def hierarchy_list_hchid():  # noqa: E501
 
     :rtype: ListHchid
     """
-    es = config.elastic_server
-
     index = "orphadata"
-    doc_id = 'product3'.format()
+    doc_id = 'product3'
 
     try:
-        response = es.get(
+        response = es_client.get(
             index=index,
             id=doc_id,
             _source_excludes=['items.clinicalEntities', 'items.clinicalEntityNb']
@@ -103,14 +115,12 @@ def hierarchy_list_hchid():  # noqa: E501
     except es_exceptions.TransportError:
         return ("Elasticsearch node unavailable", 503)
 
-    if isinstance(response, str) or isinstance(response, tuple):
-        pass
-    # else:
-    #     response = sorted([key.split("_")[2] for key, elem in response.items()])
-    return response['_source']
+    wrapped_response = ResponseWrapper(ctl_response=response['_source'], request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
+    
 
-
-def hierarchy_list_orphacode(hchid):  # noqa: E501
+def query_classification_orphacodes_by_hchid(hchid):  # noqa: E501
     """Get the list of ORPHAcodes available for a selected classification.
 
     The result is a collection of ORPHAcodes present in the selected classification. # noqa: E501
@@ -120,10 +130,9 @@ def hierarchy_list_orphacode(hchid):  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    es = config.elastic_server
+    request.args.params = {'hchID': hchid}
 
-    index = "en_product3"
-    index = "{}_{}".format(index, hchid)
+    index = "{}{}".format(index_base, hchid)
 
     query = {
         "query": {
@@ -132,10 +141,7 @@ def hierarchy_list_orphacode(hchid):  # noqa: E501
         "_source":["ORPHAcode", "name"]
     }
 
-    size = config.scroll_size  # per scroll, not limiting
-
-    scroll_timeout = config.scroll_timeout
-
-    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
-    return response
-
+    response = qc.uncapped_res(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    
+    return wrapped_response.get()

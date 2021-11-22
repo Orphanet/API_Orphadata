@@ -404,7 +404,7 @@ paths:
         on the Orphanet website, preferred term, synonyms, definition, the group and
         type, and the characterisation of the alignment between the clinical entity
         and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language
-      operationId: product1_all_orphacode
+      operationId: query_references_base
       parameters:
       - in: query
         name: lang
@@ -448,7 +448,7 @@ paths:
       - Rare diseases and cross-referencing
       summary: Get the list of ORPHAcodes available in the selected language.
       description: The result is a collection of ORPHAcodes in the selected language.
-      operationId: product1_list_orphacode
+      operationId: query_references_orphacodes
       parameters:
       - in: query
         name: lang
@@ -497,7 +497,7 @@ paths:
         preferred term, synonyms, definition, the group and type, and the characterisation
         of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra,
         and OMIM systems in the selected language.
-      operationId: product1_by_orphacode
+      operationId: query_references_by_orphacode
       parameters:
       - name: orphacode
         in: path
@@ -558,7 +558,7 @@ paths:
         preferred term, synonyms, definition, the group and type, and the characterisation
         of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra,
         and OMIM systems in the selected language.
-      operationId: product1_by_name
+      operationId: query_references_by_name
       parameters:
       - name: name
         in: path
@@ -611,7 +611,7 @@ paths:
       summary: Get informations and cross-referencing of a clinical entity searching
         by an OMIM reference in the selected language.
       description: The result is a list of clinical entites matching the given OMIM reference
-      operationId: product1_by_omim
+      operationId: query_references_by_omim
       parameters:
       - name: omim
         in: path
@@ -663,7 +663,7 @@ paths:
       - Rare diseases and cross-referencing
       summary: Get all ICD-10 references in the selected language.
       description: The result is a list of ICD-10 references
-      operationId: product1_list_icds
+      operationId: query_references_icds
       parameters:
       - in: query
         name: lang
@@ -708,7 +708,7 @@ paths:
       summary: Get informations and cross-referencing of a clinical entity searching
         by an ICD-10 reference in the selected language.
       description: The result is a list of clinical entites matching the given ICD-10 reference
-      operationId: product1_by_icd
+      operationId: query_references_by_icd
       parameters:
       - name: icd
         in: path
@@ -762,7 +762,7 @@ paths:
         available.
       description: The result is a collection of the unique identifier of each rare
         diseases classification available.
-      operationId: hierarchy_list_hchid
+      operationId: query_classification_hchids
       responses:
         "200":
           description: Successful operation
@@ -786,7 +786,7 @@ paths:
       summary: Get the list of ORPHAcodes available for a selected classification.
       description: The result is a collection of ORPHAcodes present in the selected
         classification.
-      operationId: hierarchy_list_orphacode
+      operationId: query_classification_orphacodes_by_hchid
       parameters:
       - name: hchid
         in: path
@@ -822,7 +822,7 @@ paths:
       summary: Get the organisation of all ORPHAcodes available for a selected classification.
       description: The result is a collection of ORPHAcodes organised as children
         and parents in the selected classification.
-      operationId: hierarchy_all_orphacode
+      operationId: query_classification_by_hchid
       parameters:
       - name: hchid
         in: path
@@ -860,7 +860,7 @@ paths:
       description: Query one clinical entity by its ORPHAcode and gives the list of
         occurences in Orphanet's classifications with parents and childs clinical
         entity ORPHAcode number, the list of its children and parents.
-      operationId: hierarchy_by_orphacode
+      operationId: query_classification_hchids_by_orphacode
       parameters:
       - name: orphacode
         in: path
@@ -898,7 +898,7 @@ paths:
         classification
       description: Query one clinical entity by its ORPHAcode and gives the list of
         parents and childs clinical entity in the selected Orphanet's classification
-      operationId: hierarchy_id_by_orphacode
+      operationId: query_classification_by_orphacode_and_hchid
       parameters:
       - name: orphacode
         in: path
@@ -951,7 +951,7 @@ paths:
         major diagnostic criterion or a pathognomonic sign of the rare disease. Source
         (PMID references), the date and the validation’s status of the association
         between the rare disease and HPO terms is also available.
-      operationId: phenotype_all_orphacode
+      operationId: query_phenotypes_base
       parameters:
       - in: query
         name: lang
@@ -967,7 +967,6 @@ paths:
           - fr
           - it
           - nl
-          - pl
           - pt
       responses:
         "200":
@@ -992,7 +991,7 @@ paths:
       summary: Get list of ORPHAcodes associated to HPO phenotypes in the selected
         language.
       description: The result is a collection of ORPHAcodes in the selected language.
-      operationId: phenotype_list_orphacode
+      operationId: query_phenotypes_orphacodes
       parameters:
       - in: query
         name: lang
@@ -1008,7 +1007,6 @@ paths:
           - fr
           - it
           - nl
-          - pl
           - pt
       responses:
         "200":
@@ -1040,7 +1038,7 @@ paths:
         major diagnostic criterion or a pathognomonic sign of the rare disease. Source
         (PMID references), the date and the validation’s status of the association
         between the rare disease and HPO terms is also made available.
-      operationId: phenotype_by_orphacode
+      operationId: query_phenotypes_by_orphacode
       parameters:
       - name: orphacode
         in: path
@@ -1068,7 +1066,6 @@ paths:
           - fr
           - it
           - nl
-          - pl
           - pt
       responses:
         "200":
@@ -1101,7 +1098,7 @@ paths:
         major diagnostic criterion or a pathognomonic sign of the rare disease. Source
         (PMID references), the date and the validation’s status of the association
         between the rare disease and HPO terms is also made available.
-      operationId: phenotype_by_hpo_id
+      operationId: query_phenotypes_by_hpoids
       parameters:
       - name: hpoids
         in: path
@@ -1129,7 +1126,6 @@ paths:
           - fr
           - it
           - nl
-          - pl
           - pt
       responses:
         "200":
@@ -1157,7 +1153,7 @@ paths:
         on the Orphanet website, group and type) and their genes associations. For
         each gene, symbol, synonyms, name, typology, chromosomal location and cross-mappings
         with other international genetic databases are also available.
-      operationId: associatedgene_all_orphacode
+      operationId: query_genes_base
       responses:
         "200":
           description: Successful operation
@@ -1181,7 +1177,7 @@ paths:
       summary: Get the list of ORPHAcodes associated to at least one gene.
       description: The result is a collection of ORPHAcodes associated to at least
         one gene.
-      operationId: associatedgene_list_orphacode
+      operationId: query_genes_orphacodes
       responses:
         "200":
           description: Successful operation
@@ -1209,7 +1205,7 @@ paths:
         genes and the searched disease and symbol, synonyms, name, typology, chromosomal
         location and cross-mappings with other international genetic databases of
         selected genes.
-      operationId: associatedgene_orphacode
+      operationId: query_genes_by_orphacode
       parameters:
       - name: orphacode
         in: path
@@ -1246,7 +1242,7 @@ paths:
       summary: Get the list of genes associated to at least one clinical entity.
       description: The result is a collection of genes associated to at least
         one clinical entity. Each gene is presented by its name(s) and symbol(s)
-      operationId: associatedgene_list_genes
+      operationId: query_genes_genes
       responses:
         "200":
           description: Successful operation
@@ -1274,7 +1270,7 @@ paths:
         genes and the searched disease and symbol, synonyms, name, typology, chromosomal
         location and cross-mappings with other international genetic databases of
         selected genes.
-      operationId: associatedgene_by_gene_symbol
+      operationId: query_genes_by_symbol
       parameters:
       - name: symbol
         in: path
@@ -1313,7 +1309,7 @@ paths:
         genes and the searched disease and symbol, synonyms, name, typology, chromosomal
         location and cross-mappings with other international genetic databases of
         selected genes.
-      operationId: associatedgene_by_gene_name
+      operationId: query_genes_by_name
       parameters:
       - name: name
         in: path
@@ -1355,7 +1351,7 @@ paths:
         major diagnostic criterion or a pathognomonic sign of the rare disease. Source
         (PMID references), the date and the validation’s status of the association
         between the rare disease and HPO terms is also made available.
-      operationId: medical_specialty_parent_by_orphacode
+      operationId: query_linearization_by_orphacode
       parameters:
       - name: orphacode
         in: path
@@ -1398,7 +1394,7 @@ paths:
         major diagnostic criterion or a pathognomonic sign of the rare disease. Source
         (PMID references), the date and the validation’s status of the association
         between the rare disease and HPO terms is also made available.
-      operationId: medical_specialty_parents
+      operationId: query_linearization_parents
       responses:
         "200":
           description: Successful operation
@@ -1429,7 +1425,7 @@ paths:
         major diagnostic criterion or a pathognomonic sign of the rare disease. Source
         (PMID references), the date and the validation’s status of the association
         between the rare disease and HPO terms is also made available.
-      operationId: medical_specialty_orphacode_by_parent
+      operationId: query_linearization_by_parent
       parameters:
       - name: parentcode
         in: path
@@ -1470,7 +1466,7 @@ paths:
         prevalence, birth prevalence, lifelong prevalence and incidence, or the number
         of cases/families reported together with their respective intervals per geographical
         area (country, continent) and translated in the selected language.
-      operationId: epidemiology_all_orphacode
+      operationId: query_epidemiology_base
       parameters:
       - in: query
         name: lang
@@ -1513,7 +1509,7 @@ paths:
       summary: Get the list of ORPHAcodes associated to at least one epidemiological
         data.
       description: The result is a collection of ORPHAcodes in the selected language.
-      operationId: epidemiology_list_orphacode
+      operationId: query_epidemiology_orphacodes
       parameters:
       - in: query
         name: lang
@@ -1561,7 +1557,7 @@ paths:
         prevalence, lifelong prevalence and incidence, or the number of cases/families
         reported together with their respective intervals per geographical area (country,
         continent) when exist.
-      operationId: epidemiology_by_orphacode
+      operationId: query_epidemiology_by_orphacode
       parameters:
       - name: orphacode
         in: path
@@ -1619,7 +1615,7 @@ paths:
         term, expertlink) and associated natural history data characterized by informations
         on inheritance, interval average age of onset and interval average age of
         death.
-      operationId: natural_history_all_orphacode
+      operationId: query_history_base
       parameters:
       - in: query
         name: lang
@@ -1654,7 +1650,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rd_epidemiological
+      x-openapi-router-controller: swagger_server.controllers.rd_history
   /orphadata/details/rd-natural_history/orphacodes:
     get:
       tags:
@@ -1662,7 +1658,7 @@ paths:
       summary: Get the list of ORPHAcodes associated to at least one natural history
         data.
       description: The result is a collection of ORPHAcodes in the selected language.
-      operationId: natural_history_list_orphacode
+      operationId: query_history_orphacodes
       parameters:
       - in: query
         name: lang
@@ -1697,7 +1693,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rd_epidemiological
+      x-openapi-router-controller: swagger_server.controllers.rd_history
   /orphadata/details/rd-natural_history/orphacodes/{orphacode}:
     get:
       tags:
@@ -1708,7 +1704,7 @@ paths:
         pointing to the specific page of the clinical entity on the Orphanet website,
         preferred term, the group and type, and the associated inheritance, age of
         onset and age of death when exist.
-      operationId: natural_history_by_orphacode
+      operationId: query_history_by_orphacode
       parameters:
       - name: orphacode
         in: path
@@ -1755,7 +1751,7 @@ paths:
           description: Unknown internal error
         default:
           description: Unknown internal error
-      x-openapi-router-controller: swagger_server.controllers.rd_epidemiological
+      x-openapi-router-controller: swagger_server.controllers.rd_history
 components:
   schemas:
     genericAll:

@@ -1,8 +1,13 @@
 import elasticsearch.exceptions as es_exceptions
 from flask import request
 
-import config
-import controllers.query_controller as qc
+from swagger_server import config
+import swagger_server.controllers.query_controller as qc
+from swagger_server.controllers.response_handler import ResponseWrapper
+
+
+es_client = config.elastic_server
+index = "orphadata"
 
 
 def products_description():  # noqa: E501
@@ -50,7 +55,7 @@ def products_description():  # noqa: E501
             dic_in = [x for x in all_products if x["productId"]==p_id]
             if not dic_in:
                 dic = {
-                    # "Description": p['Description'],
+                    "Description": p['Description'],
                     "productId": p_id,
                     "productName": p['productName'],
                     "languages": [p_lang]
@@ -64,24 +69,14 @@ def products_description():  # noqa: E501
 
 
 def generic_product1():
-    es = config.elastic_server
     lang = request.args.get("lang", "en")
 
-
-    index = "orphadata"
     doc_id = '{}_product1'.format(lang.lower())
 
-    try:
-        response = es.get(index=index, id=doc_id)
-    except es_exceptions.NotFoundError:
-        return ("Server Error: Index not found", 404)
-        # print(response)
-    except es_exceptions.ConnectionError:
-        return ("Elasticsearch node unavailable", 503)
-    except es_exceptions.TransportError:
-        return ("Elasticsearch node unavailable", 503)
+    response = qc.es_get(es=es_client, index=index, id=doc_id)
+    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product={})
 
-    return response['_source']
+    return wrapped_response.get()
 
 
 def generic_product3():
@@ -193,14 +188,6 @@ def generic_product9_prev():
     index = "orphadata"
     doc_id = '{}_product9_prev'.format(lang.lower())
 
-    try:
-        response = es.get(index=index, id=doc_id)
-    except es_exceptions.NotFoundError:
-        return ("Server Error: Index not found", 404)
-        # print(response)
-    except es_exceptions.ConnectionError:
-        return ("Elasticsearch node unavailable", 503)
-    except es_exceptions.TransportError:
-        return ("Elasticsearch node unavailable", 503)
+    response = qc.es_get(es=es, index=index, id=doc_id, _source=['items'])
 
-    return response['_source']
+    return response

@@ -1,11 +1,22 @@
 import elasticsearch.exceptions as es_exceptions
 from flask import request
 
-import config
-from controllers import query_controller as qc
+from swagger_server import config
+from swagger_server.controllers import query_controller as qc
+from swagger_server.controllers.response_handler import ResponseWrapper
 
 
-def product1_all_orphacode():  # noqa: E501
+PRODUCT = {
+    'ID': 'product4',
+    'name': 'Rare diseases and associated phenotypes',
+    'lang': 'en',
+}
+
+es_client = config.elastic_server
+index_base = "product1"
+
+
+def query_references_base():  # noqa: E501
     """Get all clinical entities informations and their cross-referencing in the selected language.
 
     The result is a collection of rare diseases informations including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language # noqa: E501
@@ -15,22 +26,63 @@ def product1_all_orphacode():  # noqa: E501
 
     :rtype: Product1List
     """
-    es = config.elastic_server
     lang = request.args.get("lang", "en")
+    if PRODUCT['lang'] != lang.lower():
+        PRODUCT['lang'] = lang.lower()
 
-    index = "product1"
-    index = "{}_{}".format(lang.lower(), index)
+    index = "{}_{}".format(lang.lower(), index_base)
 
-    query = "{\"query\": {\"match_all\": {}}}"    
+    query = {
+        'query': {
+            'match_all': {}
+        }
+    }
 
-    size = config.scroll_size  # per scroll, not limiting
-    scroll_timeout = config.scroll_timeout
+    response = qc.es_scroll(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
 
-    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
-    return response
+
+def query_references_orphacodes():  # noqa: E501
+    """Get the list of ORPHAcodes available in the selected language.
+
+    The result is a collection of ORPHAcodes in the selected language. # noqa: E501
+
+    :param language: Specify the language in the list supported by Orphanet (CS, DE, EN, ES, FR, IT, NL, PL, PT)
+    :type language: str
+
+    :rtype: ListOrphacode
+    """
+    lang = request.args.get("lang", "en")
+    if PRODUCT['lang'] != lang.lower():
+        PRODUCT['lang'] = lang.lower()
+
+    index = "orphadata"
+
+    query = {
+        'query': {
+            'bool': {
+                'filter': {
+                    'term': {
+                        "productId.keyword": {
+                            'value': '{}_{}'.format(lang.lower(), index_base)
+                        }
+                    }
+
+                }
+            }
+        },
+        '_source': ['items.ORPHAcode', 'items.PreferredTerm']
+    }
+
+    response = qc.es_scroll(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response[0]['items'], request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
 
 
-def product1_by_orphacode(orphacode):  # noqa: E501
+def query_references_by_orphacode(orphacode):  # noqa: E501
     """Get informations and cross-referencing of a clinical entity searching by its ORPHAcode in the selected language.
 
     The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language. # noqa: E501
@@ -42,19 +94,30 @@ def product1_by_orphacode(orphacode):  # noqa: E501
 
     :rtype: Product1
     """
-    es = config.elastic_server
+    request.args.params = {'ORPHAcode': orphacode}
+
     lang = request.args.get("lang", "en")
+    if PRODUCT['lang'] != lang.lower():
+        PRODUCT['lang'] = lang.lower()
 
-    index = "product1"
-    index = "{}_{}".format(lang.lower(), index)
+    index = "{}_{}".format(lang.lower(), index_base)
 
-    query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
+    query = {
+        "query": {
+            "term": {
+                "ORPHAcode": int(orphacode)
+            }
+        },
+        # "_source": ["ORPHAcode"]
+    }
 
-    response = qc.single_res(es, index, query)
-    return response
+    response = qc.single_res(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+
+    return wrapped_response.get()
 
 
-def product1_by_name(name):  # noqa: E501
+def query_references_by_name(name):  # noqa: E501
     """Get informations and cross-referencing of a clinical entity searching by its name in the selected language.
 
     The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the clinical entity and ICD-10, UMLS, MesH, MedDra, and OMIM systems in the selected language. # noqa: E501
@@ -66,12 +129,13 @@ def product1_by_name(name):  # noqa: E501
 
     :rtype: Product1
     """
-    # print(request.args)
-    es = config.elastic_server
-    lang = request.args.get("lang", "en")
+    request.args.params = {'name': name}
 
-    index = "product1"
-    index = "{}_{}".format(lang.lower(), index)
+    lang = request.args.get("lang", "en")
+    if PRODUCT['lang'] != lang.lower():
+        PRODUCT['lang'] = lang.lower()
+
+    index = "{}_{}".format(lang.lower(), index_base)
 
     query = {
         "query": {
@@ -81,58 +145,20 @@ def product1_by_name(name):  # noqa: E501
             }
         }
 
-    response = qc.single_res(es, index, query)
-    return response
+    response = qc.single_res(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+
+    return wrapped_response.get()
 
 
-def product1_list_orphacode():  # noqa: E501
-    """Get the list of ORPHAcodes available in the selected language.
-
-    The result is a collection of ORPHAcodes in the selected language. # noqa: E501
-
-    :param language: Specify the language in the list supported by Orphanet (CS, DE, EN, ES, FR, IT, NL, PL, PT)
-    :type language: str
-
-    :rtype: ListOrphacode
-    """
-    es = config.elastic_server
+def query_references_by_omim(omim):
+    request.args.params = {'omim': omim}
+    
     lang = request.args.get("lang", "en")
+    if PRODUCT['lang'] != lang.lower():
+        PRODUCT['lang'] = lang.lower()
 
-    index = "product1"
-    index = "{}_{}_args".format(lang.lower(), index)
-
-    # query = "{\"query\": {\"match_all\": {}}, \"_source\":[\"ORPHAcode\"]}"
-
-    query = {
-        "query": {
-            "match_all": {}
-            },
-            "_source": [
-                "ORPHAcode",
-                "Preferred term",
-                "ExternalReference.Source"]
-        }
-
-
-    size = config.scroll_size  # per scroll, not limiting
-    scroll_timeout = config.scroll_timeout
-
-    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
-    return response
-    # if isinstance(response, str) or isinstance(response, tuple):
-    #     pass
-    # else:
-    #     response = [elem["ORPHAcode"] for elem in response]
-    #     response.sort()
-    # return response
-
-
-def product1_by_omim(omim):
-    es = config.elastic_server
-    lang = request.args.get("lang", "en")
-
-    index = "product1"
-    index = "{}_{}".format(lang.lower(), index)
+    index = "{}_{}".format(lang.lower(), index_base)
 
     query = {
         "query": {
@@ -154,11 +180,13 @@ def product1_by_omim(omim):
         }
     }
 
-    response = qc.multiple_res(es, index, query, 2000)
-    return response
+    response = qc.multiple_res(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+
+    return wrapped_response.get()
 
 
-def product1_list_icds():  # noqa: E501
+def query_references_icds():  # noqa: E501
     """Get the list of ICD-10 available in the selected language.
 
     The result is a collection of ICD-10 references in the selected language. # noqa: E501
@@ -168,11 +196,11 @@ def product1_list_icds():  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    es = config.elastic_server
     lang = request.args.get("lang", "en")
+    if PRODUCT['lang'] != lang.lower():
+        PRODUCT['lang'] = lang.lower()
 
-    index = "product1"
-    index = "{}_{}".format(lang.lower(), index)
+    index = "{}_{}".format(lang.lower(), index_base)
 
     query = {
         "query": {
@@ -197,46 +225,30 @@ def product1_list_icds():  # noqa: E501
         "_source": ['ExternalReference.Source','ExternalReference.Reference']
     }
 
+    response = qc.es_scroll(es_client, index, query)
 
-    size = config.scroll_size  # per scroll, not limiting
+    if not isinstance(response, tuple):      
+        response_parsed = []
+        for res in response:
+            for ele in res["ExternalReference"]:
+                if ele["Source"] == 'ICD-10':
+                    response_parsed.append(ele["Reference"])
+    else:
+        response_parsed = response
 
-    scroll_timeout = config.scroll_timeout
+    wrapped_response = ResponseWrapper(ctl_response=sorted(list(set(response_parsed))), request=request, product=PRODUCT)
 
-    response = qc.uncapped_res(es, index, query, size, scroll_timeout)
-    response_parsed = []
-    for res in response:
-        for ele in res["ExternalReference"]:
-            if ele["Source"] == 'ICD-10':
-                response_parsed.append(ele["Reference"])
+    return wrapped_response.get()    
+
+
+def query_references_by_icd(icd):
+    request.args.params = {'icd': icd}
     
-    return sorted(list(set(response_parsed)))
-
-
-def product1_by_icd(icd):
-    es = config.elastic_server
     lang = request.args.get("lang", "en")
+    if PRODUCT['lang'] != lang.lower():
+        PRODUCT['lang'] = lang.lower()
 
-    index = "product1"
-    index = "{}_{}".format(lang.lower(), index)
-
-    # query = {
-    #     "query": {
-    #         "nested": {
-    #             "path": 'ExternalReference',
-    #             "query": {
-    #                 "bool": {
-    #                     "must": {
-    #                         "match": {"ExternalReference.Source": "ICD-10"}
-    #                     },
-    #                     'must': {
-    #                         "match": {"ExternalReference.Reference": '{}'.format(icd)}
-    #                     }
-    #                 }
-    #             }
-    #         }
-    #     },
-    #     "_source": ['ExternalReference.Source','ExternalReference.Reference']
-    # }
+    index = "{}_{}".format(lang.lower(), index_base)
 
     query = {
         "query": {
@@ -263,30 +275,7 @@ def product1_by_icd(icd):
         # "_source": ['ExternalReference.Source','ExternalReference.Reference']
     }    
 
-    response = qc.multiple_res(es=es, index=index, query=query, size=2000)
-    return response
+    response = qc.multiple_res(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 
-
-    # query = {
-    #     "query": {
-    #         "nested": {
-    #             "path": 'ExternalReference',
-    #             "query": {
-    #                 "bool": {
-    #                     "must": {
-    #                         "match": {"ExternalReference.Source": "ICD-10"}
-    #                     },
-    #                     'must': {
-    #                         "wildcard": {
-    #                             "ExternalReference.Reference": {
-    #                                 'value': '{}'.format(icd),
-    #                                 'boost': 1.0
-    #                             }
-    #                         }
-    #                     }
-    #                 }
-    #             }
-    #         }
-    #     },
-    #     "_source": ['ExternalReference.Source','ExternalReference.Reference']
-    # }
+    return wrapped_response.get()

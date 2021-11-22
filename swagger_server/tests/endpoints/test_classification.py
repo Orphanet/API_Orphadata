@@ -1,6 +1,7 @@
 # coding: utf-8
 from __future__ import absolute_import
-from swagger_server.tests import BaseTestCase, URL_ENDPOINTS
+from swagger_server.tests import BaseTestCase
+from swagger_server.config import URL_ENDPOINTS
 
 
 class TestClassificationsEndpointsStatus(BaseTestCase):

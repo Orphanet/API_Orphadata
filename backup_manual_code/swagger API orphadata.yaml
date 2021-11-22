@@ -187,7 +187,7 @@ paths:
       - Classifications of rare diseases
       summary: Get the list of identifiers of all Orphanet Rare Diseases Classifications available.
       description: The result is a collection of the unique identifier of each rare diseases classification available.
-      operationId: hierarchy_list_hchid
+      operationId: query_classification_hchids
       responses:
         "200":
           description: Successful operation
@@ -209,7 +209,7 @@ paths:
       - Classifications of rare diseases
       summary: Get the list of ORPHAcodes available for a selected classification.
       description: The result is a collection of ORPHAcodes present in the selected classification.
-      operationId: hierarchy_list_orphacode
+      operationId: query_classification_orphacodes_by_hchid
       parameters:
       - $ref: '#/components/parameters/hchid'
       responses:
@@ -233,7 +233,7 @@ paths:
       - Classifications of rare diseases
       summary: Get the organisation of all ORPHAcodes available for a selected classification.
       description: The result is a collection of ORPHAcodes organised as children and parents in the selected classification.
-      operationId: hierarchy_all_orphacode
+      operationId: query_classification_by_hchid
       parameters:
       - $ref: '#/components/parameters/hchid'
       responses:
@@ -260,7 +260,7 @@ paths:
       description: Query one clinical entity by its ORPHAcode and gives the list of
         occurences in Orphanet's classifications with parents and childs clinical
         entity ORPHAcode number, the list of its children and parents.
-      operationId: hierarchy_by_orphacode
+      operationId: query_classification_hchids_by_orphacode
       parameters:
       - $ref: '#/components/parameters/orphacode'
       responses:
@@ -286,7 +286,7 @@ paths:
         classification
       description: Query one clinical entity by its ORPHAcode and gives the list of
         parents and childs clinical entity in the selected Orphanet's classification
-      operationId: hierarchy_id_by_orphacode
+      operationId: query_classification_by_orphacode_and_hchid
       parameters:
       - $ref: '#/components/parameters/orphacode'
       - $ref: '#/components/parameters/hchid'
