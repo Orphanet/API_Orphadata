@@ -31,8 +31,7 @@ def products_description():  # noqa: E501
         "_source": ["productId", "productName"]
         }
 
-    size = config.scroll_size  # per scroll, not limiting
-    response = qc.multiple_res(es, index, query, size)
+    response = qc.multiple_res(es, index, query)
 
     all_products = []
     for p in response:
@@ -55,7 +54,7 @@ def products_description():  # noqa: E501
             dic_in = [x for x in all_products if x["productId"]==p_id]
             if not dic_in:
                 dic = {
-                    "Description": p['Description'],
+                    # "Description": p['Description'],
                     "productId": p_id,
                     "productName": p['productName'],
                     "languages": [p_lang]
@@ -74,120 +73,60 @@ def generic_product1():
     doc_id = '{}_product1'.format(lang.lower())
 
     response = qc.es_get(es=es_client, index=index, id=doc_id)
-    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product={})
+    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=config.PRODUCTS.get('product1'))
 
     return wrapped_response.get()
 
 
 def generic_product3():
-    es = config.elastic_server
-
-    index = "orphadata"
     doc_id = 'product3'.format()
 
-    try:
-        response = es.get(
-            index=index,
-            id=doc_id,
-            # _source_excludes=['items.clinicalEntities']
-        )
-    except es_exceptions.NotFoundError:
-        return ("Server Error: Index not found", 404)
-        # print(response)
-    except es_exceptions.ConnectionError:
-        return ("Elasticsearch node unavailable", 503)
-    except es_exceptions.TransportError:
-        return ("Elasticsearch node unavailable", 503)
+    response = qc.es_get(es=es_client, index=index, id=doc_id)
+    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=config.PRODUCTS.get('product3'))
 
-    return response['_source']
+    return wrapped_response.get()
 
 
 def generic_product4():
-    es = config.elastic_server
-    lang = request.args.get("lang", "en")
+    doc_id = 'en_product4'.format()
 
+    response = qc.es_get(es=es_client, index=index, id=doc_id)
+    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=config.PRODUCTS.get('product4'))
 
-    index = "orphadata"
-    doc_id = '{}_product4'.format(lang.lower())
-
-    try:
-        response = es.get(index=index, id=doc_id)
-    except es_exceptions.NotFoundError:
-        return ("Server Error: Index not found", 404)
-        # print(response)
-    except es_exceptions.ConnectionError:
-        return ("Elasticsearch node unavailable", 503)
-    except es_exceptions.TransportError:
-        return ("Elasticsearch node unavailable", 503)
-
-    return response['_source']
+    return wrapped_response.get()
 
 
 def generic_product6():
-    es = config.elastic_server
+    doc_id = 'en_product6'.format()
 
-    index = "orphadata"
-    doc_id = 'en_product6'
+    response = qc.es_get(es=es_client, index=index, id=doc_id)
+    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=config.PRODUCTS.get('product6'))
 
-    try:
-        response = es.get(index=index, id=doc_id)
-    except es_exceptions.NotFoundError:
-        return ("Server Error: Index not found", 404)
-        # print(response)
-    except es_exceptions.ConnectionError:
-        return ("Elasticsearch node unavailable", 503)
-    except es_exceptions.TransportError:
-        return ("Elasticsearch node unavailable", 503)
-
-    return response['_source']
+    return wrapped_response.get()
 
 
 def generic_product7():
-    es = config.elastic_server
+    doc_id = 'en_product7'.format()
 
-    index = "orphadata"
-    doc_id = 'en_product7'
+    response = qc.es_get(es=es_client, index=index, id=doc_id)
+    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=config.PRODUCTS.get('product7'))
 
-    try:
-        response = es.get(index=index, id=doc_id)
-    except es_exceptions.NotFoundError:
-        return ("Server Error: Index not found", 404)
-        # print(response)
-    except es_exceptions.ConnectionError:
-        return ("Elasticsearch node unavailable", 503)
-    except es_exceptions.TransportError:
-        return ("Elasticsearch node unavailable", 503)
-
-    return response['_source']
+    return wrapped_response.get()
 
 
 def generic_product9_ages():
-    es = config.elastic_server
-    lang = request.args.get("lang", "en")
+    doc_id = 'en_product9_ages'.format()
 
-    index = "orphadata"
-    doc_id = '{}_product9_ages'.format(lang.lower())
+    response = qc.es_get(es=es_client, index=index, id=doc_id)
+    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=config.PRODUCTS.get('product9_ages'))
 
-    try:
-        response = es.get(index=index, id=doc_id)
-    except es_exceptions.NotFoundError:
-        return ("Server Error: Index not found", 404)
-        # print(response)
-    except es_exceptions.ConnectionError:
-        return ("Elasticsearch node unavailable", 503)
-    except es_exceptions.TransportError:
-        return ("Elasticsearch node unavailable", 503)
-
-    return response['_source']
+    return wrapped_response.get()
 
 
 def generic_product9_prev():
-    es = config.elastic_server
-    lang = request.args.get("lang", "en")
+    doc_id = 'en_product9_prev'.format()
 
-    index = "orphadata"
-    doc_id = '{}_product9_prev'.format(lang.lower())
+    response = qc.es_get(es=es_client, index=index, id=doc_id)
+    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=config.PRODUCTS.get('product9_prev'))
 
-    response = qc.es_get(es=es, index=index, id=doc_id, _source=['items'])
-
-    return response
+    return wrapped_response.get()

@@ -63,8 +63,7 @@ class TestClassificationsEndpointsStatus(BaseTestCase):
 
         SETUP: TEST STATUS 200 /orphadata/details/rd-classification/hchids/{hchid}/orphacodes:
             - a url endpoint
-                - with a valid hchid
-            - response keys
+            - with a valid hchid
         ACTION:
             - GET request on valid url endpoint
         CHECK:

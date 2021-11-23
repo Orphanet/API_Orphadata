@@ -47,7 +47,7 @@ class ResponseWrapper:
     def get(self) -> Tuple[Dict, int]:
         if not self._ready:
             if not self.wrapper.get('error'):
-                self.wrapper['uri'] = self.request.full_path
+                self.wrapper['uri'] = self.request.full_path if self.request.args else self.request.path
                 self.wrapper['product'] = self.product
                 self.wrapper['data']['results'] = self.ctl_response
                 self.wrapper['data']['__count'] = len(self.ctl_response) if isinstance(self.ctl_response, list) else 1

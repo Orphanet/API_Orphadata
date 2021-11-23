@@ -16,7 +16,7 @@ class TestEpidemiologyEndpointsStatus(BaseTestCase):
         """test_status_200_epidemiology_base
 
         SETUP: TEST STATUS 200 for /orphadata/details/rd-epidemiology
-            - a valid url endpoint
+            - a url endpoint
         ACTION:
             - GET request on valid url endpoint
         CHECK:
