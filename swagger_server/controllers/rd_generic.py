@@ -20,10 +20,6 @@ def products_description():  # noqa: E501
 
     :rtype: Product3ClassificationList
     """
-    es = config.elastic_server
-
-    index = "orphadata"
-
     query = {
         "query": {
             "match_all": {}
@@ -31,7 +27,11 @@ def products_description():  # noqa: E501
         "_source": ["productId", "productName"]
         }
 
-    response = qc.multiple_res(es, index, query)
+    response = qc.multiple_res(es_client, index, query)
+
+    if isinstance(response, tuple):
+        wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=config.PRODUCTS.get('generic'))
+        return wrapped_response.get()
 
     all_products = []
     for p in response:
@@ -64,7 +64,9 @@ def products_description():  # noqa: E501
                 if p_lang not in dic_in[0]["languages"]:
                     dic_in[0]["languages"].append(p_lang)
 
-    return all_products
+    wrapped_response = ResponseWrapper(ctl_response=all_products, request=request, product=config.PRODUCTS.get('generic'))
+
+    return wrapped_response.get()
 
 
 def generic_product1():
