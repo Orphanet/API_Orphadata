@@ -12,3 +12,5 @@ tools/
 **__pycache__**
 query_test*
 **egg-info**
+
+**run_tests.py

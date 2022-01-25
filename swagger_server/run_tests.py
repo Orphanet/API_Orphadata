@@ -5,7 +5,7 @@ import pathlib
 # modules_to_test = ("*")
 #
 # suite = unittest.TestLoader().loadTests()
-# unittest.TextTestRunner(verbosity=2).run(suite)
+# unittest.TextTestRunner(verbosity=2).run(suite)""
 
 # unittest.loader.discover(".\\RDcode_API_server\\swagger_server\\test")
 
