@@ -5,16 +5,16 @@ import pathlib
 # modules_to_test = ("*")
 #
 # suite = unittest.TestLoader().loadTests()
-# unittest.TextTestRunner(verbosity=2).run(suite)""
+# unittest.TextTestRunner(verbosity=2).run(suite)
 
 # unittest.loader.discover(".\\RDcode_API_server\\swagger_server\\test")
 
-user_name = os.getlogin()
+# user_name = os.getlogin()
 
-if __name__ == "__main__":
-    loader = unittest.TestLoader()
-    start_dir = str(pathlib.Path(r"C:\Users\{}\PycharmProjects\API_Orphadata\swagger_server\test".format(user_name)))
-    suite = loader.discover(start_dir)
+# if __name__ == "__main__":
+#     loader = unittest.TestLoader()
+#     start_dir = str(pathlib.Path(r"C:\Users\{}\PycharmProjects\API_Orphadata\swagger_server\test".format(user_name)))
+#     suite = loader.discover(start_dir)
 
-    runner = unittest.TextTestRunner()
-    runner.run(suite)
+#     runner = unittest.TextTestRunner()
+#     runner.run(suite)
