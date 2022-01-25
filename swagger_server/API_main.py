@@ -25,26 +25,23 @@ def main():
 
     # Workaround to serve media in development server
     # Comment for production
-    @app.route("/media/<image>")
-    def media_for_dev(image):
-        return send_from_directory("../media/", image)
+    @app.route("/media/<path:path>")
+    def media_for_dev(path):
+        return send_from_directory("../media/", path)
 
-
-    @app.route('/my-styles.css')
-    def custom_css_theme():
-        return send_file('../media/css/theme-newspaper.css')
 
     # Force the direct encoding of accents in json
     # app.app.config['JSON_AS_ASCII'] = False
 
     # Remove A-z sorting in json
-    # app.app.config['JSON_SORT_KEYS'] = False
-    application = app.app
-    application.run(port=8080, debug=True, extra_files=['./swagger_server/swagger/swagger.yaml'])
+    app.app.config['JSON_SORT_KEYS'] = True
+    return  app.app
+    # application.run(port=8080, debug=True, extra_files=['./swagger_server/swagger/swagger.yaml'])
 
 
 if __name__ == '__main__':
     app = main()
+    app.run()
     # server = Server(app.wsgi_app)
     # server.serve()
-    app.run(port=8080, debug=True, extra_files=['./swagger_server/swagger/swagger.yaml'])
+    # app.run(port=8080, debug=True, extra_files=['./swagger_server/swagger/swagger.yaml'])

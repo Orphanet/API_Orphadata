@@ -4,9 +4,9 @@ env/
 .env
 
 .idea
+.tox
 
 build/
-
 tools/
 
 **__pycache__**
