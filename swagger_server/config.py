@@ -1,7 +1,17 @@
 from elasticsearch import Elasticsearch
 
 # Elasticsearch
-elastic_server = Elasticsearch(hosts=["localhost"])
+# elastic_server = Elasticsearch(hosts=["localhost"])
+elastic_server = Elasticsearch(
+	['https://9d2d8c7975624d95aa964a1d22a96daf.eu-west-1.aws.found.io'],
+	port=9243,
+	http_auth=('elastic', 'fSowAPgpKjaA3hD6T7NxctEf'),
+	timeout=60,
+	max_retries=3,
+	retry_on_timeout=True
+)
+
+
 scroll_size = 2000  # nb of query per scroll, not limiting
 scroll_timeout = "2m"
 
