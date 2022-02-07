@@ -25,9 +25,9 @@ def main():
 
     # Workaround to serve media in development server
     # Comment for production
-    @app.route("/media/<path:path>")
-    def media_for_dev(path):
-        return send_from_directory("../media/", path)
+    # @app.route("/media/<path:path>")
+    # def media_for_dev(path):
+    #     return send_from_directory("../media/", path)
 
 
     # Force the direct encoding of accents in json
