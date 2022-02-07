@@ -86,7 +86,7 @@ def query_classification_by_orphacode_and_hchid(orphacode, hchid):  # noqa: E501
     return wrapped_response.get()
 
 
-def query_classification_hchids():  # noqa: E501
+def query_classification_hchids_old():  # noqa: E501
     """Get the list of identifiers of all Orphanet Rare Diseases Classifications available.
 
     The result is a collection of the unique identifier of each rare diseases classification available. # noqa: E501
@@ -94,8 +94,7 @@ def query_classification_hchids():  # noqa: E501
 
     :rtype: ListHchid
     """
-    index = "orphadata_generic"
-    doc_id = 'en_product3'
+    index = "orphadata_en_product3"
 
     try:
         response = es_client.get(
@@ -115,6 +114,24 @@ def query_classification_hchids():  # noqa: E501
     
     return wrapped_response.get()
     
+
+def query_classification_hchids():
+    index = "orphadata_en_product3"
+
+    query = {
+        'query': {
+            'match_all': {}
+        },
+        '_source': {
+            'includes': ['hchId', 'hchTag'],
+        },
+    }
+
+    response = qc.multiple_res(es=es_client, index=index, query=query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
+
 
 def query_classification_orphacodes_by_hchid(hchid):  # noqa: E501
     """Get the list of ORPHAcodes available for a selected classification.

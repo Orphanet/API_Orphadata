@@ -40,7 +40,7 @@ def query_epidemiology_base():  # noqa: E501
     return wrapped_response.get()
 
 
-def query_epidemiology_orphacodes():  # noqa: E501
+def query_epidemiology_orphacodes_old():  # noqa: E501
     """Get the list of ORPHAcodes associated to at least one epidemiological data.
 
     The result is a collection of ORPHAcodes in the selected language. # noqa: E501
@@ -76,6 +76,26 @@ def query_epidemiology_orphacodes():  # noqa: E501
 
     response = qc.es_scroll(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response[0]['items'], request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
+
+
+def query_epidemiology_orphacodes():
+    lang = request.args.get("lang", "en")
+    if PRODUCT['lang'] != lang.lower():
+        PRODUCT['lang'] = lang.lower()
+
+    index = 'orphadata_{}_product9_prev'.format(lang.lower())
+
+    query = {
+        "query": {
+            "match_all": {}
+        },
+        '_source': ['ORPHAcode', 'Preferred term']
+    }
+
+    response = qc.es_scroll(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
     return wrapped_response.get()
 

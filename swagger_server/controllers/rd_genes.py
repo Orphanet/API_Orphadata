@@ -33,7 +33,7 @@ def query_genes_base():  # noqa: E501
     return wrapped_response.get()
 
 
-def query_genes_orphacodes():  # noqa: E501
+def query_genes_orphacodes_old():  # noqa: E501
     """Get the list of ORPHAcodes associated to at least one gene.
 
     The result is a collection of ORPHAcodes associated to at least one gene. # noqa: E501
@@ -65,6 +65,21 @@ def query_genes_orphacodes():  # noqa: E501
     wrapped_response = ResponseWrapper(ctl_response=response[0]['items'], request=request, product=PRODUCT)
     
     return wrapped_response.get()
+
+
+def query_genes_orphacodes():
+    query = {
+        "query": {
+            "match_all": {}
+        },
+        '_source': ['ORPHAcode', 'Preferred term']
+    }
+
+    response = qc.es_scroll(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
+
 
 
 def query_genes_by_orphacode(orphacode):  # noqa: E501

@@ -40,7 +40,7 @@ def query_phenotypes_base():  # noqa: E501
     return wrapped_response.get()
 
 
-def query_phenotypes_orphacodes():  # noqa: E501
+def query_phenotypes_orphacodes_old():  # noqa: E501
     """Get list of ORPHAcodes associated to HPO phenotypes in the selected language.
 
     The result is a collection of ORPHAcodes in the selected language. # noqa: E501
@@ -74,6 +74,31 @@ def query_phenotypes_orphacodes():  # noqa: E501
 
     response = qc.es_scroll(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response[0]['items'], request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
+
+
+def query_phenotypes_orphacodes():
+    lang = request.args.get("lang", "en")
+    if PRODUCT['lang'] != lang.lower():
+        PRODUCT['lang'] = lang.lower()
+
+    index = index_base.format(lang.lower())
+
+    query = {
+        "query": {
+            "match_all": {}
+        },
+        '_source': ['Disorder.ORPHAcode', 'Disorder.Preferred term']
+    }
+
+    response = qc.es_scroll(es_client, index, query)
+
+    parsed_response = []
+    for hit in response:
+        parsed_response.append(hit.pop('Disorder'))
+
+    wrapped_response = ResponseWrapper(ctl_response=parsed_response, request=request, product=PRODUCT)
     
     return wrapped_response.get()
 
