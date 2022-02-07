@@ -8,7 +8,7 @@ from swagger_server.controllers.response_handler import ResponseWrapper
 PRODUCT = config.PRODUCTS.get('product9_prev')
 
 es_client = config.elastic_server
-index_base = "product9_prev"
+index_base = "orphadata_{}_product9_prev"
 
 
 def query_epidemiology_base():  # noqa: E501
@@ -25,7 +25,7 @@ def query_epidemiology_base():  # noqa: E501
     if PRODUCT['lang'] != lang.lower():
         PRODUCT['lang'] = lang.lower()
 
-    index = "{}_{}".format(lang.lower(), index_base)
+    index = index_base.format(lang.lower())
 
     query = {
         "query": {
@@ -54,7 +54,7 @@ def query_epidemiology_orphacodes():  # noqa: E501
     if PRODUCT['lang'] != lang.lower():
         PRODUCT['lang'] = lang.lower()
 
-    index = "orphadata"
+    index = "orphadata_generic"
 
     query = {
         'query': {
@@ -99,7 +99,7 @@ def query_epidemiology_by_orphacode(orphacode):  # noqa: E501
 
     request.args.params = {'ORPHAcode': orphacode}
 
-    index = "{}_{}".format(lang.lower(), index_base)
+    index = index_base.format(lang.lower())
 
     query = {
         "query": {

@@ -1830,9 +1830,6 @@ components:
                 example:
                   - "231090"
                   - "614293"
-              geneSymbol:
-                type: string
-                example: "GRHL3"
     generic_product3:
       type: object
       properties:

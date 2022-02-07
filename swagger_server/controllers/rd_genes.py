@@ -9,7 +9,7 @@ from swagger_server.controllers.response_handler import ResponseWrapper
 PRODUCT = config.PRODUCTS.get('product6')
 
 es_client = config.elastic_server
-index = "en_product6"
+index = "orphadata_en_product6"
 
 
 def query_genes_base():  # noqa: E501
@@ -41,7 +41,7 @@ def query_genes_orphacodes():  # noqa: E501
 
     :rtype: ListOrphacode
     """
-    index = "orphadata"
+    index = "orphadata_generic"
 
     query = {
         'query': {

@@ -8,7 +8,7 @@ from swagger_server.controllers.response_handler import ResponseWrapper
 PRODUCT = config.PRODUCTS.get('product9_ages')
 
 es_client = config.elastic_server
-index_base = "product9_ages"
+index_base = "orphadata_{}_product9_ages"
 
 
 def query_history_base():  # noqa: E501
@@ -25,7 +25,7 @@ def query_history_base():  # noqa: E501
     if PRODUCT['lang'] != lang.lower():
         PRODUCT['lang'] = lang.lower()
 
-    index = "{}_{}".format(lang.lower(), index_base)
+    index = index_base.format(lang.lower())
 
     query = {
         "query": {
@@ -54,7 +54,7 @@ def query_history_orphacodes():  # noqa: E501
     if PRODUCT['lang'] != lang.lower():
         PRODUCT['lang'] = lang.lower()
 
-    index = "orphadata"
+    index = "orphadata_generic"
 
     query = {
         'query': {
@@ -62,7 +62,7 @@ def query_history_orphacodes():  # noqa: E501
                 'filter': {
                     'term': {
                         "productId.keyword": {
-                            'value': '{}_{}'.format(lang.lower(), index_base)
+                            'value': index_base.format(lang.lower()).replace("orphadata_", '')
                         }
                     }
 
@@ -98,7 +98,7 @@ def query_history_by_orphacode(orphacode):  # noqa: E501
 
     request.args.params = {'ORPHAcode': orphacode}
 
-    index = "{}_{}".format(lang.lower(), index_base)
+    index = index_base.format(lang.lower())
 
     query = {
         "query": {

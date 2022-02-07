@@ -9,7 +9,7 @@ from swagger_server.controllers.response_handler import ResponseWrapper
 PRODUCT = config.PRODUCTS.get('product3')
 
 es_client = config.elastic_server
-index_base = "en_product3_"
+index_base = "orphadata_en_product3_{}"
 
 
 def query_classification_by_hchid(hchid):  # noqa: E501
@@ -22,7 +22,7 @@ def query_classification_by_hchid(hchid):  # noqa: E501
     """
     request.args.params = {'hchID': hchid}
 
-    index = "{}{}".format(index_base, hchid)
+    index = index_base.format(hchid)
 
     query = {
         'query': {
@@ -48,7 +48,7 @@ def query_classification_hchids_by_orphacode(orphacode):  # noqa: E501
     """
     request.args.params = {'ORPHAcode': orphacode}
 
-    index = index_base + '*'
+    index = index_base.format('*')
 
     query = {
         "query": {
@@ -76,7 +76,7 @@ def query_classification_by_orphacode_and_hchid(orphacode, hchid):  # noqa: E501
     """
     request.args.params = {'ORPHAcode': orphacode, 'hchID': hchid}
 
-    index = "{}{}".format(index_base, hchid)
+    index = index_base.format(hchid)
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
@@ -94,8 +94,8 @@ def query_classification_hchids():  # noqa: E501
 
     :rtype: ListHchid
     """
-    index = "orphadata"
-    doc_id = 'product3'
+    index = "orphadata_generic"
+    doc_id = 'en_product3'
 
     try:
         response = es_client.get(
@@ -128,7 +128,7 @@ def query_classification_orphacodes_by_hchid(hchid):  # noqa: E501
     """
     request.args.params = {'hchID': hchid}
 
-    index = "{}{}".format(index_base, hchid)
+    index = index_base.format(hchid)
 
     query = {
         "query": {

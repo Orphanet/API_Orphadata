@@ -9,7 +9,7 @@ from swagger_server.controllers.response_handler import ResponseWrapper
 PRODUCT = config.PRODUCTS.get('product4')
 
 es_client = config.elastic_server
-index_base = "product4"
+index_base = "orphadata_{}_product4"
 
 
 def query_phenotypes_base():  # noqa: E501
@@ -26,7 +26,7 @@ def query_phenotypes_base():  # noqa: E501
     if PRODUCT['lang'] != lang.lower():
         PRODUCT['lang'] = lang.lower()
 
-    index = "{}_{}".format(lang.lower(), index_base)
+    index = index_base.format(lang.lower())
 
     query = {
         'query': {
@@ -54,7 +54,7 @@ def query_phenotypes_orphacodes():  # noqa: E501
     if PRODUCT['lang'] != lang.lower():
         PRODUCT['lang'] = lang.lower()
 
-    index = "orphadata"
+    index = "orphadata_generic"
 
     query = {
         'query': {
@@ -62,7 +62,7 @@ def query_phenotypes_orphacodes():  # noqa: E501
                 'filter': {
                     'term': {
                         "productId.keyword": {
-                            'value': '{}_{}'.format(lang.lower(), index_base)
+                            'value': index_base.format(lang.lower()).replace("orphadata_", '')
                         }
                     }
 
@@ -96,7 +96,7 @@ def query_phenotypes_by_orphacode(orphacode):  # noqa: E501
     if PRODUCT['lang'] != lang.lower():
         PRODUCT['lang'] = lang.lower()
 
-    index = "{}_{}".format(lang.lower(), index_base)
+    index = index_base.format(lang.lower())
 
     query = {
         "query": {
@@ -124,7 +124,7 @@ def query_phenotypes_by_hpoids(hpoids):
     if PRODUCT['lang'] != lang.lower():
         PRODUCT['lang'] = lang.lower()
 
-    index = "{}_{}".format(lang.lower(), index_base)
+    index = index_base.format(lang.lower())
 
     query = {
         "query": {

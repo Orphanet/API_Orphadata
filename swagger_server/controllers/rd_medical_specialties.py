@@ -9,7 +9,7 @@ from swagger_server.controllers.response_handler import ResponseWrapper
 PRODUCT = config.PRODUCTS.get('product7')
 
 es_client = config.elastic_server
-index = "en_product7"
+index = "orphadata_en_product7"
 
 
 def query_linearization_by_orphacode(orphacode):  # noqa: E501
