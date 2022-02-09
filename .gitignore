@@ -15,4 +15,5 @@ query_test*
 
 **run_tests.py**
 
-datas/xml_data/test
+datas/xml_data/**
+datas/json_data/**
