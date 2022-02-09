@@ -12,6 +12,7 @@ import json
 import re
 import time
 import xmltodict
+import os
 
 from lib.config import ROOT_DIR
 
@@ -667,6 +668,9 @@ def main():
     else:
         elastic = False
     print()
+
+    os.makedirs(config.out_folder, exist_ok=True)
+
 
     if config.parse_folder:
         # Process files in designated folders
