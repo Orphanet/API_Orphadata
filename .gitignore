@@ -14,3 +14,5 @@ query_test*
 **egg-info**
 
 **run_tests.py**
+
+datas/xml_data/test
