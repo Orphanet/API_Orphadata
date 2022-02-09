@@ -98,7 +98,6 @@ def query_references_orphacodes():
     return wrapped_response.get()
 
 
-
 def query_references_by_orphacode(orphacode):  # noqa: E501
     """Get informations and cross-referencing of a clinical entity searching by its ORPHAcode in the selected language.
 
