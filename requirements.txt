@@ -1,6 +1,14 @@
+certifi==2021.10.8
+charset-normalizer==2.0.10
+elasticsearch == 7.6
+idna==3.3
+requests==2.27.1
+urllib3==1.26.7
+xmltodict==0.12.0
+nose>=1.3.7
 swagger-ui-bundle == 0.0.6
 connexion == 2.6.0
-elasticsearch == 7.6
 python_dateutil == 2.6.0
+python-dotenv==0.19.2
 setuptools >= 21.0.0
 Flask-Testing >= 0.8.0

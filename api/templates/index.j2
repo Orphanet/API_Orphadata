@@ -1,0 +1,102 @@
+<!-- HTML for static distribution bundle build -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>{{ title | default('API Orphadata') }}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/theme-newspaper.css"/>
+    <link rel="icon" type="image/png" href="/static/favicon.ico"/>
+    <style>
+      html
+      {
+        box-sizing: border-box;
+        overflow: -moz-scrollbars-vertical;
+        overflow-y: scroll;
+      }
+
+      *,
+      *:before,
+      *:after
+      {
+        box-sizing: inherit;
+      }
+
+      body
+      {
+        margin:0;
+        background: #fafafa;
+      }
+      #image_head
+      {
+        margin: 30px 0px 0px 0px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+      #image_right
+      {
+        padding: 0px 0px 9px 0px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="image_head">
+        <div></div>
+        <div id="image_left">
+            <a href="https://www.orpha.net/consor/cgi-bin/index.php">
+                <img src="./media/logo_orphanet_transp.png" alt="orphanet" height="50px";>
+            </a>
+        </div>
+        <div id="image_right">
+            <a href="http://www.orphadata.org/cgi-bin/index.php">
+                <img src="./media/logo-orphadata.png" alt="orphadata" height="52px";>
+            </a>
+        </div>
+    </div>
+
+    <div id="swagger-ui"></div>
+
+    <script src="./swagger-ui-bundle.js"> </script>
+    <script src="./swagger-ui-standalone-preset.js"> </script>
+    <script>
+    // Plugin to disable Try button
+    const DisableTryItOutPlugin = function() {
+      return {
+        statePlugins: {
+          spec: {
+            wrapSelectors: {
+              allowTryItOutFor: () => () => false}}}}}
+    </script>
+    <script>
+    window.onload = function() {
+      // Begin Swagger UI call region
+      const ui = SwaggerUIBundle({
+        {% if workaround_for_API_contract is defined %}
+        url: "{{ workaround_for_API_contract }}", // If served by KONG or from base url
+        {% else %}
+        url: "{{ openapi_spec_url }}", // backup
+        {% endif %}
+        defaultModelsExpandDepth: "{{ defaultModelsExpandDepth }}",
+        validatorUrl: {{ validatorUrl | default('null') }},
+        {% if configUrl is defined %}
+        configUrl: "{{ configUrl }}",
+        {% endif %}
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ]
+      })
+      // End Swagger UI call region
+
+      window.ui = ui
+    }
+  </script>
+  <br>
+  </body>
+</html>
