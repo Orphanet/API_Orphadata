@@ -39,12 +39,12 @@ class EsBulkInjector:
         self._check_index_exist()  
         self.es_client.indices.create(
             index=self.index,
-            mappings=self.mappings,
+            body=self.mappings,
             ignore=400,
         )
         if self.aliases:
             self._put_alias()
-        self.es_client.indices.refresh(index=self.index)
+        # self.es_client.indices.refresh(index=self.index)
 
     def _put_alias(self) -> None:
         for alias in self.aliases:
@@ -56,10 +56,9 @@ class EsBulkInjector:
             client=self.es_client,
             index=self.index,
             actions=self.doc_generator,
-            max_chunk_bytes=self.max_chunk_bytes,
+            max_chunk_bytes=self.max_chunk_bytes * 1024 * 1024,
             max_retries=3,
         )
-
 
         logger.info("- Number of success in document injection: {}".format(_success))
         logger.info("- Number of errors in document injection: {}".format(_errors))

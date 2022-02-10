@@ -4,9 +4,11 @@ import logging
 from pathlib import Path
 from typing import Dict, List, Union
 import os
+import time
 
 from dotenv import load_dotenv
 from elasticsearch import Elasticsearch
+from tqdm import tqdm
 
 from lib.config import ROOT_DIR
 from lib.elastic_ingest import EsBulkInjector
@@ -14,10 +16,12 @@ from lib.es_mappings import MAPPING_BY_PRODUCTS
 
 
 load_dotenv(ROOT_DIR / '.varenv')
+PATH2JSON = ROOT_DIR / 'datas' / 'json_data'
 
-FORMAT = '%(asctime)-26s %(name)-16s %(message)s'
+FORMAT = '%(asctime)-26s %(name)-26ls %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.INFO)
-logger = logging.getLogger('orphadata_injection')
+name = __name__ if __name__ != '__main__' else 'orphadata_injection'
+logger = logging.getLogger(name)
 logging.getLogger("elasticsearch").setLevel(logging.WARNING)
 
 
@@ -40,7 +44,7 @@ def esConnector(url: str):
     if url == 'local':
         es_client =  Elasticsearch(
             'http://127.0.0.1:9200',
-            timeout=180,
+            timeout=60,
             max_retries=3,
             retry_on_timeout=True
         )
@@ -54,7 +58,7 @@ def esConnector(url: str):
                 [url],
                 port=9243,
                 http_auth=(user, password),
-                timeout=180, max_retries=3, retry_on_timeout=True
+                timeout=60, max_retries=3, retry_on_timeout=True
             )
         else:
             logger.error('Error: no profile configurations have been found to connect to the remote elasticsearch instance.')
@@ -103,36 +107,42 @@ def get_mappings(product: str) -> Dict:
         logger.info('A mapping settings have been found for {}'.format(product))
         return MAPPING_BY_PRODUCTS[product]
     else:
-        logger.debug('No mapping settings have been found for {}'.format(product))
-        return None
+        logger.debug('No mapping settings have been found for {}'.format(product))        
+        return {'mappings': {}}
 
 
-def bulk_inject(es_client: Elasticsearch, json_path: Union[str, Path, List], index: str=None):
+def bulk_inject(es_client: Elasticsearch, json_filename: Union[str, Path], index: str=None, max_chunk_bytes: int=100):
+    logger.info('Creating index {} and injecting documents from {}'.format(index, json_filename))
+
+    if not isinstance(json_filename, Path):
+        json_filename = Path(json_filename)
+
+    product = '_'.join(json_filename.stem.split('_')[1:]) if 'product3' not in json_filename.stem else 'product3'
+    mappings = get_mappings(product=product)
+
+    bulk_injector = EsBulkInjector(
+        es_client=es_client,
+        index=index,
+        doc_generator=generate_actions(filename=json_filename),
+        mappings=mappings['mappings'],
+        max_chunk_bytes=max_chunk_bytes
+    )
+    bulk_injector.run()
+
+
+def main(es_client: Elasticsearch, json_path: Union[str, Path, List], index: str=None):
     if not isinstance(json_path, List):
         json_path = [json_path]
 
-    for json_filename in json_path:
-        if not isinstance(json_filename, Path):
-            json_filename = Path(json_filename)
+    _notqdm = True if __name__ == '__main__' else False
 
-        product = '_'.join(json_filename.stem.split('_')[1:]) if 'product3' not in json_filename.stem else 'product3'
-        mappings = get_mappings(product=product)
-
+    for json_filename in tqdm(iterable=json_path, desc='JSON elastic injection', total=len(json_path), disable=_notqdm):
         if not index:             
             _index = 'orphadata_{}'.format(json_filename.stem) if 'orphadata' not in json_filename.stem else json_filename.stem
         else:
             _index = index
 
-
-        logger.info('Creating index {} and injecting documents from {}'.format(_index, json_filename))
-        bulk_injector = EsBulkInjector(
-            es_client=es_client,
-            index=_index,
-            doc_generator=generate_actions(filename=json_filename),
-            mappings=mappings['mappings'],
-            max_chunk_bytes=100
-        )
-        bulk_injector.run()
+        bulk_inject(es_client=es_client, json_filename=json_filename, index=_index)
 
 
 def parse_args():
@@ -177,11 +187,12 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
 
-    path = args.path if args.path else ROOT_DIR / 'datas' / 'json_data'
+    path = args.path if args.path else PATH2JSON
     pattern = args.match
     url_type = args.url
     index = args.index
 
+    start_time = time.time()
 
     json_filenames = get_jsons(path=path, pattern=pattern)
     if args.print:
@@ -189,6 +200,8 @@ if __name__ == '__main__':
             logger.info(' - ' + str(_file))
     else:
         es_client = esConnector(url=url_type)
-        bulk_inject(es_client=es_client, json_path=json_filenames, index=index)
+        main(es_client=es_client, json_path=json_filenames, index=index)
 
-
+    end_time = time.time()
+    
+    logger.info('Injection process has finished. Time: {:.2f}'.format(end_time-start_time))

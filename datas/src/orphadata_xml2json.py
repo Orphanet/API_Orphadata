@@ -9,18 +9,26 @@ JSON files represent the inputs to be injected in Elasticsearch instance.
 import copy
 import elasticsearch
 import json
+import logging
 import re
 import time
 import xmltodict
 import os
+from tqdm import tqdm
+
+
+FORMAT = '%(asctime)-26s %(name)-26s %(message)s'
+logging.basicConfig(format=FORMAT, level=logging.INFO)
+name = __name__ if __name__ != '__main__' else 'orphadata_xml2json'
+logger = logging.getLogger(name)
+
+
+import orphadata_generic
 
 from lib.config import ROOT_DIR
-
-
 from lib import data_RDcode
 from lib import RDcode_classifications
 from lib import orphadata_classifications
-from lib import yaml_schema_descriptor
 
 
 class XML2JSONParams:
@@ -67,25 +75,25 @@ def parse_file(in_file_path, input_encoding, xml_attribs):
         xml_declaration = xml_declaration.decode()
         pattern = re.compile("encoding=\"(.*)\"[ ?]")
         encoding = pattern.search(xml_declaration).group(1)
-        print('encoding:', encoding)
+        logger.info('encoding: {} (auto)'.format(encoding))
 
         with open(in_file_path, "r", encoding=encoding) as ini:
             xml_dict = xmltodict.parse(ini.read(), xml_attribs=xml_attribs)
 
     else:
         with open(in_file_path, "r", encoding=input_encoding) as ini:
-            print(input_encoding, "(from config file)")
+            logger.info('encoding: {} (from config file)'.format(input_encoding))
             xml_dict = xmltodict.parse(ini.read(), xml_attribs=xml_attribs)
 
     # Get JDBOR extraction date
     date_regex = re.compile("date=\"(.*)\" version")
     date = date_regex.search(date.decode()).group(1)
-    print("JDBOR extract", date)
+    logger.info("JDBOR extract: {}".format(date))
 
     # print(xml_dict)
     # DumpS then loadS: convert ordered dict to dict
     # xml_dict = json.loads(json.dumps(xml_dict, ensure_ascii=False))
-    print("parsing:", time.time() - start)
+    logger.info("parsing: {}".format(time.time() - start))
     return xml_dict, date
 
 
@@ -110,8 +118,7 @@ def subset_xml_dict(xml_dict):
     if len(new_key) == 1:
         new_key = new_key[0]
     else:
-        print("ERROR: Multiple root XML key:")
-        print(new_key)
+        logger.error("ERROR: Multiple root XML key: {}".format(new_key))
         exit(1)
 
     xml_dict = xml_dict["JDBOR"][new_key]
@@ -202,8 +209,7 @@ def simplify(xml_dict, rename_orpha):
     if len(key) == 1:
         key = key[0]
     else:
-        print("ERROR: Multiple disorder level key:")
-        print(key)
+        logger.error("ERROR: Multiple root XML key: {}".format(key))
         exit(1)
 
     node_list = xml_dict[key]
@@ -218,8 +224,7 @@ def simplify(xml_dict, rename_orpha):
         node_list = pattern.sub("ORPHAcode", node_list)
     node_list = json.loads(node_list)
 
-    print(len(node_list), "disorder concepts")
-    # print("simplify:", time.time() - start, "s")
+    logger.info("Disorder concepts number: {}".format(len(node_list)))
     return node_list
 
 
@@ -262,12 +267,10 @@ def remove_unwanted_orphacode(node_list):
     :param node_list: list of disorder
     :return: list of disorder without ORPHAcode key past the main one
     """
-    # print(node_list)
     for disorder in node_list:
         # elem is an attribute of the disorder
         for elem in disorder:
             recursive_unwanted_orphacode(disorder[elem])
-        # print()
     return node_list
 
 
@@ -483,8 +486,7 @@ def output_elasticsearch_file(out_file_path, index, node_list, indent_output, ou
         for val in node_list:
             out.write("{{\"index\": {{\"_index\":\"orphadata_{}\"}}}}\n".format(index))
             out.write(json.dumps(val, indent=indent, ensure_ascii=False) + "\n")
-            # print(json.dumps(val, indent=indent, ensure_ascii=False) + "\n")
-    print("writing:", time.time() - start, "s")
+    logger.info("writing time: {}s".format(time.time() - start))
 
 
 def upload_es(elastic, processed_json_file):
@@ -510,7 +512,7 @@ def upload_es(elastic, processed_json_file):
                 print(json.dumps(ES_response["items"][err_doc_id]["index"]["error"], indent=2))
             exit(1)
     except elasticsearch.exceptions.ConnectionError:
-        print("ERROR: elasticsearch node unavailable")
+        logger.error("ERROR: elasticsearch node unavailable")
         exit(1)
     print("upload ES:", time.time() - start, "s")
 
@@ -562,8 +564,8 @@ def process(in_file_path, out_folder, elastic, input_encoding, indent_output, ou
         index = "{}_{}".format(index, file_stem)
     else:
         index = file_stem
-    print("####################")
-    print(file_stem)
+    logger.info("####################")
+    logger.info('file stem:  {}'.format(file_stem))
     out_file_name = index + ".json"
     out_file_path = out_folder / out_file_name
 
@@ -614,7 +616,7 @@ def process(in_file_path, out_folder, elastic, input_encoding, indent_output, ou
     if "orpha_omim_" in file_stem:
         node_list = data_RDcode.rework_OMIM(node_list)
 
-    print("convert:", time.time() - start, "s")
+    logger.info("convert time: {}s".format(time.time() - start))
 
     # Output/upload function
     output_process(out_file_path, index, node_list, elastic, indent_output, output_encoding)
@@ -634,12 +636,12 @@ def output_process(out_file_path, index, node_list, elastic, indent_output, outp
     """
     # Output a json elasticsearch ready, with index name as indexing instruction
     output_elasticsearch_file(out_file_path, index, node_list, indent_output, output_encoding)
-    print()
+    logger.info('')
 
     if elastic:
         # Upload to elasticsearch node
         upload_es(elastic, out_file_path)
-        print()
+        logger.info('')
 
     if config.make_schema:
         if out_file_path.stem.startswith("en"):
@@ -648,18 +650,19 @@ def output_process(out_file_path, index, node_list, elastic, indent_output, outp
                     yaml_schema_descriptor.yaml_schema(config.out_folder, out_file_path, output_encoding)
             else:
                 yaml_schema_descriptor.yaml_schema(config.out_folder, out_file_path, output_encoding)
-            print()
+        logger.info('')
 
+
+def write_generic_product3():
+    orphadata_generic.main(input_path=config.out_folder, index='orphadata_en_product3', outdir=config.out_folder, include='product3_')
 
 def main():
     # Some config check
     if config.indent_output:
         if config.upload:
-            print("ERROR: Bad configuration, should be mutually exclusive:\n"
-                  "\tindent_output:", config.indent_output, "\n\tupload:", config.upload)
+            logger.error('ERROR: Bad configuration indent_output {} and upload {} should be mutually exclusive:'.format(config.indent_output, config.upload))
         if config.make_schema:
-            print("ERROR: Bad configuration, should be mutually exclusive:\n"
-                  "\tindent_output:", config.indent_output, "\n\tmake_schema:", config.make_schema)
+            logger.error('ERROR: Bad configuration indent_output {} and make_schema {} should be mutually exclusive:'.format(config.indent_output, config.make_schema))
         if config.upload or config.make_schema:
             exit(1)
 
@@ -667,15 +670,18 @@ def main():
         elastic = config.elastic_node
     else:
         elastic = False
-    print()
+    logger.info('')
 
     os.makedirs(config.out_folder, exist_ok=True)
 
 
     if config.parse_folder:
+
+        _notqdm = True if __name__ == '__main__' else False
+
         # Process files in designated folders
-        for folder in config.folders:
-            for file in folder.iterdir():
+        for folder in config.folders:            
+            for file in tqdm(iterable=folder.iterdir(), desc="Total XML files", total=len(list(folder.iterdir())), disable=_notqdm):
                 if not file.is_dir():
                     if file.suffix == ".xml":                     
                         if "product3" in file.stem:
@@ -720,8 +726,9 @@ def main():
                     config.input_encoding, config.indent_output, config.output_encoding)
 
 
+    write_generic_product3()
 
 if __name__ == "__main__":
     start = time.time()
     main()
-    print(time.time() - start, "s total")
+    logger.info('Total computation time: {}s'.format(time.time() - start))

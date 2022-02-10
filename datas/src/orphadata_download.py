@@ -11,13 +11,16 @@ from pathlib import Path
 from typing import Dict, Union, List
 import requests
 import os
+import time
+from tqdm import tqdm
 
 from lib.config import ROOT_DIR, PATH_PRODUCTS_INFOS
 
 
 FORMAT = '%(asctime)-26s %(name)-26s %(message)s'
-logging.basicConfig(format=FORMAT, level=logging.DEBUG)
-logger = logging.getLogger('download_orphadata')
+logging.basicConfig(format=FORMAT, level=logging.INFO)
+name = __name__ if __name__ != '__main__' else 'orphadata_download'
+logger = logging.getLogger(name)
 
 OUTPATH = Path(ROOT_DIR) / 'datas' / 'xml_data'
 
@@ -38,11 +41,11 @@ def get_xml_url(url2json: Dict=PATH_PRODUCTS_INFOS) -> Dict[str, List]:
     logger.info('Accessing JSON files to access XML URLs...')
     xml_dict = {}
 
-    for product, url in url2json.items():        
+    for product, url in url2json.items():
         logger.info('GET request to {}'.format(url))
         response = requests.get(url)
         if response.ok:
-            xml_dict[product] = [ x['anUrl'] for x in response.json()]
+            xml_dict[product] = [ x['anUrl'] for x in response.json() if 'product3_235' not in x['anUrl'] ]
 
     return xml_dict
 
@@ -58,14 +61,14 @@ def download_xml(urls: Union[str, Path, List], outdir: Union[str, Path]=OUTPATH)
         Path to download XML files to, by default OUTPATH
     """
     logger.info('Downloading XML files...')
-
+    _notqdm = True if __name__ == '__main__' else False
 
     os.makedirs(outdir, exist_ok=True)
 
     if not isinstance(urls, List):
         urls = [urls]
     
-    for url in urls:
+    for url in tqdm(iterable=urls, desc='product-related XML files', total=len(urls), disable=_notqdm, ncols=100, colour='blue'):
         if not isinstance(url, Path):
             filename = Path(url).name
         else:
@@ -77,19 +80,21 @@ def download_xml(urls: Union[str, Path, List], outdir: Union[str, Path]=OUTPATH)
 
             logger.info('Writing {} into {}'.format(filename, outdir))
             with open( outdir / filename, 'wb') as _f:
-                for chunk in response.iter_content(8192):
+                for chunk in response.iter_content(50*1024*1024):
                     _f.write(chunk)
 
 
-if __name__ == '__main__':
-
-    outdir = OUTPATH
+def main():
     xml_path = get_xml_url()
+    _notqdm = True if __name__ == '__main__' else False
 
-    for product, urls in xml_path.items():
+    for _, urls in tqdm(iterable=xml_path.items(), desc="Total products", total=len(xml_path.values()), disable=_notqdm):
         download_xml(urls=urls)
 
 
+if __name__ == '__main__':
+    start_time = time.time()
+    main()
+    end_time = time.time()
 
-
-
+    logger.info('Download process has finished. Time: {:.2f}'.format(end_time-start_time))

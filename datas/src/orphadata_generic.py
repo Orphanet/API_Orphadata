@@ -13,13 +13,18 @@ import logging
 from pathlib import Path
 from typing import List, Union, Generator
 
-from  lib.config import ROOT_DIR
-from lib.generic_parser import GenericEsDoc
+try:
+    from .lib.config import ROOT_DIR
+    from .lib.generic_parser import GenericEsDoc
+except:
+    from lib.config import ROOT_DIR
+    from lib.generic_parser import GenericEsDoc
 
 
 FORMAT = '%(asctime)-26s %(name)-16s %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
-logger = logging.getLogger('orphadata_generic')
+name = __name__ if __name__ != '__main__' else 'orphadata_generic'
+logger = logging.getLogger(name)
 
 
 def get_json_products(path: Union[str, Path], include: str='product', exclude: str='') -> List:
@@ -181,7 +186,7 @@ def write_es_json(data: Generator, index: str, outdir: Union[str, Path]):
             _json_file.write(json.dumps(doc) + '\n')
 
 
-def main(input_path: Union[str, Path], index: str, outdir: Union[str, Path], include: str='product', exclude: str=''):
+def main(input_path: Union[str, Path], index: str, outdir: Union[str, Path], include: str='product3_', exclude: str=''):
     json_filenames = get_json_products(path=input_path, include=include, exclude=exclude)
     products = process_product3(json_files=json_filenames, index=index)
     data = generate_docs(products_all=products, index=index)
@@ -211,7 +216,7 @@ def parse_args():
         required=False,
         nargs="?",
         type=str,
-        default='orphadata_generic',
+        default='orphadata_en_product3',
         help="Name of the ES index that will be created"
     )
     parser.add_argument(
@@ -219,7 +224,7 @@ def parse_args():
         required=False,
         nargs="?",
         type=str,
-        default="product",
+        default="product3_",
         help="String used to filter JSON filenames. Only JSON files containing that string will be processed (default='product')"
     )
     parser.add_argument(

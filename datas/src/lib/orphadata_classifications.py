@@ -1,8 +1,17 @@
 import re
 import time
+import logging
 
-import orphadata_xml2json
-from . import config_orphadata_elastic as config
+FORMAT = '%(asctime)-26s %(name)-26s %(message)s'
+logging.basicConfig(format=FORMAT, level=logging.INFO)
+name = __name__ if __name__ != '__main__' else 'orphadata_xml2json'
+logger = logging.getLogger(name)
+
+
+try:
+    from .. import orphadata_xml2json
+except:
+    import orphadata_xml2json
 
 # import RDcode_classifications
 # import data_RDcode
@@ -41,7 +50,6 @@ def parse_plator(pat_hch_path):
             data = line[:-1].split("\t")
             if data[lng_index] == "en":
                 hch_dict[data[hch_id_index]] = data[hch_tag_index]
-    # print(hch_dict)
     return hch_dict
 
 
@@ -148,9 +156,8 @@ def convert(hch_id, xml_dict):
     node_list = list(node_dict.values())
 
     # print(node_list)
-    print(len(node_list), "disorder concepts")
+    logger.info("Disorder concepts number: {}".format(len(node_list)))
 
-    print(time.time() - start, "s")
     return node_list
 
 
@@ -178,12 +185,15 @@ def process_classification(in_file_path, out_folder, elastic, input_encoding, in
     # Remove the suffixed date
     file_stem = re.sub("_[0-9]{4}(?![0-9])", "", file_stem)
 
-    index = config.index_prefix
+    index = orphadata_xml2json.config.index_prefix
     if index:
         index = "{}_{}".format(index, file_stem)
     else:
         index = file_stem
-    print(file_stem)
+
+    logger.info("####################")
+    logger.info('file stem:  {}'.format(file_stem))
+
     out_file_name = index + ".json"
     out_file_path = out_folder / out_file_name
 
@@ -206,10 +216,10 @@ def process_classification(in_file_path, out_folder, elastic, input_encoding, in
     # node_list = data_RDcode.insert_date(node_list, extract_date)
 
 
-    if config.cast_as_integer:
+    if orphadata_xml2json.config.cast_as_integer:
         node_list = orphadata_xml2json.remap_integer(node_list)
 
-    print("convert:", time.time() - start, "s")
+    logger.info("convert time: {}s".format(time.time() - start))
 
     # Output/upload function
     orphadata_xml2json.output_process(out_file_path, index, node_list, elastic, indent_output, output_encoding)

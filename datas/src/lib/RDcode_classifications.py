@@ -3,7 +3,7 @@ import time
 
 from . import data_RDcode
 import orphadata_xml2json
-from . import config_orphadata_elastic as config
+
 
 """
 Alternative process to treat RDcode classification
@@ -177,7 +177,7 @@ def process_classification(in_file_path, out_folder, elastic, input_encoding, in
     # TO
     # orphaclassification_146_en
     file_stem = "{}_{}_{}".format(file_stem_split[0], file_stem_split[1], file_stem_split[-1])
-    index = config.index_prefix
+    index = orphadata_xml2json.config.index_prefix
     if index:
         index = "{}_{}".format(index, file_stem)
     else:
@@ -208,7 +208,7 @@ def process_classification(in_file_path, out_folder, elastic, input_encoding, in
 
     node_list = data_RDcode.insert_date(node_list, extract_date)
 
-    if config.cast_as_integer:
+    if orphadata_xml2json.config.cast_as_integer:
         node_list = orphadata_xml2json.remap_integer(node_list)
 
     print("convert:", time.time() - start, "s")
