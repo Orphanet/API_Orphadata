@@ -1,4 +1,5 @@
 import logging
+import os
 import time
 
 from lib import utils
@@ -12,27 +13,28 @@ import orphadata_download
 import orphadata_xml2json
 import orphadata_injection
 
+ENV = os.getenv('ENV_ORPHA', 'prod')
+
 
 def main():
+    url = 'remote' if ENV == 'prod' else 'local'
     
-    logger.basic_log("Update process - step 1: starting download of data...")
+    logger.basic_log("Update PROCESS - STEP 1: starting download of data...".upper())
     orphadata_download.main()
-    logger.basic_log("Update process - step 1: download completed")
+    logger.basic_log("Update process - step 1: download completed".upper())
     logger.basic_log("")
 
-    logger.basic_log("Update process - step 2: starting conversion of XML data to elastic compatible JSON")
+    logger.basic_log("Update process - step 2: starting conversion of XML data to elastic compatible JSON".upper())
     orphadata_xml2json.main()
-    logger.basic_log("Update process - step 2: conversion completed")
+    logger.basic_log("Update process - step 2: conversion completed".upper())
     logger.basic_log("")
 
-    logger.basic_log("Update process - step 3: starting elastic injection of JSON data...")
+    logger.basic_log("Update process - step 3: starting injection of JSON data on {} elastic instance...".format(url).upper())
     json_filenames = orphadata_injection.get_jsons(path=orphadata_injection.PATH2JSON)
-    es_client = orphadata_injection.esConnector(url='local')
+    es_client = orphadata_injection.esConnector(url=url)
     orphadata_injection.main(es_client=es_client, json_path=json_filenames)
-    logger.basic_log("Update process - step 3: injection completed")
+    logger.basic_log("Update process - step 3: injection completed".upper())
     logger.basic_log("")
-
-
 
 
 if __name__ == '__main__':

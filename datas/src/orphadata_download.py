@@ -88,7 +88,7 @@ def main():
     xml_path = get_xml_url()
     _notqdm = True if __name__ == '__main__' else False
 
-    for _, urls in tqdm(iterable=xml_path.items(), desc="Total products", total=len(xml_path.values()), disable=_notqdm):
+    for _, urls in tqdm(iterable=xml_path.items(), desc="Total products", total=len(xml_path.values()), ncols=150, disable=_notqdm):
         download_xml(urls=urls)
 
 
