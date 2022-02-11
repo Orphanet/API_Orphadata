@@ -1,7 +1,7 @@
 from typing import Dict, Tuple, Union, List
 
 from flask.wrappers import Request
-from flask import request, jsonify
+from flask import request
 
 
 class ResponseWrapper:

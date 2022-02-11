@@ -1,9 +1,9 @@
 import elasticsearch.exceptions as es_exceptions
-from flask import request
+from flask import request, current_app
 
 import api.controllers.query_controller as qc
 from api.controllers.response_handler import ResponseWrapper
-from api.controllers import PRODUCTS, es_client
+from api.controllers import PRODUCTS
 
 
 PRODUCT = PRODUCTS.get('product7')
@@ -31,6 +31,7 @@ def query_linearization_by_orphacode(orphacode):  # noqa: E501
         # "_source": ["ORPHAcode"]
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.single_res(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 
@@ -46,6 +47,7 @@ def query_linearization_parents():
         "_source": ["DisorderDisorderAssociation.TargetDisorder"]
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.multiple_res(es_client, index, query)
 
     if not isinstance(response, tuple):      
@@ -82,6 +84,7 @@ def query_linearization_by_parent(parentcode):  # noqa: E501
         # "_source": ["ORPHAcode"]
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.multiple_res(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 

@@ -3,7 +3,7 @@ from flask import request, current_app
 
 import api.controllers.query_controller as qc
 from api.controllers.response_handler import ResponseWrapper
-from api.controllers import PRODUCTS, es_client
+from api.controllers import PRODUCTS
 
 
 index = "orphadata_generic"
@@ -26,6 +26,7 @@ def products_description_old():  # noqa: E501
         "_source": ["productId", "productName"]
         }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.multiple_res(es_client, index, query)
 
     if isinstance(response, tuple):
@@ -69,6 +70,8 @@ def products_description_old():  # noqa: E501
 
 
 def products_description():
+    es_client = current_app.config.get('ES_NODE')
+
     orphadata_products = es_client.indices.get('orphadata*product*').keys()
     orphadata_products = sorted(orphadata_products, key=lambda x: (x.split('_')[2], x.split('_')[1]))
 
@@ -110,6 +113,7 @@ def generic_product1_old():
 
     doc_id = '{}_product1'.format(lang.lower())
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_get(es=es_client, index=index, id=doc_id)
     wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=PRODUCTS.get('product1'))
 
@@ -132,6 +136,7 @@ def generic_product1():
         }
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es=es_client, index=index, query=query)
 
     parsed_response = []
@@ -164,6 +169,7 @@ def generic_product1():
 def generic_product3_old():
     doc_id = 'en_product3'.format()
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_get(es=es_client, index=index, id=doc_id)
     wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=PRODUCTS.get('product3'))
 
@@ -180,6 +186,7 @@ def generic_product3():
         '_source': ['ORPHAcode', 'name', 'hch_id', 'hch_tag'],
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es=es_client, index=index, query=query)
 
     parsed_response = []
@@ -228,6 +235,7 @@ def generic_product3():
 def generic_product4_old():
     doc_id = 'en_product4'.format()
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_get(es=es_client, index=index, id=doc_id)
     wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=PRODUCTS.get('product4'))
 
@@ -247,6 +255,7 @@ def generic_product4():
         }
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es=es_client, index=index, query=query)
     parsed_response = []
 
@@ -280,6 +289,7 @@ def generic_product4():
 def generic_product6_old():
     doc_id = 'en_product6'.format()
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_get(es=es_client, index=index, id=doc_id)
     wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=PRODUCTS.get('product6'))
 
@@ -304,6 +314,7 @@ def generic_product6():
         }
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es=es_client, index=index, query=query)
 
     parsed_response = []
@@ -340,6 +351,7 @@ def generic_product6():
 def generic_product7_old():
     doc_id = 'en_product7'.format()
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_get(es=es_client, index=index, id=doc_id)
     wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=PRODUCTS.get('product7'))
 
@@ -362,6 +374,7 @@ def generic_product7():
         }
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es=es_client, index=index, query=query)
 
     parsed_response = []
@@ -394,6 +407,7 @@ def generic_product7():
 def generic_product9_ages_old():
     doc_id = 'en_product9_ages'.format()
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_get(es=es_client, index=index, id=doc_id)
     wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=PRODUCTS.get('product9_ages'))
 
@@ -416,6 +430,7 @@ def generic_product9_ages():
         }
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es=es_client, index=index, query=query)
     for hit in response:
         hit['preferredTerm'] = hit.pop('Preferred term')
@@ -441,6 +456,7 @@ def generic_product9_prev():
         }
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es=es_client, index=index, query=query)
     for hit in response:
         hit['preferredTerm'] = hit.pop('Preferred term')

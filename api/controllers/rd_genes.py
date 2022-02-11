@@ -1,9 +1,9 @@
 import elasticsearch.exceptions as es_exceptions
-from flask import request
+from flask import request, current_app
 
 from api.controllers import query_controller as qc
 from api.controllers.response_handler import ResponseWrapper
-from api.controllers import PRODUCTS, es_client
+from api.controllers import PRODUCTS
 
 
 PRODUCT = PRODUCTS.get('product6')
@@ -25,6 +25,7 @@ def query_genes_base():  # noqa: E501
         # '_source': 'ORPHAcode'
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
@@ -59,6 +60,7 @@ def query_genes_orphacodes_old():  # noqa: E501
         
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response[0]['items'], request=request, product=PRODUCT)
     
@@ -73,11 +75,11 @@ def query_genes_orphacodes():
         '_source': ['ORPHAcode', 'Preferred term']
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
     return wrapped_response.get()
-
 
 
 def query_genes_by_orphacode(orphacode):  # noqa: E501
@@ -100,6 +102,7 @@ def query_genes_by_orphacode(orphacode):  # noqa: E501
         }
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.single_res(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
@@ -119,6 +122,7 @@ def query_genes_genes():  # noqa: E501
         "_source":["DisorderGeneAssociation"]
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es_client, index, query)
     if not isinstance(response, tuple):      
         response_parsed = []
@@ -150,6 +154,7 @@ def query_genes_by_symbol(symbol):
         # "_source": ["ORPHAcode"]
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.multiple_res(es_client, index, query, size=5000)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
@@ -170,7 +175,8 @@ def query_genes_by_name(name):
         },
         # "_source": ["ORPHAcode", "DisorderGeneAssociation.Gene.Preferred term", "DisorderGeneAssociation.Gene.Symbol"]
     }
-
+    
+    es_client = current_app.config.get('ES_NODE')
     response = qc.multiple_res(es_client, index, query, size=5000)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     

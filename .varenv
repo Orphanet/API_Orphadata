@@ -1,4 +1,4 @@
 ELASTIC_URL=https://9d2d8c7975624d95aa964a1d22a96daf.eu-west-1.aws.found.io
 ELASTIC_USER=elastic
 ELASTIC_PASS=fSowAPgpKjaA3hD6T7NxctEf
-
+ENV_ORPHA=local

@@ -22,7 +22,7 @@ FORMAT = '%(asctime)-26s %(name)-26ls %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 name = __name__ if __name__ != '__main__' else 'orphadata_injection'
 logger = logging.getLogger(name)
-logging.getLogger("elasticsearch").setLevel(logging.WARNING)
+# logging.getLogger("elasticsearch").setLevel(logging.WARNING)
 
 
 def esConnector(url: str):
@@ -124,7 +124,7 @@ def bulk_inject(es_client: Elasticsearch, json_filename: Union[str, Path], index
         es_client=es_client,
         index=index,
         doc_generator=generate_actions(filename=json_filename),
-        mappings=mappings['mappings'],
+        mappings=mappings,
         max_chunk_bytes=max_chunk_bytes
     )
     bulk_injector.run()

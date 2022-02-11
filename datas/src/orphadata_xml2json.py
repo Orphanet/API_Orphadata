@@ -681,7 +681,7 @@ def main():
 
         # Process files in designated folders
         for folder in config.folders:            
-            for file in tqdm(iterable=folder.iterdir(), desc="Total XML files", total=len(list(folder.iterdir())), disable=_notqdm):
+            for file in tqdm(iterable=folder.iterdir(), desc="JSON converted XML files", total=len(list(folder.iterdir())), disable=_notqdm):
                 if not file.is_dir():
                     if file.suffix == ".xml":                     
                         if "product3" in file.stem:

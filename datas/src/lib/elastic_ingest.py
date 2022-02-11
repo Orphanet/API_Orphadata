@@ -2,6 +2,7 @@ from typing import Dict, Generator, List, Union
 from elasticsearch import helpers
 from elasticsearch.client import Elasticsearch
 import logging
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +45,6 @@ class EsBulkInjector:
         )
         if self.aliases:
             self._put_alias()
-        # self.es_client.indices.refresh(index=self.index)
 
     def _put_alias(self) -> None:
         for alias in self.aliases:

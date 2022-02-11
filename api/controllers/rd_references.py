@@ -1,9 +1,9 @@
 import elasticsearch.exceptions as es_exceptions
-from flask import request
+from flask import request, current_app
 
 from api.controllers import query_controller as qc
 from api.controllers.response_handler import ResponseWrapper
-from api.controllers import PRODUCTS, es_client
+from api.controllers import PRODUCTS
 
 
 PRODUCT = PRODUCTS.get('product1')
@@ -32,6 +32,7 @@ def query_references_base():  # noqa: E501
         }
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
@@ -70,6 +71,7 @@ def query_references_orphacodes_old():  # noqa: E501
         '_source': ['items.ORPHAcode', 'items.PreferredTerm']
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response[0]['items'], request=request, product=PRODUCT)
     
@@ -90,6 +92,7 @@ def query_references_orphacodes():
         '_source': ['ORPHAcode', 'Preferred term']
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
@@ -125,6 +128,7 @@ def query_references_by_orphacode(orphacode):  # noqa: E501
         # "_source": ["ORPHAcode"]
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.single_res(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 
@@ -159,6 +163,7 @@ def query_references_by_name(name):  # noqa: E501
             }
         }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.single_res(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 
@@ -194,6 +199,7 @@ def query_references_by_omim(omim):
         }
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.multiple_res(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 
@@ -239,6 +245,7 @@ def query_references_icds():  # noqa: E501
         "_source": ['ExternalReference.Source','ExternalReference.Reference']
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es_client, index, query)
 
     if not isinstance(response, tuple):      
@@ -247,10 +254,9 @@ def query_references_icds():  # noqa: E501
             for ele in res["ExternalReference"]:
                 if ele["Source"] == 'ICD-10':
                     response_parsed.append(ele["Reference"])
+        wrapped_response = ResponseWrapper(ctl_response=sorted(list(set(response_parsed))), request=request, product=PRODUCT)
     else:
-        response_parsed = response
-
-    wrapped_response = ResponseWrapper(ctl_response=sorted(list(set(response_parsed))), request=request, product=PRODUCT)
+        wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 
     return wrapped_response.get()    
 
@@ -287,8 +293,9 @@ def query_references_by_icd(icd):
             }
         },
         # "_source": ['ExternalReference.Source','ExternalReference.Reference']
-    }    
+    }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.multiple_res(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 

@@ -3,7 +3,7 @@ from flask import request, current_app
 
 import api.controllers.query_controller as qc
 from api.controllers.response_handler import ResponseWrapper
-from api.controllers import PRODUCTS, es_client
+from api.controllers import PRODUCTS
 
 
 PRODUCT = PRODUCTS.get('product3')
@@ -28,6 +28,7 @@ def query_classification_by_hchid(hchid):  # noqa: E501
         }
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.multiple_res(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
@@ -54,6 +55,7 @@ def query_classification_hchids_by_orphacode(orphacode):  # noqa: E501
         }
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.multiple_res(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 
@@ -78,6 +80,7 @@ def query_classification_by_orphacode_and_hchid(orphacode, hchid):  # noqa: E501
 
     query = "{\"query\": {\"match\": {\"ORPHAcode\": " + str(orphacode) + "}}}"
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.single_res(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
@@ -93,6 +96,7 @@ def query_classification_hchids_old():  # noqa: E501
     :rtype: ListHchid
     """
     index = "orphadata_en_product3"
+    es_client = current_app.config.get('ES_NODE')
 
     try:
         response = es_client.get(
@@ -124,7 +128,7 @@ def query_classification_hchids():
             'includes': ['hchId', 'hchTag'],
         },
     }
-
+    es_client = current_app.config.get('ES_NODE')
     response = qc.multiple_res(es=es_client, index=index, query=query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
@@ -152,6 +156,7 @@ def query_classification_orphacodes_by_hchid(hchid):  # noqa: E501
         "_source":["ORPHAcode", "name"]
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.uncapped_res(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     

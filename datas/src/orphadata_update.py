@@ -1,4 +1,5 @@
 import logging
+# import nose
 import os
 import time
 
@@ -13,13 +14,13 @@ import orphadata_download
 import orphadata_xml2json
 import orphadata_injection
 
-ENV = os.getenv('ENV_ORPHA', 'prod')
+DATA_ENV = os.getenv('DATA_ENV', 'prod')
 
 
 def main():
-    url = 'remote' if ENV == 'prod' else 'local'
+    url = 'remote' if DATA_ENV == 'prod' else 'local'
     
-    logger.basic_log("Update PROCESS - STEP 1: starting download of data...".upper())
+    logger.basic_log("Update process - step 1: starting download of data...".upper())
     orphadata_download.main()
     logger.basic_log("Update process - step 1: download completed".upper())
     logger.basic_log("")
@@ -36,6 +37,8 @@ def main():
     logger.basic_log("Update process - step 3: injection completed".upper())
     logger.basic_log("")
 
+    # nose.run()
+
 
 if __name__ == '__main__':
     start_time = time.time()
@@ -43,3 +46,4 @@ if __name__ == '__main__':
     end_time = time.time()
 
     logger.basic_log('Update process has finished. Time: {:.2f}'.format(end_time-start_time))
+

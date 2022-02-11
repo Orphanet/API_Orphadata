@@ -1,9 +1,9 @@
 import elasticsearch.exceptions as es_exceptions
-from flask import request
+from flask import request, current_app
 
 from api.controllers import query_controller as qc
 from api.controllers.response_handler import ResponseWrapper
-from api.controllers import PRODUCTS, es_client
+from api.controllers import PRODUCTS
 
 
 PRODUCT = PRODUCTS.get('product4')
@@ -32,6 +32,7 @@ def query_phenotypes_base():  # noqa: E501
         }
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
@@ -70,6 +71,7 @@ def query_phenotypes_orphacodes_old():  # noqa: E501
         '_source': ['items.ORPHAcode', 'items.PreferredTerm']
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response[0]['items'], request=request, product=PRODUCT)
     
@@ -90,6 +92,7 @@ def query_phenotypes_orphacodes():
         '_source': ['Disorder.ORPHAcode', 'Disorder.Preferred term']
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es_client, index, query)
 
     parsed_response = []
@@ -130,6 +133,7 @@ def query_phenotypes_by_orphacode(orphacode):  # noqa: E501
         # "_source": ["ORPHAcode"]
     }
 
+    es_client = current_app.config.get('ES_NODE')
     response = qc.single_res(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 
@@ -160,7 +164,8 @@ def query_phenotypes_by_hpoids(hpoids):
         },
         # '_source': ['Disorder.ORPHAcode']
     }
-
+    
+    es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es_client, index, query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 

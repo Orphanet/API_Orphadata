@@ -5,7 +5,6 @@ import os
 
 import connexion
 from dotenv import load_dotenv
-from flask import current_app, send_from_directory, send_file
 
 from api.util import JSONEncoder
 

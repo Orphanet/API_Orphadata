@@ -68,7 +68,7 @@ def download_xml(urls: Union[str, Path, List], outdir: Union[str, Path]=OUTPATH)
     if not isinstance(urls, List):
         urls = [urls]
     
-    for url in tqdm(iterable=urls, desc='product-related XML files', total=len(urls), disable=_notqdm, ncols=100, colour='blue'):
+    for url in tqdm(iterable=urls, desc='Downloaded XML files', total=len(urls), disable=_notqdm, ncols=100, colour='blue'):
         if not isinstance(url, Path):
             filename = Path(url).name
         else:
@@ -88,7 +88,7 @@ def main():
     xml_path = get_xml_url()
     _notqdm = True if __name__ == '__main__' else False
 
-    for _, urls in tqdm(iterable=xml_path.items(), desc="Total products", total=len(xml_path.values()), ncols=150, disable=_notqdm):
+    for _, urls in tqdm(iterable=xml_path.items(), desc="Processed products", total=len(xml_path.values()), ncols=150, disable=_notqdm):
         download_xml(urls=urls)
 
 
