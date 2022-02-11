@@ -67,26 +67,18 @@ def get_config(outpath='./'):
         "handlers": {
             "console": {
                 "class": "logging.StreamHandler",
-                "level": "INFO",
+                "level": "BASIC_LOG",
                 "formatter": "detailed"
             },
 
             "info_handler": {
                 "class": "logging.FileHandler",
-                "level": "INFO",
+                "level": "NOTSET",
                 "formatter": "detailed",
                 "filename": outpath,
                 "mode": "w+",
                 "encoding": "utf8",
                 "delay": False
-            }
-        },
-
-        "loggers": {
-            "orfmap.lib": {
-                "level": "DEBUG",
-                "handlers": ["console", "info_handler"],
-                "propagate": False
             }
         },
 
