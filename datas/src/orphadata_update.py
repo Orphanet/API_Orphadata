@@ -1,13 +1,21 @@
 import logging
-# import nose
 import os
+from pathlib import Path
 import time
 
-from lib import utils
-FORMAT = '%(asctime)-26s %(name)-26s %(message)s'
-utils.addLoggingLevel('BASIC_LOG', 55, methodName='basic_log')
-logging.basicConfig(format=FORMAT, level=logging.BASIC_LOG)
-logger = logging.getLogger('orphadata_update')
+from lib import utils, log_handler
+
+BASE_PATH = Path(__file__).resolve().parent.parent
+LOG_PATH = BASE_PATH / 'logs/update_data.log'
+
+logger_name = 'orphadata_update' if __name__ == '__main__' else __name__
+logger = log_handler.Logger(name=logger_name, outpath=LOG_PATH)
+
+
+# FORMAT = '%(asctime)-26s %(name)-26s %(message)s'
+# utils.addLoggingLevel('BASIC_LOG', 55, methodName='basic_log')
+# logging.basicConfig(format=FORMAT, level=logging.BASIC_LOG)
+# logger = logging.getLogger('orphadata_update')
 
 
 import orphadata_download
@@ -15,7 +23,6 @@ import orphadata_xml2json
 import orphadata_injection
 
 DATA_ENV = os.getenv('DATA_ENV', 'prod')
-
 
 def main():
     url = 'remote' if DATA_ENV == 'prod' else 'local'
@@ -36,8 +43,6 @@ def main():
     orphadata_injection.main(es_client=es_client, json_path=json_filenames)
     logger.basic_log("Update process - step 3: injection completed".upper())
     logger.basic_log("")
-
-    # nose.run()
 
 
 if __name__ == '__main__':

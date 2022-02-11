@@ -716,15 +716,32 @@ def main():
         # Process single file
         file = config.in_file_path
         if "product3" in file.stem:
-            orphadata_classifications.process_classification(file, config.out_folder, elastic, config.input_encoding,
-                                                             config.indent_output, config.output_encoding)
+            orphadata_classifications.process_classification(
+                file,
+                config.out_folder,
+                elastic,
+                config.input_encoding,
+                config.indent_output,
+                config.output_encoding
+            )
         elif "ORPHAclassification" in file.stem:
-            RDcode_classifications.process_classification(file, config.out_folder, elastic, config.input_encoding,
-                                                          config.indent_output, config.output_encoding)
+            RDcode_classifications.process_classification(
+                file,
+                config.out_folder,
+                elastic,
+                config.input_encoding,
+                config.indent_output,
+                config.output_encoding
+            )
         else:
-            process(file, config.out_folder, elastic,
-                    config.input_encoding, config.indent_output, config.output_encoding)
-
+            process(
+                file,
+                config.out_folder,
+                elastic,
+                config.input_encoding,
+                config.indent_output,
+                config.output_encoding
+            )
 
     write_generic_product3()
 
