@@ -17,6 +17,8 @@ def create_app(config_name):
     options = {'swagger_url': '/'}
     app = connexion.App(__name__, specification_dir='./swagger/', options=options)
     with app.app.app_context():
+        print(config_name)
+        print(20*'-')
         app.app.config.from_object(config_by_name[config_name])
         app.add_api('swagger.yaml', arguments={'title': 'API Orphadata'}, pythonic_params=True)
 

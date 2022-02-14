@@ -27,10 +27,10 @@ DATA_ENV = os.getenv('DATA_ENV', 'prod')
 def main():
     url = 'remote' if DATA_ENV == 'prod' else 'local'
     
-    # logger.basic_log("Update process - step 1: starting download of data...".upper())
-    # orphadata_download.main()
-    # logger.basic_log("Update process - step 1: download completed".upper())
-    # logger.basic_log("")
+    logger.basic_log("Update process - step 1: starting download of data...".upper())
+    orphadata_download.main()
+    logger.basic_log("Update process - step 1: download completed".upper())
+    logger.basic_log("")
 
     logger.basic_log("Update process - step 2: starting conversion of XML data to elastic compatible JSON".upper())
     orphadata_xml2json.main()

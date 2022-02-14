@@ -6,10 +6,11 @@ from api.controllers import PRODUCTS
 
 
 class BaseTestCase(TestCase):
+
     def create_app(self):
         app = api.create_app(config_name='test')
         self.URL_ENDPOINTS = app.config.get('URL_ENDPOINTS')
-        self.PRODUCTS = PRODUCTS # app.config.get('PRODUCTS')
+        self.PRODUCTS = PRODUCTS
 
         try:
             from api.controllers.response_handler import ResponseWrapper
