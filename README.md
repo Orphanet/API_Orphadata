@@ -142,10 +142,9 @@ export DATA_ENV=local
 In case the variables have not been set, the default value is used. 
 
 ### Confidential environment variables
+q
 
-Both the flask application (with `FLASK_ENV=dev|production`) and the data processing scripts (with `DATA_ENV=remote`) may need to connect to the remote AWS elasticsearch instance storing the data. Access to this instance requires authentication informations that must not be shared. 
-
-Access to the remote AWS elasticsearch instance (case where `FLASK_ENV=dev|production` and `DATA_ENV=remote`)
+Access to the remote AWS elasticsearch instance (case where `FLASK_ENV=dev|production` and `DATA_ENV=remote`) requires its URL and associated login credentials.
 
 Authentication details allowing access to the remote elasticsearch instance are read from three environment variables in a *hidden* file called `.varenv` that must be located at the root of this project repository (same level as wsgi.py).
 
