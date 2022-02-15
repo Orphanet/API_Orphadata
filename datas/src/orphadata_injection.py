@@ -179,7 +179,10 @@ def parse_args():
         default="local",
         help="ES URL type: either 'local' or 'remote'"
     )
-    parser.add_argument('--print', action='store_true')
+    parser.add_argument(
+        '--print',
+        action='store_true',
+        help='Print path of JSON files that will be processed')
     
     return parser.parse_args()
 

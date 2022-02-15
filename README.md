@@ -13,6 +13,18 @@ The API
 
 - documentation follows the [OpenAPI v3 specification](https://swagger.io/specification/) and has been generated with [Swagger](https://swagger.io/).
 
+## About orphadata
+
+Only free orphadata are consumed through the API. Theses products are:
+
+- `product1`: *Rare diseases and alignment with terminologies and databases*
+- `product3`: *Clinical classifications of rare diseases*
+- `product4`: *Phenotypes associated with rare diseases*
+- `product6`: *Genes associated with rare diseases*
+- `product7`: *Linearisation of rare diseases*
+- `product9_prev`: *Epidemiology rare diseases*
+- `product9_ages`: *Natural history rare diseases*
+
 
 ## Repository structure
 
@@ -48,7 +60,7 @@ All this code has been developed and tested:
 - with python >= 3.8
 
 You will also need:
-- a local elasticsearch instance (version 7.* - for development & test purposes)
+- a local [elasticsearch instance](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html) (version 7.* - for development & test purposes)
 - an access to the AWS elasticsearch instance
 - an access to the Gandi host server
 
@@ -142,6 +154,8 @@ export DATA_ENV=local
 
 In case the variables have not been set, the default value is used. 
 
+<a id='env-variables'></a>
+
 ### Confidential environment variables
 
 Access to the remote AWS elasticsearch instance (case where `FLASK_ENV=dev|production` and `DATA_ENV=remote`) requires its URL and associated login credentials.
@@ -163,9 +177,11 @@ Please note that **this file should never be shared/accessible so don't forget t
 
 ## Run the application
 
-From now on, considering your `.varenv` file is correctly set and `FLASK_ENV` is either not set or have the value `production` or `dev`, you can simply type `python wsgi.py` to run the application. 
+Let's consider at this stage you have not setup a local elasticsearch instance. The application will need to access the remote elasticsearch instance, so you'll need:
+- `.varenv` file being correctly set up
+- `FLASK_ENV` variable set to either `production` or `dev` or nothing (because default is `production`)
 
-It should now be accessible locally on your browser at the following URL:port address: http://127.0.0.1:5000.
+You can then simply type `python wsgi.py` to run the application. It should now be accessible locally on your browser at the following URL:port address: http://127.0.0.1:5000.
 
 
 ## Deploy the application
@@ -216,3 +232,133 @@ git push origin your_branch_name
 ```
 
 # Documentation
+
+## Data
+
+This section describes how to retrieve orphadata and inject them into an elasticsearch instance.
+
+Source codes dedicated in processing data is located in the `datas/` folder:
+
+<pre><font color="#3465A4"><b>API_Orphadata/datas/src/</b></font>
+├── <font color="#3465A4"><b>lib</b></font>
+├── orphadata_download.py
+├── orphadata_generic.py
+├── orphadata_injection.py
+├── orphadata_update.py
+└── orphadata_xml2json.py
+</pre>
+
+
+### Step 1: Download XML orphadata
+
+Orphadata in XML format can simply be retrieved as follows:
+```bash
+python datas/src/orphadata_download.py
+```
+
+This command will write all XML retrieved files into `API_Orphadata/datas/xml_data/`.
+
+
+**NOTE**
+
+Each time orphadata are updated a JSON file is generated for each product. This JSON file contains detailed informations about its related product such as its size, its languages, or also the URL where it can be accessed. Thereby all orphadata products are retrieved in XML format from the URLs given in each of these product-related JSONs. 
+
+JSONs URLs are stored in the `PATH_PRODUCTS_INFOS` variable found in `datas/src/lib/config.py`:
+
+ - `product1`: http://www.orphadata.org/cgi-bin/free_product1_cross_xml.json
+ - `product3`: http://www.orphadata.org/cgi-bin/free_product3_class.json
+ - `product4`: http://www.orphadata.org/cgi-bin/free_product4_hpo.json
+ - `product6`: http://www.orphadata.org/cgi-bin/free_product6_genes.json
+ - `product7`: http://www.orphadata.org/cgi-bin/free_product7_linear.json
+ - `product9_prev`: http://www.orphadata.org/cgi-bin/free_product9_prev.json
+ - `product9_ages`: http://www.orphadata.org/cgi-bin/free_product9_ages.json
+
+
+### Step 2: Convert XML orphadata to elastic-compatible JSON data
+
+Before being injected into an elasticsearch instance, data must be parsed and written in an elasticsearch compatible JSON format. 
+
+The conversion of XML orphadata into elasticsearch compatible JSON files is done with the following command:
+
+```bash
+python datas/src/orphadata_xml2json.py
+```
+
+This command will write all JSON files into `API_Orphadata/datas/json_data/`.
+
+
+### Step 3: Inject JSON orphadata to elasticsearch
+
+Now that we have JSON files, we can inject them into an elasticsearch instance. First you have to set up the environment variable `DATA_ENV` to chose your elasticsearch instance:
+- `export DATA_ENV=local` for your local elasticsearch instance
+- `export DATA_ENV=remote` for the remote elasticsearch instance (requires [`.varenv`](#env-variables) to be set up too)
+
+If you are using your local elasticsearch instance make sure that it is running and accessible at `localhost:9200`:
+```
+nche@orphanet13:~$ curl localhost:9200
+{
+  "name" : "orphanet13",
+  "cluster_name" : "elasticsearch",
+  "cluster_uuid" : "7ODmxFEVQh2-bQS3qWFHLg",
+  "version" : {
+    "number" : "7.17.0",
+    "build_flavor" : "default",
+    "build_type" : "deb",
+    "build_hash" : "bee86328705acaa9a6daede7140defd4d9ec56bd",
+    "build_date" : "2022-01-28T08:36:04.875279988Z",
+    "build_snapshot" : false,
+    "lucene_version" : "8.11.1",
+    "minimum_wire_compatibility_version" : "6.8.0",
+    "minimum_index_compatibility_version" : "6.0.0-beta1"
+  },
+  "tagline" : "You Know, for Search"
+}
+
+```
+
+To inject your data, type the following command:
+```bash
+python datas/src/orphadata_injection.py
+```
+
+This command will create an elastic index named according to each JSON file and prefixed with `orphadata_` (except for `orphadata_en_product3.json` which already contains the prefix). For instance, the elastic index for `en_product1.json` will be `orphadata_en_product1`.
+
+You can check that those indices are now stored on your elasticsearch instance:
+```bash
+# for local elasticsearch instance
+curl localhost:9200/_cat/indices
+
+# for remote elasticsearch instance
+curl --user $ELASTIC_USER:$ELASTIC_PASS $ELASTIC_URL:9243/_cat/indices
+```
+
+**NOTE**
+
+The `orphadata_injection.py` can also be used with parameters:
+
+```bash
+(.env) nche@orphanet13:~/projects/API_Orphadata$ python datas/src/orphadata_injection.py -h
+usage: orphadata_injection.py [-h] [-path [PATH]] [-match [MATCH]] [-index [INDEX]] [-url [{local,remote}]] [--print]
+
+Bulk inject ORPHADATA products in ES
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -path [PATH]          Path or filename of JSON file(s)
+  -match [MATCH]        String used to filter JSON filenames matching it (only if -path is a directory)
+  -index [INDEX]        Name of the index to create
+  -url [{local,remote}]
+                        ES URL type: either 'local' or 'remote'
+  --print               Print path of JSON files that will be processed
+```
+
+### Full update process
+
+While running individual steps described above could be useful for development purpose, the whole process has been automatized for production purpose. First, make sure to check your `DATA_ENV` environment variable value to know on which elasticsearch instance data will be injected.
+
+
+The following command will execute sequentially steps 1, 2 and 3 in one shot:
+```bash
+python datas/src/orphadata_update.py
+```
+
