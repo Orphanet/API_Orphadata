@@ -22,10 +22,10 @@ import orphadata_download
 import orphadata_xml2json
 import orphadata_injection
 
-DATA_ENV = os.getenv('DATA_ENV', 'prod')
+DATA_ENV = os.getenv('DATA_ENV', 'remote')
 
 def main():
-    url = 'remote' if DATA_ENV == 'prod' else 'local'
+    url = 'remote' if DATA_ENV == 'remote' else 'local'
     
     logger.basic_log("Update process - step 1: starting download of data...".upper())
     orphadata_download.main()
