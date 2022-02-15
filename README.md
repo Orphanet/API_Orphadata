@@ -16,7 +16,7 @@ The API
 
 ## Repository structure
 
-Below is a global tree view of the repository and  brief description of its content:
+Below is a global tree view of the repository.
 
 <pre><font color="#3465A4"><b>.</b></font>
 ├── <font color="#3465A4"><b>api/</b></font>
@@ -27,16 +27,17 @@ Below is a global tree view of the repository and  brief description of its cont
 └── wsgi.py
 </pre>
 
-with:
-- `api/` a folder containing all code relative to the **flask implementation of the API**.
+The repository is made of two independent parts:
+- `api/`, a folder containing all code relative to the **flask implementation of the API**.
 
-- `datas/` a folder containing scripts and modules relative to the **processing of data** (download, conversion and elastic injection).
+- `datas/`, a folder containing scripts and modules relative to the **processing of data** (download, conversion and elastic injection). This folder is used to get the orphadata and store them in an elasticsearh instance that is queried by the API. 
 
-- `static/` a folder containing all static files used to serve the API. The only reason this folder is not in `api/` is related to the way the gandi server instance accesses static files.
+There is also:
+- `static/`, a folder containing all static files used to serve the API. The only reason this folder is not in `api/` is related to the way the gandi server instance accesses static files.
 
-- `requirements.txt` a file used to install all required python libraries.
+- `requirements.txt`, a file used to install all required python libraries.
 
-- `wsgi.py` a python script used to run the application.
+- `wsgi.py`, a python script used to run the application.
 
 
 # Requirements
@@ -142,40 +143,29 @@ export DATA_ENV=local
 In case the variables have not been set, the default value is used. 
 
 ### Confidential environment variables
-q
 
 Access to the remote AWS elasticsearch instance (case where `FLASK_ENV=dev|production` and `DATA_ENV=remote`) requires its URL and associated login credentials.
 
-Authentication details allowing access to the remote elasticsearch instance are read from three environment variables in a *hidden* file called `.varenv` that must be located at the root of this project repository (same level as wsgi.py).
+To avoid writing sensitive informations on the source code, python-dotenv is used to access credentials from environment variables. Unlike the previous ones, environment variables relative to the remote elasticsearch access must be stored in a file arbitrarily called `.varenv`.
 
-You will need to access three different servers:
- - the Caille server to retrieve data that will be injected to the Elasticsearch instance
- - the Elasticsearch instance in order to either inject data or to query them
- - the Gandi Simple Hosting instance to deploy the application
 
- All these servers require different identifiers to authenticate. In order to keep them private, identifiers must be set in environment variables on your system. To do so, simply create a `.varenv` in the root directory of this repository and then insert into it your different identifiers for each related environment variable as follows: 
-
+Create a file `.varenv` at the root of this repository and into it the following variables:
 ```bash
-ELASTIC_URL = 'the_elastic_url_marc_gives_you'
-ELASTIC_USER = 'the_associated_elastic_user_id'
-ELASTIC_PASS = 'the_associated_elastic_passwword'
+ELASTIC_URL=the_elastic_url_marc_gives_you
+ELASTIC_USER=the_associated_elastic_user_id
+ELASTIC_PASS=the_associated_elastic_passwword
 ```
 
-Please note that **this file should never be shared/accessible so don't forget to add it to your `.gitignore`** if not already present.
+Please note that **this file should never be shared/accessible so don't forget to add it to your `.gitignore`** if not already present. Morevoer, since **this file must be present on the gandi server instance**, you will have to [upload it](#sftp-varenv) to the remote server.
 
 
 # Quickstart
 
 ## Run the application
-From now on, you can simply type `python wsgi.py` to run the application. It should be accessible locally at the following URL:port address: http://127.0.0.1:5000.
 
+From now on, considering your `.varenv` file is correctly set and `FLASK_ENV` is either not set or have the value `production` or `dev`, you can simply type `python wsgi.py` to run the application. 
 
-Alternatively, you can also use [gunicorn](https://docs.gunicorn.org/en/stable/) (present in requirements.txt, so already installed) to serve the application, for instance:
-```bash
-gunicorn --bind 0.0.0.0:5000 wsgi:application --reload
-```
-
-This command will bind at all the local IPV4 adresses (0.0.0.0) and the port 5000 the app variable named `application` that is instantiated in the `wsgi.py` module.
+It should now be accessible locally on your browser at the following URL:port address: http://127.0.0.1:5000.
 
 
 ## Deploy the application
@@ -183,7 +173,7 @@ This command will bind at all the local IPV4 adresses (0.0.0.0) and the port 500
 ### Add your gandi git remote repository to your git config
 To deploy the application, if not already done, you'll first need to add the remote repository related to the Gandi host server to your git configurations:
 ```
-git remote add gandi git+ssh://5131004@git.sd6.gpaas.net/default.git
+git remote add gandi git+ssh://5815773.sd5.gpaas.net/default.git
 ```
 
 ### Push your code on Gandi
@@ -193,22 +183,27 @@ git push gandi your_branch_name
 ```
 and then enter the password to access the Gandi server instance.
 
-### Add the .varenv file to the Gandi server instance
-Next, you'll need to add the `.varenv` file directly in the root directory of the repository in the Gandi server instance (`/lamp0/web/vhosts/default/`). Note that this file was not pushed on the from the preceding command `git push gandi ...` since the file must be in `.gitignore`. To add it the the Gandi server instance, you can use one of the [recommended sFTP client software](https://docs.gandi.net/en/simple_hosting/connection/sftp.html). 
 
- You can also connect to the instance with a command line. First make sure you are located where your `.varenv` file is. Then type the following:
+<a id="sftp-varenv"></a>
+
+### Add the .varenv file to the Gandi server instance
+Next, you'll need to add the `.varenv` file directly in the root directory of the repository in the Gandi server instance (`/lamp0/web/vhosts/default/`). Note that this file was not pushed with the source code from the preceding command `git push gandi your_branch_name` since the file must be in `.gitignore`. To add it the the Gandi server instance, you can use one of the [recommended sFTP client software](https://docs.gandi.net/en/simple_hosting/connection/sftp.html). 
+
+ You can also connect to the instance with a command line. First make sure you are located where your `.varenv` file is on your local repository. Then type the following:
 
 ```bash
 # connect to the gandi instance and go to /lamp0/web/vhosts/default/ (you'll have to enter your password)
-sftp 5131004@155.133.142.129:/lamp0/web/vhosts/default/
+sftp 5815773@sftp.sd5.gpaas.net:/lamp0/web/vhosts/default/
 # you should see sftp>. Now you can place your local .varenv file to the remote instance you are connected to
 put .varenv
+# quit the instance
+exit
 ```
 
 ### Deploy your code on Gandi
 Now the Gandi remote repository can be deployed with the following command:
 ```bash
-ssh 5131004@git.sd6.gpaas.net deploy default.git your_branch_name
+ssh 5815773@git.sd5.gpaas.net deploy default.git your_branch_name
 ```
 and then enter the password to access the Gandi server instance.
 
@@ -219,6 +214,5 @@ After having done some change on a given branch, you can update the Marc's remot
 git commit -am "Comment your changes"
 git push origin your_branch_name
 ```
-
 
 # Documentation
