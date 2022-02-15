@@ -19,4 +19,4 @@ query_test*
 
 datas/xml_data/**
 datas/json_data/**
-# datas/logs/**
+datas/logs/**
