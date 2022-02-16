@@ -13,6 +13,7 @@ The API
 
 - documentation follows the [OpenAPI v3 specification](https://swagger.io/specification/) and has been generated with [Swagger](https://swagger.io/).
 
+
 ## About orphadata
 
 Only free orphadata are consumed through the API. Theses products are:
@@ -42,7 +43,7 @@ Below is a global tree view of the repository.
 The repository is made of two independent parts:
 - `api/`, a folder containing all code relative to the **flask implementation of the API**.
 
-- `datas/`, a folder containing scripts and modules relative to the **processing of data** (download, conversion and elastic injection). This folder is used to get the orphadata and store them in an elasticsearh instance that is queried by the API. 
+- `datas/`, a folder containing scripts and modules relative to the **processing of data** (download, conversion and elastic injection). This folder is used to get the orphadata and store them in an elasticsearch instance that is queried by the API. 
 
 There is also:
 - `static/`, a folder containing all static files used to serve the API. The only reason this folder is not in `api/` is related to the way the gandi server instance accesses static files.
@@ -170,7 +171,7 @@ ELASTIC_USER=the_associated_elastic_user_id
 ELASTIC_PASS=the_associated_elastic_passwword
 ```
 
-Please note that **this file should never be shared/accessible so don't forget to add it to your `.gitignore`** if not already present. Morevoer, since **this file must be present on the gandi server instance**, you will have to [upload it](#sftp-varenv) to the remote server.
+Please note that **this file should never be shared/accessible so don't forget to add it to your `.gitignore`** if not already present. Moreover, since **this file must be present on the gandi server instance**, you will have to [upload it](#sftp-varenv) to the remote server.
 
 
 # Quickstart
