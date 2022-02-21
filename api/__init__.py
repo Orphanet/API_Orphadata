@@ -2,7 +2,7 @@
 
 from pathlib import Path
 import os
-from flask import jsonify, request
+from flask import jsonify, render_template, request
 import connexion
 from dotenv import load_dotenv
 
@@ -22,6 +22,7 @@ def create_app(config_name):
         app.add_api('swagger_apim.yaml', arguments={'title': 'API Orphadata'}, pythonic_params=True)
 
     app.app.static_folder = module_path / 'static'
+    app.app.template_folder = module_path / 'static' / 'templates'
     app.app.json_encoder = JSONEncoder
 
     app.app.jinja_env.globals['workaround_for_API_contract'] = "./openapi.json"  # manual override of the API_contract url, comment to return to default. cf templates/index.j2
@@ -29,8 +30,13 @@ def create_app(config_name):
 
     @app.route('/apim-delegation')
     def index():
-        q_operation = request.args.get('operation', 'no operation found')
-        return "<h1>apim delegation page</h1><p>{}</p>".format(q_operation)
+        apim_params = {
+            'operation': request.args.get('operation', 'no operation found'),
+            'returnUrl': request.args.get('returnUrl', 'no returnUrl found'),
+            'salt': request.args.get('salt', 'no salt found'),
+            'sig': request.args.get('sig', 'no sig found'),
+        }
+        return render_template('apim-delegation.html', params=apim_params)
 
 
     
