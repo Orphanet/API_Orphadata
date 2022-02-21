@@ -2,7 +2,7 @@
 
 from pathlib import Path
 import os
-
+from flask import jsonify, request
 import connexion
 from dotenv import load_dotenv
 
@@ -26,6 +26,14 @@ def create_app(config_name):
 
     app.app.jinja_env.globals['workaround_for_API_contract'] = "./openapi.json"  # manual override of the API_contract url, comment to return to default. cf templates/index.j2
     app.app.jinja_env.globals["defaultModelsExpandDepth"] = "-1"  # do not display data models
+
+    @app.route('/apim-delegation')
+    def index():
+        q_operation = request.args.get('operation', 'no operation found')
+        return "<h1>apim delegation page</h1><p>{}</p>".format(q_operation)
+
+
+    
 
     return app.app
 
