@@ -32,7 +32,7 @@ def create_app(config_name):
     def index():
         apim_params = {
             'operation': request.args.get('operation', 'no operation found'),
-            'returnUrl': request.args.get('returnUrl', 'no returnUrl found'),
+            'returnUrl': request.args.get('returnUrl', 'https://orphanetapi.developer.azure-api.net/'),
             'salt': request.args.get('salt', 'no salt found'),
             'sig': request.args.get('sig', 'no sig found'),
         }
