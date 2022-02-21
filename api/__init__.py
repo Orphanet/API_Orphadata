@@ -22,7 +22,7 @@ def create_app(config_name):
         app.add_api('swagger_apim.yaml', arguments={'title': 'API Orphadata'}, pythonic_params=True)
 
     app.app.static_folder = module_path / 'static'
-    app.app.template_folder = module_path / 'static' / 'templates'
+    # app.app.template_folder = module_path / 'static' / 'templates'
     app.app.json_encoder = JSONEncoder
 
     app.app.jinja_env.globals['workaround_for_API_contract'] = "./openapi.json"  # manual override of the API_contract url, comment to return to default. cf templates/index.j2
@@ -32,14 +32,11 @@ def create_app(config_name):
     def index():
         apim_params = {
             'operation': request.args.get('operation', 'no operation found'),
-            # 'returnUrl': request.args.get('returnUrl', 'https://orphanetapi.developer.azure-api.net/'),
-            # 'salt': request.args.get('salt', 'no salt found'),
-            # 'sig': request.args.get('sig', 'no sig found'),
+            'returnUrl': request.args.get('returnUrl', 'https://orphanetapi.developer.azure-api.net/'),
+            'salt': request.args.get('salt', 'no salt found'),
+            'sig': request.args.get('sig', 'no sig found'),
         }
-        return render_template('apim-delegation.html', params=apim_params)
-
-
-    
+        return render_template('apim-delegation.html', params=apim_params)    
 
     return app.app
 
