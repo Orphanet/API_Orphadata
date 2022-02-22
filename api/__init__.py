@@ -10,7 +10,7 @@ from api.util import JSONEncoder
 
 module_path = Path(__file__).parent.parent
 load_dotenv(module_path / '.varenv')  # load variable environments for elasticsearch config
-from .config import config_by_name
+from api.config import config_by_name
 
 
 def create_app(config_name):
@@ -22,6 +22,7 @@ def create_app(config_name):
         app.add_api('swagger_apim.yaml', arguments={'title': 'API Orphadata'}, pythonic_params=True)
 
     app.app.static_folder = module_path / 'static'
+    app.app.template_folder = module_path / 'static'
     app.app.json_encoder = JSONEncoder
 
     app.app.jinja_env.globals['workaround_for_API_contract'] = "./openapi.json"  # manual override of the API_contract url, comment to return to default. cf templates/index.j2
@@ -35,8 +36,10 @@ def create_app(config_name):
             'salt': request.args.get('salt', 'no salt found'),
             'sig': request.args.get('sig', 'no sig found'),
         }
-        template_file = 'apim-delegation.html' if config_name == 'test' else '/static/templates/apim-delegation.html'
-        return render_template(template_file, params=apim_params)
+        # template_file = str(Path(app.app.static_folder) / 'templates/apim-delegation.html')
+        # return render_template(template_file, params=apim_params)
+        template = app.app.jinja_env.get_template("templates/apim-delegation.html")
+        return template.render(params=apim_params)
 
     return app.app
 
