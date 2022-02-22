@@ -32,6 +32,7 @@ def create_app(config_name):
     @app.route('/apim-delegation')
     def index():
         apim_params = {
+            'referer': request.headers.get('Referer', 'refererNotFound'),
             'operation': request.args.get('operation', 'no operation found'),
             'returnUrl': request.args.get('returnUrl', 'https://orphanetapi.developer.azure-api.net/'),
             'salt': request.args.get('salt', 'no salt found'),
