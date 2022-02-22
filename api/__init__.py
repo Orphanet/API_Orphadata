@@ -22,11 +22,12 @@ def create_app(config_name):
         app.add_api('swagger_apim.yaml', arguments={'title': 'API Orphadata'}, pythonic_params=True)
 
     app.app.static_folder = module_path / 'static'
-    app.app.template_folder = module_path / 'static'
+    # app.app.template_folder = module_path / 'static'
     app.app.json_encoder = JSONEncoder
 
     app.app.jinja_env.globals['workaround_for_API_contract'] = "./openapi.json"  # manual override of the API_contract url, comment to return to default. cf templates/index.j2
     app.app.jinja_env.globals["defaultModelsExpandDepth"] = "-1"  # do not display data models
+
 
     @app.route('/apim-delegation')
     def index():
@@ -38,8 +39,14 @@ def create_app(config_name):
         }
         # template_file = str(Path(app.app.static_folder) / 'templates/apim-delegation.html')
         # return render_template(template_file, params=apim_params)
-        template = app.app.jinja_env.get_template("templates/apim-delegation.html")
+        template = app.app.jinja_env.get_template("apim-delegation.html")
         return template.render(params=apim_params)
+
+
+    @app.route('/list-templates')
+    def list_templates():
+        jinja_templates =  app.app.jinja_env.list_templates()
+        return jsonify(jinja_templates)
 
     return app.app
 
