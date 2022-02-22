@@ -37,9 +37,11 @@ def create_app(config_name):
             'returnUrl': request.args.get('returnUrl', 'https://orphanetapi.developer.azure-api.net/'),
             'salt': request.args.get('salt', 'no salt found'),
             'sig': request.args.get('sig', 'no sig found'),
+            'userId': request.args.get('userId', 'no userId found'),
+            'productId': request.args.get('productId', 'no productId found'),
+            'subscriptionId': request.args.get('subscriptionId', 'no subscriptionId found'),
         }
-        # template_file = str(Path(app.app.static_folder) / 'templates/apim-delegation.html')
-        # return render_template(template_file, params=apim_params)
+
         template = app.app.jinja_env.get_template("apim-delegation.html")
         return template.render(params=apim_params)
 
