@@ -6,6 +6,7 @@ from flask import jsonify, render_template, request
 import connexion
 from dotenv import load_dotenv
 
+import api.routes as routes
 from api.util import JSONEncoder
 
 module_path = Path(__file__).parent.parent
@@ -28,23 +29,8 @@ def create_app(config_name):
     app.app.jinja_env.globals['workaround_for_API_contract'] = "./openapi.json"  # manual override of the API_contract url, comment to return to default. cf templates/index.j2
     app.app.jinja_env.globals["defaultModelsExpandDepth"] = "-1"  # do not display data models
 
-
-    @app.route('/apim-delegation')
-    def index():
-        apim_params = {
-            'referer': request.headers.get('Referer', 'refererNotFound'),
-            'operation': request.args.get('operation', 'no operation found'),
-            'returnUrl': request.args.get('returnUrl', 'https://orphanetapi.developer.azure-api.net/'),
-            'salt': request.args.get('salt', 'no salt found'),
-            'sig': request.args.get('sig', 'no sig found'),
-            'userId': request.args.get('userId', 'no userId found'),
-            'productId': request.args.get('productId', 'no productId found'),
-            'subscriptionId': request.args.get('subscriptionId', 'no subscriptionId found'),
-        }
-
-        template = app.app.jinja_env.get_template("apim-delegation.html")
-        return template.render(params=apim_params)
-
+    from .routes import apim_delegation
+    app.app.register_blueprint(apim_delegation.bp)
 
     @app.route('/list-templates')
     def list_templates():
