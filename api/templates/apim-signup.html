@@ -1,0 +1,22 @@
+<h1>APIM Sign Up</h1>
+<form action="/apim-delegation/signUp" method="post">
+    <label for="firstName">First name</label>
+    <input id="firstName" name="firstName" type="text"/>
+    <label for="lastName">Last name</label>
+    <input id="lastName" name="lastName" type="text"/>
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email"/>
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password"/>
+
+    <input type="submit" name="signUp" value="Sign up"/>
+
+    <input type="hidden" name="operation" value="{{ params.operation }}"/>
+    <input type="hidden" name="returnUrl" value="{{ params.returnUrl }}"/>
+    <input type="hidden" name="salt" value="{{ params.salt }}"/>
+    <input type="hidden" name="sig" value="{{ params.sig }}"/>
+</form>
+
+{% if params.errorMessage %}
+<p>{{ params.errorMessage }} </p>
+{% endif %}

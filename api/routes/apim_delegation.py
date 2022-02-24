@@ -1,8 +1,10 @@
+from typing import Dict, List
 from flask import (
     Blueprint, render_template, request
 )
 
 import api.services
+from ..services.azure_query_models import queryParams
 
 
 bp = Blueprint('delegation', __name__, url_prefix='/apim-delegation')
@@ -10,18 +12,17 @@ bp = Blueprint('delegation', __name__, url_prefix='/apim-delegation')
 
 @bp.route('/', methods=('GET', 'POST'))
 def index():
-    apim_params = {
-        'referer': request.headers.get('Referer', 'refererNotFound'),
-        'operation': request.args.get('operation', 'no operation found'),
-        'returnUrl': request.args.get('returnUrl', 'https://orphanetapi.developer.azure-api.net/'),
-        'salt': request.args.get('salt', 'no salt found'),
-        'sig': request.args.get('sig', 'no sig found'),
-        'userId': request.args.get('userId', 'no userId found'),
-        'productId': request.args.get('productId', 'no productId found'),
-        'subscriptionId': request.args.get('subscriptionId', 'no subscriptionId found'),
-    }
+    query_params = queryParams(request=request)
+    # if not query_params.validate_request():
+    #     return 'Error, it looks like the request does not come from Azure, sorry...', 401
 
-    # template = app.app.jinja_env.get_template("apim-delegation.html")
-    # return template.render(params=apim_params)
-
-    return render_template("apim-delegation.html", params=apim_params)
+    if query_params.operation == 'SignUp':
+        return render_template('apim-signup.html', params=query_params)
+    if query_params.operation == 'SignIn':
+        return render_template('apim-signin.html')
+    if query_params.operation == 'SignOut':
+        return render_template('apim-signout.html')
+    if query_params.operation == 'Subscribe':
+        return render_template('apim-subscribe.html')
+    if query_params.operation == 'Unsubscribe':
+        return render_template('apim-unsubscribe.html')

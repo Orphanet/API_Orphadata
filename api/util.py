@@ -1,7 +1,4 @@
-import base64
 import datetime
-import hmac
-import hashlib
 import six
 import typing
 
@@ -165,13 +162,3 @@ def _deserialize_dict(data, boxed_type):
     return {k: _deserialize(v, boxed_type)
             for k, v in six.iteritems(data)}
 
-
-def is_signature_valid(params: typing.Dict) -> bool:
-    msg = bytes(params.salt + '\n' + params.returnUrl, 'utf-8')
-    secret_key = b'aW50ZWdyYXRpb24mMjAyMjAzMjIxNTU0JmE4U2ZEYWRLSEdxVG5jSWtwRHp1aGpBQWJxZE9tM0wyOGkzTVVRZXNBWXI2c1Q4TzYrWngrZ3lkK3M1MCt2K1RwcDRQM0RpNzg0Qk9TdllFU0o5WDZnPT0='
-    signature = params.sig
-
-    encoder = hmac.new(bytes(base64.b64decode(secret_key).decode('utf-8'), 'utf-8'), digestmod='sha512')
-    encoder.update(msg)
-
-    return hmac.compare_digest(base64.b64encode(encoder.digest()).decode(), signature)
