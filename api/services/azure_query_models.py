@@ -1,6 +1,5 @@
 import base64
 import hmac
-import string
 from urllib.request import Request
 
 
