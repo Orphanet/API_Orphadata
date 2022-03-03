@@ -9,7 +9,7 @@ import string
 import os
 import hashlib
 
-from ..services.arm_settings import APIM_BASE_URL
+from ..services.arm_settings import APIM_BASE_URL, APIM_BASE
 
 
 def generate_token(lifetime: Dict={'minutes': 2}):
@@ -125,4 +125,26 @@ def get_product(product_id: str):
         "Authorization": '{}'.format(str(token))
     }
     response = requests.get(url=URL, headers=headers)
+    return response.json()
+
+
+def create_subscription(user_id: string, product_id: string, subscription_name: string):
+    token = generate_token()
+
+    data = {
+        "properties": {
+            "ownerId": "{}users/{}".format(APIM_BASE, user_id),
+            "scope": "{}products/{}".format(APIM_BASE, product_id),
+            "displayName": subscription_name
+        }
+    }
+
+    URL = APIM_BASE_URL + 'subscriptions/{}?api-version=2021-08-01'.format(subscription_name)
+
+    headers = {
+        "Content-Type": 'application/json',
+        "Authorization": '{}'.format(str(token))
+    }
+    response = requests.put(url=URL, data=json.dumps(data), headers=headers)       
+
     return response.json()

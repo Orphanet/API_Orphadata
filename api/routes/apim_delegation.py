@@ -1,3 +1,4 @@
+from ast import Subscript
 from typing import Dict, List
 from urllib.parse import urlparse
 from flask import Blueprint, redirect, render_template, request
@@ -33,7 +34,7 @@ def index():
         return render_template('apim-signin.html', params=query_params)
 
     if query_params.operation == 'SignOut':
-        return render_template('apim-signout.html')
+        return redirect('/apim-delegation?' + query_params.returnUrl)
 
     if query_params.operation == 'Subscribe':
         product = arm_apiQueries.get_product(product_id=query_params.productId)
@@ -120,4 +121,25 @@ def signin():
     }    
 
     redirectUrl = APIM_DEV_PORTAL_URL + "signin-sso?" + urlencode(redirect_query)
+    return redirect(redirectUrl)
+
+
+@bp.route('/subscribe', methods=('GET', 'POST'))
+def subscribe():
+
+    query_params = {
+        'operation': request.form.get('operation'),
+        'salt': request.form.get('salt'),
+        'sig': request.form.get('sig'),
+        'productId': request.form.get('productId'),
+        'userId': request.form.get('userId'),
+    }
+
+    response = arm_apiQueries.create_subscription(user_id=request.form.get('userId'), product_id=request.form.get('productId'), subscription_name=request.form.get('subscriptionName'))
+    
+    if 'error' in response:
+        query_params.update(errorMessage=response["error"]["message"])
+        return redirect('/apim-delegation?' + urlencode(query_params))
+
+    redirectUrl = APIM_DEV_PORTAL_URL + 'product#product={}'.format(request.form.get('productId'))
     return redirect(redirectUrl)

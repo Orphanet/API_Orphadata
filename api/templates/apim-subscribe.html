@@ -1,8 +1,8 @@
 <h1>Subscribe</h1>
 
-<div>Product: {{ product.name }}</div>
+<h3>Product: {{ product.name }}</h3>
 
-<form action="/subscribe" method="post">
+<form action="/apim-delegation/subscribe" method="post">
     <label for="subscriptionName">Subscription name</label>
     <input id="subscriptionName" name="subscriptionName" type="text"/>
 
@@ -13,6 +13,9 @@
     <input type="hidden" name="salt" value="{{ params.salt }}"/>
     <input type="hidden" name="sig" value="{{ params.sig }}"/>
     <input type="hidden" name="productId" value="{{ params.productId }}"/>
-    <input type="hidden" name="subscriptionId" value="{{ params.subscriptionId }}"/>
     <input type="hidden" name="userId" value="{{ params.userId }}"/>
 </form>
+
+{% if params.errorMessage %}
+<p>{{ params.errorMessage }}</p>
+{% endif %}
