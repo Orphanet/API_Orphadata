@@ -41,7 +41,7 @@ def index():
         return render_template('apim-subscribe.html', params=query_params, product=product)
 
     if query_params.operation == 'Unsubscribe':
-        return render_template('apim-unsubscribe.html')
+        return render_template('apim-unsubscribe.html', redirect_url=APIM_DEV_PORTAL_URL + '?' + query_params.returnUrl)
 
 
 @bp.route('/signup', methods=('GET', 'POST'))
