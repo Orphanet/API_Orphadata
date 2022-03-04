@@ -148,3 +148,44 @@ def create_subscription(user_id: string, product_id: string, subscription_name: 
     response = requests.put(url=URL, data=json.dumps(data), headers=headers)       
 
     return response.json()
+
+
+def update_subscription_state(sid: string, state: string) -> Dict:
+    """Update subscription state
+
+    Parameters
+    ----------
+    sid : string
+        Subscription id (i.e. subscription name)
+    state : string
+        State of the subscription. One of the following:
+            - "active"
+            - "cancelled"	
+            - "expired"
+            - "cancelled"
+            - "rejected"
+            - "submitted"
+            - "suspended"
+
+    Returns
+    -------
+    _type_
+        Azure API Response in JSON format
+    """
+    token = generate_token()
+
+    data = {
+        "properties": {
+            "state": state
+        }
+    }
+
+    URL = APIM_BASE_URL + '/subscriptions/{}?api-version=2021-08-01'.format(sid)
+
+    headers = {
+        "Content-Type": 'application/json',
+        "Authorization": '{}'.format(str(token))
+    }
+    response = requests.patch(url=URL, data=json.dumps(data), headers=headers)       
+
+    return response.json()
