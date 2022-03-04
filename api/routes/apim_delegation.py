@@ -34,7 +34,7 @@ def index():
         return render_template('apim-signin.html', params=query_params)
 
     if query_params.operation == 'SignOut':
-        return redirect('/apim-delegation?' + query_params.returnUrl)
+        return redirect(APIM_DEV_PORTAL_URL + '?' + query_params.returnUrl)
 
     if query_params.operation == 'Subscribe':
         product = arm_apiQueries.get_product(product_id=query_params.productId)
@@ -84,7 +84,7 @@ def signup():
         'returnUrl': request.form.get('returnUrl', '/')
     }    
 
-    redirectUrl = APIM_DEV_PORTAL_URL + "signin-sso?" + urlencode(redirect_query)
+    redirectUrl = APIM_DEV_PORTAL_URL + "/signin-sso?" + urlencode(redirect_query)
     return redirect(redirectUrl)
 
 
@@ -120,7 +120,7 @@ def signin():
         'returnUrl': request.form.get('returnUrl', '/')
     }    
 
-    redirectUrl = APIM_DEV_PORTAL_URL + "signin-sso?" + urlencode(redirect_query)
+    redirectUrl = APIM_DEV_PORTAL_URL + "/signin-sso?" + urlencode(redirect_query)
     return redirect(redirectUrl)
 
 
@@ -141,5 +141,5 @@ def subscribe():
         query_params.update(errorMessage=response["error"]["message"])
         return redirect('/apim-delegation?' + urlencode(query_params))
 
-    redirectUrl = APIM_DEV_PORTAL_URL + 'product#product={}'.format(request.form.get('productId'))
+    redirectUrl = APIM_DEV_PORTAL_URL + '/product#product={}'.format(request.form.get('productId'))
     return redirect(redirectUrl)

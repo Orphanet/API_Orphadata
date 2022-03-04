@@ -60,7 +60,7 @@ def create_user(user_contract: Dict):
 
     data = {"properties": user_contract}
 
-    URL = APIM_BASE_URL + 'users/{}?api-version=2021-08-01'.format(userId)
+    URL = APIM_BASE_URL + '/users/{}?api-version=2021-08-01'.format(userId)
 
     headers = {
         "Content-Type": 'application/json',
@@ -79,7 +79,7 @@ def authenticate_user(email: str, password: str):
         "Authorization": 'Basic {}'.format(credentials)
     }
 
-    URL = APIM_BASE_URL + 'identity?api-version=2021-08-01'
+    URL = APIM_BASE_URL + '/identity?api-version=2021-08-01'
     response = requests.get(URL, headers=headers)
 
     try:
@@ -104,7 +104,7 @@ def get_shared_access_token(user_id) -> Dict:
         }
     }
 
-    URL = APIM_BASE_URL + 'users/{}/token?api-version=2021-08-01'.format(user_id)
+    URL = APIM_BASE_URL + '/users/{}/token?api-version=2021-08-01'.format(user_id)
 
     headers = {
         "Content-Type": 'application/json',
@@ -118,7 +118,7 @@ def get_shared_access_token(user_id) -> Dict:
 def get_product(product_id: str):
     token = generate_token()
 
-    URL = APIM_BASE_URL + 'products/{}?api-version=2021-08-01'.format(product_id)
+    URL = APIM_BASE_URL + '/products/{}?api-version=2021-08-01'.format(product_id)
 
     headers = {
         "Content-Type": 'application/json',
@@ -139,7 +139,7 @@ def create_subscription(user_id: string, product_id: string, subscription_name: 
         }
     }
 
-    URL = APIM_BASE_URL + 'subscriptions/{}?api-version=2021-08-01'.format(subscription_name)
+    URL = APIM_BASE_URL + '/subscriptions/{}?api-version=2021-08-01'.format(subscription_name)
 
     headers = {
         "Content-Type": 'application/json',
