@@ -4,6 +4,7 @@ import hmac
 import json
 from typing import Dict
 import random
+from xmlrpc.client import boolean
 import requests
 import string
 import os
@@ -128,29 +129,30 @@ def get_product(product_id: str):
     return response.json()
 
 
-def create_subscription(user_id: string, product_id: string, subscription_name: string):
+def create_subscription(user_id: string, product_id: string, subscription_name: string, notify: boolean=False):
     token = generate_token()
 
     data = {
         "properties": {
-            "ownerId": "{}users/{}".format(APIM_BASE, user_id),
-            "scope": "{}products/{}".format(APIM_BASE, product_id),
+            "ownerId": "{}/users/{}".format(APIM_BASE, user_id),
+            "scope": "{}/products/{}".format(APIM_BASE, product_id),
             "displayName": subscription_name
         }
     }
 
-    URL = APIM_BASE_URL + '/subscriptions/{}?api-version=2021-08-01'.format(subscription_name)
+    URL = APIM_BASE_URL + '/subscriptions/{}?notify={}&api-version=2021-08-01'.format(subscription_name, notify)
 
     headers = {
         "Content-Type": 'application/json',
         "Authorization": '{}'.format(str(token))
     }
-    response = requests.put(url=URL, data=json.dumps(data), headers=headers)       
+    response = requests.put(url=URL, data=json.dumps(data), headers=headers)
+    print(response.json())
 
     return response.json()
 
 
-def update_subscription_state(sid: string, state: string) -> Dict:
+def update_subscription_state(sid: string, state: string, notify: boolean=False) -> Dict:
     """Update subscription state
 
     Parameters
@@ -166,6 +168,8 @@ def update_subscription_state(sid: string, state: string) -> Dict:
             - "rejected"
             - "submitted"
             - "suspended"
+    notify : boolean
+        True to send a subscritpion request notification (to user and administrator), False otherwise    
 
     Returns
     -------
@@ -180,7 +184,7 @@ def update_subscription_state(sid: string, state: string) -> Dict:
         }
     }
 
-    URL = APIM_BASE_URL + '/subscriptions/{}?api-version=2021-08-01'.format(sid)
+    URL = APIM_BASE_URL + '/subscriptions/{}?notify={}&api-version=2021-08-01'.format(sid, notify)
 
     headers = {
         "Content-Type": 'application/json',
