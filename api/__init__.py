@@ -20,7 +20,7 @@ def create_app(config_name):
     with app.app.app_context():
         print(config_name)
         app.app.config.from_object(config_by_name[config_name])
-        app.add_api('swagger_apim.yaml', arguments={'title': 'API Orphadata'}, pythonic_params=True)
+        app.add_api('swagger.yaml', arguments={'title': 'API Orphadata'}, pythonic_params=True)
 
     app.app.static_folder = module_path / 'static'
     # app.app.template_folder = module_path / 'static'
