@@ -123,7 +123,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/genericAll'
-          description: Access denied
         "404":
           description: Queried disorder not found
         "500":
@@ -283,7 +282,6 @@ paths:
         ORPHAcode and preferred term.
       operationId: generic_product7
       responses:
-        "200":
         "200":
           description: Successful operation
           content:
@@ -2401,11 +2399,11 @@ components:
         orphanetURL: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=558
         date: "2021-10-01 04:49:04"
         disorderDisorderAssociation:
-          disorderDisorderAssociationType: Preferential parent
-          rootDisorder: null
-          targetDisorder:
-            ORPHAcode: 98023
-            preferredTerm: Rare systemic or rheumatologic disease
+          - disorderDisorderAssociationType: Preferential parent
+            rootDisorder: null
+            targetDisorder:
+              ORPHAcode: 98023
+              preferredTerm: Rare systemic or rheumatologic disease
     product7_array:
       type: array
       items:
