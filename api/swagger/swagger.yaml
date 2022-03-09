@@ -2407,7 +2407,7 @@ components:
     product7_array:
       type: array
       items:
-        $ref: '#components/schemas/product7'
+        $ref: '#/components/schemas/product7'
     product7_disorderDisorderAssociation:
       type: object
       properties:
