@@ -110,9 +110,9 @@ def query_genes_by_orphacode(orphacode):  # noqa: E501
 
 
 def query_genes_genes():  # noqa: E501
-    """Get the list of ORPHAcodes associated to at least one gene.
+    """Get the list of genes associated to at least one clinical entity.
 
-    The result is a collection of ORPHAcodes associated to at least one gene. # noqa: E501
+    The result is a collection of genes associated to at least one clinical entity. Each gene is presented by its name(s) and symbol(s)
 
     """
     query = {
