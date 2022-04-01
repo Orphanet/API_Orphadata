@@ -10,6 +10,43 @@ PRODUCT = PRODUCTS.get('product7')
 index = "orphadata_en_product7"
 
 
+def query_linearization_base():
+    """Get medical specialties associated with all ORPHAcodes
+
+    The result is a collection of information relative to all ORPHAcodes and their medical specialy.
+    """
+    query = {
+        'query': {
+            'match_all': {}
+        }
+    }
+
+    es_client = current_app.config.get('ES_NODE')
+    response = qc.es_scroll(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
+
+
+
+def query_linearization_orphacodes():
+    """Get all orphacodes for product 7
+    """
+    query = {
+        "query": {
+            "match_all": {}
+        },
+        "_source": ["ORPHAcode", "Preferred term"]
+    }
+
+    es_client = current_app.config.get('ES_NODE')
+    response = qc.es_scroll(es=es_client, index=index, query=query)
+
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+
+    return wrapped_response.get()
+
+
 def query_linearization_by_orphacode(orphacode):  # noqa: E501
     """Get associated genes and genes information of a clinical entity searching by its ORPHAcode.
 
@@ -28,7 +65,6 @@ def query_linearization_by_orphacode(orphacode):  # noqa: E501
                 "ORPHAcode": int(orphacode)
             }
         },
-        # "_source": ["ORPHAcode"]
     }
 
     es_client = current_app.config.get('ES_NODE')
@@ -48,7 +84,7 @@ def query_linearization_parents():
     }
 
     es_client = current_app.config.get('ES_NODE')
-    response = qc.multiple_res(es_client, index, query)
+    response = qc.es_scroll(es=es_client, index=index, query=query)
 
     if not isinstance(response, tuple):      
         response_parsed = []
@@ -85,7 +121,7 @@ def query_linearization_by_parent(parentcode):  # noqa: E501
     }
 
     es_client = current_app.config.get('ES_NODE')
-    response = qc.multiple_res(es_client, index, query)
+    response = qc.es_scroll(es=es_client, index=index, query=query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 
     return wrapped_response.get()
