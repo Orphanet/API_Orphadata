@@ -29,7 +29,8 @@ def query_classification_by_hchid(hchid):  # noqa: E501
     }
 
     es_client = current_app.config.get('ES_NODE')
-    response = qc.multiple_res(es_client, index, query)
+    # response = qc.multiple_res(es_client, index, query)
+    response = qc.es_scroll(es=es_client, index=index, query=query)
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
     return wrapped_response.get()

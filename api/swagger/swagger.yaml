@@ -23,18 +23,7 @@ servers:
 # - UserSecurity: []
 # - AdminSecurity: []
 tags:
-- name: Catalog of aggregated data from Orphanet
-  description: Generic
-  externalDocs:
-    description: >
-      Search for all available data products of Orphanet accessible in different languages
-      such as english (en), french (fr), german (de), spanish (es), dutch (nl), italian (it), 
-      portguese (pt), polish (pl), czech (cs), turkish (tr), russian (ru) and chinese (zh).
-      The results include a list of ORPHAcode and their preferred term, plus key product-related 
-      informations useful to query more detailed resources from specific available products.
-    url: http://www.orphadata.org/cgi-bin/index.php
 - name: Rare diseases and cross-referencing
-  description: Product 1
   externalDocs:
     description: >
       Search for clinical entity informations and alignements with other
@@ -45,7 +34,6 @@ tags:
       MesH, MedDra, and OMIM systems in the selected language.
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Classifications of rare diseases
-  description: Product 3
   externalDocs:
     description: Search for Orphanet classifications, a multi-hierarchical and polyparental
       system built on the Orphanet nomenclature and organised around the major medical
@@ -57,7 +45,6 @@ tags:
       n-1 clinical entities).
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Rare diseases and associated phenotypes
-  description: Product 4
   externalDocs:
     description: Search for rare diseases annotated with Human Phenotype Ontology
       (HPO) terms. The result is the collection of HPO phenotypes characterized by
@@ -67,7 +54,6 @@ tags:
       status of the association between the rare disease and HPO terms is also available.
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Rare diseases and associated gene
-  description: Product 6
   externalDocs:
     description: Search for rare diseases and their associated genes. The result is
       a collection of data including the genetic international nomenclature, the gene
@@ -75,7 +61,6 @@ tags:
       genetic databases, the relationship between genes and the searched disease.
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Medical specialties of rare diseases
-  description: Product 7
   externalDocs:
     description: The Orphanet classification of rare diseases has a polyparental structure.
       It implies that a clinical entity is included in as many classification hierarchies as 
@@ -89,7 +74,6 @@ tags:
       It is updated once a month.
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Epidemiology of rare diseases
-  description: Product 9 (prev)
   externalDocs:
     description: Orphanet collects and curates data concerning the epidemiology of 
       rare diseases. A systematic survey of the literature is carried out in order
@@ -100,296 +84,12 @@ tags:
       together with their respective intervals per geographical area.
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Natural history of rare diseases
-  description: Product 9 (ages)
   externalDocs:
     description: The rare diseases natural history dataset includes rare diseases 
       (ORPHAcode, preferred name, classification level, and typology) with available data 
       related to type of inheritance, interval average age of onset and/or age of death.
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 paths:
-  /orphadata/generics:
-    get:
-      tags:
-      - Catalog of aggregated data from Orphanet
-      summary: Get generic informations about all available ORPHADATA products
-      # description: >
-      #   The result is a list of all available products described with their product ID,
-      #   product name, product description and the languages in which products can be retrieved. 
-      operationId: products_description
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/genericAll'
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_generic
-  /orphadata/generics/rd-cross-referencing:
-    get:
-      tags:
-      - Catalog of aggregated data from Orphanet
-      summary: Get generic informations useful to make more detailed requests on product 1 data
-      description: >
-        The result is a list of rare diseases informations including
-        ORPHAcode, preferred term, and a mapping reference of the clinical entity
-        and the OMIM system in the selected language
-      operationId: generic_product1
-      parameters:
-      - in: query
-        name: lang
-        description: a language in the list supported by Orphanet (cs, de,
-          en, es, fr, it, nl, pl, pt)
-        required: false
-        schema:
-          type: string
-          default: en
-          enum:
-          - cs
-          - de
-          - en
-          - es
-          - fr
-          - it
-          - nl
-          - pl
-          - pt
-          - ru
-          - tr
-          - zh
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/generic_product1'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_generic
-  /orphadata/generics/rd-classification:
-    get:
-      tags:
-      - Catalog of aggregated data from Orphanet
-      summary: Get generic informations useful to make more detailed requests on product 3 data
-      description: >
-        The result is a list of the orphanet classification of rare diseases. 
-        Each orphanet classification is represented with its hchId, hchTag
-        and a list of ORPHAcodes and their preferred term associated to rare
-        diseases belonging to it.
-      operationId: generic_product3
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/generic_product3'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_generic  
-  /orphadata/generics/rd-phenotypes:
-    get:
-      tags:
-      - Catalog of aggregated data from Orphanet
-      summary: Get generic informations useful to make more detailed requests on product 4 data
-      description: >
-        The result is a list of rare diseases informations including
-        ORPHAcode, preferred term, and a list of their associated HPOs
-      operationId: generic_product4
-      parameters:
-      - in: query
-        name: lang
-        description: a language in the list supported by Orphanet (de,
-          en, es, fr, it, pt, nl)
-        required: false
-        schema:
-          type: string
-          default: en
-          enum:
-          - de
-          - en
-          - fr
-          - it
-          - nl
-          - pt
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/generic_product4'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_generic
-  /orphadata/generics/rd-associated-genes:
-    get:
-      tags:
-      - Catalog of aggregated data from Orphanet
-      summary: Get generic informations useful to make more detailed requests on product 6 data
-      description: >
-        The result is a list of rare diseases informations including
-        ORPHAcode, preferred term, and a list of their associated genes.
-      operationId: generic_product6
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/generic_product6'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_generic
-  /orphadata/generics/rd-medical-specialties:
-    get:
-      tags:
-      - Catalog of aggregated data from Orphanet
-      summary: Get generic informations useful to make more detailed requests on product 7 data
-      description: >
-        The result is a list of the clinical entities at the disorder level 
-        and their preferential parent, both referred to as  their related 
-        ORPHAcode and preferred term.
-      operationId: generic_product7
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/generic_product7'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_generic
-  /orphadata/generics/rd-natural-history:
-    get:
-      tags:
-      - Catalog of aggregated data from Orphanet
-      summary: Get generic informations useful to make more detailed requests on product 9 data
-      description: The result is a collection of clinical entities (ORPhacode, preferred
-        term, expertlink) and associated epidemiological data characterized as point
-        prevalence, birth prevalence, lifelong prevalence and incidence, or the number
-        of cases/families reported together with their respective intervals per geographical
-        area (country, continent) and translated in the selected language.
-      operationId: generic_product9_ages
-      parameters:
-      - in: query
-        name: lang
-        description: a language in the list supported by Orphanet (cs, de,
-          en, es, fr, it, nl, pl, pt, ru)
-        required: false
-        schema:
-          type: string
-          default: en
-          enum:
-          - cs
-          - de
-          - en
-          - es
-          - fr
-          - it
-          - nl
-          - pl
-          - pt
-          - ru
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/generic_product9_ages'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_generic
-  /orphadata/generics/rd-epidemiology:
-    get:
-      tags:
-      - Catalog of aggregated data from Orphanet
-      summary: Get generic informations useful to make more detailed requests on product 9 data
-      description: The result is a collection of clinical entities (ORPhacode, preferred
-        term, expertlink) and associated epidemiological data characterized as point
-        prevalence, birth prevalence, lifelong prevalence and incidence, or the number
-        of cases/families reported together with their respective intervals per geographical
-        area (country, continent) and translated in the selected language.
-      operationId: generic_product9_prev
-      parameters:
-      - in: query
-        name: lang
-        description: A language in the list supported by Orphanet
-        required: false
-        schema:
-          type: string
-          default: en
-          enum:
-          - cs
-          - de
-          - en
-          - es
-          - fr
-          - it
-          - nl
-          - pl
-          - pt
-          - ru
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/generic_product9_prev'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_generic
   /orphadata/details/rd-cross-referencing:
     get:
       tags:
@@ -545,7 +245,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_references
-  /orphadata/details/rd-cross-referencing/names/{name}:
+  /orphadata/details/rd-cross-referencing/orphacodes/names/{name}:
     get:
       tags:
       - Rare diseases and cross-referencing

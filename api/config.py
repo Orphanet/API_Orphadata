@@ -31,18 +31,10 @@ class Config:
     ES_SCROLL_TIMEOUT = '1m'
 
     URL_ENDPOINTS = { 
-        'generics_base': '/orphadata/generics',
-        'generics_references': '/orphadata/generics/rd-cross-referencing',
-        'generics_classification': '/orphadata/generics/rd-classification',
-        'generics_phenotypes': '/orphadata/generics/rd-phenotypes',
-        'generics_genes': '/orphadata/generics/rd-associated-genes',
-        'generics_linearization': '/orphadata/generics/rd-medical-specialties',
-        'generics_history': '/orphadata/generics/rd-natural-history',
-        'generics_epidemiology': '/orphadata/generics/rd-epidemiology',
         'references_base': '/orphadata/details/rd-cross-referencing',
         'references_orphacodes': '/orphadata/details/rd-cross-referencing/orphacodes',
         'references_by_orphacode': '/orphadata/details/rd-cross-referencing/orphacodes/{}',
-        'references_by_name': '/orphadata/details/rd-cross-referencing/names/{}',
+        'references_by_name': '/orphadata/details/rd-cross-referencing/orphacodes/names/{}',
         'references_by_omim': '/orphadata/details/rd-cross-referencing/omims/{}',
         'references_icds': '/orphadata/details/rd-cross-referencing/icds',
         'references_by_icd': '/orphadata/details/rd-cross-referencing/icds/{}',
