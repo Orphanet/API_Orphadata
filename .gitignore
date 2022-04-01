@@ -7,6 +7,7 @@ env/
 .tox
 
 .varenv
+**.arm_env
 
 build/
 tools/
