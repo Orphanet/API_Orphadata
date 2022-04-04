@@ -10,6 +10,46 @@ PRODUCT = PRODUCTS.get('product3')
 index_base = "orphadata_en_product3_{}"
 
 
+def query_classification_base():  # noqa: E501
+    """Get all clinical entities information for all hierarchical classification.
+
+    """
+
+    index = index_base.format("*")
+
+    query = {
+        'query': {
+            'match_all': {}
+        }
+    }
+
+    es_client = current_app.config.get('ES_NODE')
+    response = qc.es_scroll(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
+
+
+
+def query_classification_orphacodes():
+
+    index = index_base.format("*")
+
+    query = {
+        "query": {
+            "match_all": {}
+        },
+        "_source": ["ORPHAcode", "name"]
+}
+
+    es_client = current_app.config.get('ES_NODE')
+    response = qc.es_scroll(es_client, index, query)
+
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
+
+
 def query_classification_by_hchid(hchid):  # noqa: E501
     """Get the organisation of all ORPHAcodes available for a selected classification.
 

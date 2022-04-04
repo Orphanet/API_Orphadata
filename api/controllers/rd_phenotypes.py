@@ -140,6 +140,43 @@ def query_phenotypes_by_orphacode(orphacode):  # noqa: E501
     return wrapped_response.get()
 
 
+def query_phenotypes_hpoids():
+    """Get the list of all available HPOs
+
+    The result is a collection of information relative to all ORPHAcodes and their medical specialty.
+
+    Returns
+    -------
+    _type_
+        _description_
+    """
+    lang = request.args.get("lang", "en")
+    if PRODUCT['lang'] != lang.lower():
+        PRODUCT['lang'] = lang.lower()
+
+    index = index_base.format(lang.lower())
+
+    query = {
+        "query": {
+            "match_all": {}
+        },
+        "_source": ["Disorder.HPODisorderAssociation.HPO"]
+    }
+
+    es_client = current_app.config.get('ES_NODE')
+    response = qc.es_scroll(es_client, index, query)
+    print(response)
+
+    # parsed_response = []
+    # for hit in response:
+    #     parsed_response.append(hit.pop('Disorder'))
+
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    
+    return wrapped_response.get()
+
+
+
 def query_phenotypes_by_hpoids(hpoids):
     """
     hpoids = ['HP:0000768', 'HP:0001065', 'HP:0001166', 'HP:0001763']

@@ -452,6 +452,30 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_references
+  /orphadata/details/rd-classification:
+    get:
+      tags:
+      - Classifications of rare diseases
+      summary: Get all hierarchical classification information for all clinical entities.
+      description: >
+        The result is a collection of hierarchical classification with ...
+      operationId: query_classification_base
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product3_array'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_classification
   /orphadata/details/rd-classification/hchids:
     get:
       tags:
@@ -583,6 +607,29 @@ paths:
           description: Access denied
         "404":
           description: Queried clinical entity not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_classification
+  /orphadata/details/rd-classification/orphacodes:
+    get:
+      tags:
+      - Classifications of rare diseases
+      summary: Get the list of all ORPHAcodes and their preferred term in the classification. 
+      description: The result is a collection of ORPHAcodes and their preferred term in the classification.
+      operationId: query_classification_orphacodes
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product3_orphacode_in_hchid'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
         "500":
           description: Unknown internal error
         default:
@@ -772,6 +819,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/product4'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_phenotypes
+  /orphadata/details/rd-phenotypes/hpoids:
+    get:
+      tags:
+      - Rare diseases and associated phenotypes
+      summary: Get the list of all available HPOs.
+      description: The result is a collection of information relative to all ORPHAcodes and their medical specialty
+        in the selected language.
+      operationId: query_phenotypes_hpoids
+      parameters:
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
+        schema:
+          type: string
+          default: en
+          enum:
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pt
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product4_list'
         "403":
           description: Access denied
         "404":
@@ -1594,6 +1681,10 @@ components:
           example: 146
         items:
           $ref: '#/components/schemas/product3'
+    product3_array:
+      type: array
+      items:
+        $ref: '#/components/schemas/product3_orphacode_in_hchid'
     product3:
       type: object
       properties:
