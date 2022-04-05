@@ -90,7 +90,7 @@ tags:
       related to type of inheritance, interval average age of onset and/or age of death.
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 paths:
-  /orphadata/details/rd-cross-referencing:
+  /rd-cross-referencing:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -140,7 +140,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_references
-  /orphadata/details/rd-cross-referencing/orphacodes:
+  /rd-cross-referencing/orphacodes:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -184,7 +184,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_references
-  /orphadata/details/rd-cross-referencing/orphacodes/{orphacode}:
+  /rd-cross-referencing/orphacodes/{orphacode}:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -245,7 +245,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_references
-  /orphadata/details/rd-cross-referencing/orphacodes/names/{name}:
+  /rd-cross-referencing/orphacodes/names/{name}:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -302,7 +302,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_references
-  /orphadata/details/rd-cross-referencing/omims:
+  /rd-cross-referencing/omims:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -346,7 +346,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_references
-  /orphadata/details/rd-cross-referencing/omims/{omim}:
+  /rd-cross-referencing/omims/{omim}:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -399,7 +399,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_references
-  /orphadata/details/rd-cross-referencing/icds:
+  /rd-cross-referencing/icds:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -443,7 +443,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_references
-  /orphadata/details/rd-cross-referencing/icds/{icd}:
+  /rd-cross-referencing/icds/{icd}:
     get:
       tags:
       - Rare diseases and cross-referencing
@@ -496,7 +496,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_references
-  /orphadata/details/rd-classification:
+  /rd-classification:
     get:
       tags:
       - Classifications of rare diseases
@@ -520,7 +520,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_classification
-  /orphadata/details/rd-classification/hchids:
+  /rd-classification/hchids:
     get:
       tags:
       - Classifications of rare diseases
@@ -545,7 +545,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_classification
-  /orphadata/details/rd-classification/hchids/{hchid}/orphacodes:
+  /rd-classification/hchids/{hchid}/orphacodes:
     get:
       tags:
       - Classifications of rare diseases
@@ -581,7 +581,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_classification
-  /orphadata/details/rd-classification/hchids/{hchid}:
+  /rd-classification/hchids/{hchid}:
     get:
       tags:
       - Classifications of rare diseases
@@ -617,7 +617,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_classification
-  /orphadata/details/rd-classification/orphacodes/{orphacode}/hchids:
+  /rd-classification/orphacodes/{orphacode}/hchids:
     get:
       tags:
       - Classifications of rare diseases
@@ -656,7 +656,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_classification
-  /orphadata/details/rd-classification/orphacodes:
+  /rd-classification/orphacodes:
     get:
       tags:
       - Classifications of rare diseases
@@ -679,7 +679,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_classification
-  /orphadata/details/rd-classification/orphacodes/{orphacode}/hchids/{hchid}:
+  /rd-classification/orphacodes/{orphacode}/hchids/{hchid}:
     get:
       tags:
       - Classifications of rare diseases
@@ -728,7 +728,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_classification
-  /orphadata/details/rd-phenotypes:
+  /rd-phenotypes:
     get:
       tags:
       - Rare diseases and associated phenotypes
@@ -773,7 +773,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_phenotypes
-  /orphadata/details/rd-phenotypes/orphacodes:
+  /rd-phenotypes/orphacodes:
     get:
       tags:
       - Rare diseases and associated phenotypes
@@ -813,7 +813,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_phenotypes
-  /orphadata/details/rd-phenotypes/orphacodes/{orphacode}:
+  /rd-phenotypes/orphacodes/{orphacode}:
     get:
       tags:
       - Rare diseases and associated phenotypes
@@ -872,7 +872,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_phenotypes
-  /orphadata/details/rd-phenotypes/hpoids:
+  /rd-phenotypes/hpoids:
     get:
       tags:
       - Rare diseases and associated phenotypes
@@ -912,7 +912,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_phenotypes
-  /orphadata/details/rd-phenotypes/hpoids/{hpoids}:
+  /rd-phenotypes/hpoids/{hpoids}:
     get:
       tags:
       - Rare diseases and associated phenotypes
@@ -972,7 +972,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_phenotypes
-  /orphadata/details/rd-associated-genes:
+  /rd-associated-genes:
     get:
       tags:
       - Rare diseases and associated gene
@@ -999,7 +999,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_genes
-  /orphadata/details/rd-associated-genes/orphacodes:
+  /rd-associated-genes/orphacodes:
     get:
       tags:
       - Rare diseases and associated gene
@@ -1023,7 +1023,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_genes
-  /orphadata/details/rd-associated-genes/orphacodes/{orphacode}:
+  /rd-associated-genes/orphacodes/{orphacode}:
     get:
       tags:
       - Rare diseases and associated gene
@@ -1064,7 +1064,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_genes
-  /orphadata/details/rd-associated-genes/genes:
+  /rd-associated-genes/genes:
     get:
       tags:
       - Rare diseases and associated gene
@@ -1088,7 +1088,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_genes
-  /orphadata/details/rd-associated-genes/genes/symbols/{symbol}:
+  /rd-associated-genes/genes/symbols/{symbol}:
     get:
       tags:
       - Rare diseases and associated gene
@@ -1126,7 +1126,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_genes
-  /orphadata/details/rd-associated-genes/genes/names/{name}:
+  /rd-associated-genes/genes/names/{name}:
     get:
       tags:
       - Rare diseases and associated gene
@@ -1165,7 +1165,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_genes
-  /orphadata/details/rd-medical-specialties:
+  /rd-medical-specialties:
     get:
       tags:
       - Medical specialties of rare diseases
@@ -1188,7 +1188,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_medical_specialties
-  /orphadata/details/rd-medical-specialties/orphacodes:
+  /rd-medical-specialties/orphacodes:
     get:
       tags:
       - Medical specialties of rare diseases
@@ -1211,7 +1211,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_medical_specialties
-  /orphadata/details/rd-medical-specialties/orphacodes/{orphacode}:
+  /rd-medical-specialties/orphacodes/{orphacode}:
     get:
       tags:
       - Medical specialties of rare diseases
@@ -1256,7 +1256,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_medical_specialties
-  /orphadata/details/rd-medical-specialties/parents:
+  /rd-medical-specialties/parents:
     get:
       tags:
       - Medical specialties of rare diseases
@@ -1286,7 +1286,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_medical_specialties
-  /orphadata/details/rd-medical-specialties/parents/{parentcode}:
+  /rd-medical-specialties/parents/{parentcode}:
     get:
       tags:
       - Medical specialties of rare diseases
@@ -1330,7 +1330,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_medical_specialties
-  /orphadata/details/rd-epidemiology:
+  /rd-epidemiology:
     get:
       tags:
       - Epidemiology of rare diseases
@@ -1377,7 +1377,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_epidemiological
-  /orphadata/details/rd-epidemiology/orphacodes:
+  /rd-epidemiology/orphacodes:
     get:
       tags:
       - Epidemiology of rare diseases
@@ -1420,7 +1420,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_epidemiological
-  /orphadata/details/rd-epidemiology/orphacodes/{orphacode}:
+  /rd-epidemiology/orphacodes/{orphacode}:
     get:
       tags:
       - Epidemiology of rare diseases
@@ -1480,7 +1480,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_epidemiological
-  /orphadata/details/rd-natural_history:
+  /rd-natural_history:
     get:
       tags:
       - Natural history of rare diseases
@@ -1526,7 +1526,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_history
-  /orphadata/details/rd-natural_history/orphacodes:
+  /rd-natural_history/orphacodes:
     get:
       tags:
       - Natural history of rare diseases
@@ -1569,7 +1569,7 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_history
-  /orphadata/details/rd-natural_history/orphacodes/{orphacode}:
+  /rd-natural_history/orphacodes/{orphacode}:
     get:
       tags:
       - Natural history of rare diseases
