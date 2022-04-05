@@ -1718,8 +1718,8 @@
   /* text-align: justify; */
 }
 
-.swagger-ui .opblock-tag-section h4 a {
-  color: #222222 !important;
+.swagger-ui .opblock-tag-section h4 .nostyle {
+  color: #222222;
   text-decoration: none;
 }
 
