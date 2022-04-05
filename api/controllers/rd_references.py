@@ -170,6 +170,56 @@ def query_references_by_name(name):  # noqa: E501
     return wrapped_response.get()
 
 
+def query_references_omims():  # noqa: E501
+    """Get the list of OMIMs available in the selected language.
+
+    The result is a collection of OMIM references in the selected language. 
+    """
+    lang = request.args.get("lang", "en")
+    if PRODUCT['lang'] != lang.lower():
+        PRODUCT['lang'] = lang.lower()
+
+    index = index_base.format(lang.lower())
+
+    query = {
+        "query": {
+            "nested": {
+                "path": 'ExternalReference',
+                "query": {
+                    "bool": {
+                        "must": {
+                            "match": {"ExternalReference.Source": "OMIM"}
+                        },
+                        'should': {
+                            "regexp": {
+                                "ExternalReference.Reference": {
+                                    'value': '*',
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "_source": ['ExternalReference.Source','ExternalReference.Reference']
+    }
+
+    es_client = current_app.config.get('ES_NODE')
+    response = qc.es_scroll(es_client, index, query)
+
+    if not isinstance(response, tuple):      
+        response_parsed = []
+        for res in response:
+            for ele in res["ExternalReference"]:
+                if ele["Source"] == 'OMIM':
+                    response_parsed.append(ele["Reference"])
+        wrapped_response = ResponseWrapper(ctl_response=sorted(list(set(response_parsed))), request=request, product=PRODUCT)
+    else:
+        wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+
+    return wrapped_response.get()    
+
+
 def query_references_by_omim(omim):
     request.args.params = {'omim': omim}
     

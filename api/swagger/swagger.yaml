@@ -302,6 +302,50 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_references
+  /orphadata/details/rd-cross-referencing/omims:
+    get:
+      tags:
+      - Rare diseases and cross-referencing
+      summary: Get all OMIM references in the selected language.
+      description: The result is a list of ICD-10 references
+      operationId: query_references_omims
+      parameters:
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
+        schema:
+          type: string
+          default: en
+          enum:
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
+          - tr
+          - zh
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product1_list_omims'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_references
   /orphadata/details/rd-cross-referencing/omims/{omim}:
     get:
       tags:
@@ -1657,6 +1701,30 @@ components:
             - "A01.1"
             - "A01.2"
             - ...          
+    product1_list_omims:
+      type: object
+      properties:
+        productName:
+          type: string
+          example: "Rare diseases and alignment with terminologies and databases"
+        productId:
+          type: string
+          example: "en_product1"
+        language:
+          type: string
+          example: EN
+        OMIMs:
+          type: array
+          items:
+            type: string
+          example:
+            - "100050"
+            - "100070"
+            - "100100"
+            - "100300"
+            - "100800"
+            - "101000"
+            - ...         
     product3_classification_list:
       type: array
       items:
