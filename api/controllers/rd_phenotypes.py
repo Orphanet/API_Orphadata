@@ -165,13 +165,22 @@ def query_phenotypes_hpoids():
 
     es_client = current_app.config.get('ES_NODE')
     response = qc.es_scroll(es_client, index, query)
-    print(response)
 
-    # parsed_response = []
-    # for hit in response:
-    #     parsed_response.append(hit.pop('Disorder'))
+    _HPOs = []
+    reponse_parsed = {"DisorderAssociatedHPOs": []}
 
-    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+    for hit in response:
+        for hpos in hit["Disorder"]["HPODisorderAssociation"]:
+            if hpos["HPO"]["HPOId"] not in _HPOs:
+                _HPOs.append(hpos["HPO"]["HPOId"])
+                reponse_parsed["DisorderAssociatedHPOs"].append(
+                    {
+                        "HPOId": hpos["HPO"]["HPOId"],
+                        "HPOTerm": hpos["HPO"]["HPOTerm"],
+                    }
+                )
+
+    wrapped_response = ResponseWrapper(ctl_response=reponse_parsed, request=request, product=PRODUCT)
     
     return wrapped_response.get()
 
