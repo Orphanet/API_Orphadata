@@ -1715,8 +1715,14 @@
  }
 
  .swagger-ui .opblock-tag-section div {
-  text-align: justify;
+  /* text-align: justify; */
 }
+
+.swagger-ui .opblock-tag-section h4 a {
+  color: #222222 !important;
+  text-decoration: none;
+}
+
 
 .swagger-ui .opblock-body {
   background: rgba(250, 250, 250, 0.5);

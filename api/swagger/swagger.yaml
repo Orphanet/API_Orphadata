@@ -1,93 +1,86 @@
 openapi: 3.0.1
 info:
   title: Orphadata API
-  description: Orphadata provides APIs for the scientific community with comprehensive,
-    quality data sets related to rare diseases and orphan drugs from the Orphanet
-    knowledge base.
-  termsOfService: http://www.orphadata.org/cgi-bin/index.php
-  contact:
-    name: Orphadata team
-    email: data.orphanet@inserm.fr
-  license:
-    name: Commons Attribution 4.0 International (CC BY 4.0)
-    url: https://creativecommons.org/licenses/by/4.0/
+  description: | 
+    Orphadata API provides several GET to facilitate the exploitation of various rare disease-related datasets:
+      - Rare diseases aligned with terminologies and databases    
+      - Classification of rare diseases
+      - Linearisation of rare diseases
+      - Genes associated with rare diseases
+      - Clinical signs and symptoms in rare diseases
+      - Epidemiology of rare diseases
+      - Natural history of rare diseases
+      - Rare diseases and functional consequences related to rare diseases
+
+    More information on data are available <a href="http://www.orphadata.org/cgi-bin/index.php#freeproducts" target="_blank">here</a>.
+
+    These data are updated twice a year (July and December) and are also available as downloadable files both in 
+    <a href="http://dev.orphadata.com/orphanet-scientific-knowledge-files/" target="_blank">XML and JSON formats</a>.
+
+    We apply the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Commons Attribution 4.0 International (CC BY 4.0)</a>
+     to all copyrightable parts of our databases.
+    This means that you are free to copy, distribute, display and make commercial use of these databases in all legislations,
+    provided you give us credit.
+
+    For further information, consult <a href="http://www.orphadata.org/cgi-bin/index.php" target="_blank">Orphadata website</a> and other services
+    from <a href="https://www.orpha.net/consor/cgi-bin/index.php" target="_blank">Orphanet</a>.
+
+    <a href="http://www.orphadata.org/cgi-bin/contact.html" target="_blank">Contact Orphadata team</a> 
   version: 1.0.0
-externalDocs:
-  description: For further information, consult Orphadata website and other services
-    from Orphanet
-  url: http://www.orphadata.org/cgi-bin/index.php
-servers:
-- url: /
-  description: URL for Orphadata's API server
-# security:
-# - UserSecurity: []
-# - AdminSecurity: []
 tags:
 - name: Rare diseases and cross-referencing
   externalDocs:
-    description: >
-      Search for clinical entity informations and alignements with other
-      terminologies in English, french, german, spanish,dutch, italian, portguese,
-      polish and czech are available.The result is a collection of data including
-      ORPHAcode, preferred term, synonyms, definition, the group and type, and the
-      characterisation of the alignment between the clinical entity and ICD-10, UMLS,
-      MesH, MedDra, and OMIM systems in the selected language.
+    description:
+      Get rare diseases information and their alignements with other terminologies.
+      Available in english, french, german, spanish, dutch, italian, portuguese, polish,
+      czech, russian, chinese and turkish.
+      For more information, read
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Classifications of rare diseases
   externalDocs:
-    description: Search for Orphanet classifications, a multi-hierarchical and polyparental
-      system built on the Orphanet nomenclature and organised around the major medical
-      specialties and based on clinical criteria according to diagnostic and therapeutic
-      relevance. The result is a collection of data including the ORPHAcode and the
-      preferred term of the clinical entity with a data set or each classification
-      where the clinical entity is present (Hchid, the unique identifier of the classification,
-      name of the classification, ORPHAcode and preferred term of the n+1 and the
-      n-1 clinical entities).
+    description: 
+      Get Orphanet classifications and the list of rare diseases classified in.
+      Available only in english. For more information, read
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Rare diseases and associated phenotypes
   externalDocs:
-    description: Search for rare diseases annotated with Human Phenotype Ontology
-      (HPO) terms. The result is the collection of HPO phenotypes characterized by
-      frequency (obligate, very frequent, frequent, occasional, very rare or excluded)
-      and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic
-      sign of the rare disease. Source (PMID references), the date and the validation’s
-      status of the association between the rare disease and HPO terms is also available.
+    description: 
+      Get rare diseases and associated HPO phenotypes.
+      Available in english, french, german, spanish, dutch, italian and portuguese. For more information, read
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Rare diseases and associated gene
   externalDocs:
-    description: Search for rare diseases and their associated genes. The result is
-      a collection of data including the genetic international nomenclature, the gene
-      typology, the chromosomal location, the cross-mappings with other international
-      genetic databases, the relationship between genes and the searched disease.
+    description: 
+      Get rare diseases and associated gene. Available only in english.
+      For more information, read
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Medical specialties of rare diseases
   externalDocs:
-    description: The Orphanet classification of rare diseases has a polyparental structure.
-      It implies that a clinical entity is included in as many classification hierarchies as 
-      necessary depending on its clinical presentation and the medical specialties to which 
-      it is relevant. In order to enable the sorting out of all rare diseases by medical 
-      specialty and avoid multiple counting of multiclassified entities in statistical analysis,
-      a linearisation process is applied in the Orphanet database to attribute one medical
-      specialty to each clinical entity. 
-      The dataset provided in this section includes all rare diseases present in the Orphanet
-      nomenclature each with the medical specialty attributed as the preferential parent by Orphanet.
-      It is updated once a month.
+    description: 
+      The polyparental structure of the Orphanet classification of
+      rare diseases implies that a rare disease is included in as many
+      classifications as necessary depending on its clinical presentation
+      and the medical specialties to which it is relevant.
+      In order to enable the sorting out of all rare diseases by medical specialty
+      and avoid multiple counting of multiclassified entities in statistical analysis, 
+      a linearisation process is applied in the Orphanet database to attribute 
+      one medical specialty to each clinical entity. 
+      The medical speciality is displayed as «Preferential parent».
+      Available only in english. For more information, read
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Epidemiology of rare diseases
   externalDocs:
-    description: Orphanet collects and curates data concerning the epidemiology of 
-      rare diseases. A systematic survey of the literature is carried out in order
-      to estimate the prevalence and incidence of rare diseases. The rare diseases
-      epidemiology dataset includes rare diseases (ORPHAcode, preferred name,
-      classification level, and typology) with available point prevalence, birth 
-      prevalence, lifelong prevalence and incidence, or the number of families reported
-      together with their respective intervals per geographical area.
+    description: 
+      Get epidemiological data on rare diseases.
+      Available only in english, french, german, spanish, dutch, italian, portuguese, polish and czech.
+      For more information, read
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 - name: Natural history of rare diseases
   externalDocs:
-    description: The rare diseases natural history dataset includes rare diseases 
-      (ORPHAcode, preferred name, classification level, and typology) with available data 
-      related to type of inheritance, interval average age of onset and/or age of death.
+    description: 
+      Get inheritance, interval average age of onset and interval average age of death on rare diseases.
+      Available only in english, french, german, spanish, dutch, italian, portuguese, polish and czech.
+      For more information, read
     url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
 paths:
   /rd-cross-referencing:
