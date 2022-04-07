@@ -123,6 +123,7 @@ paths:
           content:
             application/json:
               schema:
+                # $ref: './schemas/cross_referencing/_full_data.yaml'
                 $ref: '#/components/schemas/product1_list'
         "403":
           description: Access denied
@@ -229,6 +230,7 @@ paths:
           content:
             application/json:
               schema:
+                # $ref: "schemas/cross_referencing/_by_orphacode.yaml"
                 $ref: '#/components/schemas/product1'
         "403":
           description: Access denied
@@ -503,9 +505,10 @@ paths:
       - Classifications of rare diseases
       summary: 
         Get the list of rare diseases available in all classifications.
-      description: |
-        The result is a collection of rare diseases including their ORPHAcode, 
+      description:
+        The result is a collection of rare diseases including their ORPHAcode,
         preferred term, classification ID, classification tag, direct children and parents.
+      operationId: query_classification_base
       responses:
         "200":
           description: Successful operation
@@ -1723,6 +1726,7 @@ components:
     product3_classification_list:
       type: array
       items:
+        type: object
         $ref: '#/components/schemas/product3'
     product3_orphacode_in_hchid:
       type: object

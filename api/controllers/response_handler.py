@@ -21,8 +21,8 @@ class ResponseWrapper:
                 'path': {},
                 'query': {}
             },
-            'product': {
-                'ID': '',
+            'datasetCategory': {
+                # 'ID': '',
                 'name': '',
                 'lang': '',
             },
@@ -45,7 +45,7 @@ class ResponseWrapper:
         if not self._ready:
             if not self.wrapper.get('error'):
                 self.wrapper['uri'] = self.request.full_path if self.request.args else self.request.path
-                self.wrapper['product'] = self.product
+                self.wrapper['datasetCategory'] = self.product
                 self.wrapper['data']['results'] = self.ctl_response
                 self.wrapper['data']['__count'] = len(self.ctl_response) if isinstance(self.ctl_response, list) else 1
                 if hasattr(self.request.args, 'params'):
