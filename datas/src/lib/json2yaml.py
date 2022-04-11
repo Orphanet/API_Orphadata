@@ -161,8 +161,13 @@ REQ = [
 
 def json2yaml(obj):
     txt = []
+    _map_type = {
+        "int": "integer",
+        "str": "string",
+        "list": "array"
+    }
 
-    def _iterator(obj, indent=0):
+    def _iterator(obj, indent=0):        
         if isinstance(obj, Dict):
             txt.append("{}type: object".format(' '*indent))
             if obj.keys():
@@ -177,13 +182,17 @@ def json2yaml(obj):
                 txt.append("{}example: []".format(' '*indent))
             else:
                 txt.append("{}items:".format(' '*indent))
-                _list = obj[:5] if len(obj) > 5 else obj
-                for item in _list[:1]:
-                    _iterator(item, indent=indent+4)
+                if [x for x in obj if isinstance(x, int) or isinstance(x, str)]:
+                    txt.append("{}type: {}".format(' '*(indent+2), _map_type[type(obj[0]).__name__]))
+                    txt.append("{}example: [{}]".format(' '*indent, ', '.join(map(str, obj[:3]))))
+                else:
+                    for item in obj[:1]:
+                        _iterator(item, indent=indent+4)
 
         if isinstance(obj, str):
             txt.append("{}type: string".format(' '*indent))
             txt.append("{}example: \"{}\"".format(' '*indent, obj))
+
 
         if isinstance(obj, int):
             txt.append("{}type: integer".format(' '*indent))
@@ -232,10 +241,3 @@ for req in REQ[:]:
         _out.write('\n'.join(yaml_schema))
 
     time.sleep(0.5)
-
-
-
-
-
-
-
