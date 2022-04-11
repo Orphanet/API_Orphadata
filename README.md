@@ -363,3 +363,82 @@ The following command will execute sequentially steps 1, 2 and 3 in one shot:
 python datas/src/orphadata_update.py
 ```
 
+## Swagger definition
+
+#### Requirements
+- [npm from node.js](https://nodejs.org/en/download/)
+- [swagger-cli](https://www.npmjs.com/package/swagger-cli)
+
+
+
+Request response example schemas in the swagger file (`swagger_built.yaml`) were directly constructed from the response themselves.
+Each response example schema is written in a specific file that is referred to from the main swagger file called `_swagger_template.yaml`.
+Since flask/connexion doesn't seem to support directly multi-file API definitions vie $ref pointers, swagger-cli is used to build
+a final `swagger_built.yaml` from `_swagger_template.yaml`.
+
+The first step is to use the python script `API_Orphadata/datas/src/lib/json2yaml.py` which:
+ - makes a GET request for all URIs in the API
+ - converts each response (json) in a openapi compatible yaml schema format
+ - writes each yaml schema in a corresponding yaml file
+
+After running `json2yaml.py` each request in the API have a related YAML file schema describing its response. Theses files are generated in 
+`API_Orphadata/api/swagger/` as follows:
+
+<pre><font color="#3465A4"><b>schemas/</b></font>
+├── <font color="#3465A4"><b>classification</b></font>
+│   ├── _by_hchid.yaml
+│   ├── _by_orphacode_and_hchid.yaml
+│   ├── _full.yaml
+│   ├── _hchids_by_orphacode.yaml
+│   ├── _hchids.yaml
+│   ├── _orphacodes_by_hchid.yaml
+│   └── _orphacodes.yaml
+├── <font color="#3465A4"><b>cross_referencing</b></font>
+│   ├── _by_icd10.yaml
+│   ├── _by_name.yaml
+│   ├── _by_omim.yaml
+│   ├── _by_orphacode.yaml
+│   ├── _full_data.yaml
+│   ├── _full.yaml
+│   ├── _icd-10s.yaml
+│   ├── _omims.yaml
+│   ├── _orphacodes.yaml
+│   └── test.yaml
+├── <font color="#3465A4"><b>epidemiology</b></font>
+│   ├── _by_orphacode.yaml
+│   ├── _full.yaml
+│   └── _orphacodes.yaml
+├── <font color="#3465A4"><b>genes</b></font>
+│   ├── _by_gene_name.yaml
+│   ├── _by_gene_symbol.yaml
+│   ├── _by_orphacode.yaml
+│   ├── _full.yaml
+│   ├── _genes.yaml
+│   └── _orphacodes.yaml
+├── <font color="#3465A4"><b>medical_specialties</b></font>
+│   ├── _by_orphacode.yaml
+│   ├── _by_parent.yaml
+│   ├── _full.yaml
+│   ├── _orphacodes.yaml
+│   └── _parents.yaml
+├── <font color="#3465A4"><b>natural_history</b></font>
+│   ├── _by_orphacode.yaml
+│   ├── _full.yaml
+│   └── _orphacodes.yaml
+└── <font color="#3465A4"><b>phenotypes</b></font>
+    ├── _by_hpoid.yaml
+    ├── _by_orphacodes.yaml
+    ├── _full.yaml
+    ├── _hpoids.yaml
+    └── _orphacodes.yaml
+</pre>
+
+Each of theses files are referred to in the `_swagger_template.yaml` through the use of $ref pointers. 
+To make it work with flask/connexion, swagger-cli is used to convert those $ref pointers into yaml text:
+
+```
+swagger-cli bundle _swagger_template.yaml -t yaml -o swagger_built.yaml
+```
+
+`swagger_built.yaml` is the final yaml file used to feed the api instance in the flask function factory (`create_app()` in `API_Orphadata/api/__init__.py`).
+
