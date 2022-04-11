@@ -608,9 +608,13 @@ def process(in_file_path, out_folder, elastic, input_encoding, indent_output, ou
     #     output_process(out_file_path_gene, index_gene, node_list_gene, elastic, indent_output, output_encoding)
 
     # For RDcode API, insert date /!\ RDcode classification got its own process module
-    if "orphanomenclature" in file_stem or "orpha_icd10_" or "orpha_omim_" in file_stem:
-        node_list = data_RDcode.insert_date(node_list, extract_date)
-        node_list = data_RDcode.rename_terms(node_list)
+
+
+    # if "orphanomenclature" in file_stem or "orpha_icd10_" or "orpha_omim_" in file_stem:
+    # if True in [x in file_stem for x in ["orphanomenclature", "orpha_icd10_", "orpha_omim_"]]:
+
+    node_list = data_RDcode.insert_date(node_list, extract_date)
+    node_list = data_RDcode.rename_terms(node_list)
     if "orpha_icd10_" in file_stem:
         node_list = data_RDcode.rework_ICD(node_list)
     if "orpha_omim_" in file_stem:
@@ -683,7 +687,7 @@ def main():
         for folder in config.folders:            
             for file in tqdm(iterable=folder.iterdir(), desc="JSON converted XML files", total=len(list(folder.iterdir())), disable=_notqdm):
                 if not file.is_dir():
-                    if file.suffix == ".xml":                     
+                    if file.suffix == ".xml":
                         if "product3" in file.stem:
                             orphadata_classifications.process_classification(
                                 file,

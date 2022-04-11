@@ -131,11 +131,11 @@ def query_genes_genes():  # noqa: E501
             for gene in hit["DisorderGeneAssociation"]:
                 if gene["Gene"]["Preferred term"] not in is_seen:
                     is_seen.append(gene["Gene"]["Preferred term"])
-                    response_parsed.append({'preferredTerm': gene["Gene"]["Preferred term"], 'symbol': gene["Gene"]["Symbol"]})
+                    response_parsed.append({'name': gene["Gene"]["Preferred term"], 'symbol': gene["Gene"]["Symbol"]})
     else:
         response_parsed = response
 
-    wrapped_response = ResponseWrapper(ctl_response=sorted(response_parsed, key=lambda x: x["preferredTerm"]), request=request, product=PRODUCT)
+    wrapped_response = ResponseWrapper(ctl_response=sorted(response_parsed, key=lambda x: x["name"]), request=request, product=PRODUCT)
     
     return wrapped_response.get()
 
