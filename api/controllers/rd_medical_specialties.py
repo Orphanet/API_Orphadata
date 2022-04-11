@@ -89,6 +89,8 @@ def query_linearization_parents():
     if not isinstance(response, tuple):      
         response_parsed = []
         for hit in response:
+            if not hit:
+                continue
             parent = {
                 "ORPHAcode": hit["DisorderDisorderAssociation"][0]["TargetDisorder"]["ORPHAcode"],
                 "Preferred term": hit["DisorderDisorderAssociation"][0]["TargetDisorder"]["Preferred term"]

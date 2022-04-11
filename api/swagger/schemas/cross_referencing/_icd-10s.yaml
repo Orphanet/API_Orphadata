@@ -1,0 +1,32 @@
+type: object
+properties:
+  data:
+    type: object
+    properties:
+      __count:
+        type: integer
+        example: 2174
+      results:
+        type: array
+        items:
+            type: string
+            example: "A00.0"
+  datasetCategory:
+    type: object
+    properties:
+      lang:
+        type: string
+        example: "en"
+      name:
+        type: string
+        example: "Rare diseases and cross-referencing"
+  parameters:
+    type: object
+    properties:
+      path:
+        type: object
+      query:
+        type: object
+  uri:
+    type: string
+    example: "/rd-cross-referencing/icd-10s"

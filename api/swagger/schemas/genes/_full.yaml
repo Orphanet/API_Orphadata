@@ -1,0 +1,103 @@
+type: object
+properties:
+  data:
+    type: object
+    properties:
+      __count:
+        type: integer
+        example: 3884
+      results:
+        type: array
+        items:
+            type: object
+            properties:
+              Date:
+                type: string
+                example: "2022-02-01 04:53:24"
+              DisorderGeneAssociation:
+                type: array
+                items:
+                    type: object
+                    properties:
+                      DisorderGeneAssociationStatus:
+                        type: string
+                        example: "Assessed"
+                      DisorderGeneAssociationType:
+                        type: string
+                        example: "Disease-causing germline mutation(s) in"
+                      Gene:
+                        type: object
+                        properties:
+                          ExternalReference:
+                            type: array
+                            items:
+                                type: object
+                                properties:
+                                  Reference:
+                                    type: string
+                                    example: "ENSG00000166813"
+                                  Source:
+                                    type: string
+                                    example: "Ensembl"
+                          GeneType:
+                            type: string
+                            example: "gene with protein product"
+                          Locus:
+                            type: array
+                            items:
+                                type: object
+                                properties:
+                                  GeneLocus:
+                                    type: string
+                                    example: "15q26.1"
+                                  LocusKey:
+                                    type: integer
+                                    example: 1
+                          Preferred term:
+                            type: string
+                            example: "kinesin family member 7"
+                          Symbol:
+                            type: string
+                            example: "KIF7"
+                          Synonym:
+                            type: array
+                            items:
+                                type: string
+                                example: "JBTS12"
+                      SourceOfValidation:
+                        type: string
+                        example: "22587682[PMID]"
+              DisorderGroup:
+                type: string
+                example: "Disorder"
+              ORPHAcode:
+                type: integer
+                example: 166024
+              OrphanetURL:
+                type: string
+                example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024"
+              Preferred term:
+                type: string
+                example: "Multiple epiphyseal dysplasia, Al-Gazali type"
+              Typology:
+                type: string
+                example: "Disease"
+  datasetCategory:
+    type: object
+    properties:
+      lang:
+        type: string
+        example: "en"
+      name:
+        type: string
+        example: "Rare diseases and associated genes"
+  parameters:
+    type: object
+    properties:
+      path:
+        type: object
+      query:
+        type: object
+  uri:
+    type: string
+    example: "/rd-associated-genes"

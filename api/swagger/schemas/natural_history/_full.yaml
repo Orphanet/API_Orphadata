@@ -1,0 +1,63 @@
+type: object
+properties:
+  data:
+    type: object
+    properties:
+      __count:
+        type: integer
+        example: 6653
+      results:
+        type: array
+        items:
+            type: object
+            properties:
+              AverageAgeOfDeath:
+                type: string
+                example: null
+              AverageAgeOfOnset:
+                type: array
+                items:
+                    type: string
+                    example: "Infancy"
+              Date:
+                type: string
+                example: "2022-02-01 04:54:18"
+              DisorderGroup:
+                type: string
+                example: "Disorder"
+              ORPHAcode:
+                type: integer
+                example: 166024
+              OrphanetURL:
+                type: string
+                example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024"
+              Preferred term:
+                type: string
+                example: "Multiple epiphyseal dysplasia, Al-Gazali type"
+              TypeOfInheritance:
+                type: array
+                items:
+                    type: string
+                    example: "Autosomal recessive"
+              Typology:
+                type: string
+                example: "Disease"
+  datasetCategory:
+    type: object
+    properties:
+      lang:
+        type: string
+        example: "en"
+      name:
+        type: string
+        example: "Natural history of rare diseases"
+  parameters:
+    type: object
+    properties:
+      path:
+        type: object
+      query:
+        type: object
+  uri:
+    type: string
+    example: "/rd-natural_history"

@@ -1,0 +1,105 @@
+type: object
+properties:  
+  data:
+    type: object
+    properties:
+      __count: 
+        type: integer
+        format: int32
+        example: 10617
+      results: 
+        type: array
+        items: 
+          type: object
+          properties: 
+            Date: 
+              type: string
+              example: 2022-02-01 04:37:21
+            DisorderDisorderAssociation: 
+              type: string
+              format: nullable
+            DisorderFlag: 
+              type: array
+              items: 
+                type: object
+                properties: 
+                  Label: 
+                    type: string
+                    format: nullable
+                  Value: 
+                    type: integer
+                    format: int32
+                    example: 1
+            DisorderGroup: 
+              type: string
+              example: Disorder
+            ExternalReference: 
+              type: array
+              items: 
+                type: object
+                properties: 
+                  DisorderMappingICDRelation: 
+                    type: string
+                    example: Attributed (The ICD10 code is attributed by Orphanet)
+                  DisorderMappingRelation: 
+                    type: string
+                    example: NTBT (ORPHA code's Narrower Term maps to a Broader Term)
+                  DisorderMappingValidationStatus: 
+                    type: string
+                    example: Validated
+                  Reference: 
+                    type: string
+                    example: Q77.3
+                  Source: 
+                    type: string
+                    example: ICD-10
+            ORPHAcode: 
+              type: integer
+              format: int32
+              example: 166024
+            OrphanetURL: 
+              type: string
+              example: http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024
+            Preferred term: 
+              type: string
+              example: Multiple epiphyseal dysplasia Al-Gazali type
+            SummaryInformation: 
+              type: array
+              items: 
+                type: object
+                properties: 
+                  Definition: 
+                    type: string
+                    example: A rare primary bone dysplasia characterized by the association of multiple epiphyseal dysplasia with macrocephaly and dysmorphic facial features (such as frontal bossing hypertelorism flat malar region low-set ears and short neck). Patients are of normal stature and present with joint swelling and genu valgum. Additional reported manifestations include clinodactyly spindle-shaped fingers and pectus excavatum.
+            Synonym: 
+              type: array
+              items: 
+                type: string
+                example: Multiple epiphyseal dysplasia-macrocephaly-distinctive facies syndrome
+            Typology: 
+              type: string
+              example: Disease
+  parameters: 
+    type: object
+    properties: 
+      path: 
+        type: object
+        properties:  
+      query: 
+        type: object
+        properties: 
+          lang: 
+            type: string
+            example: en
+  datasetCategory: 
+    type: object
+    properties: 
+      lang: 
+        type: string
+        example: en
+      name: 
+        type: string
+        example: Rare diseases and cross-referencing
+  uri: 
+    type: string
+    example: /rd-cross-referencing?lang=en

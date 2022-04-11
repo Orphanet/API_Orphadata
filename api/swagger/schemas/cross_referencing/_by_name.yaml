@@ -1,0 +1,99 @@
+type: object
+properties:
+  data:
+    type: object
+    properties:
+      __count:
+        type: integer
+        example: 1
+      results:
+        type: object
+        properties:
+          Date:
+            type: string
+            example: "2022-02-01 04:37:21"
+          DisorderDisorderAssociation:
+            type: string
+            example: null
+          DisorderFlag:
+            type: array
+            items:
+                type: object
+                properties:
+                  Label:
+                    type: string
+                    example: null
+                  Value:
+                    type: integer
+                    example: 1
+          DisorderGroup:
+            type: string
+            example: "Disorder"
+          ExternalReference:
+            type: array
+            items:
+                type: object
+                properties:
+                  DisorderMappingICDRelation:
+                    type: string
+                    example: null
+                  DisorderMappingRelation:
+                    type: string
+                    example: "NTBT (ORPHA code's Narrower Term maps to a Broader Term)"
+                  DisorderMappingValidationStatus:
+                    type: string
+                    example: "Validated"
+                  Reference:
+                    type: string
+                    example: "610168"
+                  Source:
+                    type: string
+                    example: "OMIM"
+          ORPHAcode:
+            type: integer
+            example: 558
+          OrphanetURL:
+            type: string
+            example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=558"
+          Preferred term:
+            type: string
+            example: "Marfan syndrome"
+          SummaryInformation:
+            type: array
+            items:
+                type: object
+                properties:
+                  Definition:
+                    type: string
+                    example: "Marfan syndrome is a systemic disease of connective tissue characterized by a variable combination of cardiovascular, musculo-skeletal, ophthalmic and pulmonary manifestations."
+          Synonym:
+            type: array
+            items:
+                type: string
+                example: "MFS"
+          Typology:
+            type: string
+            example: "Disease"
+  datasetCategory:
+    type: object
+    properties:
+      lang:
+        type: string
+        example: "en"
+      name:
+        type: string
+        example: "Rare diseases and cross-referencing"
+  parameters:
+    type: object
+    properties:
+      path:
+        type: object
+        properties:
+          name:
+            type: string
+            example: "marfan syndrome"
+      query:
+        type: object
+  uri:
+    type: string
+    example: "/rd-cross-referencing/orphacodes/names/marfan syndrome"

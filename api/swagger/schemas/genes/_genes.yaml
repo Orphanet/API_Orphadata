@@ -1,0 +1,38 @@
+type: object
+properties:
+  data:
+    type: object
+    properties:
+      __count:
+        type: integer
+        example: 4333
+      results:
+        type: array
+        items:
+            type: object
+            properties:
+              preferredTerm:
+                type: string
+                example: "1,4-alpha-glucan branching enzyme 1"
+              symbol:
+                type: string
+                example: "GBE1"
+  datasetCategory:
+    type: object
+    properties:
+      lang:
+        type: string
+        example: "en"
+      name:
+        type: string
+        example: "Rare diseases and associated genes"
+  parameters:
+    type: object
+    properties:
+      path:
+        type: object
+      query:
+        type: object
+  uri:
+    type: string
+    example: "/rd-associated-genes/genes"

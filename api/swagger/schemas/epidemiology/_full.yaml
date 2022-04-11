@@ -1,0 +1,76 @@
+type: object
+properties:
+  data:
+    type: object
+    properties:
+      __count:
+        type: integer
+        example: 6064
+      results:
+        type: array
+        items:
+            type: object
+            properties:
+              Date:
+                type: string
+                example: "2022-02-01 04:55:30"
+              DisorderGroup:
+                type: string
+                example: "Disorder"
+              ORPHAcode:
+                type: integer
+                example: 166024
+              OrphanetURL:
+                type: string
+                example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024"
+              Preferred term:
+                type: string
+                example: "Multiple epiphyseal dysplasia, Al-Gazali type"
+              Prevalence:
+                type: array
+                items:
+                    type: object
+                    properties:
+                      PrevalenceClass:
+                        type: string
+                        example: null
+                      PrevalenceGeographic:
+                        type: string
+                        example: "Worldwide"
+                      PrevalenceQualification:
+                        type: string
+                        example: "Case"
+                      PrevalenceType:
+                        type: string
+                        example: "Cases/families"
+                      PrevalenceValidationStatus:
+                        type: string
+                        example: "Validated"
+                      Source:
+                        type: string
+                        example: "11389160[PMID]_9689990[PMID]_ [EXPERT]"
+                      ValMoy:
+                        type: string
+                        example: "4.0"
+              Typology:
+                type: string
+                example: "Disease"
+  datasetCategory:
+    type: object
+    properties:
+      lang:
+        type: string
+        example: "en"
+      name:
+        type: string
+        example: "Epidemiology of rare diseases"
+  parameters:
+    type: object
+    properties:
+      path:
+        type: object
+      query:
+        type: object
+  uri:
+    type: string
+    example: "/rd-epidemiology"

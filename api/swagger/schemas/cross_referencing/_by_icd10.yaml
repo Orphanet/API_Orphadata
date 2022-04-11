@@ -1,0 +1,101 @@
+type: object
+properties:
+  data:
+    type: object
+    properties:
+      __count:
+        type: integer
+        example: 72
+      results:
+        type: array
+        items:
+            type: object
+            properties:
+              Date:
+                type: string
+                example: "2022-02-01 04:37:21"
+              DisorderDisorderAssociation:
+                type: string
+                example: null
+              DisorderFlag:
+                type: array
+                items:
+                    type: object
+                    properties:
+                      Label:
+                        type: string
+                        example: null
+                      Value:
+                        type: integer
+                        example: 1
+              DisorderGroup:
+                type: string
+                example: "Disorder"
+              ExternalReference:
+                type: array
+                items:
+                    type: object
+                    properties:
+                      DisorderMappingICDRelation:
+                        type: string
+                        example: null
+                      DisorderMappingRelation:
+                        type: string
+                        example: "E (Exact mapping: the two concepts are equivalent)"
+                      DisorderMappingValidationStatus:
+                        type: string
+                        example: "Validated"
+                      Reference:
+                        type: string
+                        example: "203450"
+                      Source:
+                        type: string
+                        example: "OMIM"
+              ORPHAcode:
+                type: integer
+                example: 58
+              OrphanetURL:
+                type: string
+                example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58"
+              Preferred term:
+                type: string
+                example: "Alexander disease"
+              SummaryInformation:
+                type: array
+                items:
+                    type: object
+                    properties:
+                      Definition:
+                        type: string
+                        example: "A rare neurodegenerative disorder of the astrocytes comprised of two clinical forms: Alexander disease (AxD) type I and type II manifesting with various degrees of macrocephaly, spasticity, ataxia and seizures and leading to psychomotor regression and death."
+              Synonym:
+                type: array
+                items:
+                    type: string
+                    example: "AxD"
+              Typology:
+                type: string
+                example: "Disease"
+  datasetCategory:
+    type: object
+    properties:
+      lang:
+        type: string
+        example: "en"
+      name:
+        type: string
+        example: "Rare diseases and cross-referencing"
+  parameters:
+    type: object
+    properties:
+      path:
+        type: object
+        properties:
+          icd:
+            type: string
+            example: "e75.2"
+      query:
+        type: object
+  uri:
+    type: string
+    example: "/rd-cross-referencing/icd-10s/e75.2"

@@ -1,0 +1,56 @@
+type: object
+properties:
+  data:
+    type: object
+    properties:
+      __count:
+        type: integer
+        example: 6590
+      results:
+        type: array
+        items:
+            type: object
+            properties:
+              ORPHAcode:
+                type: integer
+                example: 648
+              childs:
+                type: array
+                example: []
+              hch_id:
+                type: integer
+                example: 156
+              hch_tag:
+                type: string
+                example: "Orphanet classification of rare genetic diseases"
+              name:
+                type: string
+                example: "Noonan syndrome"
+              parents:
+                type: array
+                items:
+                    type: integer
+                    example: 98733
+  datasetCategory:
+    type: object
+    properties:
+      lang:
+        type: string
+        example: "en"
+      name:
+        type: string
+        example: "Clinical classifications of rare diseases"
+  parameters:
+    type: object
+    properties:
+      path:
+        type: object
+        properties:
+          hchID:
+            type: integer
+            example: 156
+      query:
+        type: object
+  uri:
+    type: string
+    example: "/rd-classification/hchids/156"

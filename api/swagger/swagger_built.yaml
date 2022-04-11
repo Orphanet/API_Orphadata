@@ -1,0 +1,3899 @@
+openapi: 3.0.1
+info:
+  title: Orphadata API
+  description: |
+    Orphadata API provides several GET to facilitate the exploitation of various rare disease-related datasets:
+      - Rare diseases aligned with terminologies and databases    
+      - Classification of rare diseases
+      - Linearisation of rare diseases
+      - Genes associated with rare diseases
+      - Clinical signs and symptoms in rare diseases
+      - Epidemiology of rare diseases
+      - Natural history of rare diseases
+      - Rare diseases and functional consequences related to rare diseases
+
+    More information on data are available <a href="http://www.orphadata.org/cgi-bin/index.php#freeproducts" target="_blank">here</a>.
+
+    These data are updated twice a year (July and December) and are also available as downloadable files both in 
+    <a href="http://dev.orphadata.com/orphanet-scientific-knowledge-files/" target="_blank">XML and JSON formats</a>.
+
+    We apply the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Commons Attribution 4.0 International (CC BY 4.0)</a>
+     to all copyrightable parts of our databases.
+    This means that you are free to copy, distribute, display and make commercial use of these databases in all legislations,
+    provided you give us credit.
+
+    For further information, consult <a href="http://www.orphadata.org/cgi-bin/index.php" target="_blank">Orphadata website</a> and other services
+    from <a href="https://www.orpha.net/consor/cgi-bin/index.php" target="_blank">Orphanet</a>.
+
+    <a href="http://www.orphadata.org/cgi-bin/contact.html" target="_blank">Contact Orphadata team</a> 
+  version: 1.0.0
+tags:
+  - name: Rare diseases and cross-referencing
+    externalDocs:
+      description: 'Get rare diseases information and their alignements with other terminologies. Available in english, french, german, spanish, dutch, italian, portuguese, polish, czech, russian, chinese and turkish. For more information, read'
+      url: 'http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf'
+  - name: Classifications of rare diseases
+    externalDocs:
+      description: 'Get Orphanet classifications and the list of rare diseases classified in. Available only in english. For more information, read'
+      url: 'http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf'
+  - name: Rare diseases and associated phenotypes
+    externalDocs:
+      description: 'Get rare diseases and associated HPO phenotypes. Available in english, french, german, spanish, dutch, italian and portuguese. For more information, read'
+      url: 'http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf'
+  - name: Rare diseases and associated gene
+    externalDocs:
+      description: 'Get rare diseases and associated gene. Available only in english. For more information, read'
+      url: 'http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf'
+  - name: Medical specialties of rare diseases
+    externalDocs:
+      description: 'The polyparental structure of the Orphanet classification of rare diseases implies that a rare disease is included in as many classifications as necessary depending on its clinical presentation and the medical specialties to which it is relevant. In order to enable the sorting out of all rare diseases by medical specialty and avoid multiple counting of multiclassified entities in statistical analysis, a linearisation process is applied in the Orphanet database to attribute one medical specialty to each clinical entity. The medical speciality is displayed as «Preferential parent». Available only in english. For more information, read'
+      url: 'http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf'
+  - name: Epidemiology of rare diseases
+    externalDocs:
+      description: 'Get epidemiological data on rare diseases. Available only in english, french, german, spanish, dutch, italian, portuguese, polish and czech. For more information, read'
+      url: 'http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf'
+  - name: Natural history of rare diseases
+    externalDocs:
+      description: 'Get inheritance, interval average age of onset and interval average age of death on rare diseases. Available only in english, french, german, spanish, dutch, italian, portuguese, polish and czech. For more information, read'
+      url: 'http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf'
+paths:
+  /rd-cross-referencing:
+    get:
+      tags:
+        - Rare diseases and cross-referencing
+      summary: Get rare diseases information and their cross-referencing in a selected language.
+      description: 'The result is a collection of rare diseases including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems.'
+      operationId: query_references_base
+      parameters:
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+              - tr
+              - zh
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 10617
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            Date:
+                              type: string
+                              example: '2022-02-01 04:37:21'
+                            DisorderDisorderAssociation:
+                              type: string
+                              example: null
+                            DisorderFlag:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  Label:
+                                    type: string
+                                    example: null
+                                  Value:
+                                    type: integer
+                                    example: 1
+                            DisorderGroup:
+                              type: string
+                              example: Disorder
+                            ExternalReference:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  DisorderMappingICDRelation:
+                                    type: string
+                                    example: Attributed (The ICD10 code is attributed by Orphanet)
+                                  DisorderMappingRelation:
+                                    type: string
+                                    example: NTBT (ORPHA code's Narrower Term maps to a Broader Term)
+                                  DisorderMappingValidationStatus:
+                                    type: string
+                                    example: Validated
+                                  Reference:
+                                    type: string
+                                    example: Q77.3
+                                  Source:
+                                    type: string
+                                    example: ICD-10
+                            ORPHAcode:
+                              type: integer
+                              example: 166024
+                            OrphanetURL:
+                              type: string
+                              example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024'
+                            Preferred term:
+                              type: string
+                              example: 'Multiple epiphyseal dysplasia, Al-Gazali type'
+                            SummaryInformation:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  Definition:
+                                    type: string
+                                    example: 'A rare primary bone dysplasia characterized by the association of multiple epiphyseal dysplasia with macrocephaly and dysmorphic facial features (such as frontal bossing, hypertelorism, flat malar region, low-set ears, and short neck). Patients are of normal stature and present with joint swelling and genu valgum. Additional reported manifestations include clinodactyly, spindle-shaped fingers, and pectus excavatum.'
+                            Synonym:
+                              type: array
+                              items:
+                                type: string
+                                example: Multiple epiphyseal dysplasia-macrocephaly-distinctive facies syndrome
+                            Typology:
+                              type: string
+                              example: Disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and cross-referencing
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-cross-referencing
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_references
+  /rd-cross-referencing/orphacodes:
+    get:
+      tags:
+        - Rare diseases and cross-referencing
+      summary: Get the list of rare diseases available in a selected language.
+      description: The result is a collection of rare diseases including ORPHAcodes and preferred term in the selected language.
+      operationId: query_references_orphacodes
+      parameters:
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+              - tr
+              - zh
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 10617
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ORPHAcode:
+                              type: integer
+                              example: 166024
+                            Preferred term:
+                              type: string
+                              example: 'Multiple epiphyseal dysplasia, Al-Gazali type'
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and cross-referencing
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-cross-referencing/orphacodes
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_references
+  '/rd-cross-referencing/orphacodes/{orphacode}':
+    get:
+      tags:
+        - Rare diseases and cross-referencing
+      summary: Get rare disease information and cross-referencing details searching by an ORPHAcode in a selected language.
+      description: 'The result is a collection of disease matching with the given ORPHAcode. Results include ORPHAcode, preferred term, synonyms, definition, the group, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems in a selected language.'
+      operationId: query_references_by_orphacode
+      parameters:
+        - name: orphacode
+          in: path
+          description: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 0
+            exclusiveMinimum: true
+            type: integer
+            format: int32
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+              - tr
+              - zh
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 1
+                      results:
+                        type: object
+                        properties:
+                          Date:
+                            type: string
+                            example: '2022-02-01 04:37:21'
+                          DisorderDisorderAssociation:
+                            type: string
+                            example: null
+                          DisorderFlag:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                Label:
+                                  type: string
+                                  example: null
+                                Value:
+                                  type: integer
+                                  example: 1
+                          DisorderGroup:
+                            type: string
+                            example: Disorder
+                          ExternalReference:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                DisorderMappingICDRelation:
+                                  type: string
+                                  example: null
+                                DisorderMappingRelation:
+                                  type: string
+                                  example: 'E (Exact mapping: the two concepts are equivalent)'
+                                DisorderMappingValidationStatus:
+                                  type: string
+                                  example: Validated
+                                Reference:
+                                  type: string
+                                  example: '203450'
+                                Source:
+                                  type: string
+                                  example: OMIM
+                          ORPHAcode:
+                            type: integer
+                            example: 58
+                          OrphanetURL:
+                            type: string
+                            example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58'
+                          Preferred term:
+                            type: string
+                            example: Alexander disease
+                          SummaryInformation:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                Definition:
+                                  type: string
+                                  example: 'A rare neurodegenerative disorder of the astrocytes comprised of two clinical forms: Alexander disease (AxD) type I and type II manifesting with various degrees of macrocephaly, spasticity, ataxia and seizures and leading to psychomotor regression and death.'
+                          Synonym:
+                            type: array
+                            items:
+                              type: string
+                              example: AxD
+                          Typology:
+                            type: string
+                            example: Disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and cross-referencing
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          ORPHAcode:
+                            type: integer
+                            example: 58
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-cross-referencing/orphacodes/58
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_references
+  '/rd-cross-referencing/orphacodes/names/{name}':
+    get:
+      tags:
+        - Rare diseases and cross-referencing
+      summary: Get rare disease and cross-referencing information searching by a rare disease preferred term in the selected language.
+      description: 'The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems in a selected language.'
+      operationId: query_references_by_name
+      parameters:
+        - name: name
+          in: path
+          description: the preferred name of a disease
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+              - tr
+              - zh
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 1
+                      results:
+                        type: object
+                        properties:
+                          Date:
+                            type: string
+                            example: '2022-02-01 04:37:21'
+                          DisorderDisorderAssociation:
+                            type: string
+                            example: null
+                          DisorderFlag:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                Label:
+                                  type: string
+                                  example: null
+                                Value:
+                                  type: integer
+                                  example: 1
+                          DisorderGroup:
+                            type: string
+                            example: Disorder
+                          ExternalReference:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                DisorderMappingICDRelation:
+                                  type: string
+                                  example: null
+                                DisorderMappingRelation:
+                                  type: string
+                                  example: NTBT (ORPHA code's Narrower Term maps to a Broader Term)
+                                DisorderMappingValidationStatus:
+                                  type: string
+                                  example: Validated
+                                Reference:
+                                  type: string
+                                  example: '610168'
+                                Source:
+                                  type: string
+                                  example: OMIM
+                          ORPHAcode:
+                            type: integer
+                            example: 558
+                          OrphanetURL:
+                            type: string
+                            example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=558'
+                          Preferred term:
+                            type: string
+                            example: Marfan syndrome
+                          SummaryInformation:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                Definition:
+                                  type: string
+                                  example: 'Marfan syndrome is a systemic disease of connective tissue characterized by a variable combination of cardiovascular, musculo-skeletal, ophthalmic and pulmonary manifestations.'
+                          Synonym:
+                            type: array
+                            items:
+                              type: string
+                              example: MFS
+                          Typology:
+                            type: string
+                            example: Disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and cross-referencing
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: marfan syndrome
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-cross-referencing/orphacodes/names/marfan syndrome
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_references
+  /rd-cross-referencing/omims:
+    get:
+      tags:
+        - Rare diseases and cross-referencing
+      summary: Get all OMIM references in the selected language.
+      description: The result is a list of ICD-10 references
+      operationId: query_references_omims
+      parameters:
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+              - tr
+              - zh
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 6559
+                      results:
+                        type: array
+                        items:
+                          type: string
+                          example: '100050'
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and cross-referencing
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-cross-referencing/omims
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_references
+  '/rd-cross-referencing/omims/{omim}':
+    get:
+      tags:
+        - Rare diseases and cross-referencing
+      summary: Get rare disease information and cross-referencing searching by an OMIM code in a selected language.
+      description: 'The result is a collection of disease matching with the given OMIM code. Results include ORPHAcode, preferred term, synonyms, definition, the group, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems in a selected language.'
+      operationId: query_references_by_omim
+      parameters:
+        - name: omim
+          in: path
+          description: OMIM reference
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+              - tr
+              - zh
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 3
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            Date:
+                              type: string
+                              example: '2022-02-01 04:37:21'
+                            DisorderDisorderAssociation:
+                              type: string
+                              example: null
+                            DisorderFlag:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  Label:
+                                    type: string
+                                    example: null
+                                  Value:
+                                    type: integer
+                                    example: 1
+                            DisorderGroup:
+                              type: string
+                              example: Disorder
+                            ExternalReference:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  DisorderMappingICDRelation:
+                                    type: string
+                                    example: null
+                                  DisorderMappingRelation:
+                                    type: string
+                                    example: 'E (Exact mapping: the two concepts are equivalent)'
+                                  DisorderMappingValidationStatus:
+                                    type: string
+                                    example: Validated
+                                  Reference:
+                                    type: string
+                                    example: '203450'
+                                  Source:
+                                    type: string
+                                    example: OMIM
+                            ORPHAcode:
+                              type: integer
+                              example: 58
+                            OrphanetURL:
+                              type: string
+                              example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58'
+                            Preferred term:
+                              type: string
+                              example: Alexander disease
+                            SummaryInformation:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  Definition:
+                                    type: string
+                                    example: 'A rare neurodegenerative disorder of the astrocytes comprised of two clinical forms: Alexander disease (AxD) type I and type II manifesting with various degrees of macrocephaly, spasticity, ataxia and seizures and leading to psychomotor regression and death.'
+                            Synonym:
+                              type: array
+                              items:
+                                type: string
+                                example: AxD
+                            Typology:
+                              type: string
+                              example: Disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and cross-referencing
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          omim:
+                            type: string
+                            example: '203450'
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-cross-referencing/omims/203450
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_references
+  /rd-cross-referencing/icd-10s:
+    get:
+      tags:
+        - Rare diseases and cross-referencing
+      summary: Get all ICD-10 references in the selected language.
+      description: The result is a list of ICD-10 references.
+      operationId: query_references_icds
+      parameters:
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+              - tr
+              - zh
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 2174
+                      results:
+                        type: array
+                        items:
+                          type: string
+                          example: A00.0
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and cross-referencing
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-cross-referencing/icd-10s
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_references
+  '/rd-cross-referencing/icd-10s/{icd}':
+    get:
+      tags:
+        - Rare diseases and cross-referencing
+      summary: Get rare disease information searching by an ICD-10 code in a selected language.
+      description: 'The result is a collection of disease matching with the given ICD-10 code. Results include ORPHAcode, preferred term, synonyms, definition, the group, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems in a selected language.'
+      operationId: query_references_by_icd
+      parameters:
+        - name: icd
+          in: path
+          description: ICD-10 reference
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+              - tr
+              - zh
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 72
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            Date:
+                              type: string
+                              example: '2022-02-01 04:37:21'
+                            DisorderDisorderAssociation:
+                              type: string
+                              example: null
+                            DisorderFlag:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  Label:
+                                    type: string
+                                    example: null
+                                  Value:
+                                    type: integer
+                                    example: 1
+                            DisorderGroup:
+                              type: string
+                              example: Disorder
+                            ExternalReference:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  DisorderMappingICDRelation:
+                                    type: string
+                                    example: null
+                                  DisorderMappingRelation:
+                                    type: string
+                                    example: 'E (Exact mapping: the two concepts are equivalent)'
+                                  DisorderMappingValidationStatus:
+                                    type: string
+                                    example: Validated
+                                  Reference:
+                                    type: string
+                                    example: '203450'
+                                  Source:
+                                    type: string
+                                    example: OMIM
+                            ORPHAcode:
+                              type: integer
+                              example: 58
+                            OrphanetURL:
+                              type: string
+                              example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58'
+                            Preferred term:
+                              type: string
+                              example: Alexander disease
+                            SummaryInformation:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  Definition:
+                                    type: string
+                                    example: 'A rare neurodegenerative disorder of the astrocytes comprised of two clinical forms: Alexander disease (AxD) type I and type II manifesting with various degrees of macrocephaly, spasticity, ataxia and seizures and leading to psychomotor regression and death.'
+                            Synonym:
+                              type: array
+                              items:
+                                type: string
+                                example: AxD
+                            Typology:
+                              type: string
+                              example: Disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and cross-referencing
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          icd:
+                            type: string
+                            example: e75.2
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-cross-referencing/icd-10s/e75.2
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_references
+  /rd-classification:
+    get:
+      tags:
+        - Classifications of rare diseases
+      summary: Get the list of rare diseases available in all classifications.
+      description: 'The result is a collection of rare diseases including their ORPHAcode, preferred term, classification ID, classification tag, direct children and parents.'
+      operationId: query_classification_base
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 26545
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ORPHAcode:
+                              type: integer
+                              example: 34217
+                            childs:
+                              type: array
+                              example: []
+                            hch_id:
+                              type: integer
+                              example: 146
+                            hch_tag:
+                              type: string
+                              example: Orphanet classification of rare cardiac diseases
+                            name:
+                              type: string
+                              example: Naxos disease
+                            parents:
+                              type: array
+                              items:
+                                type: integer
+                                example: 247
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Clinical classifications of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-classification
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_classification
+  /rd-classification/hchids:
+    get:
+      tags:
+        - Classifications of rare diseases
+      summary: Get the list of classifications available.
+      description: The result is a collection of the unique identifier of each classification and its name (Tag).
+      operationId: query_classification_hchids
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 33
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            hchId:
+                              type: integer
+                              example: 146
+                            hchTag:
+                              type: string
+                              example: Orphanet classification of rare cardiac diseases
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Clinical classifications of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-classification/hchids
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_classification
+  '/rd-classification/hchids/{hchid}/orphacodes':
+    get:
+      tags:
+        - Classifications of rare diseases
+      summary: Get the list of rare diseases available for a selected classification.
+      description: The result is a collection of diseases data including ORPHAcodes and preferred term in the selected classification.
+      operationId: query_classification_orphacodes_by_hchid
+      parameters:
+        - name: hchid
+          in: path
+          description: The hierarchy ID (hchID) is a specific identifier attributed to an Orphanet classification.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 0
+            exclusiveMinimum: true
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 6590
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ORPHAcode:
+                              type: integer
+                              example: 648
+                            name:
+                              type: string
+                              example: Noonan syndrome
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Clinical classifications of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          hchID:
+                            type: integer
+                            example: 156
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-classification/hchids/156/orphacodes
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_classification
+  '/rd-classification/hchids/{hchid}':
+    get:
+      tags:
+        - Classifications of rare diseases
+      summary: Get the organisation of an ORPHAcode rare disease available for a selected classification.
+      description: The result is a collection of ORPHAcodes organised as children and parents in the selected classification.
+      operationId: query_classification_by_hchid
+      parameters:
+        - name: hchid
+          in: path
+          description: The hierarchy ID (hchID) is a specific identifier attributed to an Orphanet classification.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 0
+            exclusiveMinimum: true
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 6590
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ORPHAcode:
+                              type: integer
+                              example: 648
+                            childs:
+                              type: array
+                              example: []
+                            hch_id:
+                              type: integer
+                              example: 156
+                            hch_tag:
+                              type: string
+                              example: Orphanet classification of rare genetic diseases
+                            name:
+                              type: string
+                              example: Noonan syndrome
+                            parents:
+                              type: array
+                              items:
+                                type: integer
+                                example: 98733
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Clinical classifications of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          hchID:
+                            type: integer
+                            example: 156
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-classification/hchids/156
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_classification
+  '/rd-classification/orphacodes/{orphacode}/hchids':
+    get:
+      tags:
+        - Classifications of rare diseases
+      summary: Get the list of classifications and the list of parents and childs in which the searching ORPHAcode is available.
+      description: The result is a collection of ORPHAcodes organised as children and parents in all classifications where the given ORPHAcode is present.
+      operationId: query_classification_hchids_by_orphacode
+      parameters:
+        - name: orphacode
+          in: path
+          description: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 0
+            exclusiveMinimum: true
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 2
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ORPHAcode:
+                              type: integer
+                              example: 58
+                            childs:
+                              type: array
+                              items:
+                                type: integer
+                                example: 363717
+                            hch_id:
+                              type: integer
+                              example: 156
+                            hch_tag:
+                              type: string
+                              example: Orphanet classification of rare genetic diseases
+                            name:
+                              type: string
+                              example: Alexander disease
+                            parents:
+                              type: array
+                              items:
+                                type: integer
+                                example: 68356
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Clinical classifications of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          ORPHAcode:
+                            type: integer
+                            example: 58
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-classification/orphacodes/58/hchids
+        '403':
+          description: Access denied
+        '404':
+          description: Queried clinical entity not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_classification
+  /rd-classification/orphacodes:
+    get:
+      tags:
+        - Classifications of rare diseases
+      summary: Get the list of all ORPHAcodes and their preferred term in the classification.
+      description: The result is a collection of ORPHAcodes and their preferred term in the classification.
+      operationId: query_classification_orphacodes
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 26545
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ORPHAcode:
+                              type: integer
+                              example: 34217
+                            name:
+                              type: string
+                              example: Naxos disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Clinical classifications of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-classification/orphacodes
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_classification
+  '/rd-classification/orphacodes/{orphacode}/hchids/{hchid}':
+    get:
+      tags:
+        - Classifications of rare diseases
+      summary: Get the list of parents and childs in which the searching ORPHAcode is available in the searching classification.
+      description: The result is a collection of ORPHAcodes organised as children and parents in the given classification where the given ORPHAcode is present.
+      operationId: query_classification_by_orphacode_and_hchid
+      parameters:
+        - name: orphacode
+          in: path
+          description: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 0
+            exclusiveMinimum: true
+            type: integer
+            format: int32
+        - name: hchid
+          in: path
+          description: The hierarchy ID (hchID) is a specific identifier attributed to an Orphanet classification.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 0
+            exclusiveMinimum: true
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 1
+                      results:
+                        type: object
+                        properties:
+                          ORPHAcode:
+                            type: integer
+                            example: 58
+                          childs:
+                            type: array
+                            items:
+                              type: integer
+                              example: 363717
+                          hch_id:
+                            type: integer
+                            example: 156
+                          hch_tag:
+                            type: string
+                            example: Orphanet classification of rare genetic diseases
+                          name:
+                            type: string
+                            example: Alexander disease
+                          parents:
+                            type: array
+                            items:
+                              type: integer
+                              example: 68356
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Clinical classifications of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          ORPHAcode:
+                            type: integer
+                            example: 58
+                          hchID:
+                            type: integer
+                            example: 156
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-classification/orphacodes/58/hchids/156
+        '403':
+          description: Access denied
+        '404':
+          description: Queried clinical entity not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_classification
+  /rd-phenotypes:
+    get:
+      tags:
+        - Rare diseases and associated phenotypes
+      summary: Get the list of rare diseases with their associated phenotypes in a selected language.
+      description: 'The result is a collection of rare diseases with their associated HPO phenotypes. The association is characterized by frequency (obligate, very frequent, frequent, occasional, very rare or excluded) and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic sign of the rare disease. The source (PMID references), the date and the validation’s status of the association are also available.'
+      operationId: query_phenotypes_base
+      parameters:
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pt
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 4259
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            Date:
+                              type: string
+                              example: '2022-02-01 04:47:53'
+                            Disorder:
+                              type: object
+                              properties:
+                                DisorderGroup:
+                                  type: string
+                                  example: Disorder
+                                HPODisorderAssociation:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      DiagnosticCriteria:
+                                        type: string
+                                        example: null
+                                      HPO:
+                                        type: object
+                                        properties:
+                                          HPOId:
+                                            type: string
+                                            example: 'HP:0000256'
+                                          HPOTerm:
+                                            type: string
+                                            example: Macrocephaly
+                                      HPOFrequency:
+                                        type: string
+                                        example: Very frequent (99-80%)
+                                ORPHAcode:
+                                  type: integer
+                                  example: 58
+                                OrphanetURL:
+                                  type: string
+                                  example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58'
+                                Preferred term:
+                                  type: string
+                                  example: Alexander disease
+                                Typology:
+                                  type: string
+                                  example: Disease
+                            Online:
+                              type: string
+                              example: 'y'
+                            Source:
+                              type: string
+                              example: null
+                            ValidationDate:
+                              type: string
+                              example: '2016-06-01 00:00:00.0'
+                            ValidationStatus:
+                              type: string
+                              example: 'y'
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and associated phenotypes
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-phenotypes
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_phenotypes
+  /rd-phenotypes/orphacodes:
+    get:
+      tags:
+        - Rare diseases and associated phenotypes
+      summary: Get the list of rare diseases annotated with HPO phenotypes in a selected language.
+      description: The result is a collection of rare diseases data including ORPHAcodes and preferred term in the selected language.
+      operationId: query_phenotypes_orphacodes
+      parameters:
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pt
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 4259
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ORPHAcode:
+                              type: integer
+                              example: 58
+                            Preferred term:
+                              type: string
+                              example: Alexander disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and associated phenotypes
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-phenotypes/orphacodes
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_phenotypes
+  '/rd-phenotypes/orphacodes/{orphacode}':
+    get:
+      tags:
+        - Rare diseases and associated phenotypes
+      summary: Get rare disease information and associated HPO phenotypes searching by its ORPHAcode in a selected language.
+      description: 'The result is a set of data including ORPHAcode of the given disease, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, the group, associated characterized HPO terms, the source (PMID references), the date and the validation’s status of the annotation in the selected language.'
+      operationId: query_phenotypes_by_orphacode
+      parameters:
+        - name: orphacode
+          in: path
+          description: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 0
+            exclusiveMinimum: true
+            type: integer
+            format: int32
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pt
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 1
+                      results:
+                        type: object
+                        properties:
+                          Date:
+                            type: string
+                            example: '2022-02-01 04:47:53'
+                          Disorder:
+                            type: object
+                            properties:
+                              DisorderGroup:
+                                type: string
+                                example: Disorder
+                              HPODisorderAssociation:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    DiagnosticCriteria:
+                                      type: string
+                                      example: null
+                                    HPO:
+                                      type: object
+                                      properties:
+                                        HPOId:
+                                          type: string
+                                          example: 'HP:0000256'
+                                        HPOTerm:
+                                          type: string
+                                          example: Macrocephaly
+                                    HPOFrequency:
+                                      type: string
+                                      example: Very frequent (99-80%)
+                              ORPHAcode:
+                                type: integer
+                                example: 58
+                              OrphanetURL:
+                                type: string
+                                example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58'
+                              Preferred term:
+                                type: string
+                                example: Alexander disease
+                              Typology:
+                                type: string
+                                example: Disease
+                          Online:
+                            type: string
+                            example: 'y'
+                          Source:
+                            type: string
+                            example: null
+                          ValidationDate:
+                            type: string
+                            example: '2016-06-01 00:00:00.0'
+                          ValidationStatus:
+                            type: string
+                            example: 'y'
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and associated phenotypes
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          ORPHAcode:
+                            type: integer
+                            example: 58
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-phenotypes/orphacodes/58
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_phenotypes
+  /rd-phenotypes/hpoids:
+    get:
+      tags:
+        - Rare diseases and associated phenotypes
+      summary: Get the list of HPO phenotypes in a selected language.
+      description: The result is a collection of HPO phenotypes including their ID and term in the selected language.
+      operationId: query_phenotypes_hpoids
+      parameters:
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pt
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 8284
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            HPOId:
+                              type: string
+                              example: 'HP:0000002'
+                            HPOTerm:
+                              type: string
+                              example: Abnormality of body height
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and associated phenotypes
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-phenotypes/hpoids
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_phenotypes
+  '/rd-phenotypes/hpoids/{hpoids}':
+    get:
+      tags:
+        - Rare diseases and associated phenotypes
+      summary: Get rare diseases information searching by a list of HPO identifiers in a selected language.
+      description: 'The result is a collection of rare diseases matching with the given list of HPO identifiers including ORPHAcode, the stable URL pointing to its specific page on the Orphanet website, preferred term, the group, and the associated HPO phenotypes characterized by frequency or indication if the HPO term is a major diagnostic criterion or a pathognomonic sign. The source (PMID references), the date and the validation’s status of the association are also available.'
+      operationId: query_phenotypes_by_hpoids
+      parameters:
+        - name: hpoids
+          in: path
+          description: a comma-separated list of HPO IDs
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: array
+            minItems: 1
+            uniqueItems: true
+            items:
+              type: string
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pt
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 1
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            Date:
+                              type: string
+                              example: '2022-02-01 04:47:53'
+                            Disorder:
+                              type: object
+                              properties:
+                                DisorderGroup:
+                                  type: string
+                                  example: Disorder
+                                HPODisorderAssociation:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties:
+                                      DiagnosticCriteria:
+                                        type: string
+                                        example: null
+                                      HPO:
+                                        type: object
+                                        properties:
+                                          HPOId:
+                                            type: string
+                                            example: 'HP:0000256'
+                                          HPOTerm:
+                                            type: string
+                                            example: Macrocephaly
+                                      HPOFrequency:
+                                        type: string
+                                        example: Very frequent (99-80%)
+                                ORPHAcode:
+                                  type: integer
+                                  example: 58
+                                OrphanetURL:
+                                  type: string
+                                  example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58'
+                                Preferred term:
+                                  type: string
+                                  example: Alexander disease
+                                Typology:
+                                  type: string
+                                  example: Disease
+                            Online:
+                              type: string
+                              example: 'y'
+                            Source:
+                              type: string
+                              example: null
+                            ValidationDate:
+                              type: string
+                              example: '2016-06-01 00:00:00.0'
+                            ValidationStatus:
+                              type: string
+                              example: 'y'
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and associated phenotypes
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          hpoids:
+                            type: array
+                            items:
+                              type: string
+                              example: 'HP:0000256'
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: '/rd-phenotypes/hpoids/HP:0000256,HP:0001249,HP:0001250,HP:0001257,HP:0002650,HP:0100729'
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_phenotypes
+  /rd-associated-genes:
+    get:
+      tags:
+        - Rare diseases and associated gene
+      summary: Get rare diseases associated to at least one gene.
+      description: 'The result is a collection of rare diseases information (ORPHAcode, preferred term, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, group and type) and their genes associations. For each gene, symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases are also available.'
+      operationId: query_genes_base
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 3884
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            Date:
+                              type: string
+                              example: '2022-02-01 04:53:24'
+                            DisorderGeneAssociation:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  DisorderGeneAssociationStatus:
+                                    type: string
+                                    example: Assessed
+                                  DisorderGeneAssociationType:
+                                    type: string
+                                    example: Disease-causing germline mutation(s) in
+                                  Gene:
+                                    type: object
+                                    properties:
+                                      ExternalReference:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            Reference:
+                                              type: string
+                                              example: ENSG00000166813
+                                            Source:
+                                              type: string
+                                              example: Ensembl
+                                      GeneType:
+                                        type: string
+                                        example: gene with protein product
+                                      Locus:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            GeneLocus:
+                                              type: string
+                                              example: 15q26.1
+                                            LocusKey:
+                                              type: integer
+                                              example: 1
+                                      Preferred term:
+                                        type: string
+                                        example: kinesin family member 7
+                                      Symbol:
+                                        type: string
+                                        example: KIF7
+                                      Synonym:
+                                        type: array
+                                        items:
+                                          type: string
+                                          example: JBTS12
+                                  SourceOfValidation:
+                                    type: string
+                                    example: '22587682[PMID]'
+                            DisorderGroup:
+                              type: string
+                              example: Disorder
+                            ORPHAcode:
+                              type: integer
+                              example: 166024
+                            OrphanetURL:
+                              type: string
+                              example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024'
+                            Preferred term:
+                              type: string
+                              example: 'Multiple epiphyseal dysplasia, Al-Gazali type'
+                            Typology:
+                              type: string
+                              example: Disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and associated genes
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-associated-genes
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_genes
+  /rd-associated-genes/orphacodes:
+    get:
+      tags:
+        - Rare diseases and associated gene
+      summary: Get the list of rare diseases associated to at least one gene.
+      description: The result is a collection of diseases data including ORPHAcodes and preferred term.
+      operationId: query_genes_orphacodes
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 3884
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ORPHAcode:
+                              type: integer
+                              example: 166024
+                            Preferred term:
+                              type: string
+                              example: 'Multiple epiphyseal dysplasia, Al-Gazali type'
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and associated genes
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-associated-genes/orphacodes
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_genes
+  '/rd-associated-genes/orphacodes/{orphacode}':
+    get:
+      tags:
+        - Rare diseases and associated gene
+      summary: Get rare disease information and gene association searching by an ORPHAcode.
+      description: 'The result is a set of data including ORPHAcode of the given disease, preferred term, expertlink, group and type, relationship between diseases and the searched gene. Symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases of genes are also available.'
+      operationId: query_genes_by_orphacode
+      parameters:
+        - name: orphacode
+          in: path
+          description: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 0
+            exclusiveMinimum: true
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 1
+                      results:
+                        type: object
+                        properties:
+                          Date:
+                            type: string
+                            example: '2022-02-01 04:53:24'
+                          DisorderGeneAssociation:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                DisorderGeneAssociationStatus:
+                                  type: string
+                                  example: Assessed
+                                DisorderGeneAssociationType:
+                                  type: string
+                                  example: Disease-causing germline mutation(s) in
+                                Gene:
+                                  type: object
+                                  properties:
+                                    ExternalReference:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          Reference:
+                                            type: string
+                                            example: ENSG00000166813
+                                          Source:
+                                            type: string
+                                            example: Ensembl
+                                    GeneType:
+                                      type: string
+                                      example: gene with protein product
+                                    Locus:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          GeneLocus:
+                                            type: string
+                                            example: 15q26.1
+                                          LocusKey:
+                                            type: integer
+                                            example: 1
+                                    Preferred term:
+                                      type: string
+                                      example: kinesin family member 7
+                                    Symbol:
+                                      type: string
+                                      example: KIF7
+                                    Synonym:
+                                      type: array
+                                      items:
+                                        type: string
+                                        example: JBTS12
+                                SourceOfValidation:
+                                  type: string
+                                  example: '22587682[PMID]'
+                          DisorderGroup:
+                            type: string
+                            example: Disorder
+                          ORPHAcode:
+                            type: integer
+                            example: 166024
+                          OrphanetURL:
+                            type: string
+                            example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024'
+                          Preferred term:
+                            type: string
+                            example: 'Multiple epiphyseal dysplasia, Al-Gazali type'
+                          Typology:
+                            type: string
+                            example: Disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and associated genes
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          ORPHAcode:
+                            type: integer
+                            example: 166024
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-associated-genes/orphacodes/166024
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_genes
+  /rd-associated-genes/genes:
+    get:
+      tags:
+        - Rare diseases and associated gene
+      summary: Get the list of genes associated to at least one rare disease.
+      description: The result is a collection of genes associated to at least one rare disease. Each gene is presented by its name(s) and symbol(s).
+      operationId: query_genes_genes
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 4333
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            preferredTerm:
+                              type: string
+                              example: '1,4-alpha-glucan branching enzyme 1'
+                            symbol:
+                              type: string
+                              example: GBE1
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and associated genes
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-associated-genes/genes
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_genes
+  '/rd-associated-genes/genes/symbols/{symbol}':
+    get:
+      tags:
+        - Rare diseases and associated gene
+      summary: Get rare diseases information searching by symbol of associated gene.
+      description: 'The result is a collection of diseases associated to the given symbol gene. The result includes ORPHAcode, preferred term, expertlink, group and type, relationship between diseases and the searched gene. Symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases of genes are also available.'
+      operationId: query_genes_by_symbol
+      parameters:
+        - name: symbol
+          in: path
+          description: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 4
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            Date:
+                              type: string
+                              example: '2022-02-01 04:53:24'
+                            DisorderGeneAssociation:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  DisorderGeneAssociationStatus:
+                                    type: string
+                                    example: Assessed
+                                  DisorderGeneAssociationType:
+                                    type: string
+                                    example: Disease-causing germline mutation(s) in
+                                  Gene:
+                                    type: object
+                                    properties:
+                                      ExternalReference:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            Reference:
+                                              type: string
+                                              example: ENSG00000166813
+                                            Source:
+                                              type: string
+                                              example: Ensembl
+                                      GeneType:
+                                        type: string
+                                        example: gene with protein product
+                                      Locus:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            GeneLocus:
+                                              type: string
+                                              example: 15q26.1
+                                            LocusKey:
+                                              type: integer
+                                              example: 1
+                                      Preferred term:
+                                        type: string
+                                        example: kinesin family member 7
+                                      Symbol:
+                                        type: string
+                                        example: KIF7
+                                      Synonym:
+                                        type: array
+                                        items:
+                                          type: string
+                                          example: JBTS12
+                                  SourceOfValidation:
+                                    type: string
+                                    example: '22587682[PMID]'
+                            DisorderGroup:
+                              type: string
+                              example: Disorder
+                            ORPHAcode:
+                              type: integer
+                              example: 166024
+                            OrphanetURL:
+                              type: string
+                              example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024'
+                            Preferred term:
+                              type: string
+                              example: 'Multiple epiphyseal dysplasia, Al-Gazali type'
+                            Typology:
+                              type: string
+                              example: Disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and associated genes
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          symbol:
+                            type: string
+                            example: kif7
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-associated-genes/genes/symbols/kif7
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_genes
+  '/rd-associated-genes/genes/names/{name}':
+    get:
+      tags:
+        - Rare diseases and associated gene
+      summary: Get rare disease and associated genes searching by a chain of characters contained in a gene name.
+      description: 'The result is a set of data including ORPHAcode, preferred term, expertlink, group and type of the selected clinical entity, relationship between genes and the searched disease and symbol, synonyms, name, typology, chromosomal location and cross-mappings with other international genetic databases of selected genes.'
+      operationId: query_genes_by_name
+      parameters:
+        - name: name
+          in: path
+          description: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 22
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            Date:
+                              type: string
+                              example: '2022-02-01 04:53:24'
+                            DisorderGeneAssociation:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  DisorderGeneAssociationStatus:
+                                    type: string
+                                    example: Assessed
+                                  DisorderGeneAssociationType:
+                                    type: string
+                                    example: Disease-causing germline mutation(s) in
+                                  Gene:
+                                    type: object
+                                    properties:
+                                      ExternalReference:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            Reference:
+                                              type: string
+                                              example: ENSG00000166813
+                                            Source:
+                                              type: string
+                                              example: Ensembl
+                                      GeneType:
+                                        type: string
+                                        example: gene with protein product
+                                      Locus:
+                                        type: array
+                                        items:
+                                          type: object
+                                          properties:
+                                            GeneLocus:
+                                              type: string
+                                              example: 15q26.1
+                                            LocusKey:
+                                              type: integer
+                                              example: 1
+                                      Preferred term:
+                                        type: string
+                                        example: kinesin family member 7
+                                      Symbol:
+                                        type: string
+                                        example: KIF7
+                                      Synonym:
+                                        type: array
+                                        items:
+                                          type: string
+                                          example: JBTS12
+                                  SourceOfValidation:
+                                    type: string
+                                    example: '22587682[PMID]'
+                            DisorderGroup:
+                              type: string
+                              example: Disorder
+                            ORPHAcode:
+                              type: integer
+                              example: 166024
+                            OrphanetURL:
+                              type: string
+                              example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024'
+                            Preferred term:
+                              type: string
+                              example: 'Multiple epiphyseal dysplasia, Al-Gazali type'
+                            Typology:
+                              type: string
+                              example: Disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and associated genes
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: kinesin family
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-associated-genes/genes/names/kinesin family
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_genes
+  /rd-medical-specialties:
+    get:
+      tags:
+        - Medical specialties of rare diseases
+      summary: Get the list of rare diseases with their associated preferential parent.
+      description: 'The result is a collection of rare diseases with their associated preferential parent including ORPHAcode, preferred term, expertlink, group and type, and the ORPHAcode and preferred term of the preferential parent.'
+      operationId: query_linearization_base
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 7219
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            Date:
+                              type: string
+                              example: '2022-02-01 04:53:54'
+                            DisorderDisorderAssociation:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  DisorderDisorderAssociationType:
+                                    type: string
+                                    example: Preferential parent
+                                  RootDisorder:
+                                    type: string
+                                    example: null
+                                  TargetDisorder:
+                                    type: object
+                                    properties:
+                                      ORPHAcode:
+                                        type: integer
+                                        example: 93419
+                                      Preferred term:
+                                        type: string
+                                        example: Rare bone disease
+                            ORPHAcode:
+                              type: integer
+                              example: 166024
+                            OrphanetURL:
+                              type: string
+                              example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024'
+                            Preferred term:
+                              type: string
+                              example: 'Multiple epiphyseal dysplasia, Al-Gazali type'
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Medical specialties of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-medical-specialties
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_medical_specialties
+  /rd-medical-specialties/orphacodes:
+    get:
+      tags:
+        - Medical specialties of rare diseases
+      summary: Get the list of rare diseases with a preferential parent.
+      description: The result is a collection of rare diseases data including ORPHAcodes and preferred term.
+      operationId: query_linearization_orphacodes
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 7219
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ORPHAcode:
+                              type: integer
+                              example: 166024
+                            Preferred term:
+                              type: string
+                              example: 'Multiple epiphyseal dysplasia, Al-Gazali type'
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Medical specialties of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-medical-specialties/orphacodes
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_medical_specialties
+  '/rd-medical-specialties/orphacodes/{orphacode}':
+    get:
+      tags:
+        - Medical specialties of rare diseases
+      summary: Get preferential parent of a rare disease searching by its ORPHAcode.
+      description: 'The result is a set of data including ORPHAcode of the given disease, preferred term, expertlink, group and type, and the ORPHAcode and preferred term of the preferential parent.'
+      operationId: query_linearization_by_orphacode
+      parameters:
+        - name: orphacode
+          in: path
+          description: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 0
+            exclusiveMinimum: true
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 1
+                      results:
+                        type: object
+                        properties:
+                          Date:
+                            type: string
+                            example: '2022-02-01 04:53:54'
+                          DisorderDisorderAssociation:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                DisorderDisorderAssociationType:
+                                  type: string
+                                  example: Preferential parent
+                                RootDisorder:
+                                  type: string
+                                  example: null
+                                TargetDisorder:
+                                  type: object
+                                  properties:
+                                    ORPHAcode:
+                                      type: integer
+                                      example: 98006
+                                    Preferred term:
+                                      type: string
+                                      example: Rare neurologic disease
+                          ORPHAcode:
+                            type: integer
+                            example: 58
+                          OrphanetURL:
+                            type: string
+                            example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58'
+                          Preferred term:
+                            type: string
+                            example: Alexander disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Medical specialties of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          ORPHAcode:
+                            type: integer
+                            example: 58
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-medical-specialties/orphacodes/58
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_medical_specialties
+  /rd-medical-specialties/parents:
+    get:
+      tags:
+        - Medical specialties of rare diseases
+      summary: Get the list of preferential parent associated to at least one rare disease.
+      description: The result is a collection of preferential parent data including ORPHAcodes and preferred term.
+      operationId: query_linearization_parents
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 30
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ORPHAcode:
+                              type: integer
+                              example: 57146
+                            Preferred term:
+                              type: string
+                              example: Rare hepatic disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Medical specialties of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-medical-specialties/parents
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_medical_specialties
+  '/rd-medical-specialties/parents/{parentcode}':
+    get:
+      tags:
+        - Medical specialties of rare diseases
+      summary: Get the list of rare diseases searching by a preferential parent ORPHAcode.
+      description: 'The result is a collection of rare diseases associated to the given preferential parent, including ORPHAcodes, preferred term, expertLink and the date of the association.'
+      operationId: query_linearization_by_parent
+      parameters:
+        - name: parentcode
+          in: path
+          description: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 0
+            exclusiveMinimum: true
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 1176
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            Date:
+                              type: string
+                              example: '2022-02-01 04:53:54'
+                            DisorderDisorderAssociation:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  DisorderDisorderAssociationType:
+                                    type: string
+                                    example: Preferential parent
+                                  RootDisorder:
+                                    type: string
+                                    example: null
+                                  TargetDisorder:
+                                    type: object
+                                    properties:
+                                      ORPHAcode:
+                                        type: integer
+                                        example: 98006
+                                      Preferred term:
+                                        type: string
+                                        example: Rare neurologic disease
+                            ORPHAcode:
+                              type: integer
+                              example: 58
+                            OrphanetURL:
+                              type: string
+                              example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58'
+                            Preferred term:
+                              type: string
+                              example: Alexander disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Medical specialties of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          ORPHAcode:
+                            type: integer
+                            example: 98006
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-medical-specialties/parents/98006
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_medical_specialties
+  /rd-epidemiology:
+    get:
+      tags:
+        - Epidemiology of rare diseases
+      summary: Get rare diseases and their epidemiological data in a selected language.
+      description: 'The result is a collection of rare diseases (ORPHAcode, preferred name, group) with available point prevalence, birth prevalence, lifelong prevalence and incidence, or the number of families reported together with their respective intervals per geographical area.'
+      operationId: query_epidemiology_base
+      parameters:
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 6064
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            Date:
+                              type: string
+                              example: '2022-02-01 04:55:30'
+                            DisorderGroup:
+                              type: string
+                              example: Disorder
+                            ORPHAcode:
+                              type: integer
+                              example: 166024
+                            OrphanetURL:
+                              type: string
+                              example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024'
+                            Preferred term:
+                              type: string
+                              example: 'Multiple epiphyseal dysplasia, Al-Gazali type'
+                            Prevalence:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  PrevalenceClass:
+                                    type: string
+                                    example: null
+                                  PrevalenceGeographic:
+                                    type: string
+                                    example: Worldwide
+                                  PrevalenceQualification:
+                                    type: string
+                                    example: Case
+                                  PrevalenceType:
+                                    type: string
+                                    example: Cases/families
+                                  PrevalenceValidationStatus:
+                                    type: string
+                                    example: Validated
+                                  Source:
+                                    type: string
+                                    example: '11389160[PMID]_9689990[PMID]_ [EXPERT]'
+                                  ValMoy:
+                                    type: string
+                                    example: '4.0'
+                            Typology:
+                              type: string
+                              example: Disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Epidemiology of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-epidemiology
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_epidemiological
+  /rd-epidemiology/orphacodes:
+    get:
+      tags:
+        - Epidemiology of rare diseases
+      summary: Get the list of rare diseases associated to at least one epidemiological data in a selected language.
+      description: The result is a collection of rare diseases including ORPHAcodes and preferred term.
+      operationId: query_epidemiology_orphacodes
+      parameters:
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 6064
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ORPHAcode:
+                              type: integer
+                              example: 166024
+                            Preferred term:
+                              type: string
+                              example: 'Multiple epiphyseal dysplasia, Al-Gazali type'
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Epidemiology of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-epidemiology/orphacodes
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_epidemiological
+  '/rd-epidemiology/orphacodes/{orphacode}':
+    get:
+      tags:
+        - Epidemiology of rare diseases
+      summary: Get rare disease epidemiological data searching in a selected language by its ORPHAcode.
+      description: 'The result is a set of data including ORPHAcode of the given disease, preferred term, expertlink, group and the list of prevalence, lifelong prevalence and incidence, or the number of families reported together with their respective intervals per geographical area. The source and the status of the annotation is also available.'
+      operationId: query_epidemiology_by_orphacode
+      parameters:
+        - name: orphacode
+          in: path
+          description: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 0
+            exclusiveMinimum: true
+            type: integer
+            format: int32
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 1
+                      results:
+                        type: object
+                        properties:
+                          Date:
+                            type: string
+                            example: '2022-02-01 04:55:30'
+                          DisorderGroup:
+                            type: string
+                            example: Disorder
+                          ORPHAcode:
+                            type: integer
+                            example: 58
+                          OrphanetURL:
+                            type: string
+                            example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58'
+                          Preferred term:
+                            type: string
+                            example: Alexander disease
+                          Prevalence:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                PrevalenceClass:
+                                  type: string
+                                  example: <1 / 1 000 000
+                                PrevalenceGeographic:
+                                  type: string
+                                  example: Japan
+                                PrevalenceQualification:
+                                  type: string
+                                  example: Value and class
+                                PrevalenceType:
+                                  type: string
+                                  example: Annual incidence
+                                PrevalenceValidationStatus:
+                                  type: string
+                                  example: Validated
+                                Source:
+                                  type: string
+                                  example: '21533827[PMID]_[EXPERT]'
+                                ValMoy:
+                                  type: string
+                                  example: '0.037'
+                          Typology:
+                            type: string
+                            example: Disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Epidemiology of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          ORPHAcode:
+                            type: integer
+                            example: 58
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-epidemiology/orphacodes/58
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_epidemiological
+  /rd-natural_history:
+    get:
+      tags:
+        - Natural history of rare diseases
+      summary: Get rare diseases and their natural history in a selected language.
+      description: 'The result is a collection of rare diseases (ORPHAcode, preferred name, group) with available inheritance, interval average age of onset and interval average age of death.'
+      operationId: query_history_base
+      parameters:
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 6653
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            AverageAgeOfDeath:
+                              type: string
+                              example: null
+                            AverageAgeOfOnset:
+                              type: array
+                              items:
+                                type: string
+                                example: Infancy
+                            Date:
+                              type: string
+                              example: '2022-02-01 04:54:18'
+                            DisorderGroup:
+                              type: string
+                              example: Disorder
+                            ORPHAcode:
+                              type: integer
+                              example: 166024
+                            OrphanetURL:
+                              type: string
+                              example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024'
+                            Preferred term:
+                              type: string
+                              example: 'Multiple epiphyseal dysplasia, Al-Gazali type'
+                            TypeOfInheritance:
+                              type: array
+                              items:
+                                type: string
+                                example: Autosomal recessive
+                            Typology:
+                              type: string
+                              example: Disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Natural history of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-natural_history
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_history
+  /rd-natural_history/orphacodes:
+    get:
+      tags:
+        - Natural history of rare diseases
+      summary: 'Get the list of rare diseases associated to at least one inheritance, interval average age of onset or interval average age of death data in a selected language.'
+      description: The result is a collection of rare diseases including ORPHAcodes and preferred term.
+      operationId: query_history_orphacodes
+      parameters:
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 6653
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            ORPHAcode:
+                              type: integer
+                              example: 166024
+                            Preferred term:
+                              type: string
+                              example: 'Multiple epiphyseal dysplasia, Al-Gazali type'
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Natural history of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-natural_history/orphacodes
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_history
+  '/rd-natural_history/orphacodes/{orphacode}':
+    get:
+      tags:
+        - Natural history of rare diseases
+      summary: Get the natural history data of a given rare disease in a selected language searching by its ORPHAcode.
+      description: 'The result is a set of data including ORPHAcode of the given disease, preferred term, expertlink, group and the list of one inheritance, interval average age of onset or interval average age of death.'
+      operationId: query_history_by_orphacode
+      parameters:
+        - name: orphacode
+          in: path
+          description: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            minimum: 0
+            exclusiveMinimum: true
+            type: integer
+            format: int32
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 1
+                      results:
+                        type: object
+                        properties:
+                          AverageAgeOfDeath:
+                            type: array
+                            items:
+                              type: string
+                              example: any age
+                          AverageAgeOfOnset:
+                            type: array
+                            items:
+                              type: string
+                              example: All ages
+                          Date:
+                            type: string
+                            example: '2022-02-01 04:54:18'
+                          DisorderGroup:
+                            type: string
+                            example: Disorder
+                          ORPHAcode:
+                            type: integer
+                            example: 58
+                          OrphanetURL:
+                            type: string
+                            example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58'
+                          Preferred term:
+                            type: string
+                            example: Alexander disease
+                          TypeOfInheritance:
+                            type: array
+                            items:
+                              type: string
+                              example: Autosomal dominant
+                          Typology:
+                            type: string
+                            example: Disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Natural history of rare diseases
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          ORPHAcode:
+                            type: integer
+                            example: 58
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-natural_history/orphacodes/58
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_history
+components:
+  responses:
+    '403':
+      description: Access denied
+    '404':
+      description: Queried disorder not found
+    default:
+      description: Unknown internal error
+  parameters:
+    hchid:
+      name: hchid
+      in: path
+      description: The hierarchy ID (hchID) is a specific identifier attributed to an Orphanet classification.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        minimum: 0
+        exclusiveMinimum: true
+        type: integer
+    language:
+      name: language
+      in: path
+      description: 'Specify the language in the list supported by Orphanet (CS, DE, EN, ES, FR, IT, NL, PL, PT)'
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        default: EN
+        enum:
+          - CS
+          - DE
+          - EN
+          - ES
+          - FR
+          - IT
+          - NL
+          - PL
+          - PT
+    orphacode:
+      name: orphacode
+      in: path
+      description: a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        minimum: 0
+        exclusiveMinimum: true
+        type: integer
+        format: int32
+    symbol:
+      name: symbol
+      in: path
+      description: The symbol is an identifier to reference a gene
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string

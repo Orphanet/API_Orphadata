@@ -1,0 +1,87 @@
+type: object
+properties:
+  data:
+    type: object
+    properties:
+      __count:
+        type: integer
+        example: 1
+      results:
+        type: object
+        properties:
+          Date:
+            type: string
+            example: "2022-02-01 04:47:53"
+          Disorder:
+            type: object
+            properties:
+              DisorderGroup:
+                type: string
+                example: "Disorder"
+              HPODisorderAssociation:
+                type: array
+                items:
+                    type: object
+                    properties:
+                      DiagnosticCriteria:
+                        type: string
+                        example: null
+                      HPO:
+                        type: object
+                        properties:
+                          HPOId:
+                            type: string
+                            example: "HP:0000256"
+                          HPOTerm:
+                            type: string
+                            example: "Macrocephaly"
+                      HPOFrequency:
+                        type: string
+                        example: "Very frequent (99-80%)"
+              ORPHAcode:
+                type: integer
+                example: 58
+              OrphanetURL:
+                type: string
+                example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58"
+              Preferred term:
+                type: string
+                example: "Alexander disease"
+              Typology:
+                type: string
+                example: "Disease"
+          Online:
+            type: string
+            example: "y"
+          Source:
+            type: string
+            example: null
+          ValidationDate:
+            type: string
+            example: "2016-06-01 00:00:00.0"
+          ValidationStatus:
+            type: string
+            example: "y"
+  datasetCategory:
+    type: object
+    properties:
+      lang:
+        type: string
+        example: "en"
+      name:
+        type: string
+        example: "Rare diseases and associated phenotypes"
+  parameters:
+    type: object
+    properties:
+      path:
+        type: object
+        properties:
+          ORPHAcode:
+            type: integer
+            example: 58
+      query:
+        type: object
+  uri:
+    type: string
+    example: "/rd-phenotypes/orphacodes/58"

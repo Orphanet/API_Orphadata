@@ -1,0 +1,38 @@
+type: object
+properties:
+  data:
+    type: object
+    properties:
+      __count:
+        type: integer
+        example: 33
+      results:
+        type: array
+        items:
+            type: object
+            properties:
+              hchId:
+                type: integer
+                example: 146
+              hchTag:
+                type: string
+                example: "Orphanet classification of rare cardiac diseases"
+  datasetCategory:
+    type: object
+    properties:
+      lang:
+        type: string
+        example: "en"
+      name:
+        type: string
+        example: "Clinical classifications of rare diseases"
+  parameters:
+    type: object
+    properties:
+      path:
+        type: object
+      query:
+        type: object
+  uri:
+    type: string
+    example: "/rd-classification/hchids"

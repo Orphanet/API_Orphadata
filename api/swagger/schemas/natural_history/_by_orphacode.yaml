@@ -1,0 +1,67 @@
+type: object
+properties:
+  data:
+    type: object
+    properties:
+      __count:
+        type: integer
+        example: 1
+      results:
+        type: object
+        properties:
+          AverageAgeOfDeath:
+            type: array
+            items:
+                type: string
+                example: "any age"
+          AverageAgeOfOnset:
+            type: array
+            items:
+                type: string
+                example: "All ages"
+          Date:
+            type: string
+            example: "2022-02-01 04:54:18"
+          DisorderGroup:
+            type: string
+            example: "Disorder"
+          ORPHAcode:
+            type: integer
+            example: 58
+          OrphanetURL:
+            type: string
+            example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58"
+          Preferred term:
+            type: string
+            example: "Alexander disease"
+          TypeOfInheritance:
+            type: array
+            items:
+                type: string
+                example: "Autosomal dominant"
+          Typology:
+            type: string
+            example: "Disease"
+  datasetCategory:
+    type: object
+    properties:
+      lang:
+        type: string
+        example: "en"
+      name:
+        type: string
+        example: "Natural history of rare diseases"
+  parameters:
+    type: object
+    properties:
+      path:
+        type: object
+        properties:
+          ORPHAcode:
+            type: integer
+            example: 58
+      query:
+        type: object
+  uri:
+    type: string
+    example: "/rd-natural_history/orphacodes/58"
