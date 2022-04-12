@@ -6,12 +6,15 @@ properties:
       __count:
         type: integer
         example: 1
+      __licence:
+        type: string
+        example: "https://creativecommons.org/licenses/by/4.0"
       results:
         type: object
         properties:
           Date:
             type: string
-            example: "2022-02-01 04:37:21"
+            example: "2022-04-01 04:40:40"
           DisorderDisorderAssociation:
             type: string
             example: null
@@ -69,8 +72,8 @@ properties:
           Synonym:
             type: array
             items:
-                type: string
-                example: "MFS"
+              type: string
+            example: [MFS]
           Typology:
             type: string
             example: "Disease"

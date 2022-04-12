@@ -6,6 +6,9 @@ properties:
       __count:
         type: integer
         example: 33
+      __licence:
+        type: string
+        example: "https://creativecommons.org/licenses/by/4.0"
       results:
         type: array
         items:

@@ -27,7 +27,11 @@ class ResponseWrapper:
                 'lang': '',
             },
             'data': {
-                '__licence': "https://creativecommons.org/licenses/by/4.0", 
+                '__licence': {
+                    "name": "Creative Commons Attribution 4.0 International",
+                    "identifier": "CC-BY-4.0",
+                    "link": "https://creativecommons.org/licenses/by/4.0"
+                },
                 '__count': None,
                 'results': None
             }

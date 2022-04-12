@@ -678,7 +678,6 @@ def main():
 
     os.makedirs(config.out_folder, exist_ok=True)
 
-
     if config.parse_folder:
 
         _notqdm = True if __name__ == '__main__' else False

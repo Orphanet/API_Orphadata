@@ -5,12 +5,15 @@ properties:
     properties:
       __count:
         type: integer
-        example: 6559
+        example: 6552
+      __licence:
+        type: string
+        example: "https://creativecommons.org/licenses/by/4.0"
       results:
         type: array
         items:
-            type: string
-            example: "100050"
+          type: string
+        example: [100050, 100070, 100100]
   datasetCategory:
     type: object
     properties:

@@ -4,8 +4,9 @@ import requests
 from typing import Dict, List
 import time
 
-
-SCHEMAS_PATH = Path("/home/nche/projects/API_Orphadata/api/swagger/schemas")
+BASE_PATH = Path(__file__).resolve().parent.parent.parent.parent
+SCHEMAS_PATH = BASE_PATH / "api" / "swagger" / "schemas"
+API_ROOT = "http://localhost:5000" # 'http://api.orphadata.com'
 
 REQ = [
     {
@@ -206,8 +207,6 @@ def json2yaml(obj):
 
     return txt
 
-
-API_ROOT = "http://localhost:5000" # 'http://api.orphadata.com'
 
 for req in REQ[:]:
     url = API_ROOT + req.get("url")

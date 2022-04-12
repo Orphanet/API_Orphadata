@@ -5,7 +5,10 @@ properties:
     properties:
       __count:
         type: integer
-        example: 6590
+        example: 4
+      __licence:
+        type: string
+        example: "https://creativecommons.org/licenses/by/4.0"
       results:
         type: array
         items:
@@ -13,10 +16,10 @@ properties:
             properties:
               ORPHAcode:
                 type: integer
-                example: 648
+                example: 2196
               name:
                 type: string
-                example: "Noonan syndrome"
+                example: "Primary hypomagnesemia with hypercalciuria and nephrocalcinosis with severe ocular involvement"
   datasetCategory:
     type: object
     properties:

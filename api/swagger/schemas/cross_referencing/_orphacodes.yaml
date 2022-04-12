@@ -5,7 +5,10 @@ properties:
     properties:
       __count:
         type: integer
-        example: 10617
+        example: 10650
+      __licence:
+        type: string
+        example: "https://creativecommons.org/licenses/by/4.0"
       results:
         type: array
         items:
