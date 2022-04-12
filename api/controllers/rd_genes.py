@@ -104,6 +104,10 @@ def query_genes_by_orphacode(orphacode):  # noqa: E501
 
     es_client = current_app.config.get('ES_NODE')
     response = qc.single_res(es_client, index, query)
+
+    for i in range(len(response["DisorderGeneAssociation"])):
+        response["DisorderGeneAssociation"][i]["Gene"]["name"] = response["DisorderGeneAssociation"][i]["Gene"].pop("Preferred term")
+    
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
     return wrapped_response.get()
@@ -131,7 +135,11 @@ def query_genes_genes():  # noqa: E501
             for gene in hit["DisorderGeneAssociation"]:
                 if gene["Gene"]["Preferred term"] not in is_seen:
                     is_seen.append(gene["Gene"]["Preferred term"])
-                    response_parsed.append({'name': gene["Gene"]["Preferred term"], 'symbol': gene["Gene"]["Symbol"]})
+                    try:
+                        gene_hgnc = ', '.join([ x["Reference"] for x in gene["Gene"]["ExternalReference"] if x["Source"] == "HGNC" ])
+                    except:
+                        gene_hgnc = None
+                    response_parsed.append({'name': gene["Gene"]["Preferred term"], 'symbol': gene["Gene"]["Symbol"], "HGNC": gene_hgnc})
     else:
         response_parsed = response
 
@@ -156,6 +164,11 @@ def query_genes_by_symbol(symbol):
 
     es_client = current_app.config.get('ES_NODE')
     response = qc.multiple_res(es_client, index, query, size=5000)
+
+    for hit in response:
+        for i in range(len(hit["DisorderGeneAssociation"])):
+            hit["DisorderGeneAssociation"][i]["Gene"]["name"] = hit["DisorderGeneAssociation"][i]["Gene"].pop("Preferred term")
+
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
     return wrapped_response.get()
@@ -178,6 +191,11 @@ def query_genes_by_name(name):
     
     es_client = current_app.config.get('ES_NODE')
     response = qc.multiple_res(es_client, index, query, size=5000)
+
+    for hit in response:
+        for i in range(len(hit["DisorderGeneAssociation"])):
+            hit["DisorderGeneAssociation"][i]["Gene"]["name"] = hit["DisorderGeneAssociation"][i]["Gene"].pop("Preferred term")
+            
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
     return wrapped_response.get()
