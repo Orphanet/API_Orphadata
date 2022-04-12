@@ -27,9 +27,10 @@ class ResponseWrapper:
                 'lang': '',
             },
             'data': {
+                '__licence': "https://creativecommons.org/licenses/by/4.0", 
                 '__count': None,
                 'results': None
-            } 
+            }
         }
 
     def error_wrapper(self):
