@@ -5,7 +5,19 @@ properties:
     properties:
       __count:
         type: integer
-        example: 3884
+        example: 3887
+      __licence:
+        type: object
+        properties:
+          identifier:
+            type: string
+            example: "CC-BY-4.0"
+          link:
+            type: string
+            example: "https://creativecommons.org/licenses/by/4.0"
+          name:
+            type: string
+            example: "Creative Commons Attribution 4.0 International"
       results:
         type: array
         items:
@@ -13,7 +25,7 @@ properties:
             properties:
               Date:
                 type: string
-                example: "2022-02-01 04:53:24"
+                example: "2022-04-01 04:58:12"
               DisorderGeneAssociation:
                 type: array
                 items:
@@ -62,8 +74,8 @@ properties:
                           Synonym:
                             type: array
                             items:
-                                type: string
-                                example: "JBTS12"
+                              type: string
+                            example: [JBTS12]
                       SourceOfValidation:
                         type: string
                         example: "22587682[PMID]"

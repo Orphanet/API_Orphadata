@@ -5,7 +5,19 @@ properties:
     properties:
       __count:
         type: integer
-        example: 6653
+        example: 6641
+      __licence:
+        type: object
+        properties:
+          identifier:
+            type: string
+            example: "CC-BY-4.0"
+          link:
+            type: string
+            example: "https://creativecommons.org/licenses/by/4.0"
+          name:
+            type: string
+            example: "Creative Commons Attribution 4.0 International"
       results:
         type: array
         items:

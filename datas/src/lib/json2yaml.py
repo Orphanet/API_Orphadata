@@ -54,7 +54,7 @@ REQ = [
         "yaml_outfile": SCHEMAS_PATH / "classification" / "_orphacodes_by_hchid.yaml"
     },
     {
-        "url": "/rd-classification/hchids/156",
+        "url": "/rd-classification/hchids/181",
         "yaml_outfile": SCHEMAS_PATH / "classification" / "_by_hchid.yaml"
     },
     {
@@ -66,7 +66,7 @@ REQ = [
         "yaml_outfile": SCHEMAS_PATH / "classification" / "_orphacodes.yaml"
     },
     {
-        "url": "/rd-classification/orphacodes/58/hchids/156",
+        "url": "/rd-classification/orphacodes/58/hchids/181",
         "yaml_outfile": SCHEMAS_PATH / "classification" / "_by_orphacode_and_hchid.yaml"
     },
     {

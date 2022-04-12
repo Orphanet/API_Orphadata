@@ -6,22 +6,34 @@ properties:
       __count:
         type: integer
         example: 1
+      __licence:
+        type: object
+        properties:
+          identifier:
+            type: string
+            example: "CC-BY-4.0"
+          link:
+            type: string
+            example: "https://creativecommons.org/licenses/by/4.0"
+          name:
+            type: string
+            example: "Creative Commons Attribution 4.0 International"
       results:
         type: object
         properties:
           AverageAgeOfDeath:
             type: array
             items:
-                type: string
-                example: "any age"
+              type: string
+            example: [any age]
           AverageAgeOfOnset:
             type: array
             items:
-                type: string
-                example: "All ages"
+              type: string
+            example: [All ages]
           Date:
             type: string
-            example: "2022-02-01 04:54:18"
+            example: "2022-04-01 04:59:14"
           DisorderGroup:
             type: string
             example: "Disorder"
@@ -37,8 +49,8 @@ properties:
           TypeOfInheritance:
             type: array
             items:
-                type: string
-                example: "Autosomal dominant"
+              type: string
+            example: [Autosomal dominant]
           Typology:
             type: string
             example: "Disease"

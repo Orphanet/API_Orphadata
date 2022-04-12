@@ -7,8 +7,17 @@ properties:
         type: integer
         example: 2171
       __licence:
-        type: string
-        example: "https://creativecommons.org/licenses/by/4.0"
+        type: object
+        properties:
+          identifier:
+            type: string
+            example: "CC-BY-4.0"
+          link:
+            type: string
+            example: "https://creativecommons.org/licenses/by/4.0"
+          name:
+            type: string
+            example: "Creative Commons Attribution 4.0 International"
       results:
         type: array
         items:

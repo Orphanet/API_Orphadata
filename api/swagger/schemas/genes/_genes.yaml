@@ -6,12 +6,27 @@ properties:
       __count:
         type: integer
         example: 4333
+      __licence:
+        type: object
+        properties:
+          identifier:
+            type: string
+            example: "CC-BY-4.0"
+          link:
+            type: string
+            example: "https://creativecommons.org/licenses/by/4.0"
+          name:
+            type: string
+            example: "Creative Commons Attribution 4.0 International"
       results:
         type: array
         items:
             type: object
             properties:
-              preferredTerm:
+              HGNC:
+                type: string
+                example: "4180"
+              name:
                 type: string
                 example: "1,4-alpha-glucan branching enzyme 1"
               symbol:

@@ -98,7 +98,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 10617
+                        example: 10650
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -106,7 +118,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-02-01 04:37:21'
+                              example: '2022-04-01 04:40:40'
                             DisorderDisorderAssociation:
                               type: string
                               example: null
@@ -165,7 +177,8 @@ paths:
                               type: array
                               items:
                                 type: string
-                                example: Multiple epiphyseal dysplasia-macrocephaly-distinctive facies syndrome
+                              example:
+                                - Multiple epiphyseal dysplasia-macrocephaly-distinctive facies syndrome
                             Typology:
                               type: string
                               example: Disease
@@ -238,7 +251,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 10617
+                        example: 10650
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -331,12 +356,24 @@ paths:
                       __count:
                         type: integer
                         example: 1
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: object
                         properties:
                           Date:
                             type: string
-                            example: '2022-02-01 04:37:21'
+                            example: '2022-04-01 04:40:40'
                           DisorderDisorderAssociation:
                             type: string
                             example: null
@@ -395,7 +432,8 @@ paths:
                             type: array
                             items:
                               type: string
-                              example: AxD
+                            example:
+                              - AxD
                           Typology:
                             type: string
                             example: Disease
@@ -481,12 +519,24 @@ paths:
                       __count:
                         type: integer
                         example: 1
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: object
                         properties:
                           Date:
                             type: string
-                            example: '2022-02-01 04:37:21'
+                            example: '2022-04-01 04:40:40'
                           DisorderDisorderAssociation:
                             type: string
                             example: null
@@ -545,7 +595,8 @@ paths:
                             type: array
                             items:
                               type: string
-                              example: MFS
+                            example:
+                              - MFS
                           Typology:
                             type: string
                             example: Disease
@@ -622,12 +673,27 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 6559
+                        example: 6552
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
                           type: string
-                          example: '100050'
+                        example:
+                          - 100050
+                          - 100070
+                          - 100100
                   datasetCategory:
                     type: object
                     properties:
@@ -706,6 +772,18 @@ paths:
                       __count:
                         type: integer
                         example: 3
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -713,7 +791,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-02-01 04:37:21'
+                              example: '2022-04-01 04:40:40'
                             DisorderDisorderAssociation:
                               type: string
                               example: null
@@ -772,7 +850,8 @@ paths:
                               type: array
                               items:
                                 type: string
-                                example: AxD
+                              example:
+                                - AxD
                             Typology:
                               type: string
                               example: Disease
@@ -849,12 +928,27 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 2174
+                        example: 2171
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
                           type: string
-                          example: A00.0
+                        example:
+                          - A00.0
+                          - A00.1
+                          - A00.9
                   datasetCategory:
                     type: object
                     properties:
@@ -933,6 +1027,18 @@ paths:
                       __count:
                         type: integer
                         example: 72
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -940,7 +1046,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-02-01 04:37:21'
+                              example: '2022-04-01 04:40:40'
                             DisorderDisorderAssociation:
                               type: string
                               example: null
@@ -999,7 +1105,8 @@ paths:
                               type: array
                               items:
                                 type: string
-                                example: AxD
+                              example:
+                                - AxD
                             Typology:
                               type: string
                               example: Disease
@@ -1055,7 +1162,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 26545
+                        example: 18440
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -1080,7 +1199,8 @@ paths:
                               type: array
                               items:
                                 type: integer
-                                example: 247
+                              example:
+                                - 247
                   datasetCategory:
                     type: object
                     properties:
@@ -1130,6 +1250,18 @@ paths:
                       __count:
                         type: integer
                         example: 33
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -1200,7 +1332,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 6590
+                        example: 4
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -1208,10 +1352,10 @@ paths:
                           properties:
                             ORPHAcode:
                               type: integer
-                              example: 648
+                              example: 2196
                             name:
                               type: string
-                              example: Noonan syndrome
+                              example: Primary hypomagnesemia with hypercalciuria and nephrocalcinosis with severe ocular involvement
                   datasetCategory:
                     type: object
                     properties:
@@ -1275,7 +1419,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 6590
+                        example: 3117
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -1283,24 +1439,27 @@ paths:
                           properties:
                             ORPHAcode:
                               type: integer
-                              example: 648
+                              example: 603684
                             childs:
                               type: array
                               example: []
                             hch_id:
                               type: integer
-                              example: 156
+                              example: 181
                             hch_tag:
                               type: string
-                              example: Orphanet classification of rare genetic diseases
+                              example: Orphanet classification of rare neurological diseases
                             name:
                               type: string
-                              example: Noonan syndrome
+                              example: KLHL7-related Bohring-Opitz-like/Cold-induced sweating-like overlap syndrome
                             parents:
                               type: array
                               items:
                                 type: integer
-                                example: 98733
+                              example:
+                                - 603699
+                                - 102283
+                                - 401993
                   datasetCategory:
                     type: object
                     properties:
@@ -1318,12 +1477,12 @@ paths:
                         properties:
                           hchID:
                             type: integer
-                            example: 156
+                            example: 181
                       query:
                         type: object
                   uri:
                     type: string
-                    example: /rd-classification/hchids/156
+                    example: /rd-classification/hchids/181
         '403':
           description: Access denied
         '404':
@@ -1365,7 +1524,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 2
+                        example: 1
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -1378,13 +1549,15 @@ paths:
                               type: array
                               items:
                                 type: integer
-                                example: 363717
+                              example:
+                                - 363717
+                                - 363722
                             hch_id:
                               type: integer
-                              example: 156
+                              example: 181
                             hch_tag:
                               type: string
-                              example: Orphanet classification of rare genetic diseases
+                              example: Orphanet classification of rare neurological diseases
                             name:
                               type: string
                               example: Alexander disease
@@ -1392,7 +1565,9 @@ paths:
                               type: array
                               items:
                                 type: integer
-                                example: 68356
+                              example:
+                                - 182070
+                                - 68356
                   datasetCategory:
                     type: object
                     properties:
@@ -1445,7 +1620,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 26545
+                        example: 18440
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -1528,6 +1715,18 @@ paths:
                       __count:
                         type: integer
                         example: 1
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: object
                         properties:
@@ -1538,13 +1737,15 @@ paths:
                             type: array
                             items:
                               type: integer
-                              example: 363717
+                            example:
+                              - 363717
+                              - 363722
                           hch_id:
                             type: integer
-                            example: 156
+                            example: 181
                           hch_tag:
                             type: string
-                            example: Orphanet classification of rare genetic diseases
+                            example: Orphanet classification of rare neurological diseases
                           name:
                             type: string
                             example: Alexander disease
@@ -1552,7 +1753,9 @@ paths:
                             type: array
                             items:
                               type: integer
-                              example: 68356
+                            example:
+                              - 182070
+                              - 68356
                   datasetCategory:
                     type: object
                     properties:
@@ -1573,12 +1776,12 @@ paths:
                             example: 58
                           hchID:
                             type: integer
-                            example: 156
+                            example: 181
                       query:
                         type: object
                   uri:
                     type: string
-                    example: /rd-classification/orphacodes/58/hchids/156
+                    example: /rd-classification/orphacodes/58/hchids/181
         '403':
           description: Access denied
         '404':
@@ -1624,7 +1827,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 4259
+                        example: 4248
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -1632,7 +1847,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-02-01 04:47:53'
+                              example: '2022-04-01 04:52:10'
                             Disorder:
                               type: object
                               properties:
@@ -1747,7 +1962,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 4259
+                        example: 4248
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -1835,12 +2062,24 @@ paths:
                       __count:
                         type: integer
                         example: 1
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: object
                         properties:
                           Date:
                             type: string
-                            example: '2022-02-01 04:47:53'
+                            example: '2022-04-01 04:52:10'
                           Disorder:
                             type: object
                             properties:
@@ -1959,7 +2198,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 8284
+                        example: 8281
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -2048,6 +2299,18 @@ paths:
                       __count:
                         type: integer
                         example: 1
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -2055,7 +2318,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-02-01 04:47:53'
+                              example: '2022-04-01 04:52:10'
                             Disorder:
                               type: object
                               properties:
@@ -2125,7 +2388,10 @@ paths:
                             type: array
                             items:
                               type: string
-                              example: 'HP:0000256'
+                            example:
+                              - 'HP:0000256'
+                              - 'HP:0001249'
+                              - 'HP:0001250'
                       query:
                         type: object
                   uri:
@@ -2160,7 +2426,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 3884
+                        example: 3887
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -2168,7 +2446,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-02-01 04:53:24'
+                              example: '2022-04-01 04:58:12'
                             DisorderGeneAssociation:
                               type: array
                               items:
@@ -2218,7 +2496,8 @@ paths:
                                         type: array
                                         items:
                                           type: string
-                                          example: JBTS12
+                                        example:
+                                          - JBTS12
                                   SourceOfValidation:
                                     type: string
                                     example: '22587682[PMID]'
@@ -2285,7 +2564,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 3884
+                        example: 3887
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -2358,12 +2649,24 @@ paths:
                       __count:
                         type: integer
                         example: 1
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: object
                         properties:
                           Date:
                             type: string
-                            example: '2022-02-01 04:53:24'
+                            example: '2022-04-01 04:58:12'
                           DisorderGeneAssociation:
                             type: array
                             items:
@@ -2403,9 +2706,6 @@ paths:
                                           LocusKey:
                                             type: integer
                                             example: 1
-                                    Preferred term:
-                                      type: string
-                                      example: kinesin family member 7
                                     Symbol:
                                       type: string
                                       example: KIF7
@@ -2413,7 +2713,11 @@ paths:
                                       type: array
                                       items:
                                         type: string
-                                        example: JBTS12
+                                      example:
+                                        - JBTS12
+                                    name:
+                                      type: string
+                                      example: kinesin family member 7
                                 SourceOfValidation:
                                   type: string
                                   example: '22587682[PMID]'
@@ -2485,12 +2789,27 @@ paths:
                       __count:
                         type: integer
                         example: 4333
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
                           type: object
                           properties:
-                            preferredTerm:
+                            HGNC:
+                              type: string
+                              example: '4180'
+                            name:
                               type: string
                               example: '1,4-alpha-glucan branching enzyme 1'
                             symbol:
@@ -2554,6 +2873,18 @@ paths:
                       __count:
                         type: integer
                         example: 4
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -2561,7 +2892,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-02-01 04:53:24'
+                              example: '2022-04-01 04:58:12'
                             DisorderGeneAssociation:
                               type: array
                               items:
@@ -2601,9 +2932,6 @@ paths:
                                             LocusKey:
                                               type: integer
                                               example: 1
-                                      Preferred term:
-                                        type: string
-                                        example: kinesin family member 7
                                       Symbol:
                                         type: string
                                         example: KIF7
@@ -2611,7 +2939,11 @@ paths:
                                         type: array
                                         items:
                                           type: string
-                                          example: JBTS12
+                                        example:
+                                          - JBTS12
+                                      name:
+                                        type: string
+                                        example: kinesin family member 7
                                   SourceOfValidation:
                                     type: string
                                     example: '22587682[PMID]'
@@ -2692,6 +3024,18 @@ paths:
                       __count:
                         type: integer
                         example: 22
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -2699,7 +3043,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-02-01 04:53:24'
+                              example: '2022-04-01 04:58:12'
                             DisorderGeneAssociation:
                               type: array
                               items:
@@ -2739,9 +3083,6 @@ paths:
                                             LocusKey:
                                               type: integer
                                               example: 1
-                                      Preferred term:
-                                        type: string
-                                        example: kinesin family member 7
                                       Symbol:
                                         type: string
                                         example: KIF7
@@ -2749,7 +3090,11 @@ paths:
                                         type: array
                                         items:
                                           type: string
-                                          example: JBTS12
+                                        example:
+                                          - JBTS12
+                                      name:
+                                        type: string
+                                        example: kinesin family member 7
                                   SourceOfValidation:
                                     type: string
                                     example: '22587682[PMID]'
@@ -2820,7 +3165,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 7219
+                        example: 7232
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -2828,7 +3185,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-02-01 04:53:54'
+                              example: '2022-04-01 04:58:46'
                             DisorderDisorderAssociation:
                               type: array
                               items:
@@ -2906,7 +3263,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 7219
+                        example: 7232
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -2979,12 +3348,24 @@ paths:
                       __count:
                         type: integer
                         example: 1
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: object
                         properties:
                           Date:
                             type: string
-                            example: '2022-02-01 04:53:54'
+                            example: '2022-04-01 04:58:46'
                           DisorderDisorderAssociation:
                             type: array
                             items:
@@ -3067,6 +3448,18 @@ paths:
                       __count:
                         type: integer
                         example: 30
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -3139,6 +3532,18 @@ paths:
                       __count:
                         type: integer
                         example: 1176
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -3146,7 +3551,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-02-01 04:53:54'
+                              example: '2022-04-01 04:58:46'
                             DisorderDisorderAssociation:
                               type: array
                               items:
@@ -3247,7 +3652,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 6064
+                        example: 6063
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -3255,7 +3672,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-02-01 04:55:30'
+                              example: '2022-04-01 05:00:38'
                             DisorderGroup:
                               type: string
                               example: Disorder
@@ -3364,7 +3781,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 6064
+                        example: 6063
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -3455,12 +3884,24 @@ paths:
                       __count:
                         type: integer
                         example: 1
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: object
                         properties:
                           Date:
                             type: string
-                            example: '2022-02-01 04:55:30'
+                            example: '2022-04-01 05:00:38'
                           DisorderGroup:
                             type: string
                             example: Disorder
@@ -3573,7 +4014,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 6653
+                        example: 6641
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -3586,10 +4039,12 @@ paths:
                               type: array
                               items:
                                 type: string
-                                example: Infancy
+                              example:
+                                - Infancy
+                                - Neonatal
                             Date:
                               type: string
-                              example: '2022-02-01 04:54:18'
+                              example: '2022-04-01 04:59:14'
                             DisorderGroup:
                               type: string
                               example: Disorder
@@ -3606,7 +4061,8 @@ paths:
                               type: array
                               items:
                                 type: string
-                                example: Autosomal recessive
+                              example:
+                                - Autosomal recessive
                             Typology:
                               type: string
                               example: Disease
@@ -3677,7 +4133,19 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 6653
+                        example: 6641
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: array
                         items:
@@ -3768,6 +4236,18 @@ paths:
                       __count:
                         type: integer
                         example: 1
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
                       results:
                         type: object
                         properties:
@@ -3775,15 +4255,17 @@ paths:
                             type: array
                             items:
                               type: string
-                              example: any age
+                            example:
+                              - any age
                           AverageAgeOfOnset:
                             type: array
                             items:
                               type: string
-                              example: All ages
+                            example:
+                              - All ages
                           Date:
                             type: string
-                            example: '2022-02-01 04:54:18'
+                            example: '2022-04-01 04:59:14'
                           DisorderGroup:
                             type: string
                             example: Disorder
@@ -3800,7 +4282,8 @@ paths:
                             type: array
                             items:
                               type: string
-                              example: Autosomal dominant
+                            example:
+                              - Autosomal dominant
                           Typology:
                             type: string
                             example: Disease

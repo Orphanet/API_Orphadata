@@ -6,6 +6,18 @@ properties:
       __count:
         type: integer
         example: 1
+      __licence:
+        type: object
+        properties:
+          identifier:
+            type: string
+            example: "CC-BY-4.0"
+          link:
+            type: string
+            example: "https://creativecommons.org/licenses/by/4.0"
+          name:
+            type: string
+            example: "Creative Commons Attribution 4.0 International"
       results:
         type: object
         properties:
@@ -15,22 +27,22 @@ properties:
           childs:
             type: array
             items:
-                type: integer
-                example: 363717
+              type: integer
+            example: [363717, 363722]
           hch_id:
             type: integer
-            example: 156
+            example: 181
           hch_tag:
             type: string
-            example: "Orphanet classification of rare genetic diseases"
+            example: "Orphanet classification of rare neurological diseases"
           name:
             type: string
             example: "Alexander disease"
           parents:
             type: array
             items:
-                type: integer
-                example: 68356
+              type: integer
+            example: [182070, 68356]
   datasetCategory:
     type: object
     properties:
@@ -51,9 +63,9 @@ properties:
             example: 58
           hchID:
             type: integer
-            example: 156
+            example: 181
       query:
         type: object
   uri:
     type: string
-    example: "/rd-classification/orphacodes/58/hchids/156"
+    example: "/rd-classification/orphacodes/58/hchids/181"

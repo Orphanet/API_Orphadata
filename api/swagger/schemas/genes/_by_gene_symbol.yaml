@@ -6,6 +6,18 @@ properties:
       __count:
         type: integer
         example: 4
+      __licence:
+        type: object
+        properties:
+          identifier:
+            type: string
+            example: "CC-BY-4.0"
+          link:
+            type: string
+            example: "https://creativecommons.org/licenses/by/4.0"
+          name:
+            type: string
+            example: "Creative Commons Attribution 4.0 International"
       results:
         type: array
         items:
@@ -13,7 +25,7 @@ properties:
             properties:
               Date:
                 type: string
-                example: "2022-02-01 04:53:24"
+                example: "2022-04-01 04:58:12"
               DisorderGeneAssociation:
                 type: array
                 items:
@@ -53,17 +65,17 @@ properties:
                                   LocusKey:
                                     type: integer
                                     example: 1
-                          Preferred term:
-                            type: string
-                            example: "kinesin family member 7"
                           Symbol:
                             type: string
                             example: "KIF7"
                           Synonym:
                             type: array
                             items:
-                                type: string
-                                example: "JBTS12"
+                              type: string
+                            example: [JBTS12]
+                          name:
+                            type: string
+                            example: "kinesin family member 7"
                       SourceOfValidation:
                         type: string
                         example: "22587682[PMID]"
