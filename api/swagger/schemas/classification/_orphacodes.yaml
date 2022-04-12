@@ -26,7 +26,7 @@ properties:
               ORPHAcode:
                 type: integer
                 example: 34217
-              name:
+              preferredTerm:
                 type: string
                 example: "Naxos disease"
   datasetCategory:

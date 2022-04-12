@@ -78,6 +78,7 @@ def serialize_product3(json_filename: Union[str, Path], index: str) -> OrderedDi
     doc_item = OrderedDict(
         [
             ("_index", index),
+            ("Date", None),
             ("hchId", None),
             ("hchTag", None),
             ('productId', json_filename.stem),
@@ -92,13 +93,14 @@ def serialize_product3(json_filename: Union[str, Path], index: str) -> OrderedDi
                 line_dict = json.loads(line)
 
                 if n == 1:
+                    doc_item['Date'] = line_dict['Date']
                     doc_item['hchId'] = line_dict['hch_id']
                     doc_item['hchTag'] = line_dict['hch_tag']
 
                 doc_item['clinicalEntities'].append(
                     {
                         'ORPHAcode': line_dict["ORPHAcode"],
-                        "preferredTerm": line_dict["name"],
+                        "preferredTerm": line_dict["preferredTerm"],
                     }
                 )
                 doc_item["clinicalEntityNb"] += 1

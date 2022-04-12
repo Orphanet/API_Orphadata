@@ -39,7 +39,7 @@ def query_classification_orphacodes():
         "query": {
             "match_all": {}
         },
-        "_source": ["ORPHAcode", "name"]
+        "_source": ["ORPHAcode", "preferredTerm"]
 }
 
     es_client = current_app.config.get('ES_NODE')
@@ -194,7 +194,7 @@ def query_classification_orphacodes_by_hchid(hchid):  # noqa: E501
         "query": {
             "match_all": {}
         },
-        "_source":["ORPHAcode", "name"]
+        "_source":["ORPHAcode", "preferredTerm"]
     }
 
     es_client = current_app.config.get('ES_NODE')

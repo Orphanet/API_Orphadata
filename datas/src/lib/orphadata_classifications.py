@@ -13,6 +13,11 @@ try:
 except:
     import orphadata_xml2json
 
+try:
+    from lib import data_RDcode
+except:
+    import data_RDcode
+
 # import RDcode_classifications
 # import data_RDcode
 
@@ -24,7 +29,7 @@ Alternative process to treat Orphadata classification
 class Node(dict):
     def __init__(self):
         super().__init__()
-        self["name"] = ""
+        self["preferredTerm"] = ""
         self["ORPHAcode"] = ""
         self["hch_id"] = ""
         self["hch_tag"] = ""
@@ -88,7 +93,7 @@ def make_node_dict(node_dict, xml_dict, hch_id, hch_tag, parent):
     # print(xml_dict)
     node = Node()
     node["ORPHAcode"] = xml_dict["Disorder"]["ORPHAcode"]
-    node["name"] = xml_dict["Disorder"]["Name"]
+    node["preferredTerm"] = xml_dict["Disorder"]["Name"]
     node["hch_id"] = hch_id
     node["hch_tag"] = hch_tag
     node["parents"] = [parent]
@@ -213,7 +218,7 @@ def process_classification(in_file_path, out_folder, elastic, input_encoding, in
     
     node_list = convert(hch_id, xml_dict)
     # node_list = RDcode_classifications.convert(hch_id, xml_dict, hch_id)
-    # node_list = data_RDcode.insert_date(node_list, extract_date)
+    node_list = data_RDcode.insert_date(node_list, extract_date)
 
 
     if orphadata_xml2json.config.cast_as_integer:

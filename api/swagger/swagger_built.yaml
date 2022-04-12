@@ -1180,6 +1180,9 @@ paths:
                         items:
                           type: object
                           properties:
+                            Date:
+                              type: string
+                              example: '2022-04-01 04:44:52'
                             ORPHAcode:
                               type: integer
                               example: 34217
@@ -1192,15 +1195,15 @@ paths:
                             hch_tag:
                               type: string
                               example: Orphanet classification of rare cardiac diseases
-                            name:
-                              type: string
-                              example: Naxos disease
                             parents:
                               type: array
                               items:
                                 type: integer
                               example:
                                 - 247
+                            preferredTerm:
+                              type: string
+                              example: Naxos disease
                   datasetCategory:
                     type: object
                     properties:
@@ -1353,7 +1356,7 @@ paths:
                             ORPHAcode:
                               type: integer
                               example: 2196
-                            name:
+                            preferredTerm:
                               type: string
                               example: Primary hypomagnesemia with hypercalciuria and nephrocalcinosis with severe ocular involvement
                   datasetCategory:
@@ -1437,6 +1440,9 @@ paths:
                         items:
                           type: object
                           properties:
+                            Date:
+                              type: string
+                              example: '2022-04-01 04:46:31'
                             ORPHAcode:
                               type: integer
                               example: 603684
@@ -1449,9 +1455,6 @@ paths:
                             hch_tag:
                               type: string
                               example: Orphanet classification of rare neurological diseases
-                            name:
-                              type: string
-                              example: KLHL7-related Bohring-Opitz-like/Cold-induced sweating-like overlap syndrome
                             parents:
                               type: array
                               items:
@@ -1460,6 +1463,9 @@ paths:
                                 - 603699
                                 - 102283
                                 - 401993
+                            preferredTerm:
+                              type: string
+                              example: KLHL7-related Bohring-Opitz-like/Cold-induced sweating-like overlap syndrome
                   datasetCategory:
                     type: object
                     properties:
@@ -1542,6 +1548,9 @@ paths:
                         items:
                           type: object
                           properties:
+                            Date:
+                              type: string
+                              example: '2022-04-01 04:46:31'
                             ORPHAcode:
                               type: integer
                               example: 58
@@ -1558,9 +1567,6 @@ paths:
                             hch_tag:
                               type: string
                               example: Orphanet classification of rare neurological diseases
-                            name:
-                              type: string
-                              example: Alexander disease
                             parents:
                               type: array
                               items:
@@ -1568,6 +1574,9 @@ paths:
                               example:
                                 - 182070
                                 - 68356
+                            preferredTerm:
+                              type: string
+                              example: Alexander disease
                   datasetCategory:
                     type: object
                     properties:
@@ -1641,7 +1650,7 @@ paths:
                             ORPHAcode:
                               type: integer
                               example: 34217
-                            name:
+                            preferredTerm:
                               type: string
                               example: Naxos disease
                   datasetCategory:
@@ -1730,6 +1739,9 @@ paths:
                       results:
                         type: object
                         properties:
+                          Date:
+                            type: string
+                            example: '2022-04-01 04:46:31'
                           ORPHAcode:
                             type: integer
                             example: 58
@@ -1746,9 +1758,6 @@ paths:
                           hch_tag:
                             type: string
                             example: Orphanet classification of rare neurological diseases
-                          name:
-                            type: string
-                            example: Alexander disease
                           parents:
                             type: array
                             items:
@@ -1756,6 +1765,9 @@ paths:
                             example:
                               - 182070
                               - 68356
+                          preferredTerm:
+                            type: string
+                            example: Alexander disease
                   datasetCategory:
                     type: object
                     properties:

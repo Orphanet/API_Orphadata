@@ -26,7 +26,7 @@ properties:
               ORPHAcode:
                 type: integer
                 example: 2196
-              name:
+              preferredTerm:
                 type: string
                 example: "Primary hypomagnesemia with hypercalciuria and nephrocalcinosis with severe ocular involvement"
   datasetCategory:

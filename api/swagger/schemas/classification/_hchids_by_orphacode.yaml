@@ -23,6 +23,9 @@ properties:
         items:
             type: object
             properties:
+              Date:
+                type: string
+                example: "2022-04-01 04:46:31"
               ORPHAcode:
                 type: integer
                 example: 58
@@ -37,14 +40,14 @@ properties:
               hch_tag:
                 type: string
                 example: "Orphanet classification of rare neurological diseases"
-              name:
-                type: string
-                example: "Alexander disease"
               parents:
                 type: array
                 items:
                   type: integer
                 example: [182070, 68356]
+              preferredTerm:
+                type: string
+                example: "Alexander disease"
   datasetCategory:
     type: object
     properties:
