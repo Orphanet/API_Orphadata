@@ -4,6 +4,7 @@ from flask import request, current_app
 from api.controllers import query_controller as qc
 from api.controllers.response_handler import ResponseWrapper
 from api.controllers import PRODUCTS
+from api.util import build_query_elements
 
 
 PRODUCT = PRODUCTS.get('product1')
@@ -350,3 +351,44 @@ def query_references_by_icd(icd):
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
 
     return wrapped_response.get()
+
+
+def query_references_by_multiple_fields():  # noqa: E501
+    """Get information and cross-referencing of clinical entities searching by multiple fields in the selected language.
+
+    Allowed fields are:
+        - Disorder name, definition and synonyms
+        - Nomenclature type
+        - Code relative to the nomenclature
+        - Type of mapping between the nomenclature and disorder
+
+    :param language: Specify the language in the list supported by Orphanet (CS, DE, EN, ES, FR, IT, NL, PL, PT)
+    :type language: str
+
+    :rtype: ListOrphacode
+    """
+    lang = request.args.get("lang", "en")
+    if PRODUCT['lang'] != lang.lower():
+        PRODUCT['lang'] = lang.lower()
+
+    query_elements = build_query_elements(args=request.args)
+    query = {        
+        "query": {
+            "bool": {
+                "must": query_elements
+            }
+        }
+    }
+    import json
+    print(json.dumps(query, indent=2))
+
+    index = index_base.format(lang.lower())
+
+    es_client = current_app.config.get('ES_NODE')
+    response = qc.es_scroll(es_client, index, query)
+
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+
+    return wrapped_response.get()
+
+

@@ -162,3 +162,94 @@ def _deserialize_dict(data, boxed_type):
     return {k: _deserialize(v, boxed_type)
             for k, v in six.iteritems(data)}
 
+
+def build_query_elements(args: typing.Dict):
+    ALLOWED_QUERY_FIELDS = {
+        "disorder-name": {
+            "query_type": "query_string",
+            "field": "Preferred term",
+            "value": None
+        },
+        "disorder-synonym": {
+            "query_type": "query_string",
+            "field": "Synonym",
+            "value": None
+        },
+        "disorder-definition": {
+            "query_type": "query_string",
+            "field": "SummaryInformation.Definition",
+            "value": None
+        },
+        "reference-code": {
+            "query_type": "nested_query_string",
+            "field": "ExternalReference.Reference",
+            "value": None
+        },
+        "reference-db": {
+            "query_type": "nested_match",
+            "field": "ExternalReference.Source",
+            "value": None
+        },
+        "mapping-level": {
+            "query_type": "nested_query_string",
+            "field": "ExternalReference.DisorderMappingRelation",
+            "value": None
+        }
+    }
+
+    query_elements = []
+    nested_elements = []
+
+    for key, value in args.items():
+        if key in ALLOWED_QUERY_FIELDS:
+            element = ALLOWED_QUERY_FIELDS[key]
+
+            if element["query_type"] == "query_string":
+                query_elements.append(
+                    {
+                        "query_string": {
+                            "default_field": element["field"], 
+                            "query": value,
+                            "default_operator": "AND"
+                        }
+                    }
+                )
+            elif "nested" in element["query_type"]:
+                if "match" in element["query_type"]:
+                    nested_elements.append(
+                        {
+                            "match": {
+                                element["field"]: value
+                            }
+                        }
+                    )
+                elif "query_string" in element["query_type"]:
+                    nested_elements.append(
+                        {
+                            "query_string": {
+                                "default_field": element["field"],
+                                "query": value,
+                                "default_operator": "AND"
+                            }
+                        }
+                    )
+
+    if nested_elements:
+        query_elements.append(
+            {
+                "nested": {
+                    "path": "ExternalReference",  
+                    "query": {
+                        "bool": {
+                            "must": nested_elements
+                        }
+                    }
+                }
+            }
+        )
+
+    return query_elements
+
+
+
+

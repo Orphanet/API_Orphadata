@@ -31,6 +31,9 @@ def create_app(config_name):
     from .routes import apim_delegation
     app.app.register_blueprint(apim_delegation.bp)
 
+    from .routes import mappor
+    app.app.register_blueprint(mappor.bp)
+
     @app.route('/list-templates')
     def list_templates():
         jinja_templates =  app.app.jinja_env.list_templates()
