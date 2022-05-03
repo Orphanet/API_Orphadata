@@ -190,7 +190,7 @@ You can then simply type `python wsgi.py` to run the application. It should now 
 ### Add your gandi git remote repository to your git config
 To deploy the application, if not already done, you'll first need to add the remote repository related to the Gandi host server to your git configurations:
 ```
-git remote add gandi git+ssh://5815773.sd5.gpaas.net/default.git
+git remote add gandi git+ssh://5815773@git.sd5.gpaas.net/default.git
 ```
 
 ### Push your code on Gandi
