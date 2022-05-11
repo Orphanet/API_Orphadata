@@ -3,6 +3,7 @@
 from pathlib import Path
 import os
 from flask import jsonify, render_template, request
+from flask_cors import CORS
 import connexion
 from dotenv import load_dotenv
 
@@ -38,6 +39,8 @@ def create_app(config_name):
     def list_templates():
         jinja_templates =  app.app.jinja_env.list_templates()
         return jsonify(jinja_templates)
+
+    CORS(app.app)
 
     return app.app
 
