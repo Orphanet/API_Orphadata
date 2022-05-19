@@ -62,7 +62,7 @@ paths:
       tags:
         - Rare diseases and cross-referencing
       summary: Get rare diseases information and their cross-referencing in a selected language.
-      description: 'The result is a collection of rare diseases including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems.'
+      description: 'The result is a collection of rare diseases including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the rare disease and ICD-10, ICD-11, UMLS, MesH, MedDra, and OMIM systems.'
       operationId: query_references_base
       parameters:
         - in: query
@@ -308,7 +308,7 @@ paths:
       tags:
         - Rare diseases and cross-referencing
       summary: Get rare disease information and cross-referencing details searching by an ORPHAcode in a selected language.
-      description: 'The result is a collection of disease matching with the given ORPHAcode. Results include ORPHAcode, preferred term, synonyms, definition, the group, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems in a selected language.'
+      description: 'The result is a collection of disease matching with the given ORPHAcode. Results include ORPHAcode, preferred term, synonyms, definition, the group, and the characterisation of the alignment between the rare disease and ICD-10, ICD-11, UMLS, MesH, MedDra, and OMIM systems in a selected language.'
       operationId: query_references_by_orphacode
       parameters:
         - name: orphacode
@@ -474,7 +474,7 @@ paths:
       tags:
         - Rare diseases and cross-referencing
       summary: Get rare disease and cross-referencing information searching by a rare disease preferred term in the selected language.
-      description: 'The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems in a selected language.'
+      description: 'The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the rare disease and ICD-10, ICD-11, UMLS, MesH, MedDra, and OMIM systems in a selected language.'
       operationId: query_references_by_name
       parameters:
         - name: name
@@ -637,7 +637,7 @@ paths:
       tags:
         - Rare diseases and cross-referencing
       summary: Get all OMIM references in the selected language.
-      description: The result is a list of ICD-10 references
+      description: The result is a list of OMIM references
       operationId: query_references_omims
       parameters:
         - in: query
@@ -727,7 +727,7 @@ paths:
       tags:
         - Rare diseases and cross-referencing
       summary: Get rare disease information and cross-referencing searching by an OMIM code in a selected language.
-      description: 'The result is a collection of disease matching with the given OMIM code. Results include ORPHAcode, preferred term, synonyms, definition, the group, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems in a selected language.'
+      description: 'The result is a collection of disease matching with the given OMIM code. Results include ORPHAcode, preferred term, synonyms, definition, the group, and the characterisation of the alignment between the rare disease and ICD-10, ICD-11, UMLS, MesH, MedDra, and OMIM systems in a selected language.'
       operationId: query_references_by_omim
       parameters:
         - name: omim
@@ -982,7 +982,7 @@ paths:
       tags:
         - Rare diseases and cross-referencing
       summary: Get rare disease information searching by an ICD-10 code in a selected language.
-      description: 'The result is a collection of disease matching with the given ICD-10 code. Results include ORPHAcode, preferred term, synonyms, definition, the group, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems in a selected language.'
+      description: 'The result is a collection of disease matching with the given ICD-10 code. Results include ORPHAcode, preferred term, synonyms, definition, the group, and the characterisation of the alignment between the rare disease and ICD-10, ICD-11, UMLS, MesH, MedDra, and OMIM systems in a selected language.'
       operationId: query_references_by_icd
       parameters:
         - name: icd
@@ -1242,7 +1242,7 @@ paths:
       parameters:
         - name: icd
           in: path
-          description: ICD-10 reference
+          description: ICD-11 reference
           required: true
           style: simple
           explode: false
