@@ -25,7 +25,7 @@ properties:
             properties:
               Date:
                 type: string
-                example: "2022-04-01 04:40:40"
+                example: "2022-05-01 04:38:31"
               DisorderDisorderAssociation:
                 type: string
                 example: null

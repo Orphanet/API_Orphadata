@@ -23,7 +23,7 @@ properties:
         properties:
           Date:
             type: string
-            example: "2022-04-01 04:46:31"
+            example: "2022-05-01 04:44:10"
           ORPHAcode:
             type: integer
             example: 58

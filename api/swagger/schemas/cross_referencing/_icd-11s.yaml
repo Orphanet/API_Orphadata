@@ -5,7 +5,7 @@ properties:
     properties:
       __count:
         type: integer
-        example: 7227
+        example: 940
       __licence:
         type: object
         properties:
@@ -21,14 +21,8 @@ properties:
       results:
         type: array
         items:
-            type: object
-            properties:
-              ORPHAcode:
-                type: integer
-                example: 166024
-              Preferred term:
-                type: string
-                example: "Multiple epiphyseal dysplasia, Al-Gazali type"
+          type: string
+        example: [1A07.Z, 1A11.0, 1A30]
   datasetCategory:
     type: object
     properties:
@@ -37,7 +31,7 @@ properties:
         example: "en"
       name:
         type: string
-        example: "Medical specialties of rare diseases"
+        example: "Rare diseases and cross-referencing"
   parameters:
     type: object
     properties:
@@ -47,4 +41,4 @@ properties:
         type: object
   uri:
     type: string
-    example: "/rd-medical-specialties/orphacodes"
+    example: "/rd-cross-referencing/icd-11s"

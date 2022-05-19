@@ -5,7 +5,7 @@ properties:
     properties:
       __count:
         type: integer
-        example: 6641
+        example: 6636
       __licence:
         type: object
         properties:
@@ -33,7 +33,7 @@ properties:
                 example: [Infancy, Neonatal]
               Date:
                 type: string
-                example: "2022-04-01 04:59:14"
+                example: "2022-05-01 04:56:20"
               DisorderGroup:
                 type: string
                 example: "Disorder"

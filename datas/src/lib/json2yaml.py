@@ -42,6 +42,14 @@ REQ = [
         "yaml_outfile": SCHEMAS_PATH / "cross_referencing" / "_by_icd10.yaml"
     },
     {
+        "url": "/rd-cross-referencing/icd-11s",
+        "yaml_outfile": SCHEMAS_PATH / "cross_referencing" / "_icd-11s.yaml"
+    },
+    {
+        "url": "/rd-cross-referencing/icd-11s/4A44.5",
+        "yaml_outfile": SCHEMAS_PATH / "cross_referencing" / "_by_icd11.yaml"
+    },
+    {
         "url": "/rd-classification",
         "yaml_outfile": SCHEMAS_PATH / "classification" / "_full.yaml"
     },

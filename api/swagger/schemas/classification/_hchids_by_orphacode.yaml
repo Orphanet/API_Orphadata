@@ -5,7 +5,7 @@ properties:
     properties:
       __count:
         type: integer
-        example: 1
+        example: 2
       __licence:
         type: object
         properties:
@@ -25,7 +25,7 @@ properties:
             properties:
               Date:
                 type: string
-                example: "2022-04-01 04:46:31"
+                example: "2022-05-01 04:43:05"
               ORPHAcode:
                 type: integer
                 example: 58
@@ -36,15 +36,15 @@ properties:
                 example: [363717, 363722]
               hch_id:
                 type: integer
-                example: 181
+                example: 156
               hch_tag:
                 type: string
-                example: "Orphanet classification of rare neurological diseases"
+                example: "Orphanet classification of rare genetic diseases"
               parents:
                 type: array
                 items:
                   type: integer
-                example: [182070, 68356]
+                example: [68356, 183500]
               preferredTerm:
                 type: string
                 example: "Alexander disease"

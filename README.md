@@ -370,7 +370,6 @@ python datas/src/orphadata_update.py
 - [swagger-cli](https://www.npmjs.com/package/swagger-cli)
 
 
-
 Request response example schemas in the swagger file (`swagger_built.yaml`) were directly constructed from the response themselves.
 Each response example schema is written in a specific file that is referred to from the main swagger file called `_swagger_template.yaml`.
 Since flask/connexion doesn't seem to support directly multi-file API definitions vie $ref pointers, swagger-cli is used to build

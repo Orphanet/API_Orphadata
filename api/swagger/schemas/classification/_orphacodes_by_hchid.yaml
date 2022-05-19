@@ -5,7 +5,7 @@ properties:
     properties:
       __count:
         type: integer
-        example: 4
+        example: 6623
       __licence:
         type: object
         properties:
@@ -25,10 +25,10 @@ properties:
             properties:
               ORPHAcode:
                 type: integer
-                example: 2196
+                example: 648
               preferredTerm:
                 type: string
-                example: "Primary hypomagnesemia with hypercalciuria and nephrocalcinosis with severe ocular involvement"
+                example: "Noonan syndrome"
   datasetCategory:
     type: object
     properties:

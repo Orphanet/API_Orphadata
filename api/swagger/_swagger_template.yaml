@@ -497,6 +497,106 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_references
+  /rd-cross-referencing/icd-11s:
+    get:
+      tags:
+      - Rare diseases and cross-referencing
+      summary: Get all ICD-11 references in the selected language.
+      description: The result is a list of ICD-11 references.
+      operationId: query_references_icd11s
+      parameters:
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
+        schema:
+          type: string
+          default: en
+          enum:
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
+          - tr
+          - zh
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/cross_referencing/_icd-11s.yaml'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_references
+  /rd-cross-referencing/icd-11s/{icd}:
+    get:
+      tags:
+      - Rare diseases and cross-referencing
+      summary: 
+        Get rare disease information searching by an ICD-11 code in a selected language.
+      description:
+        The result is a collection of disease matching with the given ICD-11 code. 
+        Results include ORPHAcode, preferred term, synonyms, definition, the group, 
+        and the characterisation of the alignment between the rare disease and ICD-10, ICD-11, UMLS, MesH, MedDra, and OMIM systems in a selected language.
+      operationId: query_references_by_icd11
+      parameters:
+      - name: icd
+        in: path
+        description: ICD-10 reference
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - in: query
+        name: lang
+        description: A language in the list supported by Orphanet
+        required: false
+        schema:
+          type: string
+          default: en
+          enum:
+          - cs
+          - de
+          - en
+          - es
+          - fr
+          - it
+          - nl
+          - pl
+          - pt
+          - ru
+          - tr
+          - zh
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/cross_referencing/_by_icd11.yaml'
+        "403":
+          description: Access denied
+        "404":
+          description: Queried disorder not found
+        "500":
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_references
   /rd-classification:
     get:
       tags:

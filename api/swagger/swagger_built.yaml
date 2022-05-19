@@ -98,7 +98,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 10650
+                        example: 10659
                       __licence:
                         type: object
                         properties:
@@ -118,7 +118,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-04-01 04:40:40'
+                              example: '2022-05-01 04:38:31'
                             DisorderDisorderAssociation:
                               type: string
                               example: null
@@ -143,7 +143,7 @@ paths:
                                 properties:
                                   DisorderMappingICDRelation:
                                     type: string
-                                    example: Attributed (The ICD10 code is attributed by Orphanet)
+                                    example: Attributed (The ICD code is attributed by Orphanet)
                                   DisorderMappingRelation:
                                     type: string
                                     example: NTBT (ORPHA code's Narrower Term maps to a Broader Term)
@@ -251,7 +251,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 10650
+                        example: 10659
                       __licence:
                         type: object
                         properties:
@@ -373,7 +373,7 @@ paths:
                         properties:
                           Date:
                             type: string
-                            example: '2022-04-01 04:40:40'
+                            example: '2022-05-01 04:38:31'
                           DisorderDisorderAssociation:
                             type: string
                             example: null
@@ -536,7 +536,7 @@ paths:
                         properties:
                           Date:
                             type: string
-                            example: '2022-04-01 04:40:40'
+                            example: '2022-05-01 04:38:31'
                           DisorderDisorderAssociation:
                             type: string
                             example: null
@@ -561,19 +561,19 @@ paths:
                               properties:
                                 DisorderMappingICDRelation:
                                   type: string
-                                  example: null
+                                  example: Specific code (The ORPHA code has its own code in the ICD)
                                 DisorderMappingRelation:
                                   type: string
-                                  example: NTBT (ORPHA code's Narrower Term maps to a Broader Term)
+                                  example: 'E (Exact mapping: the two concepts are equivalent)'
                                 DisorderMappingValidationStatus:
                                   type: string
                                   example: Validated
                                 Reference:
                                   type: string
-                                  example: '610168'
+                                  example: LD28.01
                                 Source:
                                   type: string
-                                  example: OMIM
+                                  example: ICD-11
                           ORPHAcode:
                             type: integer
                             example: 558
@@ -673,7 +673,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 6552
+                        example: 6550
                       __licence:
                         type: object
                         properties:
@@ -791,7 +791,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-04-01 04:40:40'
+                              example: '2022-05-01 04:38:31'
                             DisorderDisorderAssociation:
                               type: string
                               example: null
@@ -1046,7 +1046,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-04-01 04:40:40'
+                              example: '2022-05-01 04:38:31'
                             DisorderDisorderAssociation:
                               type: string
                               example: null
@@ -1142,6 +1142,261 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_references
+  /rd-cross-referencing/icd-11s:
+    get:
+      tags:
+        - Rare diseases and cross-referencing
+      summary: Get all ICD-11 references in the selected language.
+      description: The result is a list of ICD-11 references.
+      operationId: query_references_icd11s
+      parameters:
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+              - tr
+              - zh
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 940
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
+                      results:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - 1A07.Z
+                          - 1A11.0
+                          - 1A30
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and cross-referencing
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-cross-referencing/icd-11s
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_references
+  '/rd-cross-referencing/icd-11s/{icd}':
+    get:
+      tags:
+        - Rare diseases and cross-referencing
+      summary: Get rare disease information searching by an ICD-11 code in a selected language.
+      description: 'The result is a collection of disease matching with the given ICD-11 code. Results include ORPHAcode, preferred term, synonyms, definition, the group, and the characterisation of the alignment between the rare disease and ICD-10, ICD-11, UMLS, MesH, MedDra, and OMIM systems in a selected language.'
+      operationId: query_references_by_icd11
+      parameters:
+        - name: icd
+          in: path
+          description: ICD-10 reference
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+        - in: query
+          name: lang
+          description: A language in the list supported by Orphanet
+          required: false
+          schema:
+            type: string
+            default: en
+            enum:
+              - cs
+              - de
+              - en
+              - es
+              - fr
+              - it
+              - nl
+              - pl
+              - pt
+              - ru
+              - tr
+              - zh
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      __count:
+                        type: integer
+                        example: 1
+                      __licence:
+                        type: object
+                        properties:
+                          identifier:
+                            type: string
+                            example: CC-BY-4.0
+                          link:
+                            type: string
+                            example: 'https://creativecommons.org/licenses/by/4.0'
+                          name:
+                            type: string
+                            example: Creative Commons Attribution 4.0 International
+                      results:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            Date:
+                              type: string
+                              example: '2022-05-01 04:38:31'
+                            DisorderDisorderAssociation:
+                              type: string
+                              example: null
+                            DisorderFlag:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  Label:
+                                    type: string
+                                    example: null
+                                  Value:
+                                    type: integer
+                                    example: 1
+                            DisorderGroup:
+                              type: string
+                              example: Disorder
+                            ExternalReference:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  DisorderMappingICDRelation:
+                                    type: string
+                                    example: Specific code (The ORPHA code has its own code in the ICD)
+                                  DisorderMappingRelation:
+                                    type: string
+                                    example: 'E (Exact mapping: the two concepts are equivalent)'
+                                  DisorderMappingValidationStatus:
+                                    type: string
+                                    example: Validated
+                                  Reference:
+                                    type: string
+                                    example: 4A44.5
+                                  Source:
+                                    type: string
+                                    example: ICD-11
+                            ORPHAcode:
+                              type: integer
+                              example: 2331
+                            OrphanetURL:
+                              type: string
+                              example: 'http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=2331'
+                            Preferred term:
+                              type: string
+                              example: Kawasaki disease
+                            SummaryInformation:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  Definition:
+                                    type: string
+                                    example: 'A rare inflammatory disease characterized by an acute febrile, systemic, self-limiting, medium-vessel vasculitis primarily affecting children. It often causes acute coronary arteritis which is associated with coronary arterial aneurysms (CAA) that may be life threatening when untreated.'
+                            Synonym:
+                              type: array
+                              items:
+                                type: string
+                              example:
+                                - Mucocutaneous lymph node syndrome
+                            Typology:
+                              type: string
+                              example: Disease
+                  datasetCategory:
+                    type: object
+                    properties:
+                      lang:
+                        type: string
+                        example: en
+                      name:
+                        type: string
+                        example: Rare diseases and cross-referencing
+                  parameters:
+                    type: object
+                    properties:
+                      path:
+                        type: object
+                        properties:
+                          icd:
+                            type: string
+                            example: 4A44.5
+                      query:
+                        type: object
+                  uri:
+                    type: string
+                    example: /rd-cross-referencing/icd-11s/4A44.5
+        '403':
+          description: Access denied
+        '404':
+          description: Queried disorder not found
+        '500':
+          description: Unknown internal error
+        default:
+          description: Unknown internal error
+      x-openapi-router-controller: api.controllers.rd_references
   /rd-classification:
     get:
       tags:
@@ -1162,7 +1417,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 18440
+                        example: 26637
                       __licence:
                         type: object
                         properties:
@@ -1182,7 +1437,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-04-01 04:44:52'
+                              example: '2022-05-01 04:42:36'
                             ORPHAcode:
                               type: integer
                               example: 34217
@@ -1335,7 +1590,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 4
+                        example: 6623
                       __licence:
                         type: object
                         properties:
@@ -1355,10 +1610,10 @@ paths:
                           properties:
                             ORPHAcode:
                               type: integer
-                              example: 2196
+                              example: 648
                             preferredTerm:
                               type: string
-                              example: Primary hypomagnesemia with hypercalciuria and nephrocalcinosis with severe ocular involvement
+                              example: Noonan syndrome
                   datasetCategory:
                     type: object
                     properties:
@@ -1422,7 +1677,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 3117
+                        example: 3110
                       __licence:
                         type: object
                         properties:
@@ -1442,7 +1697,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-04-01 04:46:31'
+                              example: '2022-05-01 04:44:10'
                             ORPHAcode:
                               type: integer
                               example: 603684
@@ -1530,7 +1785,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 1
+                        example: 2
                       __licence:
                         type: object
                         properties:
@@ -1550,7 +1805,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-04-01 04:46:31'
+                              example: '2022-05-01 04:43:05'
                             ORPHAcode:
                               type: integer
                               example: 58
@@ -1563,17 +1818,17 @@ paths:
                                 - 363722
                             hch_id:
                               type: integer
-                              example: 181
+                              example: 156
                             hch_tag:
                               type: string
-                              example: Orphanet classification of rare neurological diseases
+                              example: Orphanet classification of rare genetic diseases
                             parents:
                               type: array
                               items:
                                 type: integer
                               example:
-                                - 182070
                                 - 68356
+                                - 183500
                             preferredTerm:
                               type: string
                               example: Alexander disease
@@ -1629,7 +1884,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 18440
+                        example: 26637
                       __licence:
                         type: object
                         properties:
@@ -1741,7 +1996,7 @@ paths:
                         properties:
                           Date:
                             type: string
-                            example: '2022-04-01 04:46:31'
+                            example: '2022-05-01 04:44:10'
                           ORPHAcode:
                             type: integer
                             example: 58
@@ -1839,7 +2094,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 4248
+                        example: 4246
                       __licence:
                         type: object
                         properties:
@@ -1859,7 +2114,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-04-01 04:52:10'
+                              example: '2022-05-01 04:49:34'
                             Disorder:
                               type: object
                               properties:
@@ -1974,7 +2229,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 4248
+                        example: 4246
                       __licence:
                         type: object
                         properties:
@@ -2091,7 +2346,7 @@ paths:
                         properties:
                           Date:
                             type: string
-                            example: '2022-04-01 04:52:10'
+                            example: '2022-05-01 04:49:34'
                           Disorder:
                             type: object
                             properties:
@@ -2210,7 +2465,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 8281
+                        example: 8282
                       __licence:
                         type: object
                         properties:
@@ -2330,7 +2585,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-04-01 04:52:10'
+                              example: '2022-05-01 04:49:34'
                             Disorder:
                               type: object
                               properties:
@@ -2438,7 +2693,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 3887
+                        example: 3886
                       __licence:
                         type: object
                         properties:
@@ -2458,7 +2713,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-04-01 04:58:12'
+                              example: '2022-05-01 04:55:23'
                             DisorderGeneAssociation:
                               type: array
                               items:
@@ -2576,7 +2831,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 3887
+                        example: 3886
                       __licence:
                         type: object
                         properties:
@@ -2678,7 +2933,7 @@ paths:
                         properties:
                           Date:
                             type: string
-                            example: '2022-04-01 04:58:12'
+                            example: '2022-05-01 04:55:23'
                           DisorderGeneAssociation:
                             type: array
                             items:
@@ -2800,7 +3055,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 4333
+                        example: 4340
                       __licence:
                         type: object
                         properties:
@@ -2904,7 +3159,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-04-01 04:58:12'
+                              example: '2022-05-01 04:55:23'
                             DisorderGeneAssociation:
                               type: array
                               items:
@@ -3055,7 +3310,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-04-01 04:58:12'
+                              example: '2022-05-01 04:55:23'
                             DisorderGeneAssociation:
                               type: array
                               items:
@@ -3177,7 +3432,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 7232
+                        example: 7227
                       __licence:
                         type: object
                         properties:
@@ -3197,7 +3452,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-04-01 04:58:46'
+                              example: '2022-05-01 04:55:54'
                             DisorderDisorderAssociation:
                               type: array
                               items:
@@ -3275,7 +3530,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 7232
+                        example: 7227
                       __licence:
                         type: object
                         properties:
@@ -3377,7 +3632,7 @@ paths:
                         properties:
                           Date:
                             type: string
-                            example: '2022-04-01 04:58:46'
+                            example: '2022-05-01 04:55:54'
                           DisorderDisorderAssociation:
                             type: array
                             items:
@@ -3543,7 +3798,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 1176
+                        example: 1170
                       __licence:
                         type: object
                         properties:
@@ -3563,7 +3818,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-04-01 04:58:46'
+                              example: '2022-05-01 04:55:54'
                             DisorderDisorderAssociation:
                               type: array
                               items:
@@ -3664,7 +3919,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 6063
+                        example: 6058
                       __licence:
                         type: object
                         properties:
@@ -3684,7 +3939,7 @@ paths:
                           properties:
                             Date:
                               type: string
-                              example: '2022-04-01 05:00:38'
+                              example: '2022-05-01 04:57:44'
                             DisorderGroup:
                               type: string
                               example: Disorder
@@ -3793,7 +4048,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 6063
+                        example: 6058
                       __licence:
                         type: object
                         properties:
@@ -3913,7 +4168,7 @@ paths:
                         properties:
                           Date:
                             type: string
-                            example: '2022-04-01 05:00:38'
+                            example: '2022-05-01 04:57:44'
                           DisorderGroup:
                             type: string
                             example: Disorder
@@ -4026,7 +4281,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 6641
+                        example: 6636
                       __licence:
                         type: object
                         properties:
@@ -4056,7 +4311,7 @@ paths:
                                 - Neonatal
                             Date:
                               type: string
-                              example: '2022-04-01 04:59:14'
+                              example: '2022-05-01 04:56:20'
                             DisorderGroup:
                               type: string
                               example: Disorder
@@ -4145,7 +4400,7 @@ paths:
                     properties:
                       __count:
                         type: integer
-                        example: 6641
+                        example: 6636
                       __licence:
                         type: object
                         properties:
@@ -4277,7 +4532,7 @@ paths:
                               - All ages
                           Date:
                             type: string
-                            example: '2022-04-01 04:59:14'
+                            example: '2022-05-01 04:56:20'
                           DisorderGroup:
                             type: string
                             example: Disorder

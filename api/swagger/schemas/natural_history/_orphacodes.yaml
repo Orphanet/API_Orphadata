@@ -5,7 +5,7 @@ properties:
     properties:
       __count:
         type: integer
-        example: 6641
+        example: 6636
       __licence:
         type: object
         properties:

@@ -375,6 +375,100 @@ def query_references_by_icd(icd):
     return wrapped_response.get()
 
 
+def query_references_icd11s():  # noqa: E501
+    """Get the list of ICD-11 available in the selected language.
+
+    The result is a collection of ICD-11 references in the selected language. # noqa: E501
+
+    :param language: Specify the language in the list supported by Orphanet (CS, DE, EN, ES, FR, IT, NL, PL, PT)
+    :type language: str
+
+    :rtype: ListOrphacode
+    """
+    lang = request.args.get("lang", "en")
+    if PRODUCT['lang'] != lang.lower():
+        PRODUCT['lang'] = lang.lower()
+
+    index = index_base.format(lang.lower())
+
+    query = {
+        "query": {
+            "nested": {
+                "path": 'ExternalReference',
+                "query": {
+                    "bool": {
+                        "must": {
+                            "match": {"ExternalReference.Source": "ICD-11"}
+                        },
+                        'should': {
+                            "regexp": {
+                                "ExternalReference.Reference": {
+                                    'value': '*',
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "_source": ['ExternalReference.Source','ExternalReference.Reference']
+    }
+
+    es_client = current_app.config.get('ES_NODE')
+    response = qc.es_scroll(es_client, index, query)
+
+    if not isinstance(response, tuple):      
+        response_parsed = []
+        for res in response:
+            for ele in res["ExternalReference"]:
+                if ele["Source"] == 'ICD-11':
+                    response_parsed.append(ele["Reference"])
+        wrapped_response = ResponseWrapper(ctl_response=sorted(list(set(response_parsed))), request=request, product=PRODUCT)
+    else:
+        wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+
+    return wrapped_response.get()    
+
+
+def query_references_by_icd11(icd):
+    request.args.params = {'icd': icd}
+    
+    lang = request.args.get("lang", "en")
+    if PRODUCT['lang'] != lang.lower():
+        PRODUCT['lang'] = lang.lower()
+
+    index = index_base.format(lang.lower())
+
+    query = {
+        "query": {
+            "nested": {
+                "path": 'ExternalReference',
+                "query": {
+                    "bool": {
+                        "must": [
+                            {
+                                "match": {"ExternalReference.Source": "ICD-11"}
+                            },
+                            {
+                                'query_string': {
+                                    "default_field": "ExternalReference.Reference.keyword",
+                                    "query": '{}'.format(str(icd).upper())            
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }    
+
+    es_client = current_app.config.get('ES_NODE')
+    response = qc.multiple_res(es_client, index, query)
+    wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
+
+    return wrapped_response.get()
+
+
 def query_references_by_multiple_fields():  # noqa: E501
     """Get information and cross-referencing of clinical entities searching by multiple fields in the selected language.
 

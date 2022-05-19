@@ -23,7 +23,7 @@ properties:
         properties:
           Date:
             type: string
-            example: "2022-04-01 04:40:40"
+            example: "2022-05-01 04:38:31"
           DisorderDisorderAssociation:
             type: string
             example: null
@@ -48,19 +48,19 @@ properties:
                 properties:
                   DisorderMappingICDRelation:
                     type: string
-                    example: null
+                    example: "Specific code (The ORPHA code has its own code in the ICD)"
                   DisorderMappingRelation:
                     type: string
-                    example: "NTBT (ORPHA code's Narrower Term maps to a Broader Term)"
+                    example: "E (Exact mapping: the two concepts are equivalent)"
                   DisorderMappingValidationStatus:
                     type: string
                     example: "Validated"
                   Reference:
                     type: string
-                    example: "610168"
+                    example: "LD28.01"
                   Source:
                     type: string
-                    example: "OMIM"
+                    example: "ICD-11"
           ORPHAcode:
             type: integer
             example: 558

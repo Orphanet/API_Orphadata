@@ -5,7 +5,7 @@ properties:
     properties:
       __count:
         type: integer
-        example: 10650
+        example: 10659
       __licence:
         type: object
         properties:
@@ -25,7 +25,7 @@ properties:
             properties:
               Date:
                 type: string
-                example: "2022-04-01 04:40:40"
+                example: "2022-05-01 04:38:31"
               DisorderDisorderAssociation:
                 type: string
                 example: null
@@ -50,7 +50,7 @@ properties:
                     properties:
                       DisorderMappingICDRelation:
                         type: string
-                        example: "Attributed (The ICD10 code is attributed by Orphanet)"
+                        example: "Attributed (The ICD code is attributed by Orphanet)"
                       DisorderMappingRelation:
                         type: string
                         example: "NTBT (ORPHA code's Narrower Term maps to a Broader Term)"

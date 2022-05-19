@@ -5,7 +5,7 @@ properties:
     properties:
       __count:
         type: integer
-        example: 3
+        example: 1
       __licence:
         type: object
         properties:
@@ -50,7 +50,7 @@ properties:
                     properties:
                       DisorderMappingICDRelation:
                         type: string
-                        example: null
+                        example: "Specific code (The ORPHA code has its own code in the ICD)"
                       DisorderMappingRelation:
                         type: string
                         example: "E (Exact mapping: the two concepts are equivalent)"
@@ -59,19 +59,19 @@ properties:
                         example: "Validated"
                       Reference:
                         type: string
-                        example: "203450"
+                        example: "4A44.5"
                       Source:
                         type: string
-                        example: "OMIM"
+                        example: "ICD-11"
               ORPHAcode:
                 type: integer
-                example: 58
+                example: 2331
               OrphanetURL:
                 type: string
-                example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58"
+                example: "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=2331"
               Preferred term:
                 type: string
-                example: "Alexander disease"
+                example: "Kawasaki disease"
               SummaryInformation:
                 type: array
                 items:
@@ -79,12 +79,12 @@ properties:
                     properties:
                       Definition:
                         type: string
-                        example: "A rare neurodegenerative disorder of the astrocytes comprised of two clinical forms: Alexander disease (AxD) type I and type II manifesting with various degrees of macrocephaly, spasticity, ataxia and seizures and leading to psychomotor regression and death."
+                        example: "A rare inflammatory disease characterized by an acute febrile, systemic, self-limiting, medium-vessel vasculitis primarily affecting children. It often causes acute coronary arteritis which is associated with coronary arterial aneurysms (CAA) that may be life threatening when untreated."
               Synonym:
                 type: array
                 items:
                   type: string
-                example: [AxD]
+                example: [Mucocutaneous lymph node syndrome]
               Typology:
                 type: string
                 example: "Disease"
@@ -103,11 +103,11 @@ properties:
       path:
         type: object
         properties:
-          omim:
+          icd:
             type: string
-            example: "203450"
+            example: "4A44.5"
       query:
         type: object
   uri:
     type: string
-    example: "/rd-cross-referencing/omims/203450"
+    example: "/rd-cross-referencing/icd-11s/4A44.5"
