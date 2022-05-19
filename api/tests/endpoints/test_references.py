@@ -37,7 +37,7 @@ class TestReferencesEndpointsStatus(BaseTestCase):
     valid_omim = 277610
     invalid_omim = 0
     valid_icd = 'Q87.4'
-    invalid_icd = 1
+    invalid_icd = 'x'
 
     def test_status_200_references_base(self):
         """test_status_200_references_base

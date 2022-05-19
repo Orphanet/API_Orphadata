@@ -321,30 +321,52 @@ def query_references_by_icd(icd):
 
     index = index_base.format(lang.lower())
 
+    # query = {
+    #     "query": {
+    #         "nested": {
+    #             "path": 'ExternalReference',
+    #             "query": {
+    #                 "bool": {
+    #                     "must": {
+    #                         "match": {"ExternalReference.Source": "ICD-10"}
+    #                     },
+    #                     'filter': {
+    #                         "regexp": {
+    #                             "ExternalReference.Reference.keyword": {
+    #                                 'value': '{}'.format(str(icd).upper()),
+    #                                 "flags": "ALL",
+    #                                 "case_insensitive": True,
+    #                             }
+    #                         }
+    #                     }
+    #                 }
+    #             }
+    #         }
+    #     }
+    # }
+
     query = {
         "query": {
             "nested": {
                 "path": 'ExternalReference',
                 "query": {
                     "bool": {
-                        "must": {
-                            "match": {"ExternalReference.Source": "ICD-10"}
-                        },
-                        'filter': {
-                            "regexp": {
-                                "ExternalReference.Reference": {
-                                    'value': '{}'.format(str(icd)),
-                                    "flags": "ALL",
-                                    "case_insensitive": True,
+                        "must": [
+                            {
+                                "match": {"ExternalReference.Source": "ICD-10"}
+                            },
+                            {
+                                'query_string': {
+                                    "default_field": "ExternalReference.Reference.keyword",
+                                    "query": '{}'.format(str(icd).upper())            
                                 }
                             }
-                        }
+                        ]
                     }
                 }
             }
-        },
-        # "_source": ['ExternalReference.Source','ExternalReference.Reference']
-    }
+        }
+    }    
 
     es_client = current_app.config.get('ES_NODE')
     response = qc.multiple_res(es_client, index, query)

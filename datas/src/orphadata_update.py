@@ -1,3 +1,4 @@
+import argparse
 import logging
 import os
 from pathlib import Path
@@ -22,10 +23,20 @@ import orphadata_download
 import orphadata_xml2json
 import orphadata_injection
 
-DATA_ENV = os.getenv('DATA_ENV', 'remote')
 
-def main():
-    url = 'remote' if DATA_ENV == 'remote' else 'local'
+def main(es_url: str='local'):
+    """_summary_
+
+    Parameters
+    ----------
+    es_url : str, optional
+        Elasticsearch instance location to ingest data.
+        Either 'local' or 'remote'. 'remote' requires ES credentials being given in
+        DATA_ENV variable environments by default 'local'. 
+    """
+    DATA_ENV = os.getenv('DATA_ENV', None)
+
+    url = 'remote' if DATA_ENV else es_url
     
     logger.basic_log("Update process - step 1: starting download of data...".upper())
     orphadata_download.main()
@@ -45,9 +56,25 @@ def main():
     logger.basic_log("")
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description='Update ORPHADATA in ES (download, convertion, injection)')
+    parser.add_argument(
+        "-es",
+        required=True,
+        nargs="?",
+        type=str,
+        default="local",
+        help="Path or filename of JSON file(s)"
+    )
+    
+    return parser.parse_args()
+
+
 if __name__ == '__main__':
+    args = parse_args()
+
     start_time = time.time()
-    main()
+    main(es_url=args.es)
     end_time = time.time()
 
     logger.basic_log('Update process has finished. Time: {:.2f}'.format(end_time-start_time))

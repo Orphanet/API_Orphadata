@@ -28,7 +28,7 @@ class TestEpidemiologyWrapperResponse(BaseTestCase):
 
         assert response.is_json == True
         assert response.get_json().keys() == self.wrapper.valid_wrapper().keys()
-        assert response.get_json()['product'] == self.PRODUCTS.get(PRODUCT_ID)
+        assert response.get_json()['datasetCategory'] == self.PRODUCTS.get(PRODUCT_ID)
         assert not response.get_json()['parameters']['path']
         assert not response.get_json()['parameters']['query']
         assert response.get_json()['uri'] == url_endpoint
@@ -48,7 +48,7 @@ class TestEpidemiologyWrapperResponse(BaseTestCase):
 
         assert response.is_json == True
         assert response.get_json().keys() == self.wrapper.valid_wrapper().keys()
-        assert response.get_json()['product'] == self.PRODUCTS.get(PRODUCT_ID)
+        assert response.get_json()['datasetCategory'] == self.PRODUCTS.get(PRODUCT_ID)
         assert not response.get_json()['parameters']['path']
         assert not response.get_json()['parameters']['query']
         assert response.get_json()['uri'] == url_endpoint
@@ -69,7 +69,7 @@ class TestEpidemiologyWrapperResponse(BaseTestCase):
 
         assert response.is_json == True
         assert response.get_json().keys() == self.wrapper.valid_wrapper().keys()
-        assert response.get_json()['product'] == self.PRODUCTS.get(PRODUCT_ID)
+        assert response.get_json()['datasetCategory'] == self.PRODUCTS.get(PRODUCT_ID)
         assert list(response.get_json()['parameters']['path'].items()) == [('ORPHAcode', self.valid_orphacode)]
         assert not response.get_json()['parameters']['query']
         assert response.get_json()['uri'] == url_endpoint

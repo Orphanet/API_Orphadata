@@ -10,6 +10,7 @@ import copy
 import elasticsearch
 import json
 import logging
+from pathlib import Path
 import re
 import time
 import xmltodict
@@ -32,9 +33,9 @@ from lib import orphadata_classifications
 
 
 class XML2JSONParams:
-    in_file_path = None  # pathlib.Path(ROOT_DIR / 'datas' / 'en_product1.xml')
+    in_file_path = None  # Path(ROOT_DIR / 'datas' / 'xml_data' / 'en_product1.xml')
     parse_folder = True if not in_file_path else False  # Process all input folders or single input file ?
-    folders = [ROOT_DIR / 'datas' / 'xml_data']  # List of path to folder containing data
+    folders = [ROOT_DIR / 'datas' / 'xml_data']  #  [ROOT_DIR / 'datas' / 'Orphanet_Nomenclature_Pack_EN']  # List of path to folder containing data
     out_folder = ROOT_DIR / 'datas' / 'json_data'
     input_encoding = "auto"  # input encoding: "auto" or valid encoding ("UTF-8" or "iso-8859-1")
     index_prefix = ""  # Empty string or False otherwise - The prefix MUST be 'rdcode' for RDcode API (lowercase index name is mandatory)
@@ -86,8 +87,12 @@ def parse_file(in_file_path, input_encoding, xml_attribs):
             xml_dict = xmltodict.parse(ini.read(), xml_attribs=xml_attribs)
 
     # Get JDBOR extraction date
-    date_regex = re.compile("date=\"(.*)\" version")
-    date = date_regex.search(date.decode()).group(1)
+    try:
+        date_regex = re.compile("ExtractionDate=\"(.*)\" version")
+        date = date_regex.search(date.decode()).group(1)
+    except:
+        date_regex = re.compile("date=\"(.*)\" version")
+        date = date_regex.search(date.decode()).group(1)
     logger.info("JDBOR extract: {}".format(date))
 
     # print(xml_dict)
@@ -616,7 +621,9 @@ def process(in_file_path, out_folder, elastic, input_encoding, indent_output, ou
     node_list = data_RDcode.insert_date(node_list, extract_date)
     node_list = data_RDcode.rename_terms(node_list)
     if "orpha_icd10_" in file_stem:
-        node_list = data_RDcode.rework_ICD(node_list)
+        node_list = data_RDcode.rework_ICD(node_list, _type="icd10")
+    if "orpha_icd11_" in file_stem:
+        node_list = data_RDcode.rework_ICD(node_list, _type="icd11")
     if "orpha_omim_" in file_stem:
         node_list = data_RDcode.rework_OMIM(node_list)
 
@@ -683,7 +690,7 @@ def main():
         _notqdm = True if __name__ == '__main__' else False
 
         # Process files in designated folders
-        for folder in config.folders:            
+        for folder in config.folders:
             for file in tqdm(iterable=folder.iterdir(), desc="JSON converted XML files", total=len(list(folder.iterdir())), disable=_notqdm):
                 if not file.is_dir():
                     if file.suffix == ".xml":
@@ -746,7 +753,7 @@ def main():
                 config.output_encoding
             )
 
-    write_generic_product3()
+    # write_generic_product3()
 
 if __name__ == "__main__":
     start = time.time()

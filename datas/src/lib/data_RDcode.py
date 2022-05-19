@@ -77,7 +77,7 @@ def rename_terms(node_list):
     return node_list
 
 
-def rework_ICD(node_list):
+def rework_ICD(node_list, _type: str="icd10"):
     """
     remove "source" from ICD external reference
     rename ExternalReference to Code ICD and reference to Code ICD10
@@ -87,8 +87,13 @@ def rework_ICD(node_list):
     """
     node_list = json.dumps(node_list)
 
-    patterns = {"\"ExternalReference\":": "\"Code ICD\":",
-                "\"Reference\":": "\"Code ICD10\":"}
+    # patterns = {"\"ExternalReference\":": "\"Code ICD\":",
+    #             "\"Reference\":": "\"Code ICD10\":"}
+
+    patterns = {
+        "ExternalReference": "Code ICD",
+        "Reference": "Code {}".format(_type.upper())
+        }
 
     for key, value in patterns.items():
         pattern = re.compile(key)
