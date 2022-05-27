@@ -137,7 +137,7 @@ def main(es_client: Elasticsearch, json_path: Union[str, Path, List], index: str
     _notqdm = True if __name__ == '__main__' else False
 
     for json_filename in tqdm(iterable=json_path, desc='JSON elastic injection', total=len(json_path), disable=_notqdm):
-        if not index:             
+        if not index:
             _index = 'orphadata_{}'.format(json_filename.stem) if 'orphadata' not in json_filename.stem else json_filename.stem
         else:
             _index = index

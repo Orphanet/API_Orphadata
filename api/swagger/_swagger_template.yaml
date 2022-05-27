@@ -5,12 +5,11 @@ info:
     Orphadata API provides several GET to facilitate the exploitation of various rare disease-related datasets:
       - Rare diseases aligned with terminologies and databases    
       - Classification of rare diseases
-      - Linearisation of rare diseases
-      - Genes associated with rare diseases
       - Clinical signs and symptoms in rare diseases
+      - Genes associated with rare diseases
+      - Medical speciality of rare diseases (Linearisation)
       - Epidemiology of rare diseases
       - Natural history of rare diseases
-      - Rare diseases and functional consequences related to rare diseases
 
     More information on data are available <a href="http://www.orphadata.org/cgi-bin/index.php#freeproducts" target="_blank">here</a>.
 
@@ -28,33 +27,33 @@ info:
     <a href="http://www.orphadata.org/cgi-bin/contact.html" target="_blank">Contact Orphadata team</a> 
   version: 1.0.0
 tags:
-- name: Rare diseases and cross-referencing
+- name: Rare diseases aligned with terminologies and databases
   externalDocs:
     description:
       Get rare diseases information and their alignements with other terminologies.
       Available in english, french, german, spanish, dutch, italian, portuguese, polish,
       czech, russian, chinese and turkish.
       For more information, read
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+    url: http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf
 - name: Classifications of rare diseases
   externalDocs:
     description: 
       Get Orphanet classifications and the list of rare diseases classified in.
       Available only in english. For more information, read
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Rare diseases and associated phenotypes
+    url: http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf
+- name: Clinical signs and symptoms in rare diseases
   externalDocs:
     description: 
       Get rare diseases and associated HPO phenotypes.
       Available in english, french, german, spanish, dutch, italian and portuguese. For more information, read
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Rare diseases and associated gene
+    url: http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf
+- name: Genes associated with rare diseases
   externalDocs:
     description: 
       Get rare diseases and associated gene. Available only in english.
       For more information, read
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
-- name: Medical specialties of rare diseases
+    url: http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf
+- name: Medical speciality of rare diseases (Linearisation)
   externalDocs:
     description: 
       The polyparental structure of the Orphanet classification of
@@ -67,26 +66,26 @@ tags:
       one medical specialty to each clinical entity. 
       The medical speciality is displayed as «Preferential parent».
       Available only in english. For more information, read
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+    url: http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf
 - name: Epidemiology of rare diseases
   externalDocs:
     description: 
       Get epidemiological data on rare diseases.
       Available only in english, french, german, spanish, dutch, italian, portuguese, polish and czech.
       For more information, read
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+    url: http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf
 - name: Natural history of rare diseases
   externalDocs:
     description: 
       Get inheritance, interval average age of onset and interval average age of death on rare diseases.
       Available only in english, french, german, spanish, dutch, italian, portuguese, polish and czech.
       For more information, read
-    url: http://www.orphadata.org/cgi-bin/img/PDF/Catalogue_Orphadata.pdf
+    url: http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf
 paths:
   /rd-cross-referencing:
     get:
       tags:
-      - Rare diseases and cross-referencing
+      - Rare diseases aligned with terminologies and databases
       summary: 
         Get rare diseases information and their cross-referencing in a selected language.
       description:
@@ -136,11 +135,11 @@ paths:
   /rd-cross-referencing/orphacodes:
     get:
       tags:
-      - Rare diseases and cross-referencing
+      - Rare diseases aligned with terminologies and databases
       summary: 
         Get the list of rare diseases available in a selected language.
       description: 
-        The result is a collection of rare diseases including ORPHAcodes and preferred term in the selected language.
+        The result is a collection of rare diseases including ORPHAcodes and preferred term in a selected language.
       operationId: query_references_orphacodes
       parameters:
       - in: query
@@ -182,7 +181,7 @@ paths:
   /rd-cross-referencing/orphacodes/{orphacode}:
     get:
       tags:
-      - Rare diseases and cross-referencing
+      - Rare diseases aligned with terminologies and databases
       summary: 
         Get rare disease information and cross-referencing details searching by an ORPHAcode in a selected language.
       description: 
@@ -242,10 +241,10 @@ paths:
   /rd-cross-referencing/orphacodes/names/{name}:
     get:
       tags:
-      - Rare diseases and cross-referencing
+      - Rare diseases aligned with terminologies and databases
       summary: 
         Get rare disease and cross-referencing information searching by a rare 
-        disease preferred term in the selected language.
+        disease preferred term in a selected language.
       description: 
         The result is a set of data including ORPHAcode, the stable URL
         pointing to the specific page of the clinical entity on the Orphanet website,
@@ -300,8 +299,8 @@ paths:
   /rd-cross-referencing/omims:
     get:
       tags:
-      - Rare diseases and cross-referencing
-      summary: Get all OMIM references in the selected language.
+      - Rare diseases aligned with terminologies and databases
+      summary: Get all OMIM references in a selected language.
       description: The result is a list of ICD-10 references
       operationId: query_references_omims
       parameters:
@@ -344,7 +343,7 @@ paths:
   /rd-cross-referencing/omims/{omim}:
     get:
       tags:
-      - Rare diseases and cross-referencing
+      - Rare diseases aligned with terminologies and databases
       summary: 
         Get rare disease information and cross-referencing searching by an OMIM code in a selected language.
       description: 
@@ -400,8 +399,8 @@ paths:
   /rd-cross-referencing/icd-10s:
     get:
       tags:
-      - Rare diseases and cross-referencing
-      summary: Get all ICD-10 references in the selected language.
+      - Rare diseases aligned with terminologies and databases
+      summary: Get all ICD-10 references in a selected language.
       description: The result is a list of ICD-10 references.
       operationId: query_references_icds
       parameters:
@@ -444,7 +443,7 @@ paths:
   /rd-cross-referencing/icd-10s/{icd}:
     get:
       tags:
-      - Rare diseases and cross-referencing
+      - Rare diseases aligned with terminologies and databases
       summary: 
         Get rare disease information searching by an ICD-10 code in a selected language.
       description:
@@ -500,8 +499,8 @@ paths:
   /rd-cross-referencing/icd-11s:
     get:
       tags:
-      - Rare diseases and cross-referencing
-      summary: Get all ICD-11 references in the selected language.
+      - Rare diseases aligned with terminologies and databases
+      summary: Get all ICD-11 references in a selected language.
       description: The result is a list of ICD-11 references.
       operationId: query_references_icd11s
       parameters:
@@ -544,7 +543,7 @@ paths:
   /rd-cross-referencing/icd-11s/{icd}:
     get:
       tags:
-      - Rare diseases and cross-referencing
+      - Rare diseases aligned with terminologies and databases
       summary: 
         Get rare disease information searching by an ICD-11 code in a selected language.
       description:
@@ -837,7 +836,7 @@ paths:
   /rd-phenotypes:
     get:
       tags:
-      - Rare diseases and associated phenotypes
+      - Clinical signs and symptoms in rare diseases
       summary: 
         Get the list of rare diseases with their associated phenotypes in a selected language. 
       description: 
@@ -882,7 +881,7 @@ paths:
   /rd-phenotypes/orphacodes:
     get:
       tags:
-      - Rare diseases and associated phenotypes
+      - Clinical signs and symptoms in rare diseases
       summary: 
         Get the list of rare diseases annotated with HPO phenotypes in a selected language. 
       description: 
@@ -923,7 +922,7 @@ paths:
   /rd-phenotypes/orphacodes/{orphacode}:
     get:
       tags:
-      - Rare diseases and associated phenotypes
+      - Clinical signs and symptoms in rare diseases
       summary: 
         Get rare disease information and associated HPO phenotypes searching by its ORPHAcode in a selected language.
       description: 
@@ -980,7 +979,7 @@ paths:
   /rd-phenotypes/hpoids:
     get:
       tags:
-      - Rare diseases and associated phenotypes
+      - Clinical signs and symptoms in rare diseases
       summary: 
         Get the list of HPO phenotypes in a selected language.
       description: 
@@ -1021,7 +1020,7 @@ paths:
   /rd-phenotypes/hpoids/{hpoids}:
     get:
       tags:
-      - Rare diseases and associated phenotypes
+      - Clinical signs and symptoms in rare diseases
       summary: 
         Get rare diseases information searching by a list of HPO identifiers in a selected language.
       description: 
@@ -1078,7 +1077,7 @@ paths:
   /rd-associated-genes:
     get:
       tags:
-      - Rare diseases and associated gene
+      - Genes associated with rare diseases
       summary: 
         Get rare diseases associated to at least one gene.
       description: 
@@ -1107,7 +1106,7 @@ paths:
   /rd-associated-genes/orphacodes:
     get:
       tags:
-      - Rare diseases and associated gene
+      - Genes associated with rare diseases
       summary: 
         Get the list of rare diseases associated to at least one gene.
       description: 
@@ -1132,7 +1131,7 @@ paths:
   /rd-associated-genes/orphacodes/{orphacode}:
     get:
       tags:
-      - Rare diseases and associated gene
+      - Genes associated with rare diseases
       summary: 
         Get rare disease information and gene association searching by an ORPHAcode. 
       description: 
@@ -1173,7 +1172,7 @@ paths:
   /rd-associated-genes/genes:
     get:
       tags:
-      - Rare diseases and associated gene
+      - Genes associated with rare diseases
       summary: 
         Get the list of genes associated to at least one rare disease.
       description: 
@@ -1198,7 +1197,7 @@ paths:
   /rd-associated-genes/genes/symbols/{symbol}:
     get:
       tags:
-      - Rare diseases and associated gene
+      - Genes associated with rare diseases
       summary: 
         Get rare diseases information searching by symbol of associated gene.
       description: 
@@ -1237,7 +1236,7 @@ paths:
   /rd-associated-genes/genes/names/{name}:
     get:
       tags:
-      - Rare diseases and associated gene
+      - Genes associated with rare diseases
       summary: 
         Get rare disease and associated genes searching by a chain of characters contained in a gene name.
       description: 
@@ -1275,7 +1274,7 @@ paths:
   /rd-medical-specialties:
     get:
       tags:
-      - Medical specialties of rare diseases
+      - Medical speciality of rare diseases (Linearisation)
       summary: 
         Get the list of rare diseases with their associated preferential parent.
       description: 
@@ -1301,7 +1300,7 @@ paths:
   /rd-medical-specialties/orphacodes:
     get:
       tags:
-      - Medical specialties of rare diseases
+      - Medical speciality of rare diseases (Linearisation)
       summary: 
         Get the list of rare diseases with a preferential parent.
       description: 
@@ -1326,7 +1325,7 @@ paths:
   /rd-medical-specialties/orphacodes/{orphacode}:
     get:
       tags:
-      - Medical specialties of rare diseases
+      - Medical speciality of rare diseases (Linearisation)
       summary: 
         Get preferential parent of a rare disease searching by its ORPHAcode.
       description: 
@@ -1365,7 +1364,7 @@ paths:
   /rd-medical-specialties/parents:
     get:
       tags:
-      - Medical specialties of rare diseases
+      - Medical speciality of rare diseases (Linearisation)
       summary: 
         Get the list of preferential parent associated to at least one rare disease.
       description: 
@@ -1390,7 +1389,7 @@ paths:
   /rd-medical-specialties/parents/{parentcode}:
     get:
       tags:
-      - Medical specialties of rare diseases
+      - Medical speciality of rare diseases (Linearisation)
       summary: 
         Get the list of rare diseases searching by a preferential parent ORPHAcode. 
       description: 
