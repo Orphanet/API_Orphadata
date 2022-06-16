@@ -6,6 +6,7 @@ JSON files represent the inputs to be injected in Elasticsearch instance.
 
 """
 
+import argparse
 import copy
 import elasticsearch
 import json
@@ -47,6 +48,21 @@ class XML2JSONParams:
 
 
 config = XML2JSONParams()
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Convert XML from Orphanet Nomenclature Pack into Elasticsearch compatible JSON files.')
+    parser.add_argument(
+        "-i",
+        required=False,
+        nargs="?",
+        help="Path or filename of XML file(s)"
+    )
+
+    args = parser.parse_args()
+    if args.i:
+        config.in_file_path = Path(args.i)
+        config.parse_folder = False    
 
 
 def parse_file(in_file_path, input_encoding, xml_attribs):
@@ -667,6 +683,7 @@ def output_process(out_file_path, index, node_list, elastic, indent_output, outp
 def write_generic_product3():
     orphadata_generic.main(input_path=config.out_folder, index='orphadata_en_product3', outdir=config.out_folder, include='product3_')
 
+
 def main():
     # Some config check
     if config.indent_output:
@@ -757,5 +774,7 @@ def main():
 
 if __name__ == "__main__":
     start = time.time()
+
+    parse_args()
     main()
     logger.info('Total computation time: {}s'.format(time.time() - start))
