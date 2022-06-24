@@ -636,7 +636,7 @@ paths:
       tags:
         - Rare diseases aligned with terminologies and databases
       summary: Get all OMIM references in a selected language.
-      description: The result is a list of ICD-10 references
+      description: The result is a list of OMIM references.
       operationId: query_references_omims
       parameters:
         - in: query
@@ -1241,7 +1241,7 @@ paths:
       parameters:
         - name: icd
           in: path
-          description: ICD-10 reference
+          description: ICD-11 reference
           required: true
           style: simple
           explode: false
