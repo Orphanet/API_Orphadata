@@ -81,7 +81,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
               - tr
               - zh
       responses:
@@ -234,7 +233,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
               - tr
               - zh
       responses:
@@ -338,7 +336,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
               - tr
               - zh
       responses:
@@ -501,7 +498,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
               - tr
               - zh
       responses:
@@ -636,7 +632,7 @@ paths:
       tags:
         - Rare diseases aligned with terminologies and databases
       summary: Get all OMIM references in a selected language.
-      description: The result is a list of OMIM references.
+      description: The result is a list of OMIM references
       operationId: query_references_omims
       parameters:
         - in: query
@@ -656,7 +652,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
               - tr
               - zh
       responses:
@@ -754,7 +749,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
               - tr
               - zh
       responses:
@@ -911,7 +905,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
               - tr
               - zh
       responses:
@@ -1009,7 +1002,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
               - tr
               - zh
       responses:
@@ -1166,7 +1158,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
               - tr
               - zh
       responses:
@@ -1264,7 +1255,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
               - tr
               - zh
       responses:
@@ -3904,7 +3894,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
       responses:
         '200':
           description: Successful operation
@@ -4033,7 +4022,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
       responses:
         '200':
           description: Successful operation
@@ -4135,7 +4123,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
       responses:
         '200':
           description: Successful operation
@@ -4266,7 +4253,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
       responses:
         '200':
           description: Successful operation
@@ -4385,7 +4371,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
       responses:
         '200':
           description: Successful operation
@@ -4487,7 +4472,6 @@ paths:
               - nl
               - pl
               - pt
-              - ru
       responses:
         '200':
           description: Successful operation
