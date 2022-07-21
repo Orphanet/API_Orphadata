@@ -363,7 +363,7 @@ The following command will execute sequentially steps 1, 2 and 3 in one shot:
 python datas/src/orphadata_update.py
 ```
 
-## Swagger definition
+## Swagger definition automation
 
 #### Requirements
 - [npm from node.js](https://nodejs.org/en/download/)

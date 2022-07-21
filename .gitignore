@@ -3,6 +3,8 @@ myenv/
 env/
 .env
 
+.vscode
+
 .idea
 .tox
 
