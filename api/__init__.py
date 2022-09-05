@@ -7,7 +7,7 @@ from flask_cors import CORS
 import connexion
 from dotenv import load_dotenv
 
-import api.routes as routes
+# import api.routes as routes
 from api.util import JSONEncoder
 
 module_path = Path(__file__).parent.parent

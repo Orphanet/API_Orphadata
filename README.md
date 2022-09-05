@@ -125,7 +125,7 @@ Both the flask application and the data processing scripts make use of environme
 | Name | Accepted values | Default value | Role
 |---|---|---|---|
 | `FLASK_ENV` | `test`, `dev` or `production` | `production` | Used by the flask API application
-| `DATA_ENV` |  `remote` or `local` | `remote` | Used for data processing (data injection into elasticsearch)
+| `DATA_ENV` |  `remote` or `local` | `local` | Used for data processing (data injection into elasticsearch)
 
 
 The `FLASK_ENV` variable defines an object (see `api/config.py`) used to configure the flask instantiated application (through the parameter `config_name` of the factory function `create_app()` in `api/__init__.py`).

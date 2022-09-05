@@ -1,0 +1,1931 @@
+{
+  "info": {
+    "description": "More information on data are available <a href=\"http://www.orphadata.org/cgi-bin/index.php#freeproducts\" target=\"_blank\">here</a>.\n\nThese data are updated twice a year (July and December) and are also available as downloadable files both in \n<a href=\"http://dev.orphadata.com/orphanet-scientific-knowledge-files/\" target=\"_blank\">XML and JSON formats</a>.\n\nWe apply the <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Commons Attribution 4.0 International (CC BY 4.0)</a>\n to all copyrightable parts of our databases.\nThis means that you are free to copy, distribute, display and make commercial use of these databases in all legislations,\nprovided you give us credit.\n\nFor further information, consult <a href=\"http://www.orphadata.org/cgi-bin/index.php\" target=\"_blank\">Orphadata website</a> and other services\nfrom <a href=\"https://www.orpha.net/consor/cgi-bin/index.php\" target=\"_blank\">Orphanet</a>.\n\n<a href=\"http://www.orphadata.org/cgi-bin/contact.html\" target=\"_blank\">Contact Orphadata team</a> \n",
+    "title": "Rare diseases aligned with terminologies and databases",
+    "version": "1.0.0"
+  },
+  "openapi": "3.0.1",
+  "paths": {
+    "/rd-cross-referencing": {
+      "get": {
+        "description": "The result is a collection of rare diseases including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems.",
+        "operationId": "query_references_base",
+        "parameters": [
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "cs",
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pl",
+                "pt",
+                "ru",
+                "tr",
+                "zh"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 10659,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "Date": {
+                                "example": "2022-05-01 04:38:31",
+                                "type": "string"
+                              },
+                              "DisorderDisorderAssociation": {
+                                "example": null,
+                                "type": "string"
+                              },
+                              "DisorderFlag": {
+                                "items": {
+                                  "properties": {
+                                    "Label": {
+                                      "example": null,
+                                      "type": "string"
+                                    },
+                                    "Value": {
+                                      "example": 1,
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "DisorderGroup": {
+                                "example": "Disorder",
+                                "type": "string"
+                              },
+                              "ExternalReference": {
+                                "items": {
+                                  "properties": {
+                                    "DisorderMappingICDRelation": {
+                                      "example": "Attributed (The ICD code is attributed by Orphanet)",
+                                      "type": "string"
+                                    },
+                                    "DisorderMappingRelation": {
+                                      "example": "NTBT (ORPHA code's Narrower Term maps to a Broader Term)",
+                                      "type": "string"
+                                    },
+                                    "DisorderMappingValidationStatus": {
+                                      "example": "Validated",
+                                      "type": "string"
+                                    },
+                                    "Reference": {
+                                      "example": "Q77.3",
+                                      "type": "string"
+                                    },
+                                    "Source": {
+                                      "example": "ICD-10",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "ORPHAcode": {
+                                "example": 166024,
+                                "type": "integer"
+                              },
+                              "OrphanetURL": {
+                                "example": "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024",
+                                "type": "string"
+                              },
+                              "Preferred term": {
+                                "example": "Multiple epiphyseal dysplasia, Al-Gazali type",
+                                "type": "string"
+                              },
+                              "SummaryInformation": {
+                                "items": {
+                                  "properties": {
+                                    "Definition": {
+                                      "example": "A rare primary bone dysplasia characterized by the association of multiple epiphyseal dysplasia with macrocephaly and dysmorphic facial features (such as frontal bossing, hypertelorism, flat malar region, low-set ears, and short neck). Patients are of normal stature and present with joint swelling and genu valgum. Additional reported manifestations include clinodactyly, spindle-shaped fingers, and pectus excavatum.",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "Synonym": {
+                                "example": [
+                                  "Multiple epiphyseal dysplasia-macrocephaly-distinctive facies syndrome"
+                                ],
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "Typology": {
+                                "example": "Disease",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and cross-referencing",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-cross-referencing",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get rare diseases information and their cross-referencing in a selected language.",
+        "tags": [
+          "Rare diseases aligned with terminologies and databases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_references"
+      }
+    },
+    "/rd-cross-referencing/icd-10s": {
+      "get": {
+        "description": "The result is a list of ICD-10 references.",
+        "operationId": "query_references_icds",
+        "parameters": [
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "cs",
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pl",
+                "pt",
+                "ru",
+                "tr",
+                "zh"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 2171,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "example": [
+                            "A00.0",
+                            "A00.1",
+                            "A00.9"
+                          ],
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and cross-referencing",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-cross-referencing/icd-10s",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get all ICD-10 references in a selected language.",
+        "tags": [
+          "Rare diseases aligned with terminologies and databases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_references"
+      }
+    },
+    "/rd-cross-referencing/icd-10s/{icd}": {
+      "get": {
+        "description": "The result is a collection of disease matching with the given ICD-10 code. Results include ORPHAcode, preferred term, synonyms, definition, the group, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems in a selected language.",
+        "operationId": "query_references_by_icd",
+        "parameters": [
+          {
+            "description": "ICD-10 reference",
+            "explode": false,
+            "in": "path",
+            "name": "icd",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "cs",
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pl",
+                "pt",
+                "ru",
+                "tr",
+                "zh"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 72,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "Date": {
+                                "example": "2022-05-01 04:38:31",
+                                "type": "string"
+                              },
+                              "DisorderDisorderAssociation": {
+                                "example": null,
+                                "type": "string"
+                              },
+                              "DisorderFlag": {
+                                "items": {
+                                  "properties": {
+                                    "Label": {
+                                      "example": null,
+                                      "type": "string"
+                                    },
+                                    "Value": {
+                                      "example": 1,
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "DisorderGroup": {
+                                "example": "Disorder",
+                                "type": "string"
+                              },
+                              "ExternalReference": {
+                                "items": {
+                                  "properties": {
+                                    "DisorderMappingICDRelation": {
+                                      "example": null,
+                                      "type": "string"
+                                    },
+                                    "DisorderMappingRelation": {
+                                      "example": "E (Exact mapping: the two concepts are equivalent)",
+                                      "type": "string"
+                                    },
+                                    "DisorderMappingValidationStatus": {
+                                      "example": "Validated",
+                                      "type": "string"
+                                    },
+                                    "Reference": {
+                                      "example": "203450",
+                                      "type": "string"
+                                    },
+                                    "Source": {
+                                      "example": "OMIM",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "ORPHAcode": {
+                                "example": 58,
+                                "type": "integer"
+                              },
+                              "OrphanetURL": {
+                                "example": "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58",
+                                "type": "string"
+                              },
+                              "Preferred term": {
+                                "example": "Alexander disease",
+                                "type": "string"
+                              },
+                              "SummaryInformation": {
+                                "items": {
+                                  "properties": {
+                                    "Definition": {
+                                      "example": "A rare neurodegenerative disorder of the astrocytes comprised of two clinical forms: Alexander disease (AxD) type I and type II manifesting with various degrees of macrocephaly, spasticity, ataxia and seizures and leading to psychomotor regression and death.",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "Synonym": {
+                                "example": [
+                                  "AxD"
+                                ],
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "Typology": {
+                                "example": "Disease",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and cross-referencing",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "properties": {
+                            "icd": {
+                              "example": "e75.2",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-cross-referencing/icd-10s/e75.2",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get rare disease information searching by an ICD-10 code in a selected language.",
+        "tags": [
+          "Rare diseases aligned with terminologies and databases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_references"
+      }
+    },
+    "/rd-cross-referencing/icd-11s": {
+      "get": {
+        "description": "The result is a list of ICD-11 references.",
+        "operationId": "query_references_icd11s",
+        "parameters": [
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "cs",
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pl",
+                "pt",
+                "ru",
+                "tr",
+                "zh"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 940,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "example": [
+                            "1A07.Z",
+                            "1A11.0",
+                            "1A30"
+                          ],
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and cross-referencing",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-cross-referencing/icd-11s",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get all ICD-11 references in a selected language.",
+        "tags": [
+          "Rare diseases aligned with terminologies and databases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_references"
+      }
+    },
+    "/rd-cross-referencing/icd-11s/{icd}": {
+      "get": {
+        "description": "The result is a collection of disease matching with the given ICD-11 code. Results include ORPHAcode, preferred term, synonyms, definition, the group, and the characterisation of the alignment between the rare disease and ICD-10, ICD-11, UMLS, MesH, MedDra, and OMIM systems in a selected language.",
+        "operationId": "query_references_by_icd11",
+        "parameters": [
+          {
+            "description": "ICD-10 reference",
+            "explode": false,
+            "in": "path",
+            "name": "icd",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "cs",
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pl",
+                "pt",
+                "ru",
+                "tr",
+                "zh"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 1,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "Date": {
+                                "example": "2022-05-01 04:38:31",
+                                "type": "string"
+                              },
+                              "DisorderDisorderAssociation": {
+                                "example": null,
+                                "type": "string"
+                              },
+                              "DisorderFlag": {
+                                "items": {
+                                  "properties": {
+                                    "Label": {
+                                      "example": null,
+                                      "type": "string"
+                                    },
+                                    "Value": {
+                                      "example": 1,
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "DisorderGroup": {
+                                "example": "Disorder",
+                                "type": "string"
+                              },
+                              "ExternalReference": {
+                                "items": {
+                                  "properties": {
+                                    "DisorderMappingICDRelation": {
+                                      "example": "Specific code (The ORPHA code has its own code in the ICD)",
+                                      "type": "string"
+                                    },
+                                    "DisorderMappingRelation": {
+                                      "example": "E (Exact mapping: the two concepts are equivalent)",
+                                      "type": "string"
+                                    },
+                                    "DisorderMappingValidationStatus": {
+                                      "example": "Validated",
+                                      "type": "string"
+                                    },
+                                    "Reference": {
+                                      "example": "4A44.5",
+                                      "type": "string"
+                                    },
+                                    "Source": {
+                                      "example": "ICD-11",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "ORPHAcode": {
+                                "example": 2331,
+                                "type": "integer"
+                              },
+                              "OrphanetURL": {
+                                "example": "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=2331",
+                                "type": "string"
+                              },
+                              "Preferred term": {
+                                "example": "Kawasaki disease",
+                                "type": "string"
+                              },
+                              "SummaryInformation": {
+                                "items": {
+                                  "properties": {
+                                    "Definition": {
+                                      "example": "A rare inflammatory disease characterized by an acute febrile, systemic, self-limiting, medium-vessel vasculitis primarily affecting children. It often causes acute coronary arteritis which is associated with coronary arterial aneurysms (CAA) that may be life threatening when untreated.",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "Synonym": {
+                                "example": [
+                                  "Mucocutaneous lymph node syndrome"
+                                ],
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "Typology": {
+                                "example": "Disease",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and cross-referencing",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "properties": {
+                            "icd": {
+                              "example": "4A44.5",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-cross-referencing/icd-11s/4A44.5",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get rare disease information searching by an ICD-11 code in a selected language.",
+        "tags": [
+          "Rare diseases aligned with terminologies and databases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_references"
+      }
+    },
+    "/rd-cross-referencing/omims": {
+      "get": {
+        "description": "The result is a list of ICD-10 references",
+        "operationId": "query_references_omims",
+        "parameters": [
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "cs",
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pl",
+                "pt",
+                "ru",
+                "tr",
+                "zh"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 6550,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "example": [
+                            100050,
+                            100070,
+                            100100
+                          ],
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and cross-referencing",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-cross-referencing/omims",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get all OMIM references in a selected language.",
+        "tags": [
+          "Rare diseases aligned with terminologies and databases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_references"
+      }
+    },
+    "/rd-cross-referencing/omims/{omim}": {
+      "get": {
+        "description": "The result is a collection of disease matching with the given OMIM code. Results include ORPHAcode, preferred term, synonyms, definition, the group, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems in a selected language.",
+        "operationId": "query_references_by_omim",
+        "parameters": [
+          {
+            "description": "OMIM reference",
+            "explode": false,
+            "in": "path",
+            "name": "omim",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "cs",
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pl",
+                "pt",
+                "ru",
+                "tr",
+                "zh"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 3,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "Date": {
+                                "example": "2022-05-01 04:38:31",
+                                "type": "string"
+                              },
+                              "DisorderDisorderAssociation": {
+                                "example": null,
+                                "type": "string"
+                              },
+                              "DisorderFlag": {
+                                "items": {
+                                  "properties": {
+                                    "Label": {
+                                      "example": null,
+                                      "type": "string"
+                                    },
+                                    "Value": {
+                                      "example": 1,
+                                      "type": "integer"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "DisorderGroup": {
+                                "example": "Disorder",
+                                "type": "string"
+                              },
+                              "ExternalReference": {
+                                "items": {
+                                  "properties": {
+                                    "DisorderMappingICDRelation": {
+                                      "example": null,
+                                      "type": "string"
+                                    },
+                                    "DisorderMappingRelation": {
+                                      "example": "E (Exact mapping: the two concepts are equivalent)",
+                                      "type": "string"
+                                    },
+                                    "DisorderMappingValidationStatus": {
+                                      "example": "Validated",
+                                      "type": "string"
+                                    },
+                                    "Reference": {
+                                      "example": "203450",
+                                      "type": "string"
+                                    },
+                                    "Source": {
+                                      "example": "OMIM",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "ORPHAcode": {
+                                "example": 58,
+                                "type": "integer"
+                              },
+                              "OrphanetURL": {
+                                "example": "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58",
+                                "type": "string"
+                              },
+                              "Preferred term": {
+                                "example": "Alexander disease",
+                                "type": "string"
+                              },
+                              "SummaryInformation": {
+                                "items": {
+                                  "properties": {
+                                    "Definition": {
+                                      "example": "A rare neurodegenerative disorder of the astrocytes comprised of two clinical forms: Alexander disease (AxD) type I and type II manifesting with various degrees of macrocephaly, spasticity, ataxia and seizures and leading to psychomotor regression and death.",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "Synonym": {
+                                "example": [
+                                  "AxD"
+                                ],
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "Typology": {
+                                "example": "Disease",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and cross-referencing",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "properties": {
+                            "omim": {
+                              "example": "203450",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-cross-referencing/omims/203450",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get rare disease information and cross-referencing searching by an OMIM code in a selected language.",
+        "tags": [
+          "Rare diseases aligned with terminologies and databases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_references"
+      }
+    },
+    "/rd-cross-referencing/orphacodes": {
+      "get": {
+        "description": "The result is a collection of rare diseases including ORPHAcodes and preferred term in a selected language.",
+        "operationId": "query_references_orphacodes",
+        "parameters": [
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "cs",
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pl",
+                "pt",
+                "ru",
+                "tr",
+                "zh"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 10659,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "ORPHAcode": {
+                                "example": 166024,
+                                "type": "integer"
+                              },
+                              "Preferred term": {
+                                "example": "Multiple epiphyseal dysplasia, Al-Gazali type",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and cross-referencing",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-cross-referencing/orphacodes",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get the list of rare diseases available in a selected language.",
+        "tags": [
+          "Rare diseases aligned with terminologies and databases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_references"
+      }
+    },
+    "/rd-cross-referencing/orphacodes/names/{name}": {
+      "get": {
+        "description": "The result is a set of data including ORPHAcode, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, synonyms, definition, the group and type, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems in a selected language.",
+        "operationId": "query_references_by_name",
+        "parameters": [
+          {
+            "description": "the preferred name of a disease",
+            "explode": false,
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          },
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "cs",
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pl",
+                "pt",
+                "ru",
+                "tr",
+                "zh"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 1,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "properties": {
+                            "Date": {
+                              "example": "2022-05-01 04:38:31",
+                              "type": "string"
+                            },
+                            "DisorderDisorderAssociation": {
+                              "example": null,
+                              "type": "string"
+                            },
+                            "DisorderFlag": {
+                              "items": {
+                                "properties": {
+                                  "Label": {
+                                    "example": null,
+                                    "type": "string"
+                                  },
+                                  "Value": {
+                                    "example": 1,
+                                    "type": "integer"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "type": "array"
+                            },
+                            "DisorderGroup": {
+                              "example": "Disorder",
+                              "type": "string"
+                            },
+                            "ExternalReference": {
+                              "items": {
+                                "properties": {
+                                  "DisorderMappingICDRelation": {
+                                    "example": "Specific code (The ORPHA code has its own code in the ICD)",
+                                    "type": "string"
+                                  },
+                                  "DisorderMappingRelation": {
+                                    "example": "E (Exact mapping: the two concepts are equivalent)",
+                                    "type": "string"
+                                  },
+                                  "DisorderMappingValidationStatus": {
+                                    "example": "Validated",
+                                    "type": "string"
+                                  },
+                                  "Reference": {
+                                    "example": "LD28.01",
+                                    "type": "string"
+                                  },
+                                  "Source": {
+                                    "example": "ICD-11",
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "type": "array"
+                            },
+                            "ORPHAcode": {
+                              "example": 558,
+                              "type": "integer"
+                            },
+                            "OrphanetURL": {
+                              "example": "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=558",
+                              "type": "string"
+                            },
+                            "Preferred term": {
+                              "example": "Marfan syndrome",
+                              "type": "string"
+                            },
+                            "SummaryInformation": {
+                              "items": {
+                                "properties": {
+                                  "Definition": {
+                                    "example": "Marfan syndrome is a systemic disease of connective tissue characterized by a variable combination of cardiovascular, musculo-skeletal, ophthalmic and pulmonary manifestations.",
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "type": "array"
+                            },
+                            "Synonym": {
+                              "example": [
+                                "MFS"
+                              ],
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            },
+                            "Typology": {
+                              "example": "Disease",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and cross-referencing",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "properties": {
+                            "name": {
+                              "example": "marfan syndrome",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-cross-referencing/orphacodes/names/marfan syndrome",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get rare disease and cross-referencing information searching by a rare disease preferred term in a selected language.",
+        "tags": [
+          "Rare diseases aligned with terminologies and databases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_references"
+      }
+    },
+    "/rd-cross-referencing/orphacodes/{orphacode}": {
+      "get": {
+        "description": "The result is a collection of disease matching with the given ORPHAcode. Results include ORPHAcode, preferred term, synonyms, definition, the group, and the characterisation of the alignment between the rare disease and ICD-10, UMLS, MesH, MedDra, and OMIM systems in a selected language.",
+        "operationId": "query_references_by_orphacode",
+        "parameters": [
+          {
+            "description": "a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.",
+            "explode": false,
+            "in": "path",
+            "name": "orphacode",
+            "required": true,
+            "schema": {
+              "exclusiveMinimum": true,
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "simple"
+          },
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "cs",
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pl",
+                "pt",
+                "ru",
+                "tr",
+                "zh"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 1,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "properties": {
+                            "Date": {
+                              "example": "2022-05-01 04:38:31",
+                              "type": "string"
+                            },
+                            "DisorderDisorderAssociation": {
+                              "example": null,
+                              "type": "string"
+                            },
+                            "DisorderFlag": {
+                              "items": {
+                                "properties": {
+                                  "Label": {
+                                    "example": null,
+                                    "type": "string"
+                                  },
+                                  "Value": {
+                                    "example": 1,
+                                    "type": "integer"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "type": "array"
+                            },
+                            "DisorderGroup": {
+                              "example": "Disorder",
+                              "type": "string"
+                            },
+                            "ExternalReference": {
+                              "items": {
+                                "properties": {
+                                  "DisorderMappingICDRelation": {
+                                    "example": null,
+                                    "type": "string"
+                                  },
+                                  "DisorderMappingRelation": {
+                                    "example": "E (Exact mapping: the two concepts are equivalent)",
+                                    "type": "string"
+                                  },
+                                  "DisorderMappingValidationStatus": {
+                                    "example": "Validated",
+                                    "type": "string"
+                                  },
+                                  "Reference": {
+                                    "example": "203450",
+                                    "type": "string"
+                                  },
+                                  "Source": {
+                                    "example": "OMIM",
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "type": "array"
+                            },
+                            "ORPHAcode": {
+                              "example": 58,
+                              "type": "integer"
+                            },
+                            "OrphanetURL": {
+                              "example": "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58",
+                              "type": "string"
+                            },
+                            "Preferred term": {
+                              "example": "Alexander disease",
+                              "type": "string"
+                            },
+                            "SummaryInformation": {
+                              "items": {
+                                "properties": {
+                                  "Definition": {
+                                    "example": "A rare neurodegenerative disorder of the astrocytes comprised of two clinical forms: Alexander disease (AxD) type I and type II manifesting with various degrees of macrocephaly, spasticity, ataxia and seizures and leading to psychomotor regression and death.",
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "type": "array"
+                            },
+                            "Synonym": {
+                              "example": [
+                                "AxD"
+                              ],
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            },
+                            "Typology": {
+                              "example": "Disease",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and cross-referencing",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "properties": {
+                            "ORPHAcode": {
+                              "example": 58,
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-cross-referencing/orphacodes/58",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get rare disease information and cross-referencing details searching by an ORPHAcode in a selected language.",
+        "tags": [
+          "Rare diseases aligned with terminologies and databases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_references"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.orphadata.com"
+    }
+  ],
+  "tags": [
+    {
+      "externalDocs": {
+        "description": "Get rare diseases information and their alignements with other terminologies. Available in english, french, german, spanish, dutch, italian, portuguese, polish, czech, russian, chinese and turkish. For more information, read",
+        "url": "http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf"
+      },
+      "name": "Rare diseases aligned with terminologies and databases"
+    }
+  ]
+}

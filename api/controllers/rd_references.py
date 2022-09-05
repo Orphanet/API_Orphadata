@@ -1,5 +1,6 @@
 import elasticsearch.exceptions as es_exceptions
 from flask import request, current_app
+import json
 
 from api.controllers import query_controller as qc
 from api.controllers.response_handler import ResponseWrapper
@@ -495,7 +496,6 @@ def query_references_by_multiple_fields():  # noqa: E501
             }
         }
     }
-    import json
     print(json.dumps(query, indent=2))
 
     index = index_base.format(lang.lower())

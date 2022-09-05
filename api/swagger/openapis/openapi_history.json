@@ -1,0 +1,516 @@
+{
+  "info": {
+    "description": "More information on data are available <a href=\"http://www.orphadata.org/cgi-bin/index.php#freeproducts\" target=\"_blank\">here</a>.\n\nThese data are updated twice a year (July and December) and are also available as downloadable files both in \n<a href=\"http://dev.orphadata.com/orphanet-scientific-knowledge-files/\" target=\"_blank\">XML and JSON formats</a>.\n\nWe apply the <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Commons Attribution 4.0 International (CC BY 4.0)</a>\n to all copyrightable parts of our databases.\nThis means that you are free to copy, distribute, display and make commercial use of these databases in all legislations,\nprovided you give us credit.\n\nFor further information, consult <a href=\"http://www.orphadata.org/cgi-bin/index.php\" target=\"_blank\">Orphadata website</a> and other services\nfrom <a href=\"https://www.orpha.net/consor/cgi-bin/index.php\" target=\"_blank\">Orphanet</a>.\n\n<a href=\"http://www.orphadata.org/cgi-bin/contact.html\" target=\"_blank\">Contact Orphadata team</a> \n",
+    "title": "Natural history of rare diseases",
+    "version": "1.0.0"
+  },
+  "openapi": "3.0.1",
+  "paths": {
+    "/rd-natural_history": {
+      "get": {
+        "description": "The result is a collection of rare diseases (ORPHAcode, preferred name, group) with available inheritance, interval average age of onset and interval average age of death.",
+        "operationId": "query_history_base",
+        "parameters": [
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "cs",
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pl",
+                "pt",
+                "ru"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 6636,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "AverageAgeOfDeath": {
+                                "example": null,
+                                "type": "string"
+                              },
+                              "AverageAgeOfOnset": {
+                                "example": [
+                                  "Infancy",
+                                  "Neonatal"
+                                ],
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "Date": {
+                                "example": "2022-05-01 04:56:20",
+                                "type": "string"
+                              },
+                              "DisorderGroup": {
+                                "example": "Disorder",
+                                "type": "string"
+                              },
+                              "ORPHAcode": {
+                                "example": 166024,
+                                "type": "integer"
+                              },
+                              "OrphanetURL": {
+                                "example": "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=166024",
+                                "type": "string"
+                              },
+                              "Preferred term": {
+                                "example": "Multiple epiphyseal dysplasia, Al-Gazali type",
+                                "type": "string"
+                              },
+                              "TypeOfInheritance": {
+                                "example": [
+                                  "Autosomal recessive"
+                                ],
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "Typology": {
+                                "example": "Disease",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Natural history of rare diseases",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-natural_history",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get rare diseases and their natural history in a selected language.",
+        "tags": [
+          "Natural history of rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_history"
+      }
+    },
+    "/rd-natural_history/orphacodes": {
+      "get": {
+        "description": "The result is a collection of rare diseases including ORPHAcodes and preferred term.",
+        "operationId": "query_history_orphacodes",
+        "parameters": [
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "cs",
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pl",
+                "pt",
+                "ru"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 6636,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "ORPHAcode": {
+                                "example": 166024,
+                                "type": "integer"
+                              },
+                              "Preferred term": {
+                                "example": "Multiple epiphyseal dysplasia, Al-Gazali type",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Natural history of rare diseases",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-natural_history/orphacodes",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get the list of rare diseases associated to at least one inheritance, interval average age of onset or interval average age of death data in a selected language.",
+        "tags": [
+          "Natural history of rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_history"
+      }
+    },
+    "/rd-natural_history/orphacodes/{orphacode}": {
+      "get": {
+        "description": "The result is a set of data including ORPHAcode of the given disease, preferred term, expertlink, group and the list of one inheritance, interval average age of onset or interval average age of death.",
+        "operationId": "query_history_by_orphacode",
+        "parameters": [
+          {
+            "description": "a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.",
+            "explode": false,
+            "in": "path",
+            "name": "orphacode",
+            "required": true,
+            "schema": {
+              "exclusiveMinimum": true,
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "simple"
+          },
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "cs",
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pl",
+                "pt",
+                "ru"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 1,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "properties": {
+                            "AverageAgeOfDeath": {
+                              "example": [
+                                "any age"
+                              ],
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            },
+                            "AverageAgeOfOnset": {
+                              "example": [
+                                "All ages"
+                              ],
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            },
+                            "Date": {
+                              "example": "2022-05-01 04:56:20",
+                              "type": "string"
+                            },
+                            "DisorderGroup": {
+                              "example": "Disorder",
+                              "type": "string"
+                            },
+                            "ORPHAcode": {
+                              "example": 58,
+                              "type": "integer"
+                            },
+                            "OrphanetURL": {
+                              "example": "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58",
+                              "type": "string"
+                            },
+                            "Preferred term": {
+                              "example": "Alexander disease",
+                              "type": "string"
+                            },
+                            "TypeOfInheritance": {
+                              "example": [
+                                "Autosomal dominant"
+                              ],
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            },
+                            "Typology": {
+                              "example": "Disease",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Natural history of rare diseases",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "properties": {
+                            "ORPHAcode": {
+                              "example": 58,
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-natural_history/orphacodes/58",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get the natural history data of a given rare disease in a selected language searching by its ORPHAcode.",
+        "tags": [
+          "Natural history of rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_history"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.orphadata.com"
+    }
+  ],
+  "tags": [
+    {
+      "externalDocs": {
+        "description": "Get inheritance, interval average age of onset and interval average age of death on rare diseases. Available only in english, french, german, spanish, dutch, italian, portuguese, polish and czech. For more information, read",
+        "url": "http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf"
+      },
+      "name": "Natural history of rare diseases"
+    }
+  ]
+}

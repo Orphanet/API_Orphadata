@@ -1,0 +1,989 @@
+{
+  "info": {
+    "description": "More information on data are available <a href=\"http://www.orphadata.org/cgi-bin/index.php#freeproducts\" target=\"_blank\">here</a>.\n\nThese data are updated twice a year (July and December) and are also available as downloadable files both in \n<a href=\"http://dev.orphadata.com/orphanet-scientific-knowledge-files/\" target=\"_blank\">XML and JSON formats</a>.\n\nWe apply the <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Commons Attribution 4.0 International (CC BY 4.0)</a>\n to all copyrightable parts of our databases.\nThis means that you are free to copy, distribute, display and make commercial use of these databases in all legislations,\nprovided you give us credit.\n\nFor further information, consult <a href=\"http://www.orphadata.org/cgi-bin/index.php\" target=\"_blank\">Orphadata website</a> and other services\nfrom <a href=\"https://www.orpha.net/consor/cgi-bin/index.php\" target=\"_blank\">Orphanet</a>.\n\n<a href=\"http://www.orphadata.org/cgi-bin/contact.html\" target=\"_blank\">Contact Orphadata team</a> \n",
+    "title": "Classifications of rare diseases",
+    "version": "1.0.0"
+  },
+  "openapi": "3.0.1",
+  "paths": {
+    "/rd-classification": {
+      "get": {
+        "description": "The result is a collection of rare diseases including their ORPHAcode, preferred term, classification ID, classification tag, direct children and parents.",
+        "operationId": "query_classification_base",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 26637,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "Date": {
+                                "example": "2022-05-01 04:42:36",
+                                "type": "string"
+                              },
+                              "ORPHAcode": {
+                                "example": 34217,
+                                "type": "integer"
+                              },
+                              "childs": {
+                                "example": [],
+                                "type": "array"
+                              },
+                              "hch_id": {
+                                "example": 146,
+                                "type": "integer"
+                              },
+                              "hch_tag": {
+                                "example": "Orphanet classification of rare cardiac diseases",
+                                "type": "string"
+                              },
+                              "parents": {
+                                "example": [
+                                  247
+                                ],
+                                "items": {
+                                  "type": "integer"
+                                },
+                                "type": "array"
+                              },
+                              "preferredTerm": {
+                                "example": "Naxos disease",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Clinical classifications of rare diseases",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-classification",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get the list of rare diseases available in all classifications.",
+        "tags": [
+          "Classifications of rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_classification"
+      }
+    },
+    "/rd-classification/hchids": {
+      "get": {
+        "description": "The result is a collection of the unique identifier of each classification and its name (Tag).",
+        "operationId": "query_classification_hchids",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 33,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "hchId": {
+                                "example": 146,
+                                "type": "integer"
+                              },
+                              "hchTag": {
+                                "example": "Orphanet classification of rare cardiac diseases",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Clinical classifications of rare diseases",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-classification/hchids",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get the list of classifications available.",
+        "tags": [
+          "Classifications of rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_classification"
+      }
+    },
+    "/rd-classification/hchids/{hchid}": {
+      "get": {
+        "description": "The result is a collection of ORPHAcodes organised as children and parents in the selected classification.",
+        "operationId": "query_classification_by_hchid",
+        "parameters": [
+          {
+            "description": "The hierarchy ID (hchID) is a specific identifier attributed to an Orphanet classification.",
+            "explode": false,
+            "in": "path",
+            "name": "hchid",
+            "required": true,
+            "schema": {
+              "exclusiveMinimum": true,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 3110,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "Date": {
+                                "example": "2022-05-01 04:44:10",
+                                "type": "string"
+                              },
+                              "ORPHAcode": {
+                                "example": 603684,
+                                "type": "integer"
+                              },
+                              "childs": {
+                                "example": [],
+                                "type": "array"
+                              },
+                              "hch_id": {
+                                "example": 181,
+                                "type": "integer"
+                              },
+                              "hch_tag": {
+                                "example": "Orphanet classification of rare neurological diseases",
+                                "type": "string"
+                              },
+                              "parents": {
+                                "example": [
+                                  603699,
+                                  102283,
+                                  401993
+                                ],
+                                "items": {
+                                  "type": "integer"
+                                },
+                                "type": "array"
+                              },
+                              "preferredTerm": {
+                                "example": "KLHL7-related Bohring-Opitz-like/Cold-induced sweating-like overlap syndrome",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Clinical classifications of rare diseases",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "properties": {
+                            "hchID": {
+                              "example": 181,
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-classification/hchids/181",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get the organisation of an ORPHAcode rare disease available for a selected classification.",
+        "tags": [
+          "Classifications of rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_classification"
+      }
+    },
+    "/rd-classification/hchids/{hchid}/orphacodes": {
+      "get": {
+        "description": "The result is a collection of diseases data including ORPHAcodes and preferred term in the selected classification.",
+        "operationId": "query_classification_orphacodes_by_hchid",
+        "parameters": [
+          {
+            "description": "The hierarchy ID (hchID) is a specific identifier attributed to an Orphanet classification.",
+            "explode": false,
+            "in": "path",
+            "name": "hchid",
+            "required": true,
+            "schema": {
+              "exclusiveMinimum": true,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 6623,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "ORPHAcode": {
+                                "example": 648,
+                                "type": "integer"
+                              },
+                              "preferredTerm": {
+                                "example": "Noonan syndrome",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Clinical classifications of rare diseases",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "properties": {
+                            "hchID": {
+                              "example": 156,
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-classification/hchids/156/orphacodes",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get the list of rare diseases available for a selected classification.",
+        "tags": [
+          "Classifications of rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_classification"
+      }
+    },
+    "/rd-classification/orphacodes": {
+      "get": {
+        "description": "The result is a collection of ORPHAcodes and their preferred term in the classification.",
+        "operationId": "query_classification_orphacodes",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 26637,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "ORPHAcode": {
+                                "example": 34217,
+                                "type": "integer"
+                              },
+                              "preferredTerm": {
+                                "example": "Naxos disease",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Clinical classifications of rare diseases",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-classification/orphacodes",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get the list of all ORPHAcodes and their preferred term in the classification.",
+        "tags": [
+          "Classifications of rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_classification"
+      }
+    },
+    "/rd-classification/orphacodes/{orphacode}/hchids": {
+      "get": {
+        "description": "The result is a collection of ORPHAcodes organised as children and parents in all classifications where the given ORPHAcode is present.",
+        "operationId": "query_classification_hchids_by_orphacode",
+        "parameters": [
+          {
+            "description": "a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.",
+            "explode": false,
+            "in": "path",
+            "name": "orphacode",
+            "required": true,
+            "schema": {
+              "exclusiveMinimum": true,
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 2,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "Date": {
+                                "example": "2022-05-01 04:43:05",
+                                "type": "string"
+                              },
+                              "ORPHAcode": {
+                                "example": 58,
+                                "type": "integer"
+                              },
+                              "childs": {
+                                "example": [
+                                  363717,
+                                  363722
+                                ],
+                                "items": {
+                                  "type": "integer"
+                                },
+                                "type": "array"
+                              },
+                              "hch_id": {
+                                "example": 156,
+                                "type": "integer"
+                              },
+                              "hch_tag": {
+                                "example": "Orphanet classification of rare genetic diseases",
+                                "type": "string"
+                              },
+                              "parents": {
+                                "example": [
+                                  68356,
+                                  183500
+                                ],
+                                "items": {
+                                  "type": "integer"
+                                },
+                                "type": "array"
+                              },
+                              "preferredTerm": {
+                                "example": "Alexander disease",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Clinical classifications of rare diseases",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "properties": {
+                            "ORPHAcode": {
+                              "example": 58,
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-classification/orphacodes/58/hchids",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried clinical entity not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get the list of classifications and the list of parents and childs in which the searching ORPHAcode is available.",
+        "tags": [
+          "Classifications of rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_classification"
+      }
+    },
+    "/rd-classification/orphacodes/{orphacode}/hchids/{hchid}": {
+      "get": {
+        "description": "The result is a collection of ORPHAcodes organised as children and parents in the given classification where the given ORPHAcode is present.",
+        "operationId": "query_classification_by_orphacode_and_hchid",
+        "parameters": [
+          {
+            "description": "a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.",
+            "explode": false,
+            "in": "path",
+            "name": "orphacode",
+            "required": true,
+            "schema": {
+              "exclusiveMinimum": true,
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "simple"
+          },
+          {
+            "description": "The hierarchy ID (hchID) is a specific identifier attributed to an Orphanet classification.",
+            "explode": false,
+            "in": "path",
+            "name": "hchid",
+            "required": true,
+            "schema": {
+              "exclusiveMinimum": true,
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 1,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "properties": {
+                            "Date": {
+                              "example": "2022-05-01 04:44:10",
+                              "type": "string"
+                            },
+                            "ORPHAcode": {
+                              "example": 58,
+                              "type": "integer"
+                            },
+                            "childs": {
+                              "example": [
+                                363717,
+                                363722
+                              ],
+                              "items": {
+                                "type": "integer"
+                              },
+                              "type": "array"
+                            },
+                            "hch_id": {
+                              "example": 181,
+                              "type": "integer"
+                            },
+                            "hch_tag": {
+                              "example": "Orphanet classification of rare neurological diseases",
+                              "type": "string"
+                            },
+                            "parents": {
+                              "example": [
+                                182070,
+                                68356
+                              ],
+                              "items": {
+                                "type": "integer"
+                              },
+                              "type": "array"
+                            },
+                            "preferredTerm": {
+                              "example": "Alexander disease",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Clinical classifications of rare diseases",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "properties": {
+                            "ORPHAcode": {
+                              "example": 58,
+                              "type": "integer"
+                            },
+                            "hchID": {
+                              "example": 181,
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-classification/orphacodes/58/hchids/181",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried clinical entity not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get the list of parents and childs in which the searching ORPHAcode is available in the searching classification.",
+        "tags": [
+          "Classifications of rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_classification"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.orphadata.com"
+    }
+  ],
+  "tags": [
+    {
+      "externalDocs": {
+        "description": "Get Orphanet classifications and the list of rare diseases classified in. Available only in english. For more information, read",
+        "url": "http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf"
+      },
+      "name": "Classifications of rare diseases"
+    }
+  ]
+}

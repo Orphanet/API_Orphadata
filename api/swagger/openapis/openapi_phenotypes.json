@@ -1,0 +1,908 @@
+{
+  "info": {
+    "description": "More information on data are available <a href=\"http://www.orphadata.org/cgi-bin/index.php#freeproducts\" target=\"_blank\">here</a>.\n\nThese data are updated twice a year (July and December) and are also available as downloadable files both in \n<a href=\"http://dev.orphadata.com/orphanet-scientific-knowledge-files/\" target=\"_blank\">XML and JSON formats</a>.\n\nWe apply the <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Commons Attribution 4.0 International (CC BY 4.0)</a>\n to all copyrightable parts of our databases.\nThis means that you are free to copy, distribute, display and make commercial use of these databases in all legislations,\nprovided you give us credit.\n\nFor further information, consult <a href=\"http://www.orphadata.org/cgi-bin/index.php\" target=\"_blank\">Orphadata website</a> and other services\nfrom <a href=\"https://www.orpha.net/consor/cgi-bin/index.php\" target=\"_blank\">Orphanet</a>.\n\n<a href=\"http://www.orphadata.org/cgi-bin/contact.html\" target=\"_blank\">Contact Orphadata team</a> \n",
+    "title": "Clinical signs and symptoms in rare diseases",
+    "version": "1.0.0"
+  },
+  "openapi": "3.0.1",
+  "paths": {
+    "/rd-phenotypes": {
+      "get": {
+        "description": "The result is a collection of rare diseases with their associated HPO phenotypes. The association is characterized by frequency (obligate, very frequent, frequent, occasional, very rare or excluded) and whether the annotated HPO term is a major diagnostic criterion or a pathognomonic sign of the rare disease. The source (PMID references), the date and the validation\u2019s status of the association are also available.",
+        "operationId": "query_phenotypes_base",
+        "parameters": [
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pt"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 4246,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "Date": {
+                                "example": "2022-05-01 04:49:34",
+                                "type": "string"
+                              },
+                              "Disorder": {
+                                "properties": {
+                                  "DisorderGroup": {
+                                    "example": "Disorder",
+                                    "type": "string"
+                                  },
+                                  "HPODisorderAssociation": {
+                                    "items": {
+                                      "properties": {
+                                        "DiagnosticCriteria": {
+                                          "example": null,
+                                          "type": "string"
+                                        },
+                                        "HPO": {
+                                          "properties": {
+                                            "HPOId": {
+                                              "example": "HP:0000256",
+                                              "type": "string"
+                                            },
+                                            "HPOTerm": {
+                                              "example": "Macrocephaly",
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object"
+                                        },
+                                        "HPOFrequency": {
+                                          "example": "Very frequent (99-80%)",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "ORPHAcode": {
+                                    "example": 58,
+                                    "type": "integer"
+                                  },
+                                  "OrphanetURL": {
+                                    "example": "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58",
+                                    "type": "string"
+                                  },
+                                  "Preferred term": {
+                                    "example": "Alexander disease",
+                                    "type": "string"
+                                  },
+                                  "Typology": {
+                                    "example": "Disease",
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "Online": {
+                                "example": "y",
+                                "type": "string"
+                              },
+                              "Source": {
+                                "example": null,
+                                "type": "string"
+                              },
+                              "ValidationDate": {
+                                "example": "2016-06-01 00:00:00.0",
+                                "type": "string"
+                              },
+                              "ValidationStatus": {
+                                "example": "y",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and associated phenotypes",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-phenotypes",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get the list of rare diseases with their associated phenotypes in a selected language.",
+        "tags": [
+          "Clinical signs and symptoms in rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_phenotypes"
+      }
+    },
+    "/rd-phenotypes/hpoids": {
+      "get": {
+        "description": "The result is a collection of HPO phenotypes including their ID and term in the selected language.",
+        "operationId": "query_phenotypes_hpoids",
+        "parameters": [
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pt"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 8282,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "HPOId": {
+                                "example": "HP:0000002",
+                                "type": "string"
+                              },
+                              "HPOTerm": {
+                                "example": "Abnormality of body height",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and associated phenotypes",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-phenotypes/hpoids",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get the list of HPO phenotypes in a selected language.",
+        "tags": [
+          "Clinical signs and symptoms in rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_phenotypes"
+      }
+    },
+    "/rd-phenotypes/hpoids/{hpoids}": {
+      "get": {
+        "description": "The result is a collection of rare diseases matching with the given list of HPO identifiers including ORPHAcode, the stable URL pointing to its specific page on the Orphanet website, preferred term, the group, and the associated HPO phenotypes characterized by frequency or indication if the HPO term is a major diagnostic criterion or a pathognomonic sign. The source (PMID references), the date and the validation\u2019s status of the association are also available.",
+        "operationId": "query_phenotypes_by_hpoids",
+        "parameters": [
+          {
+            "description": "a comma-separated list of HPO IDs",
+            "explode": false,
+            "in": "path",
+            "name": "hpoids",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1,
+              "type": "array",
+              "uniqueItems": true
+            },
+            "style": "simple"
+          },
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pt"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 1,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "Date": {
+                                "example": "2022-05-01 04:49:34",
+                                "type": "string"
+                              },
+                              "Disorder": {
+                                "properties": {
+                                  "DisorderGroup": {
+                                    "example": "Disorder",
+                                    "type": "string"
+                                  },
+                                  "HPODisorderAssociation": {
+                                    "items": {
+                                      "properties": {
+                                        "DiagnosticCriteria": {
+                                          "example": null,
+                                          "type": "string"
+                                        },
+                                        "HPO": {
+                                          "properties": {
+                                            "HPOId": {
+                                              "example": "HP:0000256",
+                                              "type": "string"
+                                            },
+                                            "HPOTerm": {
+                                              "example": "Macrocephaly",
+                                              "type": "string"
+                                            }
+                                          },
+                                          "type": "object"
+                                        },
+                                        "HPOFrequency": {
+                                          "example": "Very frequent (99-80%)",
+                                          "type": "string"
+                                        }
+                                      },
+                                      "type": "object"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "ORPHAcode": {
+                                    "example": 58,
+                                    "type": "integer"
+                                  },
+                                  "OrphanetURL": {
+                                    "example": "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58",
+                                    "type": "string"
+                                  },
+                                  "Preferred term": {
+                                    "example": "Alexander disease",
+                                    "type": "string"
+                                  },
+                                  "Typology": {
+                                    "example": "Disease",
+                                    "type": "string"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "Online": {
+                                "example": "y",
+                                "type": "string"
+                              },
+                              "Source": {
+                                "example": null,
+                                "type": "string"
+                              },
+                              "ValidationDate": {
+                                "example": "2016-06-01 00:00:00.0",
+                                "type": "string"
+                              },
+                              "ValidationStatus": {
+                                "example": "y",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and associated phenotypes",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "properties": {
+                            "hpoids": {
+                              "example": [
+                                "HP:0000256",
+                                "HP:0001249",
+                                "HP:0001250"
+                              ],
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-phenotypes/hpoids/HP:0000256,HP:0001249,HP:0001250,HP:0001257,HP:0002650,HP:0100729",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get rare diseases information searching by a list of HPO identifiers in a selected language.",
+        "tags": [
+          "Clinical signs and symptoms in rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_phenotypes"
+      }
+    },
+    "/rd-phenotypes/orphacodes": {
+      "get": {
+        "description": "The result is a collection of rare diseases data including ORPHAcodes and preferred term in the selected language.",
+        "operationId": "query_phenotypes_orphacodes",
+        "parameters": [
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pt"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 4246,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "items": {
+                            "properties": {
+                              "ORPHAcode": {
+                                "example": 58,
+                                "type": "integer"
+                              },
+                              "Preferred term": {
+                                "example": "Alexander disease",
+                                "type": "string"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and associated phenotypes",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-phenotypes/orphacodes",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get the list of rare diseases annotated with HPO phenotypes in a selected language.",
+        "tags": [
+          "Clinical signs and symptoms in rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_phenotypes"
+      }
+    },
+    "/rd-phenotypes/orphacodes/{orphacode}": {
+      "get": {
+        "description": "The result is a set of data including ORPHAcode of the given disease, the stable URL pointing to the specific page of the clinical entity on the Orphanet website, preferred term, the group, associated characterized HPO terms, the source (PMID references), the date and the validation\u2019s status of the annotation in the selected language.",
+        "operationId": "query_phenotypes_by_orphacode",
+        "parameters": [
+          {
+            "description": "a unique and time-stable numerical identifier attributed randomly by the database upon creation of the entity.",
+            "explode": false,
+            "in": "path",
+            "name": "orphacode",
+            "required": true,
+            "schema": {
+              "exclusiveMinimum": true,
+              "format": "int32",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "style": "simple"
+          },
+          {
+            "description": "A language in the list supported by Orphanet",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "de",
+                "en",
+                "es",
+                "fr",
+                "it",
+                "nl",
+                "pt"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "properties": {
+                        "__count": {
+                          "example": 1,
+                          "type": "integer"
+                        },
+                        "__licence": {
+                          "properties": {
+                            "identifier": {
+                              "example": "CC-BY-4.0",
+                              "type": "string"
+                            },
+                            "link": {
+                              "example": "https://creativecommons.org/licenses/by/4.0",
+                              "type": "string"
+                            },
+                            "name": {
+                              "example": "Creative Commons Attribution 4.0 International",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "results": {
+                          "properties": {
+                            "Date": {
+                              "example": "2022-05-01 04:49:34",
+                              "type": "string"
+                            },
+                            "Disorder": {
+                              "properties": {
+                                "DisorderGroup": {
+                                  "example": "Disorder",
+                                  "type": "string"
+                                },
+                                "HPODisorderAssociation": {
+                                  "items": {
+                                    "properties": {
+                                      "DiagnosticCriteria": {
+                                        "example": null,
+                                        "type": "string"
+                                      },
+                                      "HPO": {
+                                        "properties": {
+                                          "HPOId": {
+                                            "example": "HP:0000256",
+                                            "type": "string"
+                                          },
+                                          "HPOTerm": {
+                                            "example": "Macrocephaly",
+                                            "type": "string"
+                                          }
+                                        },
+                                        "type": "object"
+                                      },
+                                      "HPOFrequency": {
+                                        "example": "Very frequent (99-80%)",
+                                        "type": "string"
+                                      }
+                                    },
+                                    "type": "object"
+                                  },
+                                  "type": "array"
+                                },
+                                "ORPHAcode": {
+                                  "example": 58,
+                                  "type": "integer"
+                                },
+                                "OrphanetURL": {
+                                  "example": "http://www.orpha.net/consor/cgi-bin/OC_Exp.php?lng=en&Expert=58",
+                                  "type": "string"
+                                },
+                                "Preferred term": {
+                                  "example": "Alexander disease",
+                                  "type": "string"
+                                },
+                                "Typology": {
+                                  "example": "Disease",
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "Online": {
+                              "example": "y",
+                              "type": "string"
+                            },
+                            "Source": {
+                              "example": null,
+                              "type": "string"
+                            },
+                            "ValidationDate": {
+                              "example": "2016-06-01 00:00:00.0",
+                              "type": "string"
+                            },
+                            "ValidationStatus": {
+                              "example": "y",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "datasetCategory": {
+                      "properties": {
+                        "lang": {
+                          "example": "en",
+                          "type": "string"
+                        },
+                        "name": {
+                          "example": "Rare diseases and associated phenotypes",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "parameters": {
+                      "properties": {
+                        "path": {
+                          "properties": {
+                            "ORPHAcode": {
+                              "example": 58,
+                              "type": "integer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "query": {
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "uri": {
+                      "example": "/rd-phenotypes/orphacodes/58",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful operation"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Queried disorder not found"
+          },
+          "500": {
+            "description": "Unknown internal error"
+          },
+          "default": {
+            "description": "Unknown internal error"
+          }
+        },
+        "summary": "Get rare disease information and associated HPO phenotypes searching by its ORPHAcode in a selected language.",
+        "tags": [
+          "Clinical signs and symptoms in rare diseases"
+        ],
+        "x-openapi-router-controller": "api.controllers.rd_phenotypes"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.orphadata.com"
+    }
+  ],
+  "tags": [
+    {
+      "externalDocs": {
+        "description": "Get rare diseases and associated HPO phenotypes. Available in english, french, german, spanish, dutch, italian and portuguese. For more information, read",
+        "url": "http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf"
+      },
+      "name": "Clinical signs and symptoms in rare diseases"
+    }
+  ]
+}
