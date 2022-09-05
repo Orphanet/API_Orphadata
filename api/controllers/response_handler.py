@@ -1,7 +1,7 @@
 from typing import Dict, Tuple, Union, List
 
 from flask.wrappers import Request
-from flask import request
+from flask import request, current_app
 
 
 class ResponseWrapper:
@@ -49,7 +49,7 @@ class ResponseWrapper:
     def get(self) -> Tuple[Dict, int]:
         if not self._ready:
             if not self.wrapper.get('error'):
-                self.wrapper['uri'] = self.request.full_path if self.request.args else self.request.path
+                self.wrapper['uri'] = current_app.config["BACKEND_BASE_URL"] + self.request.full_path if self.request.args else current_app.config["BACKEND_BASE_URL"] + self.request.path
                 self.wrapper['datasetCategory'] = self.product
                 self.wrapper['data']['results'] = self.ctl_response
                 self.wrapper['data']['__count'] = len(self.ctl_response) if isinstance(self.ctl_response, list) else 1

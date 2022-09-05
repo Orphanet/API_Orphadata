@@ -63,6 +63,8 @@ class Config:
         'history_orphacodes': '/rd-natural_history/orphacodes',
         'history_by_orphacode': '/rd-natural_history/orphacodes/{}'
     }
+
+    BACKEND_BASE_URL = "https://api.orphadata.com"
     
 
 class DevelopmentConfig(Config):
