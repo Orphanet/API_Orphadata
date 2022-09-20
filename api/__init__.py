@@ -29,8 +29,8 @@ def create_app(config_name):
     app.app.jinja_env.globals['workaround_for_API_contract'] = "./openapi.json"  # manual override of the API_contract url, comment to return to default. cf templates/index.j2
     app.app.jinja_env.globals["defaultModelsExpandDepth"] = "-1"  # do not display data models
 
-    # from .routes import apim_delegation
-    # app.app.register_blueprint(apim_delegation.bp)
+    from .routes import apim_delegation
+    app.app.register_blueprint(apim_delegation.bp)
 
     from .routes import mappor
     app.app.register_blueprint(mappor.bp)

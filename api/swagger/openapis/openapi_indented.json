@@ -6613,7 +6613,7 @@
   },
   "servers": [
     {
-      "url": ""
+      "url": "https://api.orphadata.com"
     }
   ],
   "tags": [
