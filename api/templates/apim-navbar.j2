@@ -1,0 +1,32 @@
+{% set navigation_bar = [
+    ('https://orphanetapi.developer.azure-api.net/', 'home', 'Home'),
+    ('https://orphanetapi.developer.azure-api.net/apis/', 'apis', 'APIs'),
+    ('https://orphanetapi.developer.azure-api.net/products', 'products', 'Products'),
+    ('https://orphanetapi.developer.azure-api.net/get-started', 'get-started', 'Get started'),
+    ('https://orphanetapi.developer.azure-api.net/signin', 'signin', 'Signin'),
+    ('https://orphanetapi.developer.azure-api.net/signup', 'signup', 'Signup'),
+] -%}
+{% set active_page = active_page|default('signup') -%}
+
+
+
+<article class="d-flex justify-content-between">
+    <div>
+        <img src="/static/logo_orphanet_transp.png" alt="Orphanet logo" width="370" height="60" style="width: 20em">
+    </div>
+
+    <nav class="navbar navbar-expand-sm navbar-light">
+        
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+            {% for href, id, caption in navigation_bar %}
+                <li {% if id == active_page %} class="active nav-item" {% else %} class="nav-item" {% endif %}>
+                    <a class="nav-link" href="{{ href|e }}">{{ caption|e }}</a>
+                </li>
+            {% endfor %}
+
+            </ul>
+        </div>
+    </nav>
+</article>

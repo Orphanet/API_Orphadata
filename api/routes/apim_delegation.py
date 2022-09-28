@@ -1,4 +1,5 @@
 from ast import Subscript
+from datetime import datetime
 from typing import Dict, List
 from urllib.parse import urlparse
 from flask import Blueprint, redirect, render_template, request
@@ -48,13 +49,28 @@ def index():
 
 @bp.route('/signup', methods=('GET', 'POST'))
 def signup():
+
+    if request.form.get('checkbox-cgu'):
+        cgu_acceptance = "CGU accepted on the following date: {} (UTC)".format(datetime.utcnow().isoformat())
+    else:
+        cgu_acceptance = "CGU not accepted"
+
+    note = "- Country: {}\n- Position: {}\n- Usage purposes: {}\n- CGU acceptance: {}".format(
+        request.form.get('country'),
+        request.form.get('position'),
+        request.form.get('usage-intention'),
+        cgu_acceptance
+    )
+
     data = {
         'email': request.form.get('email'),
         'password': request.form.get('password'),
-        'firstName': request.form.get('firstName'),
-        'lastName': request.form.get('lastName'),
+        'firstName': request.form.get('first-name'),
+        'lastName': request.form.get('last-name'),
+        'note': note,
         'confirmation': "signup"
     }
+
 
     query_params = {
         'returnUrl': request.form.get('returnUrl'),

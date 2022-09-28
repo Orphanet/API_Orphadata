@@ -1,19 +1,53 @@
-<h1>APIM Sign In</h1>
-<form action="/apim-delegation/signin" method="post">
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email"/>
+{% extends 'apim-layout.html' %}
+{% set active_page = "signin" %}
 
-    <label for="password">Password</label>
-    <input id="password" name="password" type="password"/>
 
-    <input type="submit" name="signIn" value="Sign in"/>
+{% block content %}
 
-    <input type="hidden" name="operation" value="{{ params.operation }}"/>
-    <input type="hidden" name="returnUrl" value="{{ params.returnUrl }}"/>
-    <input type="hidden" name="salt" value="{{ params.salt }}"/>
-    <input type="hidden" name="sig" value="{{ params.sig }}"/>
-</form>
+<section class="my-4">
 
-{% if params.errorMessage %}
-<p>{{ params.errorMessage }}</p>
-{% endif %}
+    <h2>Sign in</h2>
+    <p class="text-info">Not a member yet? <a href="https://orphanetapi.developer.azure-api.net/signup">Sign up</a></p>
+
+    <article>
+
+        <form action="/apim-delegation/signin" method="post">
+
+            <div class="row">
+                <div class="col p-4 mx-2">        
+               
+                    <div class="row mb-4 form-group">
+                        <label for="email">Email *</label>
+                        <input id="email" name="email" type="text" class="form-control" placeholder="jdoe@example.com" required>
+                    </div>
+                
+                    <div class="row mb-4 form-group">
+                        <label for="password">Password *</label>
+                        <input id="password" type="password" name="password" class="form-control" placeholder="" required>
+                    </div>                
+        
+                    <div class="row mt-5">
+                        <input type="submit" name="signIn" class="btn btn-primary mb-2" value="Sign in"/>
+
+                        <input type="hidden" name="operation" value="{{ params.operation }}"/>
+                        <input type="hidden" name="returnUrl" value="{{ params.returnUrl }}"/>
+                        <input type="hidden" name="salt" value="{{ params.salt }}"/>
+                        <input type="hidden" name="sig" value="{{ params.sig }}"/>
+                    </div>                
+                </div>
+            </div>
+            <p class="text-info" style="margin-top: -0.9em;">Forgot your password? <a href="#">Reset it</a></p>
+          
+        </form>
+        
+        
+        {% if params.errorMessage %}
+        <p>{{ params.errorMessage }} </p>
+        <p>{{ params }} </p>
+        {% endif %}
+
+    </article>
+</section>
+
+
+{% endblock content %}

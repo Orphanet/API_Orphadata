@@ -1,22 +1,93 @@
-<h1>APIM Sign Up</h1>
-<form action="/apim-delegation/signup" method="post">
-    <label for="firstName">First name</label>
-    <input id="firstName" name="firstName" type="text"/>
-    <label for="lastName">Last name</label>
-    <input id="lastName" name="lastName" type="text"/>
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email"/>
-    <label for="password">Password</label>
-    <input id="password" name="password" type="password"/>
+{% extends 'apim-layout.html' %}
+{% set active_page = "signup" %}
 
-    <input type="submit" name="signUp" value="Sign up"/>
+{% block content %}
 
-    <input type="hidden" name="operation" value="{{ params.operation }}"/>
-    <input type="hidden" name="returnUrl" value="{{ params.returnUrl }}"/>
-    <input type="hidden" name="salt" value="{{ params.salt }}"/>
-    <input type="hidden" name="sig" value="{{ params.sig }}"/>
-</form>
+<section class="my-4">
 
-{% if params.errorMessage %}
-<p>{{ params.errorMessage }} </p>
-{% endif %}
+    <h2>Sign up</h2>
+    <p class="text-info">Already a member? <a href="https://orphanetapi.developer.azure-api.net/signin">Sign in</a></p>
+
+    <article>
+
+        <form action="/apim-delegation/signup" role="form" method="post">
+
+            <div class="row">
+                <div class="col p-4 mx-2">
+        
+                    <div class="row mb-4 form-group">
+                        <label for="first-name">First name *</label>
+                        <input id="first-name" name="first-name" type="text" class="form-control" placeholder="John" required>
+                    </div>
+                
+                    <div class="row mb-4 form-group">
+                        <label for="last-name">Last name *</label>
+                        <input id="last-name" name="last-name" type="text" class="form-control" placeholder="Doe" required>
+                    </div>
+                
+                    <div class="row mb-4 form-group">
+                        <label for="email">Email *</label>
+                        <input id="email" name="email" type="text" class="form-control" placeholder="jdoe@example.com" required>
+                    </div>
+                
+                    <div class="row mb-4 form-group">
+                        <label for="password">Password *</label>
+                        <input id="password" type="password" name="password" class="form-control" placeholder="" required>
+                    </div>
+                
+                    <div class="row mb-4 form-group">
+                        <label for="password-2">Confirm password *</label>
+                        <input id="password-2" type="text" class="form-control" placeholder="" required>
+                    </div>        
+                      
+                    <div class="row mb-4 form-group">
+                        <label for="country">Country *</label>
+                        <input id="country" type="text" name="country" class="form-control" placeholder="UK" required>
+                    </div>
+                
+                    <div class="row mb-4 form-group">
+                        <label for="position">Position *</label>
+                        <input id="position" type="text" name="position" class="form-control" placeholder="IT Engineer" required>
+                    </div>
+
+
+                    <div class="row mb-4 form-group">
+                        <label for="usage-intention">Usage intention</label>
+                        <textarea class="form-control tex" id="usage-intention" name="usage-intention" rows="3" placeholder="I intend to develop applications allowing to access rares diseases scientific informations"></textarea>
+                    </div>
+
+                    {% include 'apim-legal-terms.j2' %}
+        
+                    <div class="row mt-5">
+                        <input disabled type="submit" name="signUp" class="btn btn-primary mb-2" id="signup-btn" value="Sign up"/>
+
+                        <input type="hidden" name="operation" value="{{ params.operation }}"/>
+                        <input type="hidden" name="returnUrl" value="{{ params.returnUrl }}"/>
+                        <input type="hidden" name="salt" value="{{ params.salt }}"/>
+                        <input type="hidden" name="sig" value="{{ params.sig }}"/>
+                    </div>
+                
+                </div>
+            </div>
+          
+        </form>
+        
+        
+        {% if params.errorMessage %}
+        <p>{{ params.errorMessage }} </p>
+        <p>{{ params }} </p>
+        {% endif %}
+
+    </article>
+</section>
+
+<script type="text/javascript">
+ let boxCGU = document.querySelector('#box-cgu');
+ let signUpBtn = document.querySelector('#signup-btn');
+
+ boxCGU.addEventListener("change", function() {
+    signUpBtn.disabled = !signUpBtn.disabled
+ })
+</script>
+
+{% endblock content %}
