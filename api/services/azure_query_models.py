@@ -6,24 +6,21 @@ import os
 class queryParams:
     def __init__(self, request: Request) -> None:
         self.operation = request.args.get('operation', 'SignUp')
-        self.errorMessage = request.args.get('errorMessage', None)        
+        self.salt = request.args.get('salt', 'Undefined salt')
+        self.sig = request.args.get('sig', 'Undefined sig')
+
+        self.errorMessage = request.args.get('errorMessage', 'Undefined error')        
         
-        if self.operation in ['SignIn',  'SignOut']:
-            self.returnUrl = request.args.get('returnUrl', None)
-            self.salt = request.args.get('salt', None)
-            self.sig = request.args.get('sig', None)
+        if self.operation in ['SignIn',  'SignUp', 'SignOut']:
+            self.returnUrl = request.args.get('returnUrl', 'Undefined returnUrl')
 
         elif self.operation in ['Subscribe', 'Unsubscribe', 'Renew']:
-            self.productId = request.args.get('productId', None)
-            self.subscriptionId = request.args.get('subscriptionId', None)
-            self.userId = request.args.get('userId', None)
-            self.salt = request.args.get('salt', None)
-            self.sig = request.args.get('sig', None)
+            self.productId = request.args.get('productId', 'Undefined productId')
+            self.subscriptionId = request.args.get('subscriptionId', 'Undefined subscriptionId')
+            self.userId = request.args.get('userId', 'Undefined userId')
 
         elif self.operation in ['ChangePassword', 'ChangeProfile', 'CloseAccount']:
-            self.userId = request.args.get('userId', None)
-            self.salt = request.args.get('salt', None)
-            self.sig = request.args.get('sig', None)
+            self.userId = request.args.get('userId', 'Undefined userId')
 
 
     def validate_request(self) -> bool:
@@ -48,23 +45,20 @@ class queryParams:
         bool
             True if the hashed chain message matches the expected signature, False otherwise.
         """
-        try:
-            if self.operation in ['SignIn','SignUp', 'SignOut']:
-                query_params = [self.salt, self.returnUrl]
-            if self.operation == 'Subscribe':
-                query_params = [self.salt, self.productId, self.userId]
-            if self.operation == 'Unsubscribe':
-                query_params = [self.salt, self.subscriptionId]
-        except:
-            return False
+        secret_key = os.getenv('APIM_DELEGATION_KEY', '')
+
+        if self.operation in ['SignIn','SignUp', 'SignOut']:
+            query_params = [self.salt, self.returnUrl]
+        elif self.operation == 'Subscribe':
+            query_params = [self.salt, self.productId, self.userId]
+        elif self.operation == 'Unsubscribe':
+            query_params = [self.salt, self.subscriptionId]
 
         message = bytes('\n'.join(query_params), 'utf-8')
-
-        secret_key = os.getenv('APIM_DELEGATION_KEY')
-        if not secret_key:
-              return False
-
-        encoder = hmac.new(bytes(base64.b64decode(bytes(secret_key, "utf-8")).decode('utf-8'), 'utf-8'), digestmod='sha512')
+        encoder = hmac.new(bytes(base64.b64decode(secret_key).decode('utf-8'), 'utf-8'), digestmod='sha512')
         encoder.update(message)
 
-        return hmac.compare_digest(base64.b64encode(encoder.digest()).decode(), self.sig)
+        calculated_signature = base64.b64encode(encoder.digest()).decode()
+        expected_signature = self.sig.encode("utf-8").decode()
+
+        return hmac.compare_digest(calculated_signature, expected_signature)

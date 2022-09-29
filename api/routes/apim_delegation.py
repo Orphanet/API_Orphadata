@@ -12,6 +12,7 @@ import os
 from dotenv import load_dotenv
 import urllib3
 module_path = Path(__file__).parent.parent / 'services'
+print(module_path)
 load_dotenv(module_path / '.arm_env')
 
 from ..services import arm_apiQueries
