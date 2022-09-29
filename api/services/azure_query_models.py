@@ -1,7 +1,7 @@
 import base64
 import hmac
 from urllib.request import Request
-
+import os
 
 class queryParams:
     def __init__(self, request: Request) -> None:
@@ -48,18 +48,23 @@ class queryParams:
         bool
             True if the hashed chain message matches the expected signature, False otherwise.
         """
-        if self.operation in ['SignIn','SignUp', 'SignOut']:
-            query_params = [self.salt, self.returnUrl]
-        if self.operation == 'Subscribe':
-            query_params = [self.salt, self.productId, self.userId]
-        if self.operation == 'Unsubscribe':
-            query_params = [self.salt, self.subscriptionId]
+        try:
+            if self.operation in ['SignIn','SignUp', 'SignOut']:
+                query_params = [self.salt, self.returnUrl]
+            if self.operation == 'Subscribe':
+                query_params = [self.salt, self.productId, self.userId]
+            if self.operation == 'Unsubscribe':
+                query_params = [self.salt, self.subscriptionId]
+        except:
+            return False
 
         message = bytes('\n'.join(query_params), 'utf-8')
 
-        secret_key = b'aW50ZWdyYXRpb24mMjAyMjAzMjIxNTU0JmE4U2ZEYWRLSEdxVG5jSWtwRHp1aGpBQWJxZE9tM0wyOGkzTVVRZXNBWXI2c1Q4TzYrWngrZ3lkK3M1MCt2K1RwcDRQM0RpNzg0Qk9TdllFU0o5WDZnPT0='
+        secret_key = os.getenv('APIM_DELEGATION_KEY')
+        if not secret_key:
+              return False
 
-        encoder = hmac.new(bytes(base64.b64decode(secret_key).decode('utf-8'), 'utf-8'), digestmod='sha512')
+        encoder = hmac.new(bytes(base64.b64decode(bytes(secret_key, "utf-8")).decode('utf-8'), 'utf-8'), digestmod='sha512')
         encoder.update(message)
 
         return hmac.compare_digest(base64.b64encode(encoder.digest()).decode(), self.sig)

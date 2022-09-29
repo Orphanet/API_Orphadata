@@ -25,8 +25,8 @@ bp = Blueprint('delegation', __name__, url_prefix='/apim-delegation')
 @bp.route('/', methods=('GET', 'POST'))
 def index():
     query_params = queryParams(request=request)
-    # if not query_params.validate_request():
-    #     return 'Error, it looks like the request does not come from Azure, sorry...', 401
+    if not query_params.validate_request():
+        return 'Error, the source of the request is not allowed to access this page...', 401
 
     if query_params.operation == 'SignUp':
         return render_template('apim-signup.html', params=query_params)
@@ -55,8 +55,9 @@ def signup():
     else:
         cgu_acceptance = "CGU not accepted"
 
-    note = "- Country: {}\n- Position: {}\n- Usage purposes: {}\n- CGU acceptance: {}".format(
+    note = "- Country: {}\n- Institution: {}\n- Position: {}\n- Usage purposes: {}\n- CGU acceptance: {}".format(
         request.form.get('country'),
+        request.form.get('institution'),
         request.form.get('position'),
         request.form.get('usage-intention'),
         cgu_acceptance
