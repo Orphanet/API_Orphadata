@@ -45,7 +45,8 @@ class queryParams:
         bool
             True if the hashed chain message matches the expected signature, False otherwise.
         """
-        secret_key = os.getenv('APIM_DELEGATION_KEY', 'aW50ZWdyYXRpb24mMjAyMjEwMjkxNDE2JlJNc3ZGODVDMGppRTFRRFhoNjM5bzhGRmszdjFSbFEvdDNCcVpwQUJDNGd6ZGFvYTVPY2RTclFOM2IzSlhNUzFBSlRacnd0R3RzY1VXUnJBU3p2SXVBPT0=')
+        # secret_key = os.getenv('APIM_DELEGATION_KEY', 'aW50ZWdyYXRpb24mMjAyMjEwMjkxNDE2JlJNc3ZGODVDMGppRTFRRFhoNjM5bzhGRmszdjFSbFEvdDNCcVpwQUJDNGd6ZGFvYTVPY2RTclFOM2IzSlhNUzFBSlRacnd0R3RzY1VXUnJBU3p2SXVBPT0=')
+        secret_key = 'aW50ZWdyYXRpb24mMjAyMjEwMjkxNDE2JlJNc3ZGODVDMGppRTFRRFhoNjM5bzhGRmszdjFSbFEvdDNCcVpwQUJDNGd6ZGFvYTVPY2RTclFOM2IzSlhNUzFBSlRacnd0R3RzY1VXUnJBU3p2SXVBPT0='
 
         if self.operation in ['SignIn','SignUp', 'SignOut']:
             query_params = [self.salt, self.returnUrl]
