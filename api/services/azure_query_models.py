@@ -9,7 +9,7 @@ class queryParams:
         self.salt = request.args.get('salt', 'Undefined salt')
         self.sig = request.args.get('sig', 'Undefined sig')
 
-        self.errorMessage = request.args.get('errorMessage', 'Undefined error')        
+        self.errorMessage = request.args.get('errorMessage', None)        
         
         if self.operation in ['SignIn',  'SignUp', 'SignOut']:
             self.returnUrl = request.args.get('returnUrl', 'Undefined returnUrl')
@@ -45,7 +45,7 @@ class queryParams:
         bool
             True if the hashed chain message matches the expected signature, False otherwise.
         """
-        secret_key = os.getenv('APIM_DELEGATION_KEY', '')
+        secret_key = os.getenv('APIM_DELEGATION_KEY', 'aW50ZWdyYXRpb24mMjAyMjEwMjkxNDE2JlJNc3ZGODVDMGppRTFRRFhoNjM5bzhGRmszdjFSbFEvdDNCcVpwQUJDNGd6ZGFvYTVPY2RTclFOM2IzSlhNUzFBSlRacnd0R3RzY1VXUnJBU3p2SXVBPT0=')
 
         if self.operation in ['SignIn','SignUp', 'SignOut']:
             query_params = [self.salt, self.returnUrl]
