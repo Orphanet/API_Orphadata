@@ -21,6 +21,8 @@ def create_app(config_name):
     with app.app.app_context():
         app.app.config.from_object(config_by_name[config_name])
         app.add_api('swagger_built.yaml', arguments={'title': 'API Orphadata'}, pythonic_params=True)
+    
+    print(app.app.config["ES_URL"])
 
     app.app.static_folder = module_path / 'static'
     # app.app.template_folder = module_path / 'static'

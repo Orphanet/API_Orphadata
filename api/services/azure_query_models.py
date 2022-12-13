@@ -1,7 +1,8 @@
 import base64
 import hmac
 from urllib.request import Request
-import os
+
+
 
 class queryParams:
     def __init__(self, request: Request) -> None:

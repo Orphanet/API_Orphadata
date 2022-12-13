@@ -1,18 +1,11 @@
-from ast import Subscript
 from datetime import datetime
 from typing import Dict, List
-from urllib.parse import urlparse
 from flask import Blueprint, redirect, render_template, request
-import json
 from pathlib import Path
-import requests
 from urllib.parse import urlencode
-import os
 
 from dotenv import load_dotenv
-import urllib3
 module_path = Path(__file__).parent.parent / 'services'
-print(module_path)
 load_dotenv(module_path / '.arm_env')
 
 from ..services import arm_apiQueries
