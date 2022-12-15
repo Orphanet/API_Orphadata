@@ -13,25 +13,25 @@ class TestEpidemiologyWrapperResponse(BaseTestCase):
     invalid_orphacode = 1
 
 
-    def test_valid_response_content_wrapper_epidemiology_base(self):
-        """test_valid_response_content_wrapper_epidemiology_base
+    # def test_valid_response_content_wrapper_epidemiology_base(self):
+    #     """test_valid_response_content_wrapper_epidemiology_base
 
-        SETUP: TEST WRAPPER REPONSE for /orphadata/details/rd-epidemiology
-            - a url endpoint
-        ACTION:
-            - GET request on valid url endpoint
-        CHECK:
-            - response content of the wrapper
-        """
-        url_endpoint = self.URL_ENDPOINTS.get('epidemiology_base')
-        response = self.client.get(url_endpoint)
+    #     SETUP: TEST WRAPPER REPONSE for /orphadata/details/rd-epidemiology
+    #         - a url endpoint
+    #     ACTION:
+    #         - GET request on valid url endpoint
+    #     CHECK:
+    #         - response content of the wrapper
+    #     """
+    #     url_endpoint = self.URL_ENDPOINTS.get('epidemiology_base')
+    #     response = self.client.get(url_endpoint)
 
-        assert response.is_json == True
-        assert response.get_json().keys() == self.wrapper.valid_wrapper().keys()
-        assert response.get_json()['datasetCategory'] == self.PRODUCTS.get(PRODUCT_ID)
-        assert not response.get_json()['parameters']['path']
-        assert not response.get_json()['parameters']['query']
-        assert response.get_json()['uri'] == url_endpoint
+    #     assert response.is_json == True
+    #     assert response.get_json().keys() == self.wrapper.valid_wrapper().keys()
+    #     assert response.get_json()['datasetCategory'] == self.PRODUCTS.get(PRODUCT_ID)
+    #     assert not response.get_json()['parameters']['path']
+    #     assert not response.get_json()['parameters']['query']
+    #     assert response.get_json()['uri'] == url_endpoint
 
     def test_valid_response_content_wrapper_epidemiology_orphacodes(self):
         """test_valid_response_content_wrapper_epidemiology_orphacodes

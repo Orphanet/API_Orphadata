@@ -34,7 +34,7 @@ class TestReferencesEndpointsStatus(BaseTestCase):
     invalid_orphacode = 'a'
     valid_name = 'marfan'
     invalid_name = 99999
-    valid_omim = 277610
+    valid_omim = 100100
     invalid_omim = 0
     valid_icd = 'Q87.4'
     invalid_icd = 'x'
@@ -141,7 +141,9 @@ class TestReferencesEndpointsStatus(BaseTestCase):
             - response status is 200
         """
         url_endpoint = self.URL_ENDPOINTS.get('references_by_omim').format(self.valid_omim)
+        print(url_endpoint)
         response = self.client.get(url_endpoint)
+        print(response)
         self.assert200(response)
 
     def test_status_404_references_by_omim(self):

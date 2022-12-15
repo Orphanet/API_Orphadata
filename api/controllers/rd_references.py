@@ -496,7 +496,7 @@ def query_references_by_multiple_fields():  # noqa: E501
             }
         }
     }
-    print(json.dumps(query, indent=2))
+    # print(json.dumps(query, indent=2))
 
     index = index_base.format(lang.lower())
 
