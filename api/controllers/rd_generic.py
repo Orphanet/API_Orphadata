@@ -9,66 +9,6 @@ from api.controllers import PRODUCTS
 index = "orphadata_generic"
 
 
-def products_description_old():  # noqa: E501
-    """Get the organisation of all ORPHAcodes available for a selected classification.
-
-    The result is a collection of ORPHAcodes organised as children and parents in the selected classification. # noqa: E501
-
-    :param hchid: The hierarchy ID (hchID) is a specific identifier attributed to an Orphanet classification.
-    :type hchid: int
-
-    :rtype: Product3ClassificationList
-    """
-    query = {
-        "query": {
-            "match_all": {}
-            },
-        "_source": ["productId", "productName"]
-        }
-
-    es_client = current_app.config.get('ES_NODE')
-    response = qc.multiple_res(es_client, index, query)
-
-    if isinstance(response, tuple):
-        wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCTS.get('generic'))
-        return wrapped_response.get()
-
-    all_products = []
-    for p in response:
-        p_id_tmp = p['productId'].split('_')[1:]
-        if p_id_tmp[-1] not in ['ages', 'prev']:
-            p_id = p_id_tmp[0]
-        else:
-            p_id = '_'.join(p_id_tmp)
-        p_lang = p['productId'].split('_')[0]
-
-        if not all_products:
-            dic = {
-                # "Description": p['Description'],
-                "productId": p_id,
-                "productName": p['productName'],
-                "languages": [p_lang]
-            }
-            all_products.append(dic)
-        else:
-            dic_in = [x for x in all_products if x["productId"]==p_id]
-            if not dic_in:
-                dic = {
-                    # "Description": p['Description'],
-                    "productId": p_id,
-                    "productName": p['productName'],
-                    "languages": [p_lang]
-                }
-                all_products.append(dic)
-            else:
-                if p_lang not in dic_in[0]["languages"]:
-                    dic_in[0]["languages"].append(p_lang)
-
-    wrapped_response = ResponseWrapper(ctl_response=all_products, request=request, product=PRODUCTS.get('generic'))
-
-    return wrapped_response.get()
-
-
 def products_description():
     es_client = current_app.config.get('ES_NODE')
 
@@ -104,18 +44,6 @@ def products_description():
                     dict_item['languages'].append(product_lang)
 
     wrapped_response = ResponseWrapper(ctl_response=parsed_response, request=request, product=PRODUCTS.get('generic'))
-
-    return wrapped_response.get()
-
-
-def generic_product1_old():
-    lang = request.args.get("lang", "en")
-
-    doc_id = '{}_product1'.format(lang.lower())
-
-    es_client = current_app.config.get('ES_NODE')
-    response = qc.es_get(es=es_client, index=index, id=doc_id)
-    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=PRODUCTS.get('product1'))
 
     return wrapped_response.get()
 
@@ -162,16 +90,6 @@ def generic_product1():
         parsed_response.append(item)
 
     wrapped_response = ResponseWrapper(ctl_response=parsed_response, request=request, product=PRODUCTS.get('product1'))
-
-    return wrapped_response.get()
-
-
-def generic_product3_old():
-    doc_id = 'en_product3'.format()
-
-    es_client = current_app.config.get('ES_NODE')
-    response = qc.es_get(es=es_client, index=index, id=doc_id)
-    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=PRODUCTS.get('product3'))
 
     return wrapped_response.get()
 
@@ -232,16 +150,6 @@ def generic_product3():
     return wrapped_response.get()
 
 
-def generic_product4_old():
-    doc_id = 'en_product4'.format()
-
-    es_client = current_app.config.get('ES_NODE')
-    response = qc.es_get(es=es_client, index=index, id=doc_id)
-    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=PRODUCTS.get('product4'))
-
-    return wrapped_response.get()
-
-
 def generic_product4():
     lang = request.args.get('lang', 'en')
     index = "orphadata_{}_product4".format(lang)
@@ -282,16 +190,6 @@ def generic_product4():
         parsed_response.append(item)
 
     wrapped_response = ResponseWrapper(ctl_response=parsed_response, request=request, product=PRODUCTS.get('product7'))
-
-    return wrapped_response.get()
-
-
-def generic_product6_old():
-    doc_id = 'en_product6'.format()
-
-    es_client = current_app.config.get('ES_NODE')
-    response = qc.es_get(es=es_client, index=index, id=doc_id)
-    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=PRODUCTS.get('product6'))
 
     return wrapped_response.get()
 
@@ -348,16 +246,6 @@ def generic_product6():
     return wrapped_response.get()
 
 
-def generic_product7_old():
-    doc_id = 'en_product7'.format()
-
-    es_client = current_app.config.get('ES_NODE')
-    response = qc.es_get(es=es_client, index=index, id=doc_id)
-    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=PRODUCTS.get('product7'))
-
-    return wrapped_response.get()
-
-
 def generic_product7():
     index = "orphadata_en_product7"
 
@@ -400,16 +288,6 @@ def generic_product7():
         parsed_response.append(item)
 
     wrapped_response = ResponseWrapper(ctl_response=parsed_response, request=request, product=PRODUCTS.get('product7'))
-
-    return wrapped_response.get()
-
-
-def generic_product9_ages_old():
-    doc_id = 'en_product9_ages'.format()
-
-    es_client = current_app.config.get('ES_NODE')
-    response = qc.es_get(es=es_client, index=index, id=doc_id)
-    wrapped_response = ResponseWrapper(ctl_response=response['items'], request=request, product=PRODUCTS.get('product9_ages'))
 
     return wrapped_response.get()
 

@@ -126,36 +126,6 @@ def query_classification_by_orphacode_and_hchid(orphacode, hchid):  # noqa: E501
     wrapped_response = ResponseWrapper(ctl_response=response, request=request, product=PRODUCT)
     
     return wrapped_response.get()
-
-
-def query_classification_hchids_old():  # noqa: E501
-    """Get the list of identifiers of all Orphanet Rare Diseases Classifications available.
-
-    The result is a collection of the unique identifier of each rare diseases classification available. # noqa: E501
-
-
-    :rtype: ListHchid
-    """
-    index = "orphadata_en_product3"
-    es_client = current_app.config.get('ES_NODE')
-
-    try:
-        response = es_client.get(
-            index=index,
-            id=doc_id,
-            _source_excludes=['items.clinicalEntities', 'items.clinicalEntityNb']
-        )
-    except es_exceptions.NotFoundError:
-        return ("Server Error: Index not found", 404)
-        # print(response)
-    except es_exceptions.ConnectionError:
-        return ("Elasticsearch node unavailable", 503)
-    except es_exceptions.TransportError:
-        return ("Elasticsearch node unavailable", 503)
-
-    wrapped_response = ResponseWrapper(ctl_response=response['_source'], request=request, product=PRODUCT)
-    
-    return wrapped_response.get()
     
 
 def query_classification_hchids():

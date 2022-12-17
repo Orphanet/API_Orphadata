@@ -41,45 +41,6 @@ def query_references_base():  # noqa: E501
     return wrapped_response.get()
 
 
-def query_references_orphacodes_old():  # noqa: E501
-    """Get the list of ORPHAcodes available in the selected language.
-
-    The result is a collection of ORPHAcodes in the selected language. # noqa: E501
-
-    :param language: Specify the language in the list supported by Orphanet (CS, DE, EN, ES, FR, IT, NL, PL, PT)
-    :type language: str
-
-    :rtype: ListOrphacode
-    """
-    lang = request.args.get("lang", "en")
-    if PRODUCT['lang'] != lang.lower():
-        PRODUCT['lang'] = lang.lower()
-
-    index = "orphadata_generic"
-
-    query = {
-        'query': {
-            'bool': {
-                'filter': {
-                    'term': {
-                        "productId.keyword": {
-                            'value': index_base.format(lang.lower()).replace('orphadata_', '')
-                        }
-                    }
-
-                }
-            }
-        },
-        '_source': ['items.ORPHAcode', 'items.PreferredTerm']
-    }
-
-    es_client = current_app.config.get('ES_NODE')
-    response = qc.es_scroll(es_client, index, query)
-    wrapped_response = ResponseWrapper(ctl_response=response[0]['items'], request=request, product=PRODUCT)
-    
-    return wrapped_response.get()
-
-
 def query_references_orphacodes():
     lang = request.args.get("lang", "en")
     if PRODUCT['lang'] != lang.lower():

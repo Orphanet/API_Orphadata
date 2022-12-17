@@ -32,41 +32,6 @@ def query_genes_base():  # noqa: E501
     return wrapped_response.get()
 
 
-def query_genes_orphacodes_old():  # noqa: E501
-    """Get the list of ORPHAcodes associated to at least one gene.
-
-    The result is a collection of ORPHAcodes associated to at least one gene. # noqa: E501
-
-
-    :rtype: ListOrphacode
-    """
-    index = "orphadata_generic"
-
-    query = {
-        'query': {
-            'bool': {
-                'filter': {
-                    'term': {
-                        "productId.keyword": {
-                            'value': 'en_product6'
-                        }
-                    }
-                }
-            }
-        },
-        '_source': {
-            'excludes': ['items.associatedGenes']
-        }
-        
-    }
-
-    es_client = current_app.config.get('ES_NODE')
-    response = qc.es_scroll(es_client, index, query)
-    wrapped_response = ResponseWrapper(ctl_response=response[0]['items'], request=request, product=PRODUCT)
-    
-    return wrapped_response.get()
-
-
 def query_genes_orphacodes():
     query = {
         "query": {

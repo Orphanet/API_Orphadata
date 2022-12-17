@@ -39,47 +39,6 @@ def query_history_base():  # noqa: E501
     return wrapped_response.get()
 
 
-def query_history_orphacodes_old():  # noqa: E501
-    """Get the list of ORPHAcodes associated to at least one natural history data.
-
-    The result is a collection of ORPHAcodes in the selected language. # noqa: E501
-
-    :param language: Specify the language in the list supported by Orphanet (CS, DE, EN, ES, FR, IT, NL, PL, PT)
-    :type language: str
-
-    :rtype: ListOrphacode
-    """
-    lang = request.args.get("lang", "en")
-    if PRODUCT['lang'] != lang.lower():
-        PRODUCT['lang'] = lang.lower()
-
-    index = "orphadata_generic"
-
-    query = {
-        'query': {
-            'bool': {
-                'filter': {
-                    'term': {
-                        "productId.keyword": {
-                            'value': index_base.format(lang.lower()).replace("orphadata_", '')
-                        }
-                    }
-
-                }
-            }
-        },
-        '_source': {
-            # 'excludes': ['items.associatedGenes']
-        }        
-    }
-
-    es_client = current_app.config.get('ES_NODE')
-    response = qc.es_scroll(es_client, index, query)
-    wrapped_response = ResponseWrapper(ctl_response=response[0]['items'], request=request, product=PRODUCT)
-    
-    return wrapped_response.get()
-
-
 def query_history_orphacodes():
     lang = request.args.get("lang", "en")
     if PRODUCT['lang'] != lang.lower():
