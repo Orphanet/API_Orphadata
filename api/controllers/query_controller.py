@@ -4,9 +4,13 @@ from elasticsearch.helpers import scan as es_helpers_scan
 from flask import make_response, current_app
 import yaml
 
+from api.config import Config
+scroll_size = Config.ES_SIZE
+scroll_timeout = Config.ES_SCROLL_TIMEOUT
+
 # from api.config import scroll_size, scroll_timeout
-scroll_size = current_app.config.get('ES_SIZE')
-scroll_timeout = current_app.config.get('ES_SCROLL_TIMEOUT')
+# scroll_size = current_app.config.get('ES_SIZE')
+# scroll_timeout = current_app.config.get('ES_SCROLL_TIMEOUT')
 
 
 def handle_query(es, index, query, size=1):

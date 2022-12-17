@@ -18,10 +18,8 @@ from api.config import config_by_name
 def create_app(config_name):
     options = {'swagger_url': '/'}
     app = connexion.App(__name__, specification_dir='./swagger/', options=options)
-    with app.app.app_context():
-        app.app.config.from_object(config_by_name[config_name])
-        app.add_api('swagger.yaml', arguments={'title': 'API Orphadata'}, pythonic_params=True)
-    
+    app.add_api('swagger.yaml', arguments={'title': 'API Orphadata'}, pythonic_params=True)
+    app.app.config.from_object(config_by_name[config_name])
     print(app.app.config["ES_URL"])
 
     app.app.static_folder = module_path / 'static'
