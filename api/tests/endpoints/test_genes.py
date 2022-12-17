@@ -37,19 +37,19 @@ class TestGenesEndpointsStatus(BaseTestCase):
     valid_symbol = 'kif7'
     invalid_symbol = 'abc123'
 
-    def test_status_200_genes_base(self):
-        """test_status_200_genes_base
+    # def test_status_200_genes_base(self):
+    #     """test_status_200_genes_base
 
-        SETUP: TEST STATUS 200 for /orphadata/details/rd-associated-genes
-            - a valid url endpoint
-        ACTION:
-            - GET request on valid url endpoint
-        CHECK:
-            - response status is 200
-        """
-        url_endpoint = self.URL_ENDPOINTS.get('genes_base')
-        response = self.client.get(url_endpoint)
-        self.assert200(response)
+    #     SETUP: TEST STATUS 200 for /orphadata/details/rd-associated-genes
+    #         - a valid url endpoint
+    #     ACTION:
+    #         - GET request on valid url endpoint
+    #     CHECK:
+    #         - response status is 200
+    #     """
+    #     url_endpoint = self.URL_ENDPOINTS.get('genes_base')
+    #     response = self.client.get(url_endpoint)
+    #     self.assert200(response)
 
     def test_status_200_genes_orphacodes(self):
         """test_status_200_genes_orphacodes

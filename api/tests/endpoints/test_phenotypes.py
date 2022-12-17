@@ -13,19 +13,19 @@ class TestPhenotypesEndpointsStatus(BaseTestCase):
     valid_hpoids = 'HP:0000768,HP:0001065,HP:0001166,HP:0001763'
     invalid_hpoid = 'abcd'
 
-    def test_status_200_phenotypes_base(self):
-        """test_status_200_phenotypes_base
+    # def test_status_200_phenotypes_base(self):
+    #     """test_status_200_phenotypes_base
 
-        SETUP: TEST STATUS 200 for /orphadata/details/rd-phenotypes
-            - a valid url endpoint
-        ACTION:
-            - GET request on valid url endpoint
-        CHECK:
-            - response status is 200
-        """
-        url_endpoint = self.URL_ENDPOINTS.get('phenotypes_base')
-        response = self.client.get(url_endpoint)
-        self.assert200(response)
+    #     SETUP: TEST STATUS 200 for /orphadata/details/rd-phenotypes
+    #         - a valid url endpoint
+    #     ACTION:
+    #         - GET request on valid url endpoint
+    #     CHECK:
+    #         - response status is 200
+    #     """
+    #     url_endpoint = self.URL_ENDPOINTS.get('phenotypes_base')
+    #     response = self.client.get(url_endpoint)
+    #     self.assert200(response)
 
     def test_status_200_phenotypes_orphacodes(self):
         """test_status_200_phenotypes_orphacodes

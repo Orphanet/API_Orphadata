@@ -39,19 +39,19 @@ class TestReferencesEndpointsStatus(BaseTestCase):
     valid_icd = 'Q87.4'
     invalid_icd = 'x'
 
-    def test_status_200_references_base(self):
-        """test_status_200_references_base
+    # def test_status_200_references_base(self):
+    #     """test_status_200_references_base
 
-        SETUP: TEST STATUS 200 for /orphadata/details/rd-cross-referencing
-            - a valid url endpoint
-        ACTION:
-            - GET request on valid url endpoint
-        CHECK:
-            - response status is 200
-        """
-        url_endpoint = self.URL_ENDPOINTS.get('references_base')
-        response = self.client.get(url_endpoint)
-        self.assert200(response)
+    #     SETUP: TEST STATUS 200 for /orphadata/details/rd-cross-referencing
+    #         - a valid url endpoint
+    #     ACTION:
+    #         - GET request on valid url endpoint
+    #     CHECK:
+    #         - response status is 200
+    #     """
+    #     url_endpoint = self.URL_ENDPOINTS.get('references_base')
+    #     response = self.client.get(url_endpoint)
+    #     self.assert200(response)
 
     def test_status_200_references_orphacodes(self):
         """test_status_200_references_orphacodes
@@ -141,9 +141,7 @@ class TestReferencesEndpointsStatus(BaseTestCase):
             - response status is 200
         """
         url_endpoint = self.URL_ENDPOINTS.get('references_by_omim').format(self.valid_omim)
-        print(url_endpoint)
         response = self.client.get(url_endpoint)
-        print(response)
         self.assert200(response)
 
     def test_status_404_references_by_omim(self):
