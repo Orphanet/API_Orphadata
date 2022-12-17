@@ -237,7 +237,8 @@ for req in REQ[:]:
     print("Requesting GET {} ...".format(url))
     response = requests.get(url=url)
     if not response.status_code == 200:
-        print("Request did not succeed... Please check its URL or the server status.\n")
+        print(f"** WARNING ** - Request did not succeed for {url}... Please check its URL or the server status.\n")
+        continue
     else:
         response = response.json()
 
