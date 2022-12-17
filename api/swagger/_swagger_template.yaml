@@ -586,32 +586,32 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_references
-  /rd-classification:
-    get:
-      tags:
-      - Classifications of rare diseases
-      summary: 
-        Get the list of rare diseases available in all classifications.
-      description:
-        The result is a collection of rare diseases including their ORPHAcode,
-        preferred term, classification ID, classification tag, direct children and parents.
-      operationId: query_classification_base
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: './schemas/classification/_full.yaml'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_classification
+  # /rd-classification:
+  #   get:
+  #     tags:
+  #     - Classifications of rare diseases
+  #     summary: 
+  #       Get the list of rare diseases available in all classifications.
+  #     description:
+  #       The result is a collection of rare diseases including their ORPHAcode,
+  #       preferred term, classification ID, classification tag, direct children and parents.
+  #     operationId: query_classification_base
+  #     responses:
+  #       "200":
+  #         description: Successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: './schemas/classification/_full.yaml'
+  #       "403":
+  #         description: Access denied
+  #       "404":
+  #         description: Queried disorder not found
+  #       "500":
+  #         description: Unknown internal error
+  #       default:
+  #         description: Unknown internal error
+  #     x-openapi-router-controller: api.controllers.rd_classification
   /rd-classification/hchids:
     get:
       tags:
@@ -823,51 +823,51 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_classification
-  /rd-phenotypes:
-    get:
-      tags:
-      - Clinical signs and symptoms in rare diseases
-      summary: 
-        Get the list of rare diseases with their associated phenotypes in a selected language. 
-      description: 
-        The result is a collection of rare diseases with their associated HPO phenotypes.
-        The association is characterized by frequency (obligate, very frequent, frequent, 
-        occasional, very rare or excluded) and whether the annotated HPO term is a major 
-        diagnostic criterion or a pathognomonic sign of the rare disease.
-        The source (PMID references), the date and the validation’s status of the association are also available.
-      operationId: query_phenotypes_base
-      parameters:
-      - in: query
-        name: lang
-        description: A language in the list supported by Orphanet
-        required: false
-        schema:
-          type: string
-          default: en
-          enum:
-          - de
-          - en
-          - es
-          - fr
-          - it
-          - nl
-          - pt
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: './schemas/phenotypes/_full.yaml'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_phenotypes
+  # /rd-phenotypes:
+  #   get:
+  #     tags:
+  #     - Clinical signs and symptoms in rare diseases
+  #     summary: 
+  #       Get the list of rare diseases with their associated phenotypes in a selected language. 
+  #     description: 
+  #       The result is a collection of rare diseases with their associated HPO phenotypes.
+  #       The association is characterized by frequency (obligate, very frequent, frequent, 
+  #       occasional, very rare or excluded) and whether the annotated HPO term is a major 
+  #       diagnostic criterion or a pathognomonic sign of the rare disease.
+  #       The source (PMID references), the date and the validation’s status of the association are also available.
+  #     operationId: query_phenotypes_base
+  #     parameters:
+  #     - in: query
+  #       name: lang
+  #       description: A language in the list supported by Orphanet
+  #       required: false
+  #       schema:
+  #         type: string
+  #         default: en
+  #         enum:
+  #         - de
+  #         - en
+  #         - es
+  #         - fr
+  #         - it
+  #         - nl
+  #         - pt
+  #     responses:
+  #       "200":
+  #         description: Successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: './schemas/phenotypes/_full.yaml'
+  #       "403":
+  #         description: Access denied
+  #       "404":
+  #         description: Queried disorder not found
+  #       "500":
+  #         description: Unknown internal error
+  #       default:
+  #         description: Unknown internal error
+  #     x-openapi-router-controller: api.controllers.rd_phenotypes
   /rd-phenotypes/orphacodes:
     get:
       tags:
@@ -1064,35 +1064,35 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_phenotypes
-  /rd-associated-genes:
-    get:
-      tags:
-      - Genes associated with rare diseases
-      summary: 
-        Get rare diseases associated to at least one gene.
-      description: 
-        The result is a collection of rare diseases information (ORPHAcode, 
-        preferred term, the stable URL pointing to the specific page of the 
-        clinical entity on the Orphanet website, group and type) and their 
-        genes associations. For each gene, symbol, synonyms, name, typology, 
-        chromosomal location and cross-mappings with other international genetic databases are also available.
-      operationId: query_genes_base
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: './schemas/genes/_full.yaml'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_genes
+  # /rd-associated-genes:
+  #   get:
+  #     tags:
+  #     - Genes associated with rare diseases
+  #     summary: 
+  #       Get rare diseases associated to at least one gene.
+  #     description: 
+  #       The result is a collection of rare diseases information (ORPHAcode, 
+  #       preferred term, the stable URL pointing to the specific page of the 
+  #       clinical entity on the Orphanet website, group and type) and their 
+  #       genes associations. For each gene, symbol, synonyms, name, typology, 
+  #       chromosomal location and cross-mappings with other international genetic databases are also available.
+  #     operationId: query_genes_base
+  #     responses:
+  #       "200":
+  #         description: Successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: './schemas/genes/_full.yaml'
+  #       "403":
+  #         description: Access denied
+  #       "404":
+  #         description: Queried disorder not found
+  #       "500":
+  #         description: Unknown internal error
+  #       default:
+  #         description: Unknown internal error
+  #     x-openapi-router-controller: api.controllers.rd_genes
   /rd-associated-genes/orphacodes:
     get:
       tags:
@@ -1261,32 +1261,32 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_genes
-  /rd-medical-specialties:
-    get:
-      tags:
-      - Medical speciality of rare diseases (Linearisation)
-      summary: 
-        Get the list of rare diseases with their associated preferential parent.
-      description: 
-        The result is a collection of rare diseases with their associated preferential parent including
-        ORPHAcode, preferred term, expertlink, group and type, and the ORPHAcode and preferred term of the preferential parent. 
-      operationId: query_linearization_base
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: './schemas/medical_specialties/_full.yaml'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_medical_specialties
+  # /rd-medical-specialties:
+  #   get:
+  #     tags:
+  #     - Medical speciality of rare diseases (Linearisation)
+  #     summary: 
+  #       Get the list of rare diseases with their associated preferential parent.
+  #     description: 
+  #       The result is a collection of rare diseases with their associated preferential parent including
+  #       ORPHAcode, preferred term, expertlink, group and type, and the ORPHAcode and preferred term of the preferential parent. 
+  #     operationId: query_linearization_base
+  #     responses:
+  #       "200":
+  #         description: Successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: './schemas/medical_specialties/_full.yaml'
+  #       "403":
+  #         description: Access denied
+  #       "404":
+  #         description: Queried disorder not found
+  #       "500":
+  #         description: Unknown internal error
+  #       default:
+  #         description: Unknown internal error
+  #     x-openapi-router-controller: api.controllers.rd_medical_specialties
   /rd-medical-specialties/orphacodes:
     get:
       tags:
@@ -1415,51 +1415,51 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_medical_specialties
-  /rd-epidemiology:
-    get:
-      tags:
-      - Epidemiology of rare diseases
-      summary: 
-        Get rare diseases and their epidemiological data in a selected language.
-      description: 
-        The result is a collection of rare diseases (ORPHAcode, preferred name, group) 
-        with available point prevalence, birth prevalence, lifelong prevalence and incidence, 
-        or the number of families reported together with their respective intervals per geographical area.
-      operationId: query_epidemiology_base
-      parameters:
-      - in: query
-        name: lang
-        description: A language in the list supported by Orphanet
-        required: false
-        schema:
-          type: string
-          default: en
-          enum:
-          - cs
-          - de
-          - en
-          - es
-          - fr
-          - it
-          - nl
-          - pl
-          - pt
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: './schemas/epidemiology/_full.yaml'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_epidemiological
+  # /rd-epidemiology:
+  #   get:
+  #     tags:
+  #     - Epidemiology of rare diseases
+  #     summary: 
+  #       Get rare diseases and their epidemiological data in a selected language.
+  #     description: 
+  #       The result is a collection of rare diseases (ORPHAcode, preferred name, group) 
+  #       with available point prevalence, birth prevalence, lifelong prevalence and incidence, 
+  #       or the number of families reported together with their respective intervals per geographical area.
+  #     operationId: query_epidemiology_base
+  #     parameters:
+  #     - in: query
+  #       name: lang
+  #       description: A language in the list supported by Orphanet
+  #       required: false
+  #       schema:
+  #         type: string
+  #         default: en
+  #         enum:
+  #         - cs
+  #         - de
+  #         - en
+  #         - es
+  #         - fr
+  #         - it
+  #         - nl
+  #         - pl
+  #         - pt
+  #     responses:
+  #       "200":
+  #         description: Successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: './schemas/epidemiology/_full.yaml'
+  #       "403":
+  #         description: Access denied
+  #       "404":
+  #         description: Queried disorder not found
+  #       "500":
+  #         description: Unknown internal error
+  #       default:
+  #         description: Unknown internal error
+  #     x-openapi-router-controller: api.controllers.rd_epidemiological
   /rd-epidemiology/orphacodes:
     get:
       tags:
@@ -1562,50 +1562,50 @@ paths:
         default:
           description: Unknown internal error
       x-openapi-router-controller: api.controllers.rd_epidemiological
-  /rd-natural_history:
-    get:
-      tags:
-      - Natural history of rare diseases
-      summary: 
-        Get rare diseases and their natural history in a selected language.
-      description: 
-        The result is a collection of rare diseases (ORPHAcode, preferred name, group) 
-        with available inheritance, interval average age of onset and interval average age of death.
-      operationId: query_history_base
-      parameters:
-      - in: query
-        name: lang
-        description: A language in the list supported by Orphanet
-        required: false
-        schema:
-          type: string
-          default: en
-          enum:
-          - cs
-          - de
-          - en
-          - es
-          - fr
-          - it
-          - nl
-          - pl
-          - pt
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: './schemas/natural_history/_full.yaml'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_history
+  # /rd-natural_history:
+  #   get:
+  #     tags:
+  #     - Natural history of rare diseases
+  #     summary: 
+  #       Get rare diseases and their natural history in a selected language.
+  #     description: 
+  #       The result is a collection of rare diseases (ORPHAcode, preferred name, group) 
+  #       with available inheritance, interval average age of onset and interval average age of death.
+  #     operationId: query_history_base
+  #     parameters:
+  #     - in: query
+  #       name: lang
+  #       description: A language in the list supported by Orphanet
+  #       required: false
+  #       schema:
+  #         type: string
+  #         default: en
+  #         enum:
+  #         - cs
+  #         - de
+  #         - en
+  #         - es
+  #         - fr
+  #         - it
+  #         - nl
+  #         - pl
+  #         - pt
+  #     responses:
+  #       "200":
+  #         description: Successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: './schemas/natural_history/_full.yaml'
+  #       "403":
+  #         description: Access denied
+  #       "404":
+  #         description: Queried disorder not found
+  #       "500":
+  #         description: Unknown internal error
+  #       default:
+  #         description: Unknown internal error
+  #     x-openapi-router-controller: api.controllers.rd_history
   /rd-natural_history/orphacodes:
     get:
       tags:

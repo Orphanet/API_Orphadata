@@ -20,7 +20,7 @@ def create_app(config_name):
     app = connexion.App(__name__, specification_dir='./swagger/', options=options)
     with app.app.app_context():
         app.app.config.from_object(config_by_name[config_name])
-        app.add_api('swagger_built.yaml', arguments={'title': 'API Orphadata'}, pythonic_params=True)
+        app.add_api('swagger.yaml', arguments={'title': 'API Orphadata'}, pythonic_params=True)
     
     print(app.app.config["ES_URL"])
 
