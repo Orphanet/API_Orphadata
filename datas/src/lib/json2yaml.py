@@ -1,3 +1,19 @@
+"""
+Helper script used to build a swagger compatible schema description 
+of responses from the defined requests. 
+
+The script requires the API running on the local server (see API_ROOT variable)
+to make the call to each requests defined in the 'REQ' variable.
+
+The 'REQ' variable contains the list of all requests that will be called. 
+For each request, the response in JSON format is converted in a 
+swagger-compatible YAML format that will be used to describe/display 
+the schema of the response. Please note that not all the content of 
+the response is converted, only the minimim useful information (e.g. 
+ only the 1st element of lists is converted).
+
+"""
+
 from pathlib import Path
 import json
 import requests

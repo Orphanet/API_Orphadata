@@ -365,11 +365,12 @@ python datas/src/orphadata_update.py
 
 ## Swagger definition automation
 
-#### Requirements
+### Requirements
 - [npm from node.js](https://nodejs.org/en/download/)
 - [swagger-cli](https://www.npmjs.com/package/swagger-cli)
 
 
+### Overall explanation
 Request response example schemas in the swagger file (`swagger_built.yaml`) were directly constructed from the response themselves.
 Each response example schema is written in a specific file that is referred to from the main swagger file called `_swagger_template.yaml`.
 Since flask/connexion doesn't seem to support directly multi-file API definitions vie $ref pointers, swagger-cli is used to build
@@ -440,4 +441,25 @@ swagger-cli bundle _swagger_template.yaml -t yaml -o swagger_built.yaml
 ```
 
 `swagger_built.yaml` is the final yaml file used to feed the api instance in the flask function factory (`create_app()` in `API_Orphadata/api/__init__.py`).
+
+
+### Use cases
+
+#### Add a new operation
+1. add its specification in `swagger_built.yaml` without specifying the description schema of the response
+2. add the URL of the new operation and the path to its yaml schema response in the `REQ` list
+3. add its specification in `_swagger_template.yaml` with the $ref link pointing to the path of the yaml description schema of the response
+4. build the swagger file: `swagger-cli bundle _swagger_template.yaml -t yaml -o swagger_built.yaml`
+
+
+#### Remove an existing operation
+1. remove or comment the operation related specification in `_swagger_template.yaml`
+2. build the swagger file: `swagger-cli bundle _swagger_template.yaml -t yaml -o swagger_built.yaml`
+
+
+#### Modify an existing operation
+
+Two different cases:
+- the modification concerns the response content of the operation
+* the modification concerns 
 

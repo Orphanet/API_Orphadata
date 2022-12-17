@@ -82,55 +82,55 @@ tags:
       For more information, read
     url: http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf
 paths:
-  /rd-cross-referencing:
-    get:
-      tags:
-      - Rare diseases aligned with terminologies and databases
-      summary: 
-        Get rare diseases information and their cross-referencing in a selected language.
-      description:
-        The result is a collection of rare diseases including ORPHAcode, 
-        the stable URL pointing to the specific page of the clinical entity
-        on the Orphanet website, preferred term, synonyms, definition, the group and
-        type, and the characterisation of the alignment between the rare disease
-        and ICD-10, UMLS, MesH, MedDra, and OMIM systems.
-      operationId: query_references_base
-      parameters:
-      - in: query
-        name: lang
-        description: A language in the list supported by Orphanet
-        required: false
-        schema:
-          type: string
-          default: en
-          enum:
-          - cs
-          - de
-          - en
-          - es
-          - fr
-          - it
-          - nl
-          - pl
-          - pt
-          - tr
-          - zh
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: './schemas/cross_referencing/_full.yaml'
-        "403":
-          description: Access denied
-        "404":
-          description: Queried disorder not found
-        "500":
-          description: Unknown internal error
-        default:
-          description: Unknown internal error
-      x-openapi-router-controller: api.controllers.rd_references
+  # /rd-cross-referencing:
+  #   get:
+  #     tags:
+  #     - Rare diseases aligned with terminologies and databases
+  #     summary: 
+  #       Get rare diseases information and their cross-referencing in a selected language.
+  #     description:
+  #       The result is a collection of rare diseases including ORPHAcode, 
+  #       the stable URL pointing to the specific page of the clinical entity
+  #       on the Orphanet website, preferred term, synonyms, definition, the group and
+  #       type, and the characterisation of the alignment between the rare disease
+  #       and ICD-10, UMLS, MesH, MedDra, and OMIM systems.
+  #     operationId: query_references_base
+  #     parameters:
+  #     - in: query
+  #       name: lang
+  #       description: A language in the list supported by Orphanet
+  #       required: false
+  #       schema:
+  #         type: string
+  #         default: en
+  #         enum:
+  #         - cs
+  #         - de
+  #         - en
+  #         - es
+  #         - fr
+  #         - it
+  #         - nl
+  #         - pl
+  #         - pt
+  #         - tr
+  #         - zh
+  #     responses:
+  #       "200":
+  #         description: Successful operation
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: './schemas/cross_referencing/_full.yaml'
+  #       "403":
+  #         description: Access denied
+  #       "404":
+  #         description: Queried disorder not found
+  #       "500":
+  #         description: Unknown internal error
+  #       default:
+  #         description: Unknown internal error
+  #     x-openapi-router-controller: api.controllers.rd_references
   /rd-cross-referencing/orphacodes:
     get:
       tags:

@@ -770,7 +770,7 @@ def main():
                 config.output_encoding
             )
 
-    # write_generic_product3()
+    write_generic_product3()
 
 if __name__ == "__main__":
     start = time.time()
