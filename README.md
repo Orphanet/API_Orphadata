@@ -363,103 +363,77 @@ The following command will execute sequentially steps 1, 2 and 3 in one shot:
 python datas/src/orphadata_update.py
 ```
 
-## Swagger definition automation
+## Swagger definition
 
 ### Requirements
 - [npm from node.js](https://nodejs.org/en/download/)
 - [swagger-cli](https://www.npmjs.com/package/swagger-cli)
 
 
-### Overall explanation
-Request response example schemas in the swagger file (`swagger_built.yaml`) were directly constructed from the response themselves.
-Each response example schema is written in a specific file that is referred to from the main swagger file called `_swagger_template.yaml`.
-Since flask/connexion doesn't seem to support directly multi-file API definitions vie $ref pointers, swagger-cli is used to build
-a final `swagger_built.yaml` from `_swagger_template.yaml`.
-
-The first step is to use the python script `API_Orphadata/datas/src/lib/json2yaml.py` which:
- - makes a GET request for all URIs in the API
- - converts each response (json) in a openapi compatible yaml schema format
- - writes each yaml schema in a corresponding yaml file
-
-After running `json2yaml.py` each request in the API have a related YAML file schema describing its response. Theses files are generated in 
-`API_Orphadata/api/swagger/` as follows:
-
-<pre><font color="#3465A4"><b>schemas/</b></font>
-├── <font color="#3465A4"><b>classification</b></font>
-│   ├── _by_hchid.yaml
-│   ├── _by_orphacode_and_hchid.yaml
-│   ├── _full.yaml
-│   ├── _hchids_by_orphacode.yaml
-│   ├── _hchids.yaml
-│   ├── _orphacodes_by_hchid.yaml
-│   └── _orphacodes.yaml
-├── <font color="#3465A4"><b>cross_referencing</b></font>
-│   ├── _by_icd10.yaml
-│   ├── _by_name.yaml
-│   ├── _by_omim.yaml
-│   ├── _by_orphacode.yaml
-│   ├── _full_data.yaml
-│   ├── _full.yaml
-│   ├── _icd-10s.yaml
-│   ├── _omims.yaml
-│   ├── _orphacodes.yaml
-│   └── test.yaml
-├── <font color="#3465A4"><b>epidemiology</b></font>
-│   ├── _by_orphacode.yaml
-│   ├── _full.yaml
-│   └── _orphacodes.yaml
-├── <font color="#3465A4"><b>genes</b></font>
-│   ├── _by_gene_name.yaml
-│   ├── _by_gene_symbol.yaml
-│   ├── _by_orphacode.yaml
-│   ├── _full.yaml
-│   ├── _genes.yaml
-│   └── _orphacodes.yaml
-├── <font color="#3465A4"><b>medical_specialties</b></font>
-│   ├── _by_orphacode.yaml
-│   ├── _by_parent.yaml
-│   ├── _full.yaml
-│   ├── _orphacodes.yaml
-│   └── _parents.yaml
-├── <font color="#3465A4"><b>natural_history</b></font>
-│   ├── _by_orphacode.yaml
-│   ├── _full.yaml
-│   └── _orphacodes.yaml
-└── <font color="#3465A4"><b>phenotypes</b></font>
-    ├── _by_hpoid.yaml
-    ├── _by_orphacodes.yaml
-    ├── _full.yaml
-    ├── _hpoids.yaml
-    └── _orphacodes.yaml
-</pre>
-
-Each of theses files are referred to in the `_swagger_template.yaml` through the use of $ref pointers. 
-To make it work with flask/connexion, swagger-cli is used to convert those $ref pointers into yaml text:
-
-```
-swagger-cli bundle _swagger_template.yaml -t yaml -o swagger_built.yaml
+The API uses an interface based on [OpenAPI specification](https://swagger.io/specification/). For this, Flask reads through Connexion a `swagger.yaml` file containing all specifications of available requests:
+```python
+# API_Orphadata/api/__init__.py
+def create_app(config_name):
+    options = {'swagger_url': '/'}
+    app = connexion.App(__name__, specification_dir='./swagger/', options=options)
+    app.add_api('swagger.yaml', arguments={'title': 'API Orphadata'}, pythonic_params=True)
+    ...
 ```
 
-`swagger_built.yaml` is the final yaml file used to feed the api instance in the flask function factory (`create_app()` in `API_Orphadata/api/__init__.py`).
+If you need to update the specifications (to update/remove/add an operation), it is recommended to do it through the following workflow:
+1. go here `API_Orphadata/api/swagger/`
+2. make your modifications in the template `_swagger_template.yaml`
+3. update `swagger.yaml` from the template: `swagger-cli bundle _swagger_template.yaml -t yaml -o swagger.yaml`
+
+Why ? Simply to avoid manually writing the schema response describing the response to each request.
 
 
-### Use cases
+### Add a new operation
 
-#### Add a new operation
-1. add its specification in `swagger_built.yaml` without specifying the description schema of the response
-2. add the URL of the new operation and the path to its yaml schema response in the `REQ` list
-3. add its specification in `_swagger_template.yaml` with the $ref link pointing to the path of the yaml description schema of the response
-4. build the swagger file: `swagger-cli bundle _swagger_template.yaml -t yaml -o swagger_built.yaml`
+In case you need to add a new operation, first follow the main workfow described above. When adding the specification of the new operation, **you don't need to specify the description schema of the response**.
 
+After having updated the `swagger.yaml` from the template, you can automatically build the description of the schema response of this new operation from the response itself:
+1. open `API_Orphadata/datas/src/lib/json2yaml.py`
+2. add in the `REQ` list variable the following key-pair values with values related to the new operation:
+```python
+REQ = [
+  {
+          "url": "/rd-new-operation",  # relative path of your new operation (as specified in swagger.yaml). 
+          "yaml_outfile": SCHEMAS_PATH / "tag-name-new-operation" / "_descr-name.yaml"  # absolute location of the output file that will contain the schema response
+  },
+  ...
+]
+```
+3. save and close the file
+4. make sure your flask server runs locally (-> http://localhost:5000) 
+5. generate the schema response: `python API_Orphadata/datas/src/lib/json2yaml.py`
+6. add in `_swagger_template.yaml` a pointer to the specification describing the schema response of the new operation:
+```yaml
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/tag-name-new-operation/_descr-name.yaml'
+```
+7. update `swagger.yaml` from the template: `swagger-cli bundle _swagger_template.yaml -t yaml -o swagger.yaml`
 
-#### Remove an existing operation
-1. remove or comment the operation related specification in `_swagger_template.yaml`
-2. build the swagger file: `swagger-cli bundle _swagger_template.yaml -t yaml -o swagger_built.yaml`
+### About `json2yaml.py`
+```python
+"""
+Helper script used to build a swagger compatible schema description 
+of responses from the defined requests. 
 
+The script requires the API running on the local server (see API_ROOT variable)
+to make the call to each requests defined in the 'REQ' variable.
 
-#### Modify an existing operation
+The 'REQ' variable contains the list of all requests that will be called. 
+For each request, the response in JSON format is converted in a 
+swagger-compatible YAML format that will be used to describe/display 
+the schema of the response. Please note that not all the content of 
+the response is converted, only the minimim useful information (e.g. 
+ only the 1st element of lists is converted).
 
-Two different cases:
-- the modification concerns the response content of the operation
-* the modification concerns 
-
+"""
+```
