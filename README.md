@@ -124,8 +124,8 @@ Both the flask application and the data processing scripts make use of environme
 
 | Name | Accepted values | Default value | Role
 |---|---|---|---|
-| `FLASK_ENV` | `test`, `dev` or `production` | `production` | Used by the flask API application
-| `DATA_ENV` |  `remote` or `local` | `local` | Used for data processing (data injection into elasticsearch)
+| `FLASK_ENV` | `test`, `dev` or `production` | `production` | Only used by the flask API application
+| `DATA_ENV` |  `remote` or `local` | `local` | Only used for the full data update process: `datas/src/orphadata_update.py`
 
 
 The `FLASK_ENV` variable defines an object (see `api/config.py`) used to configure the flask instantiated application (through the parameter `config_name` of the factory function `create_app()` in `api/__init__.py`).
@@ -290,9 +290,7 @@ This command will write all JSON files into `API_Orphadata/datas/json_data/`.
 
 ### Step 3: Inject JSON orphadata to elasticsearch
 
-Now that we have JSON files, we can inject them into an elasticsearch instance. First you have to set up the environment variable `DATA_ENV` to chose your elasticsearch instance:
-- `export DATA_ENV=local` for your local elasticsearch instance
-- `export DATA_ENV=remote` for the remote elasticsearch instance (requires [`.varenv`](#env-variables) to be set up too)
+Now that we have JSON files, we can inject them into an elasticsearch instance.
 
 If you are using your local elasticsearch instance make sure that it is running and accessible at `localhost:9200`:
 ```
@@ -319,10 +317,15 @@ nche@orphanet13:~$ curl localhost:9200
 
 To inject your data, type the following command:
 ```bash
-python datas/src/orphadata_injection.py
+# for local elasticsearch instance (default ES url: http://127.0.0.1:9200)
+python datas/src/orphadata_injection.py -url local
+
+# for remote elasticsearch instance (reads .varenv to access ES url)
+python datas/src/orphadata_injection.py -url remote
 ```
 
-This command will create an elastic index named according to each JSON file and prefixed with `orphadata_` (except for `orphadata_en_product3.json` which already contains the prefix). For instance, the elastic index for `en_product1.json` will be `orphadata_en_product1`.
+
+This will create an elastic index named according to each JSON file and prefixed with `orphadata_` (except for `orphadata_en_product3.json` which already contains the prefix). For instance, the elastic index for `en_product1.json` will be `orphadata_en_product1`.
 
 You can check that those indices are now stored on your elasticsearch instance:
 ```bash
@@ -355,7 +358,10 @@ optional arguments:
 
 ### Full update process
 
-While running individual steps described above could be useful for development purpose, the whole process has been automatized for production purpose. First, make sure to check your `DATA_ENV` environment variable value to know on which elasticsearch instance data will be injected.
+While running individual steps described above could be useful for development purpose, the whole process has been automatized for production purpose. First you have to set up the environment variable `DATA_ENV` to chose your elasticsearch instance:
+- `export DATA_ENV=local` for your local elasticsearch instance
+- `export DATA_ENV=remote` for the remote elasticsearch instance (requires [`.varenv`](#env-variables) to be set up too)
+Note that instead of declaring the variable in a terminal, you can alternatively define it in the `.varenv` file.
 
 
 The following command will execute sequentially steps 1, 2 and 3 in one shot:
