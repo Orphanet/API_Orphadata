@@ -1,6 +1,6 @@
 {
   "info": {
-    "description": "More information on data are available <a href=\"http://www.orphadata.org/cgi-bin/index.php#freeproducts\" target=\"_blank\">here</a>.\n\nThese data are updated twice a year (July and December) and are also available as downloadable files both in \n<a href=\"http://dev.orphadata.com/orphanet-scientific-knowledge-files/\" target=\"_blank\">XML and JSON formats</a>.\n\nWe apply the <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Commons Attribution 4.0 International (CC BY 4.0)</a>\n to all copyrightable parts of our databases.\nThis means that you are free to copy, distribute, display and make commercial use of these databases in all legislations,\nprovided you give us credit.\n\nFor further information, consult <a href=\"http://www.orphadata.org/cgi-bin/index.php\" target=\"_blank\">Orphadata website</a> and other services\nfrom <a href=\"https://www.orpha.net/consor/cgi-bin/index.php\" target=\"_blank\">Orphanet</a>.\n\n<a href=\"http://www.orphadata.org/cgi-bin/contact.html\" target=\"_blank\">Contact Orphadata team</a> \n",
+    "description": "More information on data are available <a href=\"https://www.orphadata.com/orphanet-scientific-knowledge/" target=\"_blank\">here</a>.\n\nThese data are updated twice a year (July and December) and are also available as downloadable files both in \n<a href=\"http://dev.orphadata.com/orphanet-scientific-knowledge-files/\" target=\"_blank\">XML and JSON formats</a>.\n\nWe apply the <a href=\"https://creativecommons.org/licenses/by/4.0/\" target=\"_blank\">Commons Attribution 4.0 International (CC BY 4.0)</a>\n to all copyrightable parts of our databases.\nThis means that you are free to copy, distribute, display and make commercial use of these databases in all legislations,\nprovided you give us credit.\n\nFor further information, consult <a href=\"https://www.orphadata.com" target=\"_blank\">Orphadata website</a> and other services\nfrom <a href=\"https://www.orpha.net/consor/cgi-bin/index.php\" target=\"_blank\">Orphanet</a>.\n\n<a href=\"http://www.orphadata.org/cgi-bin/contact.html" target=\"_blank\">Contact Orphadata team</a> \n",
     "title": "Clinical signs and symptoms in rare diseases",
     "version": "1.0.0"
   },
@@ -900,7 +900,7 @@
     {
       "externalDocs": {
         "description": "Get rare diseases and associated HPO phenotypes. Available in english, french, german, spanish, dutch, italian and portuguese. For more information, read",
-        "url": "http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf"
+        "url": "https://www.orphadata.com/docs/OrphadataFreeAccessProductsDescription.pdf"
       },
       "name": "Clinical signs and symptoms in rare diseases"
     }
