@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: Orphadata API
+  title: Orphadata APIs
   description: | 
     Orphadata API provides several GET to facilitate the exploitation of various rare disease-related datasets:
       - Rare diseases aligned with terminologies and databases    
