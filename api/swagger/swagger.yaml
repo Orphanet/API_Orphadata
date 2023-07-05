@@ -29,8 +29,8 @@ info:
 tags:
   - name: Rare diseases aligned with terminologies and databases
     externalDocs:
-      description: 'Get rare diseases information and their alignements with other terminologies. Available in english, french, german, spanish, dutch, italian, portuguese, polish, czech, russian, chinese and turkish. For more information, click'
-      url: '<a href="https://www.orphadata.com/docs/OrphadataFreeAccessProductsDescription.pdf" target="_blank">here</a>.'
+      description: 'Get rare diseases information and their alignements with other terminologies. Available in english, french, german, spanish, dutch, italian, portuguese, polish, czech, russian, chinese and turkish. For more information, read'
+      url: 'https://www.orphadata.com/docs/OrphadataFreeAccessProductsDescription.pdf'
   - name: Classifications of rare diseases
     externalDocs:
       description: 'Get Orphanet classifications and the list of rare diseases classified in. Available only in english. For more information, read'
