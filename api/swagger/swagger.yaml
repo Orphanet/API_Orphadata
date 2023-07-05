@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: Orphadata API
+  title: Orphadata APIs
   description: |
     Orphadata API provides several GET to facilitate the exploitation of various rare disease-related datasets:
       - Rare diseases aligned with terminologies and databases    
@@ -14,47 +14,47 @@ info:
     More information on data are available <a href="https://www.orphadata.com/orphanet-scientific-knowledge/" target="_blank">here</a>.
 
     These data are updated twice a year (July and December) and are also available as downloadable files both in 
-    <a href="http://dev.orphadata.com/orphanet-scientific-knowledge-files/" target="_blank">XML and JSON formats</a>.
+    <a href="https://www.orphadata.com/orphanet-scientific-knowledge-files/" target="_blank">XML and JSON formats</a>.
 
     We apply the <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Commons Attribution 4.0 International (CC BY 4.0)</a>
      to all copyrightable parts of our databases.
     This means that you are free to copy, distribute, display and make commercial use of these databases in all legislations,
     provided you give us credit.
 
-    For further information, consult <a href="http://www.orphadata.org/cgi-bin/index.php" target="_blank">Orphadata website</a> and other services
+    For further information, consult <a href="https://www.orphadata.com/" target="_blank">Orphadata website</a> and other services
     from <a href="https://www.orpha.net/consor/cgi-bin/index.php" target="_blank">Orphanet</a>.
 
-    <a href="http://www.orphadata.org/cgi-bin/contact.html" target="_blank">Contact Orphadata team</a> 
+    <a href="https://www.orphadata.com/contact/" target="_blank">Contact Orphadata team</a> 
   version: 1.0.0
 tags:
   - name: Rare diseases aligned with terminologies and databases
     externalDocs:
       description: 'Get rare diseases information and their alignements with other terminologies. Available in english, french, german, spanish, dutch, italian, portuguese, polish, czech, russian, chinese and turkish. For more information, read'
-      url: 'http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf'
+      url: 'https://www.orphadata.com/docs/OrphadataFreeAccessProductsDescription.pdf'
   - name: Classifications of rare diseases
     externalDocs:
       description: 'Get Orphanet classifications and the list of rare diseases classified in. Available only in english. For more information, read'
-      url: 'http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf'
+      url: 'https://www.orphadata.com/docs/OrphadataFreeAccessProductsDescription.pdf'
   - name: Clinical signs and symptoms in rare diseases
     externalDocs:
       description: 'Get rare diseases and associated HPO phenotypes. Available in english, french, german, spanish, dutch, italian and portuguese. For more information, read'
-      url: 'http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf'
+      url: 'https://www.orphadata.com/docs/OrphadataFreeAccessProductsDescription.pdf'
   - name: Genes associated with rare diseases
     externalDocs:
       description: 'Get rare diseases and associated gene. Available only in english. For more information, read'
-      url: 'http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf'
+      url: 'https://www.orphadata.com/docs/OrphadataFreeAccessProductsDescription.pdf'
   - name: Medical speciality of rare diseases (Linearisation)
     externalDocs:
       description: 'The polyparental structure of the Orphanet classification of rare diseases implies that a rare disease is included in as many classifications as necessary depending on its clinical presentation and the medical specialties to which it is relevant. In order to enable the sorting out of all rare diseases by medical specialty and avoid multiple counting of multiclassified entities in statistical analysis, a linearisation process is applied in the Orphanet database to attribute one medical specialty to each clinical entity. The medical speciality is displayed as «Preferential parent». Available only in english. For more information, read'
-      url: 'http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf'
+      url: 'https://www.orphadata.com/docs/OrphadataFreeAccessProductsDescription.pdf'
   - name: Epidemiology of rare diseases
     externalDocs:
       description: 'Get epidemiological data on rare diseases. Available only in english, french, german, spanish, dutch, italian, portuguese, polish and czech. For more information, read'
-      url: 'http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf'
+      url: 'https://www.orphadata.com/docs/OrphadataFreeAccessProductsDescription.pdf'
   - name: Natural history of rare diseases
     externalDocs:
       description: 'Get inheritance, interval average age of onset and interval average age of death on rare diseases. Available only in english, french, german, spanish, dutch, italian, portuguese, polish and czech. For more information, read'
-      url: 'http://www.orphadata.org/cgi-bin/img/PDF/OrphadataFreeAccessProductsDescription.pdf'
+      url: 'https://www.orphadata.com/docs/OrphadataFreeAccessProductsDescription.pdf'
 paths:
   /rd-cross-referencing/orphacodes:
     get:
