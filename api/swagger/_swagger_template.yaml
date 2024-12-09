@@ -159,6 +159,7 @@ paths:
           - pl
           - pt
           - tr
+          - uk
           - zh
       responses:
         "200":
@@ -218,6 +219,7 @@ paths:
           - pl
           - pt
           - tr
+          - uk
           - zh
       responses:
         "200":
@@ -275,6 +277,7 @@ paths:
           - pl
           - pt
           - tr
+          - uk
           - zh
       responses:
         "200":
@@ -318,6 +321,7 @@ paths:
           - pl
           - pt
           - tr
+          - uk
           - zh
       responses:
         "200":
@@ -373,6 +377,7 @@ paths:
           - pl
           - pt
           - tr
+          - uk
           - zh
       responses:
         "200":
@@ -416,6 +421,7 @@ paths:
           - pl
           - pt
           - tr
+          - uk
           - zh
       responses:
         "200":
@@ -471,6 +477,7 @@ paths:
           - pl
           - pt
           - tr
+          - uk
           - zh
       responses:
         "200":
@@ -514,6 +521,7 @@ paths:
           - pl
           - pt
           - tr
+          - uk
           - zh
       responses:
         "200":
@@ -569,6 +577,7 @@ paths:
           - pl
           - pt
           - tr
+          - uk
           - zh
       responses:
         "200":
