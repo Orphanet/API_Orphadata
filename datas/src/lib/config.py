@@ -7,13 +7,13 @@ ROOT_DIR = Path(__file__).parent.parent.parent.parent
 
 # URLs of JSONs containing orphadata XML URLs for each product of interest
 PATH_PRODUCTS_INFOS = {
-    'product1': "http://www.orphadata.org/cgi-bin/free_product1_cross_xml.json",
-    'product3': "http://www.orphadata.org/cgi-bin/free_product3_class.json",
-    'product4': "http://www.orphadata.org/cgi-bin/free_product4_hpo.json",
-    'product6':"http://www.orphadata.org/cgi-bin/free_product6_genes.json",
-    'product7':"http://www.orphadata.org/cgi-bin/free_product7_linear.json",
-    'product9_prev':"http://www.orphadata.org/cgi-bin/free_product9_prev.json",
-    'product9_ages':"http://www.orphadata.org/cgi-bin/free_product9_ages.json"
+    'product1': "https://www.orphadata.com/data/json_api/product1_cross.json",
+    'product3': "https://www.orphadata.com/data/json_api/product3_class.json",
+    'product4': "https://www.orphadata.com/data/json_api/product4_hpo.json",
+    'product6': "https://www.orphadata.com/data/json_api/product6_genes.json",
+    'product7': "https://www.orphadata.com/data/json_api/product7_linear.json",
+    'product9_prev': "https://www.orphadata.com/data/json_api/product9_prev.json",
+    'product9_ages': "https://www.orphadata.com/data/json_api/product9_ages.json",
 }
 
 # Product full names (used by GenericEsDoc class in generic_parser.py)
